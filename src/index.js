@@ -35,12 +35,12 @@ const Index = observer(() => {
     // // 全局加载插件store
     // const PluginContainer  = createContainer()
     //
-    // const allStore = {
-    //     ...privilegeStores,
-    //     ...messageModuleStores,
-    //     ...orgStores,
-    //     ...store
-    // }
+    const allStore = {
+        // ...privilegeStores,
+        // ...messageModuleStores,
+        // ...orgStores,
+        ...store
+    }
     //
     // useAccountConfig()
     // useEffect(() => {
@@ -53,9 +53,13 @@ const Index = observer(() => {
     // if (visible) return <div>加载。。。</div>
 
     return (
-        <HashRouter >
-            {renderRoutes(initPluginData.routes)}
-        </HashRouter>
+        <Provider {...allStore}>
+            <ConfigProvider locale={zhCN}>
+                <HashRouter >
+                    {renderRoutes(initPluginData.routes)}
+                </HashRouter>
+            </ConfigProvider>
+        </Provider>
         // <PluginContainer.Provider initialState={initPluginData}>
         //     <Provider {...allStore}>
         //         <ConfigProvider locale={zhCN}>

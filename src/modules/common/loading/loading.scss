@@ -1,4 +1,4 @@
-.code-container{
+.xcode-container{
     margin: 0 auto;
     display:flex;
     justify-content:center;
@@ -14,7 +14,7 @@
     background-color: rgba(0,0,0,.1);
 
 }
-.code-shape  {
+.xcode-shape  {
     width: 16px;
     height: 16px;
     background-color: var(--tiklab-blue);
@@ -24,10 +24,10 @@
     animation: anim 1.4s infinite ease-in-out;
     animation-fill-mode: both;
 }
-.code-shape:nth-child(1)  {
+.xcode-shape:nth-child(1)  {
     animation-delay: -0.32s;
 }
-.code-shape:nth-child(2)  {
+.xcode-shape:nth-child(2)  {
     animation-delay: -0.16s;
 }
 

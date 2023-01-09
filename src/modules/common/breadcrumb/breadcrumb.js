@@ -9,10 +9,10 @@ const BreadcrumbContent = props =>{
 
     const {firstItem,secondItem,goBack} = props
 
-    return  <div className="code-breadcrumb">
+    return  <div className="xcode-breadcrumb">
                 <Space>
                     {goBack && <LeftOutlined onClick={goBack} style={{color:"#0063FF"}}/>}
-                    <span className={secondItem ? "code-breadcrumb-span":""}>
+                    <span className={secondItem ? "xcode-breadcrumb-span":""}>
                         {firstItem}
                     </span>
                     {secondItem && <span> / &nbsp; {secondItem}</span>}

@@ -3,10 +3,10 @@ import "./loading.scss";
 
 const Loading = props =>{
     return (
-        <div className="code-container">
-            <div className="code-shape"/>
-            <div className="code-shape"/>
-            <div className="code-shape"/>
+        <div className="xcode-container">
+            <div className="xcode-shape"/>
+            <div className="xcode-shape"/>
+            <div className="xcode-shape"/>
         </div>
     )
 }

@@ -8,10 +8,10 @@
         width: 100%;
         min-width: 600px;
         color: #ffffff;
-        height: var(--mf-head-height);
+        height: var(--xcode-head-height);
         background: var(--tiklab-blue);
         &-logo{
-            height: var(--mf-head-height);
+            height: var(--xcode-head-height);
             width: 100px;
             margin: 0 20px;
             img{
@@ -83,7 +83,7 @@
         }
     }
     &-content{
-        height: var(--mf-content-height);
+        height: var(--xcode-content-height);
     }
 }
 

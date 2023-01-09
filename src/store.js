@@ -1,10 +1,12 @@
-import {STOREHOUSE_STORE,StorehouseStore} from "./modules/storehouse/store/storehouseStore";
+import {HOUSE_STORE,HouseStore} from "./modules/house/store/houseStore";
+import {HOUSEGRROUP_STORE,HouseGroupStore} from "./modules/houseGroup/store/houseGroupStore";
 
 import {createContext} from "react";
 
 function createStores() {
     return{
-        [STOREHOUSE_STORE]:new StorehouseStore(),
+        [HOUSE_STORE]:new HouseStore(),
+        [HOUSEGRROUP_STORE]:new HouseGroupStore(),
     }
 }
 

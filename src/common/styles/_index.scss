@@ -4,7 +4,7 @@ ul li{
     list-style: none;
 }
 
-.code .ant-form{
+.xcode .ant-form{
     .ant-form-item{
         margin-bottom: 10px;
     }
@@ -32,54 +32,54 @@ ul li{
     }
 }
 
-.code .ant-steps-item-process>.ant-steps-item-container>.ant-steps-item-icon{
+.xcode .ant-steps-item-process>.ant-steps-item-container>.ant-steps-item-icon{
     background-color: var(--tiklab-blue);
 }
 
-.code .ant-steps-item-finish .ant-steps-item-icon{
+.xcode .ant-steps-item-finish .ant-steps-item-icon{
     border-color: var(--tiklab-blue);
 }
 
-.code .ant-steps-item-finish .ant-steps-finish-icon{
+.xcode .ant-steps-item-finish .ant-steps-finish-icon{
     color: var(--tiklab-blue);
 }
 
-.code .ant-steps-item-finish>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-title:after{
+.xcode .ant-steps-item-finish>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-title:after{
     background-color: var(--tiklab-blue);
 }
 
-.code .ant-table-thead>tr>th{
+.xcode .ant-table-thead>tr>th{
     background: #ffffff;
     padding: 8px;
 }
 
-.code .ant-table-tbody>tr>td{
+.xcode .ant-table-tbody>tr>td{
     border: none;
     padding: 8px;
 }
 
-.code .ant-transfer-list{
+.xcode .ant-transfer-list{
     background: #ffffff;
     border: none;
 }
 
-.code .ant-transfer-list-search-action{
+.xcode .ant-transfer-list-search-action{
     top:22px
 }
 
-.code .ant-transfer-list-header-dropdown{
+.xcode .ant-transfer-list-header-dropdown{
     display: none;
 }
 
-.code .ant-transfer-list-header{
+.xcode .ant-transfer-list-header{
     border: none;
 }
 
-.code .ant-modal-footer{
+.xcode .ant-modal-footer{
     border:none;
 }
 
-.code .icon {
+.xcode .icon {
     width: 16px;
     height: 16px;
     vertical-align: -0.15em;
@@ -89,7 +89,7 @@ ul li{
 
 .ant-message{
     top: 50px;
-    .ant-message-notice{  /*code-message*/
+    .ant-message-notice{  /*xcode-message*/
         padding: 0;
     }
     .ant-message-notice-content{
@@ -99,7 +99,7 @@ ul li{
     }
 }
 
-.code-icon{
+.xcode-icon{
     &-0{
         background: #f3caca;
     }
@@ -120,7 +120,7 @@ ul li{
     }
 }
 
-.code-home-limited{
+.xcode-home-limited{
     margin: auto;
     max-width: 1280px;
     min-width: 768px;
@@ -179,10 +179,10 @@ ul li{
     --tiklab-icon-size-22: 22px;
     --tiklab-icon-size-32: 32px;
 
-    --code-sider-color: #efefef;
-    --code-select-color: #e3e8f0;
-    --code-hover-color: #edf0f5;
-    --code-backdrop-color: #f7f7f7;
-    --code-head-height: 48px;
-    --code-content-height: calc(100vh - 48px)
+    --xcode-sider-color: #efefef;
+    --xcode-select-color: #e3e8f0;
+    --xcode-hover-color: #edf0f5;
+    --xcode-backdrop-color: #f7f7f7;
+    --xcode-head-height: 48px;
+    --xcode-content-height: calc(100vh - 48px)
 }

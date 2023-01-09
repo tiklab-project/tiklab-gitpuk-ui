@@ -10,29 +10,29 @@ const Guide = props =>{
     const goDetails = title =>{
         switch (title) {
             case "我的待办":
-                props.history.push("/index/agency")
+                // props.history.push("/index/agency")
                 break
             case "近期动态":
-                props.history.push("/index/dyna")
+                // props.history.push("/index/dyna")
                 break
             case "流水线动态":
-                props.history.push(`/index/task/${pipelineId}/dyna`)
+                // props.history.push(`/index/task/${pipelineId}/dyna`)
         }
     }
 
     return(
-        <div className="code-guide">
-            <div className="code-guide-title">
-                <span className="code-guide-title-icon">
+        <div className="xcode-guide">
+            <div className="xcode-guide-title">
+                <span className="xcode-guide-title-icon">
                     {icon && icon}
                 </span>
-                <span className="code-guide-title-name">
+                <span className="xcode-guide-title-name">
                     {title}
                 </span>
             </div>
             {
                 type &&
-                <div className="code-guide-ac">
+                <div className="xcode-guide-ac">
                     <span onClick={()=>goDetails(title)}>
                         <RightOutlined />
                     </span>

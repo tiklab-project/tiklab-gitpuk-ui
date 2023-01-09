@@ -1,0 +1,214 @@
+.homePage{
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background: var(--xcode-backdrop-color);
+    &-content{
+        &-top{
+            display: flex;
+        }
+        &-center{
+            display: flex;
+            margin: 15px 0;
+        }
+        &-bottom{
+            display: flex;
+        }
+        .homePage-empty{
+            padding-top: 20px;
+        }
+        .quickIn{
+            margin-bottom: 15px;
+            display: flex;
+            &-group{
+                min-width: 100px;
+                line-height: 100px;
+                height: 100px;
+                text-align: center;
+                border-radius: 4px;
+                background: #fff;
+                cursor: pointer;
+                flex: 1;
+                &:not(:last-child){
+                    margin-right: 15px;
+                }
+                &-wrap{
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    .quickIn-group-title{
+                        font-weight: var(--tiklab-font-weight-bold);
+                    }
+                    .quickIn-group-icon{
+                        .icon{
+                            width: 30px;
+                            height: 30px;
+                            vertical-align: -0.55rem;
+                        }
+                    }
+                    .quickIn-group-number{
+                        margin-left: 5px;
+                        width: 20px;
+                        height: 20px;
+                        line-height: 20px;
+                        background: #f2f2f2;
+                        border-radius: 50px;
+                        font-weight: 500;
+                        font-size: 15px;
+                    }
+                }
+            }
+        }
+        .pipelineRecent{
+            border-radius: 4px;
+            padding: 10px;
+            height: 200px;
+            background: #fff;
+            flex: 1;
+            margin-bottom: 15px;
+            .pipelineRecent-content{
+                display: flex;
+                justify-content: flex-start;
+                padding-top: 5px;
+            }
+            .pipelineRecent-item{
+                width: 232px;
+                height: 120px;
+                padding: 10px;
+                border-radius: 4px;
+                cursor: pointer;
+                background-color: var(--xcode-backdrop-color);
+                border-bottom: 2px solid rgba(255,255,255,0);
+                &:not(:last-child){
+                    margin-right: 15px;
+                }
+            }
+            .pipelineRecent-item:hover{
+                border-radius: 4px 4px 0 0;
+                border-bottom-color: var(--tiklab-blue);
+                transition: 1s;
+            }
+            .pipelineRecent-item-title{
+                padding-bottom: var(--tiklab-padding-item);
+                .pipelineRecent-icon{
+                    display: inline-block;
+                    width: 32px;
+                    height: 32px;
+                    line-height: 32px;
+                    border-radius: 4px;
+                    text-align: center;
+                    color: black;
+                    font-size: 13px;
+                }
+                .pipelineRecent-name{
+                    display: inline-block;
+                    max-width: 170px;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    -o-text-overflow: ellipsis;
+                    font-weight: var(--tiklab-font-weight-bold);
+                }
+            }
+            .pipelineRecent-item-details{
+                font-size: var(--tiklab-font-13);
+                display: flex;
+                justify-content: space-around;
+                white-space: nowrap;
+                .details-desc{
+                    color: #9b9b9b;
+                    padding-right: 8px;
+                }
+            }
+            .pipelineRecent-item-detail{
+                height: 40px;
+                line-height: 40px;
+                &:first-child{
+                    margin-right: 10px;
+                }
+            }
+        }
+        .home-dyna{
+            background: #fff;
+            padding: 10px;
+            min-height: 450px;
+            border-radius: 4px;
+        }
+        .agency{
+            flex: 1;
+            background: #fff;
+            border-radius: 4px;
+            padding: 10px;
+            min-height: 350px;
+            margin-bottom: 15px;
+            &-bottom{
+                &-list{
+                    padding: 8px;
+                    &:not(:last-child){
+                        border-bottom: 1px solid var(--tiklab-gray-200);
+                    }
+                    &:hover{
+                        background: #f4f4f4;
+                        border-radius: 4px;
+                    }
+                    .agency-item{
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        &-title{
+                            cursor: pointer;
+                            font-weight: 500;
+                            text-overflow: ellipsis;
+                            white-space: nowrap;
+                            display: inline-block;
+                            overflow: hidden;
+                            width: 105px;
+                        }
+                        &-time{
+                            margin-top: 5px;
+                        }
+                        &-user{
+                            width: 270px;
+                            .user-create{
+                                text-overflow: ellipsis;
+                                white-space: nowrap;
+                                display: inline-block;
+                                overflow: hidden;
+                                vertical-align: top;
+                            }
+                            .createUser{
+                                width: 50px;
+                            }
+                            .execUser{
+                                max-width: 100px;
+                            }
+                            .user-arrow{
+                                padding: 0 5px;
+                            }
+                        }
+                        &-state{
+                            width: 50px;
+                            height: 25px;
+                            line-height: 25px;
+                            text-align: center;
+                            font-size: 12px;
+                            border-radius: 30px;
+                        }
+                        .state{
+                            &-1{
+                                background: #87d068;
+                            }
+                            &-2{
+                                background: var(--tiklab-blue);
+                            }
+                            &-3{
+                                background: red;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+}

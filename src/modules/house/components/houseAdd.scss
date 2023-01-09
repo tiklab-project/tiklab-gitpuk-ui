@@ -1,0 +1,135 @@
+.storehouse-add{
+    .ant-modal-body{
+        height: 100%;
+        overflow: auto;
+        padding: 0;
+        background: var(--tiklab-gray);
+    }
+    .ant-modal-footer{
+        display: none;
+    }
+    .storehouseAddModal{
+        max-width: 900px;
+        margin: auto;
+        padding: 20px;
+        &-top{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--tiklab-padding-item);
+            .storehouseAddModal-top-title{
+                font-size: 15px;
+                font-weight: var(--tiklab-font-weight-bold);
+            }
+            .storehouseAddModal-top-leadingIn{
+                .leadingIn{
+                    color: var(--tiklab-blue);
+                    cursor: pointer;
+                }
+            }
+        }
+        &-content{
+            .storehouseAddModal-new{
+                .storehouseAddModal-path{
+                    display: flex;
+                    .path-tips{
+                        flex: 1;
+                        .ant-form-item-label,.ant-form-item-explain{
+                            margin-left: -350px;
+                        }
+                    }
+                }
+                .storehouseAddModal-power{
+                    padding-bottom: var(--tiklab-padding);
+                    .storehouseAddModal-power-title{
+                        padding: 0 0 8px;
+                    }
+                    .storehouseAddModal-power-content{
+                        display: flex;
+                    }
+                    .storehouseAddModal-power-item{
+                        height: 150px;
+                        background: #ffffff;
+                        padding: 10px;
+                        cursor: pointer;
+                        border-radius: 4px;
+                        &:first-child{
+                            margin-right: 15px;
+                        }
+                        .power-item{
+                            display: flex;
+                            justify-content: space-between;
+                        }
+                        .power-title{
+                            font-size: 16px;
+                        }
+                        .power-desc{
+                            padding-top: 20px;
+                        }
+                        .power-select-show{
+                            width: 13px;
+                            height: 13px;
+                            background: var(--tiklab-blue);
+                            border-radius: 50px;
+                            position: relative;
+                            &:after{
+                                position: absolute;
+                                content: "";
+                                width: 23px;
+                                height: 23px;
+                                top: -5px;
+                                left: -5px;
+                                border: 3px solid var(--tiklab-blue);
+                                border-radius: 50px;
+                            }
+                        }
+                    }
+                    .storehouseAddModal-power-set{
+                        max-width: 300px;
+                        width: 300px;
+                        border: 1px solid var(--tiklab-gray-200);
+                    }
+                    .storehouseAddModal-power-noSet{
+                        flex: 1;
+                    }
+                    .storehouseAddModal-power-select{
+                        border: 2px solid var(--tiklab-blue) !important;
+                    }
+                }
+                .storehouseAddModal-user{
+                    padding-bottom: var(--tiklab-padding-item);
+                    .storehouseAddModal-user-title{
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        padding-bottom: 8px;
+                    }
+                    .storehouseAddModal-user-table{
+                        background: #ffffff;
+                        padding: 8px;
+                        min-height: 240px;
+                    }
+                }
+            }
+            .storehouseAddModal-old{
+                .steps-content {
+                    min-height: 100px;
+                }
+                .ant-steps-item-icon{
+                    padding-top: 7px;
+                }
+            }
+
+        }
+    }
+}
+
+.storehouseAddModal-user-add{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: var(--tiklab-padding-item);
+    font-weight: var(--tiklab-font-weight-bold);
+    .user-add-close{
+        cursor: pointer;
+    }
+}

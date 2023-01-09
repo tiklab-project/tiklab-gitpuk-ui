@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import {Dropdown,Badge} from 'antd';
+import {Dropdown,Badge,Avatar} from 'antd';
 import {useTranslation} from 'react-i18next';
 import {
     GlobalOutlined,
@@ -10,12 +10,13 @@ import {
     ProfileOutlined,
     ExpandOutlined,
     ScheduleOutlined,
-    WhatsAppOutlined
-} from '@ant-design/icons';
-import {withRouter} from 'react-router';
-import {inject,observer} from 'mobx-react';
-import logo from '../../../assets/images/img/matflow3.png';
-import MessageDrawer from './messageDrawer';
+    WhatsAppOutlined,
+    UserOutlined
+} from '@ant-design/icons'
+import {withRouter} from 'react-router'
+import {inject,observer} from 'mobx-react'
+import logo from '../../../assets/images/img/matflow3.png'
+// import MessageDrawer from './messageDrawer'
 
 const Head = props =>{
 
@@ -88,9 +89,9 @@ const Head = props =>{
         <div className='header-outMenu'>
             <div className='header-outMenu-top'>
                 <div className='outMenu-out'>
-                    <Profile userInfo={getUser()}/>
+                    {/*<Profile userInfo={getUser()}/>*/}
                     <div className='outMenu-out-info'>
-                        <div className='outMenu-out-name'>{getUser().name}</div>
+                        <div className='outMenu-out-name'>name</div>
                         <div className='outMenu-out-eamil'>tiklab@</div>
                     </div>
                 </div>
@@ -140,7 +141,7 @@ const Head = props =>{
     return(
         <div className='frame-header'>
             <div className='frame-header-right'>
-                <WorkAppConfig  isSSO={false}/>
+                {/*<WorkAppConfig  isSSO={false}/>*/}
                 <div className='frame-header-logo'>
                     <img src={logo} alt='logo' />
                 </div>
@@ -154,7 +155,7 @@ const Head = props =>{
                         <SettingOutlined className='frame-header-icon'/>
                     </div>
                     <div className='frame-header-message' onClick={()=>setVisible(true)}>
-                        <Badge count={unread} size='small'>
+                        <Badge count={3} size='small'>
                             <BellOutlined className='frame-header-icon'/>
                         </Badge>
                     </div>
@@ -165,17 +166,19 @@ const Head = props =>{
                     </div>
                     <Dropdown overlay={outMenu}>
                         <div className='frame-header-user'>
-                            <Profile userInfo={getUser()}/>
+                            {/*<Profile userInfo={getUser()}/>*/}
+                            <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+
                         </div>
                     </Dropdown>
                 </div>
             </div>
 
-            <MessageDrawer
-                {...props}
-                visible={visible}
-                setVisible={setVisible}
-            />
+            {/*<MessageDrawer*/}
+            {/*    {...props}*/}
+            {/*    visible={visible}*/}
+            {/*    setVisible={setVisible}*/}
+            {/*/>*/}
 
         </div>
     )
