@@ -1,0 +1,24 @@
+.code-guide{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    .code-guide-title{
+        border-radius: 4px;
+        height: 40px;
+        line-height: 40px;
+        font-weight: var(--tiklab-font-weight-bold);
+        .code-guide-title-icon{
+            font-size: var(--tiklab-icon-size-16);
+        }
+        .code-guide-title-name{
+            padding: 0 8px;
+        }
+    }
+    .code-guide-ac{
+        border-radius: 3px;
+        cursor: pointer;
+        font-size: 16px;
+        color: var(--tiklab-blue);
+    }
+}

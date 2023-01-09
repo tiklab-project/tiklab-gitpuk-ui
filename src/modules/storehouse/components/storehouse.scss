@@ -1,0 +1,17 @@
+.pipeline {
+    height: 100%;
+    overflow: auto;
+    &-flex{
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+    }
+    &-type{
+         display: flex;
+         align-items: center;
+         justify-content: flex-start;
+         padding-bottom: 10px;
+     }
+}
+
+

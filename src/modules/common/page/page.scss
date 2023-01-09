@@ -1,0 +1,19 @@
+.code-page{
+    width: 100%;
+    text-align: center;
+    padding-top: 10px;
+    height: 47px;
+    .code-page-ban{
+        cursor:not-allowed;
+        color: var(--tiklab-gray-500);
+    }
+    .code-page-allow{
+        cursor: pointer;
+        &:hover{
+          color: var(--tiklab-blue);
+        }
+    }
+    .code-page-current{
+        color: var(--tiklab-blue);
+    }
+}

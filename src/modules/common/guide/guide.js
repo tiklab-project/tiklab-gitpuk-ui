@@ -1,0 +1,45 @@
+import React from "react";
+import {withRouter} from "react-router-dom";
+import {RightOutlined} from "@ant-design/icons";
+import "./guide.scss";
+
+const Guide = props =>{
+
+    const {title,type,icon,pipelineId} = props
+
+    const goDetails = title =>{
+        switch (title) {
+            case "我的待办":
+                props.history.push("/index/agency")
+                break
+            case "近期动态":
+                props.history.push("/index/dyna")
+                break
+            case "流水线动态":
+                props.history.push(`/index/task/${pipelineId}/dyna`)
+        }
+    }
+
+    return(
+        <div className="code-guide">
+            <div className="code-guide-title">
+                <span className="code-guide-title-icon">
+                    {icon && icon}
+                </span>
+                <span className="code-guide-title-name">
+                    {title}
+                </span>
+            </div>
+            {
+                type &&
+                <div className="code-guide-ac">
+                    <span onClick={()=>goDetails(title)}>
+                        <RightOutlined />
+                    </span>
+                </div>
+            }
+        </div>
+    )
+}
+
+export default withRouter(Guide)

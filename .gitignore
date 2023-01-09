@@ -1,0 +1,6 @@
+node_modules
+plugin
+dist
+es
+.idea
+lib
