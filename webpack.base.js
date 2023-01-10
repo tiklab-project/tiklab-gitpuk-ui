@@ -1,8 +1,9 @@
-const path = require("path");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const DIST_PATH = path.resolve(__dirname, "dist");
+const path = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const DIST_PATH = path.resolve(__dirname, 'dist');
+const MONACO_DIR = path.resolve(__dirname, './node_modules/monaco-editor');
 
-const isDevelopment = process.env.NODE_ENV === "development";
+const isDevelopment = process.env.NODE_ENV === 'development';
 
 const sassModuleRegex = /\.module\.(scss|sass)$/;
 const cssRegex = /\.css$/;
@@ -10,19 +11,19 @@ const cssModuleRegex = /\.module\.css$/;
 const sassRegex = /\.(scss|sass)$/;
 const getStyleLoaders = (cssOptions, preProcessor) => {
     const loaders = [
-        isDevelopment && "style-loader",
+        isDevelopment && 'style-loader',
         !isDevelopment && {
             loader: MiniCssExtractPlugin.loader,
             options: {
-                publicPath: "../",
+                publicPath: '../',
             },
         },
         {
-            loader: "css-loader",
+            loader: 'css-loader',
             options: cssOptions,
         },
         {
-            loader: "postcss-loader",
+            loader: 'postcss-loader',
             options: {
                 sourceMap: !isDevelopment ,
             },
@@ -46,19 +47,19 @@ const getStyleLoaders = (cssOptions, preProcessor) => {
 
 module.exports = {
     output: {
-        filename: "js/[name].[hash:8].js",
-        chunkFilename: "js/[name].[hash:8].js",
+        filename: 'js/[name].[hash:8].js',
+        chunkFilename: 'js/[name].[hash:8].js',
         path: DIST_PATH,
-        publicPath: "/",
+        publicPath: '/',
     },
     resolve: {
-        extensions: [".js", ".jsx", ".json"],
+        extensions: ['.js', '.jsx', '.json'],
         alias: {
-            "react-dom": "@hot-loader/react-dom",
-            "@src": path.join(__dirname, "./src"),
-            "@stores": path.join(__dirname, "./src/stores"),
-            "@utils": path.join(__dirname, "./src/utils"),
-            "@service": path.join(__dirname, "./src/service"),
+            'react-dom': '@hot-loader/react-dom',
+            '@src': path.join(__dirname, './src'),
+            '@stores': path.join(__dirname, './src/stores'),
+            '@utils': path.join(__dirname, './src/utils'),
+            '@service': path.join(__dirname, './src/service'),
         },
 
     },
@@ -68,8 +69,8 @@ module.exports = {
             {
                 test: /\.(js|jsx)$/,
                 use: [{
-                    // loader: "happypack/loader?id=portal"
-                    loader: "babel-loader"
+                    // loader: 'happypack/loader?id=portal'
+                    loader: 'babel-loader'
                 }],
                 exclude: /node_modules/
             },
@@ -88,7 +89,7 @@ module.exports = {
                     importLoaders: 1,
                     sourceMap: !isDevelopment ,
                     modules: {
-                        localIdentName: "[local]--[hash:base64:5]",
+                        localIdentName: '[local]--[hash:base64:5]',
                     },
                 }),
             },
@@ -100,7 +101,7 @@ module.exports = {
                         importLoaders: 3,
                         sourceMap: !isDevelopment ,
                     },
-                    "sass-loader",
+                    'sass-loader',
                 ),
                 sideEffects: true,
             },
@@ -111,21 +112,21 @@ module.exports = {
                         importLoaders: 3,
                         sourceMap: !isDevelopment ,
                         modules: {
-                            localIdentName: "[local]--[hash:base64:5]",
+                            localIdentName: '[local]--[hash:base64:5]',
                         },
                     },
-                    "sass-loader",
+                    'sass-loader',
                 ),
             },
             {
                 test: /\.(png|jpg|jpeg|gif)/,
                 // exclude: /node_modules/,
                 use: {
-                    loader: "url-loader",
+                    loader: 'url-loader',
                     options: {
-                        // publicPath: "images",
-                        outputPath: "images/",
-                        name: "[name].[ext]", // 图片输出的路径
+                        // publicPath: 'images',
+                        outputPath: 'images/',
+                        name: '[name].[ext]', // 图片输出的路径
                         limit: 8*1024,
                     }
                 }
@@ -134,11 +135,11 @@ module.exports = {
                 test: /\.(eot|woff2?|ttf)$/,
                 use: [
                     {
-                        loader: "url-loader",
+                        loader: 'url-loader',
                         options: {
-                            name: "[name]-[hash:5].min.[ext]",
-                            limit: 5000, // fonts file portal <= 5KB, use "base64"; else, output svg file
-                            outputPath: "fonts/",
+                            name: '[name]-[hash:5].min.[ext]',
+                            limit: 5000, // fonts file portal <= 5KB, use 'base64'; else, output svg file
+                            outputPath: 'fonts/',
                         }
                     }
                 ]
@@ -146,10 +147,10 @@ module.exports = {
             {
                 test: /\.(svg)/,
                 use: {
-                    loader: "file-loader",
+                    loader: 'file-loader',
                     options: {
-                        outputPath: "images/",
-                        name: "[name].[ext]", // 图片输出的路径
+                        outputPath: 'images/',
+                        name: '[name].[ext]', // 图片输出的路径
                         limit: 8*1024,
                     }
                 }

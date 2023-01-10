@@ -7,7 +7,7 @@ const HouseDetails= (props)=>{
 
     const {route,match}=props
 
-    const houseId = match.params.id
+    const houseName = match.params.name
 
     const [isLoading,setIsLoading] = useState(false)
 
@@ -16,7 +16,7 @@ const HouseDetails= (props)=>{
             <HouseDetailsAside
                 {...props}
                 setIsLoading={setIsLoading}
-                houseId={houseId}
+                houseName={houseName}
             />
             {
                 isLoading ? <Loading/> :

@@ -1,17 +1,17 @@
- import fs from "fs";
- import path from "path";
- import filesize from "rollup-plugin-filesize";
- import { uglify } from "rollup-plugin-uglify";
- import {terser} from "rollup-plugin-terser";
- 
- import commonPlugins from "./scripts/commonPlugins";
- 
- 
- const pkg = require("./package.json");
- 
- const IS_DEV = process.env.NODE_ENV === "development"
- const BABEL_ENV = process.env.BABEL_ENV || "umd";
- 
+ import fs from 'fs';
+ import path from 'path';
+ import filesize from 'rollup-plugin-filesize';
+ import { uglify } from 'rollup-plugin-uglify';
+ import {terser} from 'rollup-plugin-terser';
+
+ import commonPlugins from './scripts/commonPlugins';
+
+
+ const pkg = require('./package.json');
+
+ const IS_DEV = process.env.NODE_ENV === 'development'
+ const BABEL_ENV = process.env.BABEL_ENV || 'umd';
+
  const getFiles = (entry, extensions=[], excludeExtensions = []) => {
      let fileNames = [];
      const dirs = fs.readdirSync(entry);
@@ -22,7 +22,7 @@
                  ...fileNames,
                  ...getFiles(path, extensions, excludeExtensions),
              ];
- 
+
              return;
          }
          if (!excludeExtensions.some((exclude) => dir.endsWith(exclude))
@@ -34,83 +34,83 @@
      return fileNames;
  }
  const globals = {
-     "react": "React",
-     "react-dom": "ReactDOM",
-     "antd":"antd",
-     "react-i18next":"reactI18next",
-     "tiklab-core-ui":"tiklabCoreUi",
-     "@ant-design/icons":"icons",
-     "tiklab-plugin-ui":"tiklabPluginUi",
-     "mobx-react":"mobxReact",
-     "mobx":"mobx",
-     "react-router-dom":"reactRouterDom"
+     'react': 'React',
+     'react-dom': 'ReactDOM',
+     'antd':'antd',
+     'react-i18next':'reactI18next',
+     'tiklab-core-ui':'tiklabCoreUi',
+     '@ant-design/icons':'icons',
+     'tiklab-plugin-ui':'tiklabPluginUi',
+     'mobx-react':'mobxReact',
+     'mobx':'mobx',
+     'react-router-dom':'reactRouterDom'
  };
- 
- 
- const extensions = [".js", ".jsx",]
- 
+
+
+ const extensions = ['.js', '.jsx',]
+
  const umdOutput = {
-     format: "umd",
-     name: "tiklab-xcode-ui",
+     format: 'umd',
+     name: 'tiklab-xcode-ui',
      globals,
-     assetFileNames: "[name].[ext]"
+     assetFileNames: '[name].[ext]'
  };
  const esOutput = {
      globals,
      preserveModules: true,
-     preserveModulesRoot: "components",
-     exports: "named",
+     preserveModulesRoot: 'components',
+     exports: 'named',
      assetFileNames: ({name}) => {
          console.log(name)
          const {ext, dir, base} = path.parse(name);
-         if (ext !== ".css") return "[name].[ext]";
+         if (ext !== '.css') return '[name].[ext]';
          // 规范 style 的输出格式
-         return path.join(dir, "style", base);
+         return path.join(dir, 'style', base);
      },
  }
- 
- const external = Object.keys(pkg.peerDependencies || {}).concat("react-dom")
- 
+
+ const external = Object.keys(pkg.peerDependencies || {}).concat('react-dom')
+
  export default () => {
      switch (BABEL_ENV) {
-         case "umd":
-             console.log(BABEL_ENV, "BABEL_ENV-umd")
+         case 'umd':
+             console.log(BABEL_ENV, 'BABEL_ENV-umd')
              return [{
-                 input: "src/ui.js",
+                 input: 'src/ui.js',
                  output: {...umdOutput, file: `dist/${pkg.name}.development.js`,sourcemap: true,},
                  external,
                  // 使用gulpfile 抽离css
                  // plugins: [styles(stylePluginConfig), ...commonPlugins]
                  plugins: [ ...commonPlugins, filesize()]
              }, {
-                 input: "src/ui.js",
+                 input: 'src/ui.js',
                  output: {...umdOutput, file: `dist/${pkg.name}.production.min.js`, plugins: [terser(), uglify()]},
                  external,
                  // 使用gulpfile 抽离css
                  // plugins: [styles({...stylePluginConfig, minimize: true}), ...commonPlugins]
                  plugins: [ ...commonPlugins, filesize(), terser()]
              }];
-         case "esm":
+         case 'esm':
              return {
                  input: [
-                     "src/ui.js",
-                     ...getFiles("./src/modules", extensions),
+                     'src/ui.js',
+                     ...getFiles('./src/modules', extensions),
                  ],
-                 output: { ...esOutput, dir: "es", format: "es", sourcemap: IS_DEV},
+                 output: { ...esOutput, dir: 'es', format: 'es', sourcemap: IS_DEV},
                  external,
                  plugins: [ ...commonPlugins]
              };
-         case "cjs":
+         case 'cjs':
              return {
                  input: [
-                     "src/ui.js",
-                     ...getFiles("./src/modules", extensions),
+                     'src/ui.js',
+                     ...getFiles('./src/modules', extensions),
                  ],
                  preserveModules: true, // rollup-plugin-styles 还是需要使用
-                 output: { ...esOutput, dir: "lib", format: "cjs", sourcemap: IS_DEV},
+                 output: { ...esOutput, dir: 'lib', format: 'cjs', sourcemap: IS_DEV},
                  external,
                  // plugins: [styles(esStylePluginConfig), ...commonPlugins]
- 
+
                  plugins: [ ...commonPlugins]
              };
          default:

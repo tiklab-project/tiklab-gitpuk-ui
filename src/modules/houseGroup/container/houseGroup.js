@@ -130,7 +130,7 @@ const StorehouseGroup = props => {
 
     return(
         <div className='storehouse'>
-            <div className='storehouse-content xcode-home-limited code'>
+            <div className='storehouse-content xcode-home-limited xcode'>
                 <div className='storehouse-top'>
                     <BreadcrumbContent firstItem={"仓库组"}/>
                     <Btn

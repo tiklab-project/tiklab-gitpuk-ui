@@ -25,17 +25,6 @@
     cursor:not-allowed;
 }
 
-.xcode-btn-text {
-    color: rgba(0,0,0,.85);
-    background: transparent;
-    border-color: transparent;
-    box-shadow: none;
-    padding-top: 5px;
-    &:hover{
-        background: #f4f4f4;
-    }
-}
-
 .xcode-btn-small{
     background: transparent;
     border-color: transparent;
@@ -47,42 +36,6 @@
     color: #fff;
     background: #ff0000;
     border-color: #ff0000;;
-}
-
-
-.xcode-btn-link-disabled{
-    color: rgba(0,0,0,.25);
-    background: transparent;
-    border-color: transparent;
-    box-shadow: none;
-    cursor:not-allowed;
-}
-
-.xcode-btn-link{
-    color: var(--tiklab-blue);
-    background: transparent;
-    border-color: transparent;
-    box-shadow: none;
-}
-
-.xcode-btn-link-small{
-    color: var(--tiklab-blue);
-    background: transparent;
-    border-color: transparent;
-    box-shadow: none;
-    font-size: var(--tiklab-font-13);
-}
-
-.xcode-btn-row{
-    width: 100%;
-    text-align: left;
-    background: transparent;
-    border-color: transparent;
-    padding: 4px 8px;
-    border-radius: 0;
-    &:hover{
-        background: #f4f4f4;
-    }
 }
 
 .xcode-btn-mar{

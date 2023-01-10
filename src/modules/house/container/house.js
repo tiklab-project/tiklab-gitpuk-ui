@@ -1,13 +1,13 @@
 import React,{useState} from 'react'
 import {PlusOutlined,SettingOutlined,LockOutlined,SearchOutlined} from '@ant-design/icons'
-import {inject,observer} from "mobx-react"
+import {inject,observer} from 'mobx-react'
 import {Table,Tooltip,Space,Input} from 'antd'
 import BreadcrumbContent from '../../common/breadcrumb/breadcrumb'
 import Btn from '../../common/btn/btn'
 import Tabs from '../../common/tabs/tabs'
 import EmptyText from '../../common/emptyText/emptyText'
-import Listname from "../../common/list/listname"
-import HouseAdd from "../components/houseAdd";
+import Listname from '../../common/list/listname'
+import HouseAdd from '../components/houseAdd'
 import '../components/house.scss'
 
 
@@ -22,15 +22,15 @@ const House = props => {
     const lis = [
         {
             id:1,
-            title:"所有仓库",
+            title:'所有仓库',
         },
         {
             id:2,
-            title:"我的仓库",
+            title:'我的仓库',
         },
         {
             id:3,
-            title:"我收藏的",
+            title:'我收藏的',
         }
     ]
 
@@ -40,14 +40,14 @@ const House = props => {
 
     const columns = [
         {
-            title: "仓库名称",
-            dataIndex: "name",
-            key: "name",
-            width:"60%",
+            title: '仓库名称',
+            dataIndex: 'name',
+            key: 'name',
+            width:'60%',
             ellipsis:true,
             render:(text,record)=>{
                 return (
-                    <div className='storehouse-tables-name' onClick={()=>props.history.push(`/index/house/${record.id}/code`)}>
+                    <div className='storehouse-tables-name' onClick={()=>props.history.push(`/index/house/${record.name}/tree`)}>
                         <div className='name-icon'>
                             <Listname text={text}/>
                         </div>
@@ -55,7 +55,7 @@ const House = props => {
                             <div className='name-text-title'>
                                 <span className='name-text-name'>仓库组/{text}</span>
                                 <span className='name-text-lock'><LockOutlined/></span>
-                                <span className="name-text-type">{record.userType === '3' ? '管理员':'开发者'}</span>
+                                <span className='name-text-type'>{record.userType === '3' ? '管理员':'开发者'}</span>
                             </div>
                             {
                                 record.userType === '2' &&
@@ -68,35 +68,35 @@ const House = props => {
             }
         },
         {
-            title: "更新",
-            dataIndex: "update",
-            key: "update",
-            width:"30%",
+            title: '更新',
+            dataIndex: 'update',
+            key: 'update',
+            width:'30%',
             ellipsis:true,
         },
         {
-            title: "操作",
-            dataIndex: "action",
-            key:"action",
-            width:"10%",
+            title: '操作',
+            dataIndex: 'action',
+            key:'action',
+            width:'10%',
             ellipsis:true,
             render:(text,record)=>{
                 return(
                     <Space>
-                        <Tooltip title="设置">
-                            <span className="storehouse-tables-set">
-                                <SettingOutlined className="actions-se"/>
+                        <Tooltip title='设置'>
+                            <span className='storehouse-tables-set'>
+                                <SettingOutlined className='actions-se'/>
                             </span>
                         </Tooltip>
-                        <Tooltip title="收藏">
-                                <span className="storehouse-tables-collect">
+                        <Tooltip title='收藏'>
+                                <span className='storehouse-tables-collect'>
                                 {
                                     record.collect === 0 ?
-                                        <svg className="icon" aria-hidden="true">
+                                        <svg className='icon' aria-hidden='true'>
                                             <use xlinkHref={`#icon-xingxing-kong`} />
                                         </svg>
                                         :
-                                        <svg className="icon" aria-hidden="true">
+                                        <svg className='icon' aria-hidden='true'>
                                             <use xlinkHref={`#icon-xingxing1`} />
                                         </svg>
                                 }
@@ -133,10 +133,10 @@ const House = props => {
         <div className='storehouse'>
             <div className='storehouse-content xcode-home-limited xcode'>
                 <div className='storehouse-top'>
-                    <BreadcrumbContent firstItem={"仓库"}/>
+                    <BreadcrumbContent firstItem={'仓库'}/>
                     <Btn
-                        type={"primary"}
-                        title={"新建仓库"}
+                        type={'primary'}
+                        title={'新建仓库'}
                         icon={<PlusOutlined/>}
                         onClick={()=>setAddHouseVisible(true)}
                     />
@@ -151,10 +151,10 @@ const House = props => {
                         tabLis={lis}
                         onClick={clickType}
                     />
-                    <div className="storehouse-type-input">
+                    <div className='storehouse-type-input'>
                         <Input
                             allowClear
-                            placeholder="仓库名称"
+                            placeholder='仓库名称'
                             // onChange={onChangeSearch}
                             prefix={<SearchOutlined />}
                             style={{ width: 200 }}

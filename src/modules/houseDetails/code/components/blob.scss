@@ -1,22 +1,25 @@
-.code{
-    .code-content{
+.blob{
+    .blob-content{
+        display: flex;
+        flex-direction: column;
+        height: 100%;
         &-head{
             display: flex;
             justify-content: flex-start;
             align-items: center;
             margin: var(--tiklab-padding-item) 0;
-            .code-head-left{
+            .blob-head-left{
                 flex: 1;
                 display: flex;
                 align-items: center;
-                .code-branch{
+                .blob-branch{
                     width: 160px;
                     margin-right: var(--tiklab-padding-item);
                     .ant-select{
                         width: 100% !important;
                     }
                 }
-                .code-bread{
+                .blob-bread{
                     display: flex;
                     .bread-item{
                         &:not(:last-child){
@@ -29,24 +32,23 @@
                     }
                 }
             }
-            .code-head-right{
+            .blob-head-right{
                 display: flex;
                 align-items: center;
-                .code-search{
+                .blob-search{
                     margin-left: var(--tiklab-padding-item);
                     font-size: 16px;
                     cursor: pointer;
                 }
-                .code-file-add{
+                .blob-file-add{
                     margin-left: var(--tiklab-padding-item);
                     font-size: 16px;
                     cursor: pointer;
                 }
-                .code-desc{
+                .blob-desc{
                     margin-left: var(--tiklab-padding-item);
-
                 }
-                .code-clone{
+                .blob-clone{
                     margin-left: var(--tiklab-padding-item);
                 }
             }
@@ -59,14 +61,14 @@
             display: flex;
             justify-content: flex-start;
             align-items: center;
-            .code-commit-icon{
+            .blob-commit-icon{
                 width: 32px;
                 height: 32px;
                 border-radius: 50px;
                 background: #cccccc;
                 margin-right: var(--tiklab-padding-item);
             }
-            .code-commit-msg{
+            .blob-commit-msg{
                 flex: 1;
                 .msg-title{
                     font-size: 13px;
@@ -77,7 +79,7 @@
                     color: var(--tiklab-gray-500);
                 }
             }
-            .code-commit-ident{
+            .blob-commit-ident{
                 display: flex;
                 align-items: center;
                 .ident-title{
@@ -98,63 +100,48 @@
                 }
             }
         }
-        &-tables{
-            .code-table-name,.code-table-msg{
-                &:hover{
-                    cursor: pointer;
-                    text-decoration: underline;
+        &-editor{
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            .blob-editor-title{
+                display: flex;
+                align-items: center;
+                flex-direction: row;
+                background-color: #f4f4f4;
+                padding: 8px 16px;
+                .editor-title-left{
+                    flex: 1;
+                    .editor-title-text{
+                        font-size: 13px;
+                        font-weight: var(--tiklab-font-weight-bold);
+                    }
+                    .editor-title-size{
+                        padding: 0 8px;
+                    }
+                }
+                .editor-title-right{
+                    display: flex;
+                    flex-direction: row;
+                    border: 1px solid #d9d9d9;
+                    .editor-title-item{
+                        height: 32px;
+                        line-height: 32px;
+                        padding: 0 10px;
+                        border-right: 1px solid #d9d9d9;
+                        cursor: pointer;
+                        background-color: #ffffff;
+                        &:not(:last-child){
+                            border-right: 1px solid #d9d9d9;
+                        }
+                    }
                 }
             }
-        }
-    }
-}
-
-.file-add-menu{
-    box-shadow: 0 4px 8px -2px #091e4240, 0 0 1px #091e424f;
-    border-radius: 4px;
-    background-color: #ffffff;
-    width: 120px;
-    .file-add-item{
-        cursor: pointer;
-        padding: 10px;
-        &:hover{
-            background: #f4f4f4;
-        }
-        &:first-child{
-            border-radius: 4px 4px 0 0;
-        }
-        &:last-child{
-            border-radius: 0 0 4px 4px;
-        }
-    }
-}
-.clone-menu{
-    box-shadow: 0 4px 8px -2px #091e4240, 0 0 1px #091e424f;
-    border-radius: 4px;
-    background-color: #ffffff;
-    width: 350px;
-    .clone-item{
-        padding: 0 var(--tiklab-padding-item);
-        .clone-item-title{
-            padding: 10px 0;
-        }
-        &:last-child{
-            margin-bottom: 10px;
-        }
-    }
-    .clone-download{
-        display: flex;
-        align-items: center;
-        margin-top: var(--tiklab-padding-item);
-        border-top: 1px solid #d9d9d9;
-        .clone-item-download{
-            flex: 1;
-            text-align: center;
-            height: 40px;
-            line-height: 40px;
-            cursor: pointer;
-            &:hover{
-                background-color: #f4f4f4;
+            .blob-editor-content{
+                flex: 1;
+                width: 100%;
+                border-left: 1px solid #d9d9d9;
+                border-right: 1px solid #d9d9d9;
             }
         }
     }

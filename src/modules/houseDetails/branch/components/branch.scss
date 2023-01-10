@@ -1,0 +1,83 @@
+.branch{
+    .branch-content{
+        &-top{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        &-type{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 10px;
+        }
+        &-tables{
+            .branch-tables-item{
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                padding: 8px;
+                .branch-tables-icon{
+                    margin-right: 5px;
+                }
+                .branch-tables-commit{
+                    width: 130px;
+                    text-align: center;
+                    position: relative;
+                    .commit-num-left{
+                        margin-right: 5px;
+                        padding-right: 5px;
+                        border-right: 1px solid #d9d9d9;
+                    }
+                }
+                .branch-tables-name{
+                    cursor: pointer;
+                    flex: 1;
+                    .name-text-name{
+                        font-weight: var(--tiklab-font-weight-bold);
+                        margin-right: 8px;
+                        &:hover{
+                            text-decoration: underline;
+                        }
+                    }
+                    .name-text-default{
+                        margin-right: 8px;
+                    }
+                    .name-text-type{
+                        display: inline-block;
+                        background: #02a7f0;
+                        font-size: 12px;
+                        line-height: 20px;
+                        padding: 0 7px;
+                        border: 1px solid #e5e5e5;
+                        border-radius: 100px;
+                        font-weight: 400;
+                    }
+                    .name-text-desc{
+                        color: var(--tiklab-gray-500);
+                        .desc-name{
+                            margin-right: 8px;
+                        }
+                    }
+                }
+                .branch-tables-action{
+                    .branch-tables-combine,.branch-tables-compare,.branch-tables-download{
+                        padding: 6px 10px;
+                        background: #f4f4f4;
+                        display: inline-block;
+                        border-radius: 4px;
+                        border: 1px solid #f4f4f4;
+                    }
+                    .branch-tables-del{
+                        background: #ff0000;
+                        color: #ffffff;
+                        padding: 6px 8px;
+                        border-radius: 4px;
+                    }
+                }
+            }
+
+        }
+    }
+}
