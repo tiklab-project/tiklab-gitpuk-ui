@@ -1,0 +1,89 @@
+.commitsDetails{
+    &-head{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        margin: 8px 0 8px;
+        .commitsDetails-head-left{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            .head-title-icon{
+                .head-title{
+                    padding-right: 5px;
+                }
+            }
+            .head-user-time{
+                .head-time{
+                    padding-right: 5px;
+                }
+            }
+        }
+    }
+    &-contrast{
+        .commitsDetails-contrast-title{
+            font-size: 13px;
+            font-weight: var(--tiklab-font-weight-bold);
+            margin-bottom: var(--tiklab-padding-item);
+        }
+        .commitsDetails-contrast-content{
+            .contrast-title{
+                border-bottom: 1px solid #d9d9d9;
+                margin-bottom: var(--tiklab-padding-item);
+            }
+            .contrast-affected{
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                .contrast-affected-opt{
+                    margin-right: 10px;
+                    .ant-select-selector{
+                        padding: 0;
+                        min-width: 85px;
+                    }
+                }
+                .contrast-affected-num{
+                    .num-title{
+                        padding-right: 5px;
+                    }
+                    .num-add{
+                        color: var(--tiklab-blue);
+                        padding-right: 5px;
+                    }
+                    .num-reduce{
+                        color: #ff0000;
+                    }
+                }
+            }
+            .contrast-content{
+                .contrast-content-item{
+                    &:not(:last-child){
+                        margin-bottom: var(--tiklab-padding-item);
+                    }
+                    .item-head{
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: space-between;
+                        align-items: center;
+                        padding: 8px;
+                        .item-title-icon{
+                            display: flex;
+                            flex-direction: row;
+                            align-items: center;
+                            .item-icon{
+                                margin-right: 8px;
+                            }
+                            .item-title{
+                                font-weight: 500;
+                                .title-text{
+                                    padding-right: 5px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

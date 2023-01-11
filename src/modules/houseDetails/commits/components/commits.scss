@@ -1,0 +1,118 @@
+.commits{
+    &-head{
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        margin: var(--tiklab-padding-item) 0;
+        .commits-head-left{
+            flex: 1;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            .commits-branch{
+                width: 160px;
+                margin-right: var(--tiklab-padding-item);
+                .ant-select{
+                    width: 100% !important;
+                }
+            }
+            .commits-bread{
+                display: flex;
+                .bread-item{
+                    &:not(:last-child){
+                        margin-right: 5px;
+                    }
+                    &:nth-child(odd):hover{
+                        cursor: pointer;
+                        text-decoration: underline;
+                    }
+                }
+            }
+        }
+        .commits-head-right{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            .commits-user{
+                margin-right: var(--tiklab-padding-item);
+            }
+        }
+    }
+    &-msg{
+        .commits-msg-item{
+            .commits-msg-item-title{
+                background: #f7f7f7;
+                border-bottom: 1px solid #f0f0f0;
+                font-size: 14px;
+                padding: 6px var(--tiklab-padding-item);
+                font-weight: 500;
+                .title-time{
+                    padding-right: 5px;
+                }
+            }
+            .commits-msg-item-content{
+                .msg-item{
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 8px var(--tiklab-padding-item);
+                    .msg-item-left{
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+                    }
+                    .msg-item-icon{
+                        margin-right: var(--tiklab-padding-item);
+                    }
+                    .msg-item-msg{
+                        margin-right: var(--tiklab-padding-item);
+                        cursor: pointer;
+                        .msg-item-title{
+                            font-size: 13px;
+                            font-weight: var(--tiklab-font-weight-bold);
+                            &:hover{
+                                text-decoration: underline;
+                            }
+                        }
+                        .msg-item-desc{
+                            font-size: 13px;
+                            color: var(--tiklab-gray-500);
+                            .desc-user{
+                                padding-right: 5px;
+                            }
+                        }
+                    }
+                    .msg-item-ident{
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+                        .ident-title{
+                            border-bottom-left-radius: 4px;
+                            border-top-left-radius: 4px;
+                            background-color: #fafafa;
+                            padding: 6px 10px;
+                            border: 1px solid #e5e5e5
+                        }
+                        .ident-copy{
+                            padding: 10px;
+                            border: 1px solid #e5e5e5;
+                            border-left: none;
+                            cursor: pointer;
+                            background-color: #fafafa;
+                        }
+                        .ident-folder{
+                            padding: 10px;
+                            border: 1px solid #e5e5e5;
+                            border-left: none;
+                            border-bottom-right-radius: 4px;
+                            border-top-right-radius: 4px;
+                            cursor: pointer;
+                            background-color: #fafafa;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

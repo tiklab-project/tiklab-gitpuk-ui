@@ -40,9 +40,15 @@ const Edit = props =>{
                     <div className='edit-editor-content'>
                         {
                             editType==='compile'?
-                            <MonacoEdit/>
+                            <MonacoEdit
+                                readOnly={editType==='compile'}
+                            />
                                 :
-                            <MonacoPreview/>
+                            <MonacoPreview
+                                newValue={'哈哈哈哈'}
+                                oldValue={'呜呜呜呜'}
+                                language={'java'}
+                            />
                         }
 
                     </div>

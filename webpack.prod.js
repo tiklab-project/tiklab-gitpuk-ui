@@ -65,9 +65,8 @@ module.exports = merge(baseWebpackConfig, {
             /moment[/\\]locale$/,
             /zh-cn|es/,
         ),
-        new MonacoWebpackPlugin({
-            languages: ['json','javascript','scss','typescript','bat']
-        })
+        new MonacoWebpackPlugin()
+
     ],
     optimization: {
         minimize: true,

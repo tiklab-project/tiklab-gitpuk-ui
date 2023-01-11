@@ -38,6 +38,10 @@ const House = props => {
         setHouseType(item.id)
     }
 
+    const goDetails = (text,record) => {
+        props.history.push(`/index/house/${record.name}/tree`)
+    }
+
     const columns = [
         {
             title: '仓库名称',
@@ -47,7 +51,7 @@ const House = props => {
             ellipsis:true,
             render:(text,record)=>{
                 return (
-                    <div className='storehouse-tables-name' onClick={()=>props.history.push(`/index/house/${record.name}/tree`)}>
+                    <div className='storehouse-tables-name' onClick={()=>goDetails(text,record)}>
                         <div className='name-icon'>
                             <Listname text={text}/>
                         </div>

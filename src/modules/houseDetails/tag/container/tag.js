@@ -4,13 +4,17 @@ import {PlusOutlined, SearchOutlined,EditOutlined,DeleteOutlined} from '@ant-des
 import BreadcrumbContent from '../../../common/breadcrumb/breadcrumb'
 import Btn from '../../../common/btn/btn'
 import Tabs from '../../../common/tabs/tabs'
+import EmptyText from '../../../common/emptyText/emptyText'
+import Listname from '../../../common/list/listname'
+import Publish from "../components/publish";
 import '../components/tag.scss'
-import EmptyText from "../../../common/emptyText/emptyText";
-import Listname from "../../../common/list/listname";
 
 const Tag = props =>{
 
+    const {match} = props
+
     const [tagType,setTagType] = useState(1)
+    const [publishVisible,setPublishVisible] = useState(false)
 
     const clickType = item => {
         setTagType(item.id)
@@ -27,8 +31,17 @@ const Tag = props =>{
         },
     ]
 
+    const goDetails = (text,record) => {
+        switch (tagType) {
+            case 1:
+                break
+            case 2:
+                setPublishVisible(true)
+        }
+    }
+
     const renderName = (text,record) =>{
-        return <div className='tag-tables-name'>
+        return <div className='tag-tables-name' onClick={()=>goDetails(text,record)}>
             <div className='name-icon'>
                 <Listname text={text}/>
             </div>
@@ -46,21 +59,21 @@ const Tag = props =>{
 
     const renderAction = (text,record) =>{
         return <Space>
-            <Tooltip title="编辑">
-                            <span className='tag-tables-edit'>
-                                <EditOutlined />
-                            </span>
+            <Tooltip title='编辑'>
+                <span className='tag-tables-edit'>
+                    <EditOutlined />
+                </span>
             </Tooltip>
-            <Tooltip title="删除">
+            <Tooltip title='删除'>
                 <Popconfirm
-                    placement="topRight"
-                    title="你确定删除吗"
-                    okText="确定"
-                    cancelText="取消"
+                    placement='topRight'
+                    title='你确定删除吗'
+                    okText='确定'
+                    cancelText='取消'
                 >
-                                <span className='tag-tables-del'>
-                                    <DeleteOutlined />
-                                </span>
+                    <span className='tag-tables-del'>
+                        <DeleteOutlined />
+                    </span>
                 </Popconfirm>
             </Tooltip>
         </Space>
@@ -152,6 +165,12 @@ const Tag = props =>{
             desc: 'desc'
         }
     ]
+
+    if(publishVisible){
+        return  <Publish
+                    setPublishVisible={setPublishVisible}
+                />
+    }
 
     return(
         <div className='tag'>

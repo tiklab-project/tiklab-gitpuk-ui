@@ -40,9 +40,7 @@ module.exports = merge(baseWebpackConfig,{
             ignoreOrder: true
         }),
         new CssMinimizerPlugin(),
-        new MonacoWebpackPlugin({
-            languages: ['json','javascript','scss','typescript','bat']
-        })
+        new MonacoWebpackPlugin()
     ],
     // 开发环境本地启动的服务配置
     devServer: {

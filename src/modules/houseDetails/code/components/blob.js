@@ -3,7 +3,7 @@ import {Select} from 'antd'
 import {CopyOutlined,FileTextOutlined} from '@ant-design/icons'
 import Btn from '../../../common/btn/btn'
 import BreadcrumbContent from '../../../common/breadcrumb/breadcrumb'
-import {MonacoBlob} from "../../../common/monaco/monaco";
+import {MonacoBlob} from '../../../common/monaco/monaco'
 import './blob.scss'
 
 const Blob = props =>{
@@ -79,7 +79,9 @@ const Blob = props =>{
                         </div>
                     </div>
                     <div className='blob-editor-content'>
-                        <MonacoBlob/>
+                        <MonacoBlob
+                            readOnly={true}
+                        />
                     </div>
                 </div>
             </div>

@@ -45,7 +45,7 @@ const HouseDetailsAside = props =>{
             key:"2",
         },
         {
-            to:`/index/house/${houseName}/submit`,
+            to:`/index/house/${houseName}/commits`,
             title: "提交",
             icon: <PushpinOutlined />,
             key:"3",
@@ -63,7 +63,7 @@ const HouseDetailsAside = props =>{
             key:"5",
         },
         {
-            to:`/index/house/${houseName}/combine`,
+            to:`/index/house/${houseName}/merge`,
             title: "合并请求",
             icon: <PullRequestOutlined />,
             key:"6",
@@ -149,7 +149,7 @@ const HouseDetailsAside = props =>{
                          onClick={(e)=>e.preventDefault()}
                      >
                           <span className={`dropdowns_icon xcode-icon-1`}>
-                              Text
+                              T
                              {/*{houseDetails && houseDetails.name.substring(0,1).toUpperCase()}*/}
                          </span>
                          <span>
