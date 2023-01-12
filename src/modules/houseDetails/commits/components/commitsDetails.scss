@@ -1,4 +1,6 @@
 .commitsDetails{
+    height: 100%;
+    overflow: auto;
     &-head{
         display: flex;
         flex-direction: row;
@@ -39,7 +41,7 @@
                 .contrast-affected-opt{
                     margin-right: 10px;
                     .ant-select-selector{
-                        padding: 0;
+                        padding: 0 11px 0 0;
                         min-width: 85px;
                     }
                 }

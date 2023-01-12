@@ -1,0 +1,15 @@
+.push-rule{
+    &-mode{
+        margin: var(--tiklab-padding-item) 0;
+        .mode-title{
+            font-size: 13px;
+            font-weight: var(--tiklab-font-weight-bold);
+        }
+        .mode-swith{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+        }
+    }
+}

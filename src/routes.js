@@ -21,6 +21,15 @@ const Branch=AsyncComponent(()=>import('./modules/houseDetails/branch/container/
 const Tag=AsyncComponent(()=>import('./modules/houseDetails/tag/container/tag'))
 const Merge=AsyncComponent(()=>import('./modules/houseDetails/merge/container/merge'))
 const Commits=AsyncComponent(()=>import('./modules/houseDetails/commits/container/commits'))
+const Question=AsyncComponent(()=>import('./modules/houseDetails/question/container/question'))
+const Pipeline=AsyncComponent(()=>import('./modules/houseDetails/pipeline/container/pipeline'))
+const Statistics=AsyncComponent(()=>import('./modules/houseDetails/statistics/container/statistics'))
+
+const StorehouseSet=AsyncComponent(()=>import('./modules/houseSet/common/houseSet'))
+const HouseSet=AsyncComponent(()=>import('./modules/houseSet/set/houseSet'))
+const PushRule=AsyncComponent(()=>import('./modules/houseSet/pushRule/container/pushRule'))
+const Keys=AsyncComponent(()=>import('./modules/houseSet/keys/container/keys'))
+const WebHooks=AsyncComponent(()=>import('./modules/houseSet/webHooks/container/hooks'))
 
 const routers = [
     {
@@ -132,6 +141,40 @@ const routers = [
                         path:'/index/house/:name/commits',
                         component:Commits,
                     },
+                    {
+                        path:'/index/house/:name/statistics',
+                        component: Statistics
+                    },
+                    {
+                        path:'/index/house/:name/question',
+                        component: Question
+                    },
+                    {
+                        path:'/index/house/:name/pipeline',
+                        component: Pipeline
+                    },
+                    {
+                        path:'/index/house/:name/sys',
+                        component: StorehouseSet,
+                        routes:[
+                            {
+                                path:'/index/house/:name/sys/set',
+                                component:HouseSet
+                            },
+                            {
+                                path:'/index/house/:name/sys/pushRule',
+                                component:PushRule
+                            },
+                            {
+                                path:'/index/house/:name/sys/keys',
+                                component:Keys
+                            },
+                            {
+                                path:'/index/house/:name/sys/hooks',
+                                component:WebHooks
+                            },
+                        ]
+                    }
                 ]
             }
         ]

@@ -1,0 +1,35 @@
+.keys{
+    &-up{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+    &-illustrate{
+        margin: var(--tiklab-padding-item) 0;
+        padding: 10px;
+        background: #F8FFFF;
+        color: var(--tiklab-blue);
+        border: 1px solid #e3e9ed;
+        &>div:not(:last-child){
+            padding-bottom: 10px;
+        }
+    }
+}
+
+.keys-add-modal{
+    .keys-add-up{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: var(--tiklab-font-weight-bold);
+        padding: var(--tiklab-padding) var(--tiklab-padding) var(--tiklab-padding-item);
+    }
+    .keys-add-content{
+        padding: 0 var(--tiklab-padding);
+        max-height:calc(100% - 120px);
+        overflow:auto;
+    }
+}
+

@@ -47,3 +47,30 @@
         }
     }
 }
+
+.merge-add-modal{
+    .merge-add-up{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: var(--tiklab-font-weight-bold);
+        padding: var(--tiklab-padding) var(--tiklab-padding) var(--tiklab-padding-item);
+    }
+    .merge-add-content{
+        padding: 0 var(--tiklab-padding);
+        max-height:calc(100% - 120px);
+        overflow:auto;
+        .merge-add-branch{
+            display: flex;
+            flex-direction: row;
+            .ant-form-item{
+                flex: 1;
+            }
+            .add-branch-arrow{
+                margin: 40px var(--tiklab-padding-item) 0;
+            }
+        }
+    }
+}
+

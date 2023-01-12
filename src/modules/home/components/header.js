@@ -28,6 +28,9 @@ const Head = props =>{
     const {i18n,t} = useTranslation()
 
     useEffect(()=>{
+        if(path.indexOf('/index/house')===0){
+            path='/index/storehouse'
+        }
         setCurrentLink(path)
     },[path])
 

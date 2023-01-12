@@ -9,7 +9,7 @@ const Commits = props =>{
 
     const {match} = props
 
-    const [details,setDetails] = useState(true)
+    const [details,setDetails] = useState(false)
 
     const changBranch = value => {
         props.history.push(`/index/house/${match.params.name}/commits/${value}`)

@@ -84,12 +84,10 @@ export const MonacoEdit = props =>{
 
 export const MonacoPreview = props => {
 
-    const {newValue,oldValue,language} = props
+    const {newValue,oldValue,language,renderOverviewRuler} = props
 
     const monacoEditorRef = useRef()
     const monacoEditorDomRef = useRef()
-
-    const [height,setHeight] = useState(0)
 
     useEffect(() => {
         newMonaco()
@@ -103,17 +101,14 @@ export const MonacoPreview = props => {
         try {
             monacoEditorRef.current = monaco.editor.createDiffEditor(monacoEditorDomRef.current, {
                 minimap: { enabled: false }, // 小地图
-                automaticLayout: true, // 自动布局,
-                codeLens: true,
-                colorDecorators: true,
-                contextmenu: false,
                 readOnly: true, //是否只读
+                linkedEditing:false,
                 formatOnPaste: true,
                 overviewRulerBorder: false, // 滚动条的边框
-                scrollBeyondLastLine: true,
+                scrollBeyondLastLine: false,
                 theme: 'vs', // 主题
                 renderSideBySide:false,
-                renderOverviewRuler:false,
+                renderOverviewRuler:renderOverviewRuler,
             })
             monacoEditorRef.current.setModel({
                 original: monaco.editor.createModel(newValue, language && language),

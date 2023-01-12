@@ -6,7 +6,8 @@ import Btn from '../../../common/btn/btn'
 import Tabs from '../../../common/tabs/tabs'
 import EmptyText from '../../../common/emptyText/emptyText'
 import Listname from '../../../common/list/listname'
-import Publish from "../components/publish";
+import Publish from '../components/publish'
+import TagAdd from '../components/tagAdd'
 import '../components/tag.scss'
 
 const Tag = props =>{
@@ -15,6 +16,7 @@ const Tag = props =>{
 
     const [tagType,setTagType] = useState(1)
     const [publishVisible,setPublishVisible] = useState(false)
+    const [addVisible,setAddVisible] = useState(false)
 
     const clickType = item => {
         setTagType(item.id)
@@ -181,6 +183,11 @@ const Tag = props =>{
                         type={'primary'}
                         title={'新建标签'}
                         icon={<PlusOutlined/>}
+                        onClick={()=>setAddVisible(true)}
+                    />
+                    <TagAdd
+                        addVisible={addVisible}
+                        setAddVisible={setAddVisible}
                     />
                 </div>
                 <div className='tag-type'>

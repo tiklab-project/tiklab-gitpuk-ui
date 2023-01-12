@@ -1,8 +1,8 @@
 import React,{useState} from 'react'
 import {Modal,Steps,Form,Input,Select,Switch} from 'antd'
-import {LockOutlined,UnlockOutlined} from '@ant-design/icons'
 import Btn from '../../common/btn/btn'
 import HouseUser from './houseUser'
+import HousePower from "./housePower";
 import './houseAdd.scss'
 
 const HouseAdd = props =>{
@@ -17,24 +17,8 @@ const HouseAdd = props =>{
     const [nUserList,setNUserList] = useState([])
     const [member,setMember] = useState([])
 
-    const powerLis = [
-        {
-            id:1,
-            title:'全局',
-            icon:<UnlockOutlined />,
-            desc:'公共项目，全部成员可见。不支持TFVC等某些功能。'
-        },
-        {
-            id:2,
-            title:'私有',
-            icon:<LockOutlined />,
-            desc: '只有您授予访问权限的人才能查看此项目。'
-        }
-    ]
-
-
     const onOk = value => {
-        console.log(value)
+
     }
 
     const newStoreHouse = (
@@ -85,38 +69,10 @@ const HouseAdd = props =>{
                     <Input bordered={false} style={{background:'#fff'}}/>
                 </Form.Item>
             </div>
-            <div className='storehouseAddModal-power'>
-                <div className='storehouseAddModal-power-title'>仓库权限</div>
-                <div className='storehouseAddModal-power-content'>
-                    {
-                        powerLis.map(item=>{
-                            return <div
-                                key={item.id}
-                                className={`storehouseAddModal-power-item storehouseAddModal-power-noSet ${powerType===item.id?'storehouseAddModal-power-select':''}`}
-                                onClick={()=>setPowerType(item.id)}
-                            >
-                                <div className='power-item'>
-                                    <div>
-                                        <div className='power-title power-icon'>
-                                            {item.icon}
-                                        </div>
-                                        <div className='power-title power-name'>
-                                            {item.title}
-                                        </div>
-                                    </div>
-                                    {
-                                        powerType===item.id &&
-                                        <div className='power-select-show'/>
-                                    }
-                                </div>
-                                <div className='power-desc'>
-                                    {item.desc}
-                                </div>
-                            </div>
-                        })
-                    }
-                </div>
-            </div>
+            <HousePower
+                powerType={powerType}
+                setPowerType={setPowerType}
+            />
             {
                 powerType===2 &&
                 <HouseUser

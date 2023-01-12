@@ -5,11 +5,13 @@ import BreadcrumbContent from '../../../common/breadcrumb/breadcrumb'
 import Btn from '../../../common/btn/btn'
 import Tabs from '../../../common/tabs/tabs'
 import Listname from '../../../common/list/listname'
+import BranchAdd from '../components/branchAdd'
 import '../components/branch.scss'
 
 const Branch = props =>{
 
     const [branchType,setBranchType] = useState(1)
+    const [addVisible,setAddVisible] = useState(false)
 
     const clickType = item => {
         setBranchType(item.id)
@@ -116,6 +118,11 @@ const Branch = props =>{
                         type={'primary'}
                         title={'新建分支'}
                         icon={<PlusOutlined/>}
+                        onClick={()=>setAddVisible(true)}
+                    />
+                    <BranchAdd
+                        addVisible={addVisible}
+                        setAddVisible={setAddVisible}
                     />
                 </div>
                 <div className='branch-content-type'>

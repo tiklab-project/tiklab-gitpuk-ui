@@ -165,7 +165,7 @@ const HouseDetailsAside = props =>{
             </div>
 
              <div className="houseDetails-sys"
-                  onClick={()=>props.history.push(`/index/task/${houseName}/assembly/set`)}
+                  onClick={()=>props.history.push(`/index/house/${houseName}/sys`)}
              >
                  <div className="aside_content_icon">
                      <SettingOutlined/>

@@ -26,8 +26,8 @@ const CommitsDetails = props =>{
 
     const contrastData = [
         {
-            id:1,
-            title:'tiklab/src',
+            id:2,
+            title:'tiklab/src111',
             newValue:'.item-icon{\n' +
                 '  }',
             oldValue:'.item-icon{\n' +
@@ -36,15 +36,15 @@ const CommitsDetails = props =>{
             type:'css'
         },
         {
-            id:2,
-            title:'tiklab/src',
+            id:3,
+            title:'tiklab/src222',
             newValue:'code11',
             oldValue:'code',
             type:'java'
         },
         {
-            id:3,
-            title:'tiklab/src',
+            id:4,
+            title:'tiklab/src333',
             newValue:'code11',
             oldValue:'code',
             type:'js'
@@ -79,6 +79,7 @@ const CommitsDetails = props =>{
                         newValue={item.newValue}
                         oldValue={item.oldValue}
                         language={item.type}
+                        renderOverviewRuler={false}
                     />
                 </div>
             </div>
@@ -118,8 +119,12 @@ const CommitsDetails = props =>{
                             <div className='contrast-affected-opt'>
                                 <Select defaultValue={1} bordered={false}>
                                     <Select.Option value={1}>文件变更</Select.Option>
-                                    <Select.Option value={2}>tiklab1</Select.Option>
-                                    <Select.Option value={3}>tiklab2</Select.Option>
+                                    {
+                                        contrastData.map(item=>{
+                                            return <Select.Option value={item.id} key={item.id}>{item.title}</Select.Option>
+
+                                        })
+                                    }
                                 </Select>
                             </div>
                             <div className='contrast-affected-num'>

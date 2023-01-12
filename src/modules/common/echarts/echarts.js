@@ -1,5 +1,5 @@
 import * as echarts from "echarts/core";
-import {PieChart} from 'echarts/charts';
+import {PieChart,BarChart} from 'echarts/charts';
 
 // 引入提示框，标题，直角坐标系，数据集，内置数据转换器组件，组件后缀都为 Component
 import {
@@ -18,6 +18,7 @@ echarts.use(
         TooltipComponent,
         GridComponent,
         PieChart,
+        BarChart,
         LegendComponent,
         DatasetComponent,
         CanvasRenderer

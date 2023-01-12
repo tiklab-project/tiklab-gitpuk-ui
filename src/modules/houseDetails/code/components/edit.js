@@ -48,6 +48,7 @@ const Edit = props =>{
                                 newValue={'哈哈哈哈'}
                                 oldValue={'呜呜呜呜'}
                                 language={'java'}
+                                renderOverviewRuler={true}
                             />
                         }
 

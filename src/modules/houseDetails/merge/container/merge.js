@@ -4,12 +4,16 @@ import {PlusOutlined,SearchOutlined,PullRequestOutlined} from '@ant-design/icons
 import BreadcrumbContent from '../../../common/breadcrumb/breadcrumb'
 import Btn from '../../../common/btn/btn'
 import Tabs from '../../../common/tabs/tabs'
-import '../components/merge.scss'
 import EmptyText from '../../../common/emptyText/emptyText'
+import MergeDetails from '../components/mergeDetails'
+import MergeAdd from '../components/mergeAdd'
+import '../components/merge.scss'
 
 const Merge = props => {
 
     const [combineType,setCombineType] = useState(1)
+    const [details,setDetails] = useState(false)
+    const [addVisible,setAddVisible] = useState(false)
 
     const clickType = item => {
         setCombineType(item.id)
@@ -34,6 +38,10 @@ const Merge = props => {
         },
     ]
 
+    const goDetails = (text,record) => {
+        setDetails(true)
+    }
+
     const columns = [
         {
             title:'请求标题',
@@ -42,7 +50,7 @@ const Merge = props => {
             width:'25%',
             ellipsis:true,
             render:(text,record)=>{
-                return  <span className='tables-title'>
+                return  <span className='tables-title' onClick={()=>goDetails(text,record)}>
                             <span className='tables-title-icon'><PullRequestOutlined/></span>
                             <span className='tables-title-text'>{text}</span>
                         </span>
@@ -132,6 +140,12 @@ const Merge = props => {
         },
     ]
 
+    if(details){
+        return  <MergeDetails
+                    setDetails={setDetails}
+                />
+    }
+
     return (
         <div className='combine'>
             <div className='combine-content xcode-home-limited xcode'>
@@ -141,6 +155,11 @@ const Merge = props => {
                         type={'primary'}
                         title={'新建合并请求'}
                         icon={<PlusOutlined/>}
+                        onClick={()=>setAddVisible(true)}
+                    />
+                    <MergeAdd
+                        addVisible={addVisible}
+                        setAddVisible={setAddVisible}
                     />
                 </div>
                 <div className='combine-type'>
