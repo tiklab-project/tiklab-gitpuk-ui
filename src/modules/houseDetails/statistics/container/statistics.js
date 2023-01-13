@@ -1,4 +1,5 @@
 import React,{useEffect,useState} from 'react'
+import {Avatar} from 'antd'
 import BreadcrumbContent from '../../../common/breadcrumb/breadcrumb'
 import echarts from '../../../common/echarts/echarts'
 import '../components/statistics.scss'
@@ -20,16 +21,15 @@ const Statistics = props =>{
                 myChart=chartDom && echarts.init(chartDom)
             }
             const option={
-                color:["#77b3eb","#f06f6f","#f6c659"],
-                type: "bar",
-                series: [{
-                    type: "bar",
-                    data: [
-                        { value: 1, name: "成功" },
-                        { value: 2, name: "失败" },
-                        { value: 3, name: "其他" },
-                    ],
-                }]
+                color:"#77b3eb",
+                xAxis: {data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']},
+                yAxis: {type: 'value'},
+                series:{
+                    type: "line",
+                    data:[0,3,5,23,5,2,1]
+                }
+
+
             }
             myChart && myChart.setOption(option)
         }catch {}
@@ -85,7 +85,26 @@ const Statistics = props =>{
                         })
                     }
                 </div>
-                <div className="survey-census">
+                <div className="statistics-census">
+                    <div className='statistics-census-head'>
+                        <div className='title-user'>
+                            <div className='title-user-avatar'>
+                                <Avatar
+                                    style={{
+                                        color: '#f9c6a0',
+                                        backgroundColor: '#f9c6a0',
+                                    }}
+                                />
+                            </div>
+                            <div className='title-user-name'>
+                                <div className='name'>莫凶凶</div>
+                                <div className='num'>提交次数12</div>
+                            </div>
+                        </div>
+                        <div className='title-branch'>
+                            #1
+                        </div>
+                    </div>
                     <div className="chart-box" id="burn-down" style={{width:'100%',height:400}}/>
                 </div>
             </div>

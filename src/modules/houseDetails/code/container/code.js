@@ -1,11 +1,11 @@
 import React,{useEffect,useState,useRef} from 'react'
 import {Select,Input,Table,Dropdown,Tooltip,Button,Divider} from 'antd'
 import {SearchOutlined,PlusOutlined,CopyOutlined} from '@ant-design/icons'
-import {inject,observer} from "mobx-react";
+import {inject,observer} from "mobx-react"
 import BreadcrumbContent from '../../../common/breadcrumb/breadcrumb'
-import Btn from "../../../common/btn/btn";
+import Btn from "../../../common/btn/btn"
+import EmptyText from "../../../common/emptyText/emptyText"
 import '../components/code.scss'
-import EmptyText from "../../../common/emptyText/emptyText";
 
 const Code = props =>{
 
@@ -14,6 +14,28 @@ const Code = props =>{
 
     const searValue = useRef(null)
     const [searInput,setSearInput] = useState(false)
+    const [dataSource,setData] = useState([
+        {
+            commit: {id: "4a0a53f66e972bcf4c8d0f109503402436ea2cd2", message: "配置",committed_date:"202020"},
+            commit_path:"/devops-itdd/tiklab-xcode-ui/-/commit/4a0a53f66e972bcf4c8d0f109503402436ea2cd2",
+            file_name:"node",
+            type: "tree",
+            child:[
+                {
+                    commit: {id: "4a0a53f66e972bcf4c8d0f109503402436ea2cd2", message: "配置",committed_date:"202020"},
+                    commit_path:"/devops-itdd/tiklab-xcode-ui/-/commit/4a0a53f66e972bcf4c8d0f109503402436ea2cd2",
+                    file_name:"assets.js",
+                    type: "blob"
+                },
+            ]
+        },
+        {
+            commit: {id: "4a0a53f66e972bcf4c8d0f109503402436ea2cd2", message: "配置",committed_date:"202020"},
+            commit_path:"/devops-itdd/tiklab-xcode-ui/-/commit/4a0a53f66e972bcf4c8d0f109503402436ea2cd2",
+            file_name:"zzz.js",
+            type: "blob"
+        },
+    ])
 
     useEffect(()=>{
         if(searInput){
@@ -26,12 +48,14 @@ const Code = props =>{
     }
 
     const fileName = record => {
+        const name = location.pathname.split('/'+match.params.name+'/tree/')
         switch (record.type) {
             case 'tree':
+                setData(record.child)
                 props.history.push(`${location.pathname}/${record.file_name}`)
                 break
             case 'blob':
-                props.history.push(`/index/house/${match.params.name}/blob`)
+                props.history.push(`/index/house/${match.params.name}/blob/${name[1]}/${record.file_name}`)
         }
     }
 
@@ -90,21 +114,6 @@ const Code = props =>{
         },
     ]
 
-    const dataSource = [
-        {
-            commit: {id: "4a0a53f66e972bcf4c8d0f109503402436ea2cd2", message: "配置",committed_date:"202020"},
-            commit_path:"/devops-itdd/tiklab-matflow-ui/-/commit/4a0a53f66e972bcf4c8d0f109503402436ea2cd2",
-            file_name:"assets",
-            type: "tree"
-        },
-        {
-            commit: {id: "4a0a53f66e972bcf4c8d0f109503402436ea2cd2", message: "配置",committed_date:"202020"},
-            commit_path:"/devops-itdd/tiklab-matflow-ui/-/commit/4a0a53f66e972bcf4c8d0f109503402436ea2cd2",
-            file_name:"zzz.js",
-            type: "blob"
-        },
-    ]
-
     const addFileMenu = (
         <div className='file-add-menu'>
             <div className='file-add-item'>新建文件</div>
@@ -127,7 +136,7 @@ const Code = props =>{
             <div className='clone-item'>
                 <div className='clone-item-title'>使用HTTP克隆</div>
                 <Input.Group compact>
-                    <Input value="http://172.12.1.10/devops-itdd/tiklab-matflow-ui.git" style={{width:"calc(100% - 50px)"}}/>
+                    <Input value="http://172.12.1.10/devops-itdd/tiklab-xcode-ui.git" style={{width:"calc(100% - 50px)"}}/>
                     <Tooltip title="复制地址">
                         <Button icon={<CopyOutlined />} />
                     </Tooltip>

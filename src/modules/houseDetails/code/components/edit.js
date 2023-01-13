@@ -7,6 +7,8 @@ import './edit.scss'
 
 const Edit = props =>{
 
+    const {match} = props
+
     const [form] = Form.useForm()
 
     const [editType,setEditType] = useState('compile')
@@ -14,7 +16,7 @@ const Edit = props =>{
     return(
         <div className='edit'>
             <div className='edit-content xcode-home-limited xcode'>
-                <BreadcrumbContent firstItem={'代码'} secondItem={'node'}/>
+                <BreadcrumbContent firstItem={'代码'} secondItem={'node'} goBack={()=>props.history.go(-1)}/>
                 <div className='edit-content-head'>
                     编辑文件
                 </div>
@@ -69,7 +71,7 @@ const Edit = props =>{
                         </Form.Item>
                     </Form>
                 </div>
-                <div>
+                <div className='edit-content-btn'>
                     <Btn
                         title={'取消'}
                         isMar={true}

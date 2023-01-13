@@ -35,6 +35,10 @@ const StorehouseGroup = props => {
         setHouseGroupType(item.id)
     }
 
+    const goDetails = (text,record) => {
+        props.history.push(`/index/group/${text}/survey`)
+    }
+
     const columns = [
         {
             title: "仓库组名称",
@@ -44,7 +48,7 @@ const StorehouseGroup = props => {
             ellipsis:true,
             render:(text,record)=>{
                 return (
-                    <div className='storehouse-tables-name'>
+                    <div className='storehouse-tables-name' onClick={()=>goDetails(text,record)}>
                         <div className='name-icon'>
                             <Listname text={text}/>
                         </div>

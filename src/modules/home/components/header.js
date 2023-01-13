@@ -16,7 +16,7 @@ import {
 import {withRouter} from 'react-router'
 import {inject,observer} from 'mobx-react'
 import logo from '../../../assets/images/img/matflow3.png'
-// import MessageDrawer from './messageDrawer'
+import MessageDrawer from './messageDrawer'
 
 const Head = props =>{
 
@@ -30,6 +30,9 @@ const Head = props =>{
     useEffect(()=>{
         if(path.indexOf('/index/house')===0){
             path='/index/storehouse'
+        }
+        if(path.indexOf('/index/group')===0){
+            path='/index/storehouseGroup'
         }
         setCurrentLink(path)
     },[path])
@@ -47,7 +50,7 @@ const Head = props =>{
         },
         {
             key:'storehouse group',
-            to:'/index/group',
+            to:'/index/storehouseGroup',
             title: 'storehouse group',
         },
     ]
@@ -61,7 +64,7 @@ const Head = props =>{
             return  <div key={routers.key}
                          onClick={()=>changeCurrentLink(routers)}
                          className={currentLink===routers.to ? 'headers-active' : null}
-            >
+                    >
                 {t(routers.title)}
             </div>
         })
@@ -93,6 +96,12 @@ const Head = props =>{
             <div className='header-outMenu-top'>
                 <div className='outMenu-out'>
                     {/*<Profile userInfo={getUser()}/>*/}
+                    <Avatar
+                        style={{
+                            color: '#f9c6a0',
+                            backgroundColor: '#f9c6a0',
+                        }}
+                    />
                     <div className='outMenu-out-info'>
                         <div className='outMenu-out-name'>name</div>
                         <div className='outMenu-out-eamil'>tiklab@</div>
@@ -138,7 +147,7 @@ const Head = props =>{
     )
 
     const goSystem = () =>{
-        props.history.push('/index/system')
+        props.history.push('/index/sys')
     }
 
     return(
@@ -177,11 +186,11 @@ const Head = props =>{
                 </div>
             </div>
 
-            {/*<MessageDrawer*/}
-            {/*    {...props}*/}
-            {/*    visible={visible}*/}
-            {/*    setVisible={setVisible}*/}
-            {/*/>*/}
+            <MessageDrawer
+                {...props}
+                visible={visible}
+                setVisible={setVisible}
+            />
 
         </div>
     )

@@ -1,22 +1,22 @@
 import React,{useEffect,useState} from 'react'
 import {Input,Space,Table} from 'antd'
 import {PlusOutlined,SearchOutlined,PullRequestOutlined} from '@ant-design/icons'
-import BreadcrumbContent from '../../../common/breadcrumb/breadcrumb'
-import Btn from '../../../common/btn/btn'
-import Tabs from '../../../common/tabs/tabs'
-import EmptyText from '../../../common/emptyText/emptyText'
+import BreadcrumbContent from '../../common/breadcrumb/breadcrumb'
+import Btn from '../../common/btn/btn'
+import Tabs from '../../common/tabs/tabs'
+import EmptyText from '../../common/emptyText/emptyText'
 import MergeDetails from '../components/mergeDetails'
 import MergeAdd from '../components/mergeAdd'
 import '../components/merge.scss'
 
 const Merge = props => {
 
-    const [combineType,setCombineType] = useState(1)
+    const [mergeType,setmergeType] = useState(1)
     const [details,setDetails] = useState(false)
     const [addVisible,setAddVisible] = useState(false)
 
     const clickType = item => {
-        setCombineType(item.id)
+        setmergeType(item.id)
     }
 
     const lis = [
@@ -147,9 +147,9 @@ const Merge = props => {
     }
 
     return (
-        <div className='combine'>
-            <div className='combine-content xcode-home-limited xcode'>
-                <div className='combine-top'>
+        <div className='merge'>
+            <div className='merge-content xcode-home-limited xcode'>
+                <div className='merge-top'>
                     <BreadcrumbContent firstItem={'合并请求'}/>
                     <Btn
                         type={'primary'}
@@ -162,23 +162,23 @@ const Merge = props => {
                         setAddVisible={setAddVisible}
                     />
                 </div>
-                <div className='combine-type'>
+                <div className='merge-type'>
                     <Tabs
-                        type={combineType}
+                        type={mergeType}
                         tabLis={lis}
                         onClick={clickType}
                     />
-                    <div className='combine-type-input'>
+                    <div className='merge-type-input'>
                         <Input
                             allowClear
-                            placeholder='标题名称'
+                            placeholder='请求标题'
                             // onChange={onChangeSearch}
                             prefix={<SearchOutlined />}
                             style={{ width: 200 }}
                         />
                     </div>
                 </div>
-                <div className='combine-tables'>
+                <div className='merge-tables'>
                     <Table
                         bordered={false}
                         columns={columns}

@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom'
 import {HashRouter} from 'react-router-dom'
 // import enableAxiosCE from 'tiklab-enable-axios-ce'
 // import {useAccountConfig} from 'tiklab-eam-ui/es/_utils'
-// import {orgStores} from 'tiklab-user-ui/es/store'
-// import {privilegeStores} from 'tiklab-privilege-ui/es/store'
-// import {messageModuleStores} from 'tiklab-message-ui/es/store'
+import {orgStores} from 'tiklab-user-ui/es/store'
+import {privilegeStores} from 'tiklab-privilege-ui/es/store'
+import {messageModuleStores} from 'tiklab-message-ui/es/store'
 // import {initFetch,createContainer} from 'tiklab-plugin-ui/es/_utils'
 import {ConfigProvider} from 'antd'
 import zhCN from 'antd/es/locale/zh_CN'
@@ -36,10 +36,10 @@ const Index = observer(() => {
     // const PluginContainer  = createContainer()
     //
     const allStore = {
-        // ...privilegeStores,
-        // ...messageModuleStores,
-        // ...orgStores,
-        ...store
+        ...privilegeStores,
+        ...messageModuleStores,
+        ...orgStores,
+        ...store,
     }
     //
     // useAccountConfig()

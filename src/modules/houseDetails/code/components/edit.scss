@@ -4,6 +4,8 @@
         flex-direction: column;
         &-head{
             margin: var(--tiklab-padding-item) 0;
+            font-size: 13px;
+            font-weight: var(--tiklab-font-weight-bold);
         }
         &-title{
             margin-bottom: var(--tiklab-padding-item);
@@ -39,6 +41,9 @@
         }
         &-msg{
             margin-top: var(--tiklab-padding-item);
+        }
+        &-btn{
+            margin-top: 5px;
         }
     }
 }

@@ -103,6 +103,8 @@
         "json-server": "^0.16.3",
         "mini-css-extract-plugin": "^1.3.1",
         "mockjs": "^1.1.0",
+        "monaco-editor-webpack-plugin": "^5.0.0",
+        "monaco-editor-esm-webpack-plugin": "^2.0.0",
         "ncp": "^2.0.0",
         "node-forge": "*",
         "nodemon": "^2.0.6",
@@ -158,7 +160,7 @@
         "mobx-react": "^6.2.2",
         "moment": "^2.29.4",
         "monaco-editor": "^0.30.1",
-        "monaco-editor-webpack-plugin": "^5.0.0",
+        "monaco-editor-nls": "^2.0.0",
         "react": "^17.0.2",
         "react-dom": "^17.0.1",
         "react-i18next": "^11.7.3",
@@ -166,8 +168,15 @@
         "react-router": "^5.2.0",
         "react-router-config": "^5.1.1",
         "react-router-dom": "^5.2.0",
+        "tiklab-core-ui": "^1.0.1",
         "tiklab-eam-ui": "^1.0.1",
         "tiklab-enable-axios-ce": "^1.0.1",
-        "tiklab-plugin-ui": "^1.0.1"
+        "tiklab-licence-ui": "^1.0.1",
+        "tiklab-message-ui": "^1.0.1",
+        "tiklab-oplog-ui": "^1.0.1",
+        "tiklab-plugin-ui": "^1.0.1",
+        "tiklab-todotask-ui": "^1.0.1",
+        "tiklab-user-ui": "^1.0.1",
+        "tiklab-widget-ui": "^1.0.1"
     }
 }

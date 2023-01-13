@@ -18,6 +18,16 @@ const HouseSetAside = props =>{
             enCode:'pipeline_seting',
         },
         {
+            key:`/index/house/${match.params.name}/sys/user`,
+            label:"成员",
+            enCode:"pipeline_user",
+        },
+        {
+            key:`/index/house/${match.params.name}/sys/role`,
+            label:"权限",
+            enCode:"pipeline_auth",
+        },
+        {
             key:`/index/house/${match.params.name}/sys/pushRule`,
             label:'推送规则',
             enCode:'pipeline_seting',

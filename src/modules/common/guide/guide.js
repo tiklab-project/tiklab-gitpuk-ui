@@ -5,7 +5,7 @@ import "./guide.scss";
 
 const Guide = props =>{
 
-    const {title,type,icon,pipelineId} = props
+    const {title,type,icon} = props
 
     const goDetails = title =>{
         switch (title) {

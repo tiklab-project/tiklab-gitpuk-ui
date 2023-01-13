@@ -31,7 +31,11 @@ const HouseAdd = props =>{
             <Form.Item label='仓库名称' name='name1'
                        rules={[
                            {required:true,message:'仓库名称不能为空'},
-                           {max:30,message:'请输入1~31位以内的名称'},
+                           {max:30,message:"请输入1~31位以内的名称"},
+                           {
+                               pattern: /^[a-zA-Z0-9_]([a-zA-Z0-9_\-.])*$/,
+                               message: "只能包含字母和数字、 '_'、 '.'和'-'，且只能以字母、数字或'_'开头",
+                           },
                        ]}
             >
                 <Input bordered={false} style={{background:'#fff'}}/>

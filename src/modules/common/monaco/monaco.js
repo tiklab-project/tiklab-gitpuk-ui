@@ -1,5 +1,6 @@
 import React,{useEffect,useRef,useState} from 'react'
-import * as monaco from 'monaco-editor'
+// import * as monaco from 'monaco-editor'
+import * as monaco from 'monaco-editor/esm/vs/editor/editor.api.js'
 
 export const MonacoBlob = props =>{
 
@@ -55,7 +56,7 @@ export const MonacoEdit = props =>{
         try {
             monacoEditorRef.current = monaco.editor.create(monacoEditorDomRef.current, {
                 value: 'code',
-                language: 'yaml', // 编辑器类型支持
+                language: 'shell', // 编辑器类型支持
                 minimap: { enabled: false }, // 小地图
                 automaticLayout: true, // 自动布局,
                 codeLens: true,
@@ -67,18 +68,19 @@ export const MonacoEdit = props =>{
                 scrollBeyondLastLine: true,
                 theme: 'vs', // 主题
             });
-            // onDidChangeModelContent，方法产生的监听需要在组件销毁的时候dispose下
+            // // onDidChangeModelContent，方法产生的监听需要在组件销毁的时候dispose下
             // monacoEditorRef.current.onDidChangeModelContent(e => {
             //     try {
             //         let newValue = monacoEditorRef.current.getValue()
+            //         console.log(newValue)
             //         // setYamlValue(newValue)
             //     } catch {}
-            // });
+            // })
         } catch {}
     }
 
     return (
-        <div ref={monacoEditorDomRef} style={{height:200}}/>
+        <div ref={monacoEditorDomRef} style={{height:300}}/>
     )
 }
 
@@ -110,16 +112,17 @@ export const MonacoPreview = props => {
                 renderSideBySide:false,
                 renderOverviewRuler:renderOverviewRuler,
             })
+
             monacoEditorRef.current.setModel({
                 original: monaco.editor.createModel(newValue, language && language),
                 modified: monaco.editor.createModel(oldValue, language && language),
             })
-
         } catch {}
     }
 
+
     return (
-        <div ref={monacoEditorDomRef} style={{height: 200}}/>
+        <div ref={monacoEditorDomRef} style={{height: 300}}/>
     )
 }
 

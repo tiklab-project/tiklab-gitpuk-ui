@@ -1,4 +1,7 @@
 .statistics{
+    height: 100%;
+    overflow: auto;
+    background: var(--xcode-backdrop-color);
     &-head{
         display: flex;
         flex-direction: row;
@@ -7,8 +10,9 @@
         margin: var(--tiklab-padding-item) 0;
         .head-item{
             flex: 1;
-            border: 1px solid #d9d9d9;
             padding: 0 var(--tiklab-padding-item);
+            background: #ffffff;
+            border-radius: 4px;
             .head-item-content{
                 display: flex;
                 flex-direction: row;
@@ -19,6 +23,36 @@
             }
             &:not(:last-child){
                 margin-right: var(--tiklab-padding-item);
+            }
+        }
+    }
+    &-census{
+        padding: 10px;
+        background: #ffffff;
+        border-radius: 4px;
+        .statistics-census-head{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            .title-user{
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                .title-user-avatar{
+                    padding-right: 10px;
+                }
+                .title-user-name{
+                    .num{
+                        font-size: 13px;
+                        color: var(--tiklab-gray-500);
+                    }
+                }
+            }
+            .title-branch{
+                font-size: 13px;
+                color: var(--tiklab-gray-500);
             }
         }
     }

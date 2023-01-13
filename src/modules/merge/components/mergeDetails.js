@@ -1,9 +1,9 @@
 import React,{useState,useRef,useEffect} from 'react'
 import {Input,Avatar} from 'antd'
 import {FolderOutlined} from '@ant-design/icons'
-import BreadcrumbContent from '../../../common/breadcrumb/breadcrumb'
-import Btn from '../../../common/btn/btn'
-import Tabs from '../../../common/tabs/tabs';
+import BreadcrumbContent from '../../common/breadcrumb/breadcrumb'
+import Btn from '../../common/btn/btn'
+import Tabs from '../../common/tabs/tabs';
 import './mergeDetails.scss'
 
 const MergeDetails = props =>{

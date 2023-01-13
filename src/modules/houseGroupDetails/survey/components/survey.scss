@@ -1,0 +1,12 @@
+.survey{
+    background: var(--xcode-backdrop-color);
+    height: 100%;
+    overflow: auto;
+    &-dyna{
+        background: #fff;
+        padding: 10px;
+        min-height: 420px;
+        border-radius: 4px;
+        margin: var(--tiklab-padding-item) 0;
+    }
+}

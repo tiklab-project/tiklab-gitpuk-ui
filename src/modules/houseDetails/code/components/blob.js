@@ -8,14 +8,15 @@ import './blob.scss'
 
 const Blob = props =>{
 
-    const {match} = props
+    const {match,location} = props
 
     const changBranch = value => {
 
     }
 
     const goEdit = () =>{
-        props.history.push(`/index/house/${match.params.name}/edit`)
+        const name = location.pathname.split('/'+match.params.name+'/blob/')
+        props.history.push(`/index/house/${match.params.name}/edit/${name[1]}`)
     }
 
     return(
