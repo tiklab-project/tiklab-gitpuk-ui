@@ -1,13 +1,13 @@
 import React,{useState} from 'react'
-import {Modal,Steps,Form,Input,Select,Switch} from 'antd'
+import {Modal,Steps,Form,Input,Select,Switch,Checkbox,Row,Col} from 'antd'
 import Btn from '../../common/btn/btn'
 import HouseUser from './houseUser'
-import HousePower from "./housePower";
+import HousePower from './housePower'
 import './houseAdd.scss'
 
 const HouseAdd = props =>{
 
-    const {addHouseVisible,setAddHouseVisible} = props
+    const {addHouseVisible,setAddHouseVisible,createCode} = props
 
     const [form] = Form.useForm()
 
@@ -18,7 +18,9 @@ const HouseAdd = props =>{
     const [member,setMember] = useState([])
 
     const onOk = value => {
-
+        createCode(value).then(res=>{
+            res.code===0 && props.history.push(`/index/house/${value.name}/tree`)
+        })
     }
 
     const newStoreHouse = (
@@ -26,12 +28,12 @@ const HouseAdd = props =>{
             form={form}
             autoComplete='off'
             layout='vertical'
-            initialValues={{name2:'http://xcode/tiklab.net',name3:1}}
+            initialValues={{group:1}}
         >
-            <Form.Item label='仓库名称' name='name1'
+            <Form.Item label='仓库名称' name='name'
                        rules={[
                            {required:true,message:'仓库名称不能为空'},
-                           {max:30,message:"请输入1~31位以内的名称"},
+                           {max:30,message:'请输入1~31位以内的名称'},
                            {
                                pattern: /^[a-zA-Z0-9_]([a-zA-Z0-9_\-.])*$/,
                                message: "只能包含字母和数字、 '_'、 '.'和'-'，且只能以字母、数字或'_'开头",
@@ -41,21 +43,22 @@ const HouseAdd = props =>{
                 <Input bordered={false} style={{background:'#fff'}}/>
             </Form.Item>
             <div className='storehouseAddModal-path'>
-                <Form.Item
-                    label={<span style={{opacity:0}}>归属</span>}
-                    name='name2'
-                    style={{width:200}}
-                >
-                    <Input bordered={false} style={{background:'#fff'}} disabled={true}/>
+                <Form.Item label={<span style={{opacity:0}}>归属</span>}>
+                    <Input
+                        bordered={false}
+                        style={{background:'#fff'}}
+                        disabled={true}
+                        value={'http://xcode/tiklab.net'}
+                    />
                 </Form.Item>
-                <Form.Item label={<span style={{opacity:0}}>归属</span>} name='name3'>
-                    <Select bordered={false} style={{background:'#fff',width:150}}>
+                <Form.Item label={<span style={{opacity:0}}>归属</span>} name='group'>
+                    <Select bordered={false} style={{background:'#fff',width:150,height:30}}>
                         <Select.Option value={1}>不选择分组</Select.Option>
                         <Select.Option value={2}>user</Select.Option>
                         <Select.Option value={3}>zz</Select.Option>
                     </Select>
                 </Form.Item>
-                <Form.Item label='仓库路径' name='name4'
+                <Form.Item label='仓库路径' name='address'
                            rules={[
                                {max:30,message:'请输入1~31位以内的名称'},
                                {required:true,message:''},
@@ -89,9 +92,31 @@ const HouseAdd = props =>{
                     setMember={setMember}
                 />
             }
-            <Form.Item name='desc' label='仓库描述'>
+            <Form.Item name='remark' label='仓库描述'>
                 <Input.TextArea bordered={false}  style={{background:'#fff'}} />
             </Form.Item>
+            {/*<Form.Item  name='dddd'>*/}
+            {/*    <Row>*/}
+            {/*        <Col span={24}>*/}
+            {/*            <Checkbox value={1}*/}
+            {/*                      style={{*/}
+            {/*                          lineHeight: '32px',*/}
+            {/*                      }}*/}
+            {/*            >*/}
+            {/*                创建 README.md*/}
+            {/*            </Checkbox>*/}
+            {/*        </Col>*/}
+            {/*        <Col span={24}>*/}
+            {/*            <Checkbox value={2}*/}
+            {/*                      style={{*/}
+            {/*                          lineHeight: '32px',*/}
+            {/*                      }}*/}
+            {/*            >*/}
+            {/*                创建 .gitignore*/}
+            {/*            </Checkbox>*/}
+            {/*        </Col>*/}
+            {/*    </Row>*/}
+            {/*</Form.Item>*/}
         </Form>
     )
 

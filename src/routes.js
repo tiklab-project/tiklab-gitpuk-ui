@@ -2,7 +2,7 @@ import React from 'react';
 import {Redirect} from 'react-router-dom';
 import AsyncComponent from './common/lazy/SyncComponent';
 
-const Home=AsyncComponent(()=>import('./modules/home/container/portal'))
+const Home=AsyncComponent(()=>import('./modules/home/container/home'))
 
 const Login=AsyncComponent(()=>import('./modules/eam/login'))
 const Logout=AsyncComponent(()=>import('./modules/eam/Logout'))
@@ -17,13 +17,14 @@ const Homepage=AsyncComponent(()=>import('./modules/home/components/homePage'))
 /*
     仓库
  */
-
 const Storehouse=AsyncComponent(()=>import('./modules/house/container/house'))
+
 /*
      仓库组
  */
 const StorehouseGroup=AsyncComponent(()=>import('./modules/houseGroup/container/houseGroup'))
 
+const WEBIDE=AsyncComponent(()=>import('./modules/WEBIDE/container/webIde'))
 
 /*
     仓库详情
@@ -151,9 +152,19 @@ const routers = [
                 component:StorehouseGroup,
             },
             {
+                path:'/index/ide/*',
+                component:WEBIDE,
+            },
+
+            {
                 path:'/index/house/:name',
                 component:StorehouseDetails,
                 routes:[
+                    {
+                        path:'/index/house/:name/tree',
+                        exact: true,
+                        component:Code,
+                    },
                     {
                         path:'/index/house/:name/tree/:branch',
                         component:Code,

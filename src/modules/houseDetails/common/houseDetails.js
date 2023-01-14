@@ -1,5 +1,4 @@
 import React,{useState,useEffect} from 'react'
-import Aside from '../../common/aside/aside'
 import {
     ApartmentOutlined,
     BranchesOutlined,
@@ -9,11 +8,15 @@ import {
     QuestionCircleOutlined,
     RadarChartOutlined,
     TagOutlined
-} from '@ant-design/icons';
+} from '@ant-design/icons'
+import {inject,observer} from 'mobx-react'
+import Aside from '../../common/aside/aside'
 
 const HouseDetails= props=>{
 
-    const {match}=props
+    const {match,houseStore}=props
+
+    const {findUserCode,houseInfo,setHouseInfo,houseList} = houseStore
 
     let path = props.location.pathname
     const houseName = match.params.name
@@ -22,21 +25,34 @@ const HouseDetails= props=>{
 
     useEffect(()=>{
         if(path.indexOf(`/index/house/${houseName}/tree`)===0){
-            path=`/index/house/${houseName}/tree/master`
+            path=`/index/house/${houseName}/tree`
         }
         if(path.indexOf(`/index/house/${houseName}/blob`)===0){
-            path=`/index/house/${houseName}/tree/master`
+            path=`/index/house/${houseName}/tree`
         }
         if(path.indexOf(`/index/house/${houseName}/edit`)===0){
-            path=`/index/house/${houseName}/tree/master`
+            path=`/index/house/${houseName}/tree`
         }
         setNav(path)
     },[path])
 
+    useEffect(()=>{
+        findUserCode().then(res=>{
+            const data = res.data
+            if(res.code===0){
+                data && data.map(item=>{
+                    if(item.name===houseName){
+                        setHouseInfo(item)
+                    }
+                })
+            }
+        })
+    },[houseName])
+
     // 侧边第一栏导航
     const firstRouters=[
         {
-            to:`/index/house/${houseName}/tree/master`,
+            to:`/index/house/${houseName}/tree`,
             title:'代码',
             icon:<ApartmentOutlined />,
             key:'2',
@@ -90,10 +106,12 @@ const HouseDetails= props=>{
                 firstRouters={firstRouters}
                 nav={nav}
                 houseName={houseName}
+                houseList={houseList}
+                houseInfo={houseInfo}
             />
 
 }
 
-export default HouseDetails
+export default inject('houseStore')(observer(HouseDetails))
 
 

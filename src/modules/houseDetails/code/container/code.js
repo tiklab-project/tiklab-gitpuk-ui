@@ -1,41 +1,38 @@
 import React,{useEffect,useState,useRef} from 'react'
 import {Select,Input,Table,Dropdown,Tooltip,Button,Divider} from 'antd'
-import {SearchOutlined,PlusOutlined,CopyOutlined} from '@ant-design/icons'
-import {inject,observer} from "mobx-react"
+import {
+    SearchOutlined,
+    PlusOutlined,
+    CopyOutlined,
+    FileOutlined,
+    FolderOutlined
+} from '@ant-design/icons'
+import {inject,observer} from 'mobx-react'
 import BreadcrumbContent from '../../../common/breadcrumb/breadcrumb'
-import Btn from "../../../common/btn/btn"
-import EmptyText from "../../../common/emptyText/emptyText"
+import Btn from '../../../common/btn/btn'
+import EmptyText from '../../../common/emptyText/emptyText'
+import Usher from '../components/usher'
 import '../components/code.scss'
 
 const Code = props =>{
 
-    const {houseStore,match,location} = props
-    const {houseId} = houseStore
+    const {houseStore,codeStore,match,location} = props
 
+    const {houseInfo} = houseStore
+    const {findFileTree,codeTreeData} = codeStore
+
+    let path = location.pathname
     const searValue = useRef(null)
+
     const [searInput,setSearInput] = useState(false)
-    const [dataSource,setData] = useState([
-        {
-            commit: {id: "4a0a53f66e972bcf4c8d0f109503402436ea2cd2", message: "配置",committed_date:"202020"},
-            commit_path:"/devops-itdd/tiklab-xcode-ui/-/commit/4a0a53f66e972bcf4c8d0f109503402436ea2cd2",
-            file_name:"node",
-            type: "tree",
-            child:[
-                {
-                    commit: {id: "4a0a53f66e972bcf4c8d0f109503402436ea2cd2", message: "配置",committed_date:"202020"},
-                    commit_path:"/devops-itdd/tiklab-xcode-ui/-/commit/4a0a53f66e972bcf4c8d0f109503402436ea2cd2",
-                    file_name:"assets.js",
-                    type: "blob"
-                },
-            ]
-        },
-        {
-            commit: {id: "4a0a53f66e972bcf4c8d0f109503402436ea2cd2", message: "配置",committed_date:"202020"},
-            commit_path:"/devops-itdd/tiklab-xcode-ui/-/commit/4a0a53f66e972bcf4c8d0f109503402436ea2cd2",
-            file_name:"zzz.js",
-            type: "blob"
-        },
-    ])
+    const [isEmpty,setIsEmpty] = useState(false)
+
+    useEffect(()=>{
+        houseInfo  && findFileTree({
+            codeId:houseInfo.codeId,
+            path:'',
+        })
+    },[houseInfo,path])
 
     useEffect(()=>{
         if(searInput){
@@ -49,43 +46,49 @@ const Code = props =>{
 
     const fileName = record => {
         const name = location.pathname.split('/'+match.params.name+'/tree/')
-        switch (record.type) {
-            case 'tree':
-                setData(record.child)
-                props.history.push(`${location.pathname}/${record.file_name}`)
-                break
-            case 'blob':
-                props.history.push(`/index/house/${match.params.name}/blob/${name[1]}/${record.file_name}`)
+        const prefix = `/index/house/${match.params.name}/${record.fileType}`
+        let path
+        if(name[1]===undefined){
+            path = `${prefix}/master/${record.fileName}`
         }
+        if(name[1]){
+            path = `${prefix}/${name[1]}/${record.fileName}`
+        }
+        props.history.push(path)
     }
 
     const renderFileType = text => {
-        const fileType = text.substring(text.lastIndexOf('.') + 1);
+        const fileType = text.substring(text.lastIndexOf('.') + 1)
         switch (fileType) {
             case 'js':
-                return  <svg className="icon" aria-hidden="true">
-                            <use xlinkHref="#icon-nodejs"/>
+                return  <svg className='icon' aria-hidden='true'>
+                            <use xlinkHref='#icon-nodejs'/>
                         </svg>
             case 'css':
                 return 'css'
+            case 'txt':
+                return <FileOutlined />
+
         }
+    }
+
+    const goWebIde = () => {
+        props.history.push(`/index/ide/${match.params.name}`)
     }
 
     const columns = [
         {
-            title: "名称",
-            dataIndex: "file_name",
-            key: "file_name",
-            width:"60%",
+            title: '名称',
+            dataIndex: 'fileName',
+            key: 'fileName',
+            width:'60%',
             ellipsis:true,
             render:(text,record)=>{
                 return <span className='code-table-name' onClick={()=>fileName(record)}>
                             <span style={{paddingRight:5}}>
                                 {
-                                    record.type==='tree' ?
-                                        <svg className="icon" aria-hidden="true">
-                                            <use xlinkHref="#icon-renwu"/>
-                                        </svg>
+                                    record.fileType==='tree' ?
+                                        <FolderOutlined />
                                         :
                                         renderFileType(text)
                                 }
@@ -96,20 +99,20 @@ const Code = props =>{
             }
         },
         {
-            title: "提交信息",
-            dataIndex: ["commit","message"],
-            key: ['commit',"message"],
-            width:"30%",
+            title: '提交信息',
+            dataIndex: 'commitMessage',
+            key: 'commitMessage',
+            width:'30%',
             ellipsis:true,
             render:(text,record)=> {
                 return <span className='code-table-msg'>{text}</span>
             }
         },
         {
-            title: "提交时间",
-            dataIndex: ["commit","committed_date"],
-            key:["commit","committed_date"],
-            width:"10%",
+            title: '提交时间',
+            dataIndex: 'commitTime',
+            key:'commitTime',
+            width:'10%',
             ellipsis:true,
         },
     ]
@@ -122,13 +125,17 @@ const Code = props =>{
         </div>
     )
 
+    if(isEmpty){
+        return <Usher/>
+    }
+
     const cloneMenu = (
         <div className='clone-menu'>
             <div className='clone-item'>
                 <div className='clone-item-title'>使用SSH克隆</div>
                 <Input.Group compact>
-                    <Input value="git@github.com:ant-design/ant-design.git" style={{width:"calc(100% - 50px)"}}/>
-                    <Tooltip title="复制地址">
+                    <Input value='git@github.com:ant-design/ant-design.git' style={{width:'calc(100% - 50px)'}}/>
+                    <Tooltip title='复制地址'>
                         <Button icon={<CopyOutlined />} />
                     </Tooltip>
                 </Input.Group>
@@ -136,15 +143,15 @@ const Code = props =>{
             <div className='clone-item'>
                 <div className='clone-item-title'>使用HTTP克隆</div>
                 <Input.Group compact>
-                    <Input value="http://172.12.1.10/devops-itdd/tiklab-xcode-ui.git" style={{width:"calc(100% - 50px)"}}/>
-                    <Tooltip title="复制地址">
+                    <Input value='http://172.12.1.10/devops-itdd/tiklab-xcode-ui.git' style={{width:'calc(100% - 50px)'}}/>
+                    <Tooltip title='复制地址'>
                         <Button icon={<CopyOutlined />} />
                     </Tooltip>
                 </Input.Group>
             </div>
             <div className='clone-download'>
                 <div className='clone-item-download'>下载ZIP</div>
-                <Divider type="vertical" />
+                <Divider type='vertical' />
                 <div className='clone-item-download'>下载TAR</div>
             </div>
         </div>
@@ -176,7 +183,7 @@ const Code = props =>{
                                 <Input
                                     allowClear
                                     ref={searValue}
-                                    placeholder="文件名称"
+                                    placeholder='文件名称'
                                     // onChange={onChangeSearch}
                                     prefix={<SearchOutlined />}
                                     onBlur={()=>setSearInput(false)}
@@ -194,6 +201,7 @@ const Code = props =>{
                         <div className='code-desc'>
                             <Btn
                                 title={'WEB IDE'}
+                                onClick={()=>goWebIde()}
                             />
                         </div>
                         <div className='code-clone'>
@@ -221,8 +229,8 @@ const Code = props =>{
                     <Table
                         bordered={false}
                         columns={columns}
-                        dataSource={dataSource}
-                        rowKey={record=>record.file_name}
+                        dataSource={codeTreeData}
+                        rowKey={record=>record.fileName}
                         pagination={false}
                         locale={{emptyText: <EmptyText/>}}
                     />
@@ -232,4 +240,4 @@ const Code = props =>{
     )
 }
 
-export default inject('houseStore')(observer(Code))
+export default inject('houseStore','codeStore')(observer(Code))

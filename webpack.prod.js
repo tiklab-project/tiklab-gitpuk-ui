@@ -143,6 +143,13 @@ module.exports = merge(baseWebpackConfig, {
                     priority: 70,
                     reuseExistingChunk: true
                 },
+                monacoEditor: {
+                    name: 'chunk-monaco-editor',
+                    chunks: 'all',
+                    test: /monaco-editor/,
+                    priority: 70,
+                    reuseExistingChunk: true
+                },
                 moment: {
                     name: 'chunk-moment',
                     chunks: 'all',

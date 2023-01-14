@@ -46,6 +46,8 @@ const GroupDetails= props =>{
                 firstRouters={firstRouters}
                 nav={nav}
                 houseName={houseName}
+                houseList={[]}
+                houseInfo={null}
             />
 
 }

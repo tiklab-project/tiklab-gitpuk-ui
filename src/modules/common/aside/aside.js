@@ -7,8 +7,9 @@ import './aside.scss'
 
 const Aside = props =>{
 
-    const {route,firstRouters,nav,houseName} = props
+    const {route,firstRouters,nav,houseInfo,houseList} = props
 
+    const path = props.location.pathname
     const [isLoading,setIsLoading] = useState(false)
 
     const changeNav = item=>{
@@ -17,12 +18,17 @@ const Aside = props =>{
 
     // 切换路由跳转
     const changeHouseDetails = item => {
+        const name = path.split('/'+ houseInfo.name +'/')
+        if(item.name!==houseInfo.name){
+            // props.history.push(`/index/house/${item.name}/${name[1]}`)
+            props.history.push(`/index/house/${item.name}/tree`)
+        }
     }
 
     // 切换项目菜单列表
     const houseMenu = item =>{
-        return  <div onClick={()=>{changeHouseDetails(item)}} key={item.id} className={`houseDetails-opt-item ${item.houseName===houseName ?'houseDetails-opt-active':''}`}>
-                    <span className={`houseDetails-opt-icon mf-icon-${item.color}`}>
+        return  <div onClick={()=>{changeHouseDetails(item)}} key={item.codeId} className={`houseDetails-opt-item ${item.name===houseInfo.name ?'houseDetails-opt-active':''}`}>
+                    <span className={`houseDetails-opt-icon xcode-icon-1`}>
                         {item.name.substring(0,1).toUpperCase()}
                     </span>
                     <span className='houseDetails-opt-name'>
@@ -36,11 +42,11 @@ const Aside = props =>{
         <div className='houseDetails-opt'>
             <div className='houseDetails-opt-title'>切换仓库</div>
             <div className='houseDetails-opt-group'>
-                {/*{*/}
-                {/*    houseList && houseList.map(item=>{*/}
-                {/*        return houseMenu(item)*/}
-                {/*    })*/}
-                {/*}*/}
+                {
+                    houseList && houseList.map(item=>{
+                        return houseMenu(item)
+                    })
+                }
             </div>
         </div>
     )
@@ -88,7 +94,7 @@ const Aside = props =>{
                </div>
 
                <div className='houseDetails-sys'
-                    onClick={()=>props.history.push(`/index/house/${houseName}/sys`)}
+                    onClick={()=>props.history.push(`/index/house/${houseInfo.name}/sys`)}
                >
                    <div className='aside_content_icon'>
                        <SettingOutlined/>

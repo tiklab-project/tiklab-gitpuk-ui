@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import {PlusOutlined,SearchOutlined} from '@ant-design/icons'
 import {inject,observer} from 'mobx-react'
 import {Input} from 'antd'
@@ -14,9 +14,13 @@ const House = props => {
 
     const {houseStore} = props
 
-    const {houseType,setHouseType} = houseStore
+    const {houseType,setHouseType,createCode,findUserCode,houseList} = houseStore
 
     const [addHouseVisible,setAddHouseVisible] = useState(false)
+
+    useEffect(()=>{
+        findUserCode()
+    },[])
 
     const lis = [
         {
@@ -49,6 +53,8 @@ const House = props => {
                         onClick={()=>setAddHouseVisible(true)}
                     />
                     <HouseAdd
+                        {...props}
+                        createCode={createCode}
                         addHouseVisible={addHouseVisible}
                         setAddHouseVisible={setAddHouseVisible}
                     />
@@ -71,6 +77,7 @@ const House = props => {
                 </div>
                 <HouseTable
                     {...props}
+                    houseList={houseList}
                 />
             </div>
         </div>

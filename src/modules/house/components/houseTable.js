@@ -7,8 +7,10 @@ import './houseTable.scss'
 
 const HouseTable = props => {
 
+    const {houseList} = props
+
     const goDetails = (text,record) => {
-        props.history.push(`/index/house/${record.name}/tree/master`)
+        props.history.push(`/index/house/${record.name}/tree`)
     }
 
     const goSet = (text,record) => {
@@ -30,7 +32,7 @@ const HouseTable = props => {
                         </div>
                         <div className='name-text'>
                             <div className='name-text-title'>
-                                <span className='name-text-name'>仓库组/{text}</span>
+                                <span className='name-text-name'>{text}</span>
                                 <span className='name-text-lock'><LockOutlined/></span>
                                 <span className='name-text-type'>{record.userType === '3' ? '管理员':'开发者'}</span>
                             </div>
@@ -49,6 +51,7 @@ const HouseTable = props => {
             key: 'update',
             width:'30%',
             ellipsis:true,
+            render:text => text?text:'暂无更新'
         },
         {
             title: '操作',
@@ -67,14 +70,14 @@ const HouseTable = props => {
                         <Tooltip title='收藏'>
                                 <span className='house-tables-collect'>
                                 {
-                                    record.collect === 0 ?
-                                        <svg className='icon' aria-hidden='true'>
-                                            <use xlinkHref={`#icon-xingxing-kong`} />
-                                        </svg>
-                                        :
-                                        <svg className='icon' aria-hidden='true'>
-                                            <use xlinkHref={`#icon-xingxing1`} />
-                                        </svg>
+                                    record.collect === 1 ?
+                                    <svg className='icon' aria-hidden='true'>
+                                        <use xlinkHref={`#icon-xingxing1`} />
+                                    </svg>
+                                    :
+                                    <svg className='icon' aria-hidden='true'>
+                                        <use xlinkHref={`#icon-xingxing-kong`} />
+                                    </svg>
                                 }
                                 </span>
                         </Tooltip>
@@ -110,8 +113,8 @@ const HouseTable = props => {
             <Table
                 bordered={false}
                 columns={columns}
-                dataSource={dataSource}
-                rowKey={record=>record.id}
+                dataSource={houseList}
+                rowKey={record=>record.codeId}
                 pagination={false}
                 locale={{emptyText: <EmptyText/>}}
             />
