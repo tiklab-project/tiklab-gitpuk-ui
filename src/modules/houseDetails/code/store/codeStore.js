@@ -6,16 +6,18 @@ import {
 export class CodeStore {
 
     @observable codeTreeData = []
+    @observable isEmpty = false
 
     @action
     findFileTree = async value =>{
-        const params = new FormData()
-        params.append('codeId',value.codeId)
-        params.append('path',value.path)
-        const data = await FindFileTree(params)
+        const data = await FindFileTree(value)
         if(data.code===0){
             this.codeTreeData = data.data && data.data
         }
+        else {
+            this.codeTreeData = []
+        }
+        return data
     }
 
 }

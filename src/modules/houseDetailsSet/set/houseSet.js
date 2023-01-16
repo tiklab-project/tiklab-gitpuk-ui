@@ -8,12 +8,17 @@ import {
     EditOutlined
 } from '@ant-design/icons'
 import {PrivilegeProjectButton} from 'tiklab-privilege-ui'
+import {inject,observer} from 'mobx-react'
 import Btn from '../../common/btn/btn'
 import BreadcrumbContent from '../../common/breadcrumb/breadcrumb'
-import HousePower from "../../house/components/housePower";
+import HousePower from '../../house/components/housePower'
 import './houseSet.scss'
 
 const HouseSet = props =>{
+
+    const {houseStore} = props
+
+    const {houseInfo} = houseStore
 
     const [form] = Form.useForm()
     const [expandedTree,setExpandedTree] = useState([])  // 树的展开与闭合
@@ -50,12 +55,10 @@ const HouseSet = props =>{
                             form={form}
                             autoComplete='off'
                             layout='vertical'
+                            initialValues={{name:houseInfo.name}}
                         >
-                            <Form.Item label='仓库名称' name='name1'
-                                       rules={[
-                                           {required:true,message:'仓库名称不能为空'},
-                                           {max:30,message:'请输入1~31位以内的名称'},
-                                       ]}
+                            <Form.Item label='仓库名称' name='name'
+                                       rules={[{max:30,message:'请输入1~31位以内的名称'}]}
                             >
                                 <Input/>
                             </Form.Item>
@@ -70,13 +73,13 @@ const HouseSet = props =>{
                         <div className='bottom-rename-btn'>
                             <Btn
                                 type={'common'}
-                                title={"取消"}
+                                title={'取消'}
                                 isMar={true}
                                 onClick={()=>setOpenOrClose(1)}
                             />
                             <Btn
-                                type={"dangerous"}
-                                title={"确定"}
+                                type={'dangerous'}
+                                title={'确定'}
                                 onClick={() => {
                                     form
                                         .validateFields()
@@ -189,4 +192,4 @@ const HouseSet = props =>{
     )
 }
 
-export default HouseSet
+export default inject('houseStore')(observer(HouseSet))

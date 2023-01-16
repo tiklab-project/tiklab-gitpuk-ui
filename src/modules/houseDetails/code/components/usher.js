@@ -1,19 +1,22 @@
-import React from 'react'
+import React,{useEffect,useState} from 'react'
 import {Input} from 'antd'
 import {CopyOutlined} from '@ant-design/icons'
 import BreadcrumbContent from '../../../common/breadcrumb/breadcrumb'
 import './usher.scss'
 
+/*
+    仓库为空
+*/
 const Usher = props =>{
 
     const courseList = [
         {
-            name:'Git全局设置',
+            name:'Git全局设置：',
             content:'git config --global user.name "高梦园"\n' +
                 'git config --global user.email "2780288581@qq.com"'
         },
         {
-            name:'创建 git 仓库:',
+            name:'创建 git 仓库：',
             content:'mkdir try\n' +
                 'cd try\n' +
                 'git init \n' +
@@ -32,6 +35,8 @@ const Usher = props =>{
 
     ]
 
+    const [urlPrefix,setUrlPrefix] = useState('http')
+
     return (
         <div className='usher'>
             <div className='usher-content xcode-home-limited xcode'>
@@ -41,8 +46,13 @@ const Usher = props =>{
                         <div className='usher-title'>快速设置--如果你知道该怎么操作，直接使用下面的地址</div>
                         <div className='usher-url'>
                             <div className='usher-url-switch'>
-                                <div className='url-switch-prefix'>HTTP</div>
-                                <div className='url-switch-prefix'>SSH</div>
+                                <div className={`url-switch-prefix ${urlPrefix==='http'?'prefix-active':''}`}
+                                     onClick={()=>setUrlPrefix('http')}
+                                >HTTP</div>
+                                <div
+                                    className={`url-switch-prefix ${urlPrefix==='SSH'?'prefix-active':''}`}
+                                    onClick={()=>setUrlPrefix('SSH')}
+                                >SSH</div>
                             </div>
                             <div className='usher-url-input'>
                                 <Input

@@ -1,16 +1,10 @@
 import moment from "moment";
+import {message} from "antd";
 
 export default {
     moment:moment().format("YYYY-MM-DD HH:mm:ss"), //当前时间
     time:moment().format("HH:mm"),
     clientHeight:document.documentElement.clientHeight
-}
-
-// 获取url里面的值
-export const getUrlParam = name => {
-    const query = window.location
-    const param_arr = query.split("#");
-    return param_arr[1]
 }
 
 // 监听浏览器高度
@@ -25,21 +19,15 @@ export const autoHeight = () =>{
     return winHeight-120
 }
 
-// 时间转换
-export const getTime = time =>{
-    let DateTimes ;
-    let days = parseInt(time / ( 60 * 60 * 24));
-    let hours = parseInt((time % ( 60 * 60 * 24)) / (60 * 60));
-    let minutes = parseInt((time % ( 60 * 60)) /60);
-    let seconds =  parseInt(time % 60);
-    if(days >= 1){
-        DateTimes= days + " 天 " + hours + " 时 " + minutes + " 分 " + seconds + " 秒"
-    }else if(hours >= 1){
-        DateTimes=hours + " 时 " + minutes + " 分 " + seconds + " 秒"
-    }else if(minutes >= 1){
-        DateTimes=minutes + " 分 " + seconds + " 秒"
-    }else{
-        DateTimes=seconds + " 秒"
-    }
-    return DateTimes
+// 复制事件
+export const copy = data => {
+    let url = data;//拿到想要复制的值
+    let copyInput = document.createElement('input');//创建input元素
+    document.body.appendChild(copyInput);//向页面底部追加输入框
+    copyInput.setAttribute('value', url);//添加属性，将url赋值给input元素的value属性
+    copyInput.select();//选择input元素
+    document.execCommand("Copy");//执行复制命令
+    message.success("链接已复制！");//弹出提示信息，不同组件可能存在写法不同
+    //复制之后再删除元素，否则无法成功赋值
+    copyInput.remove();//删除动态创建的节点
 }

@@ -52,10 +52,8 @@ const HouseAdd = props =>{
                     />
                 </Form.Item>
                 <Form.Item label={<span style={{opacity:0}}>归属</span>} name='group'>
-                    <Select bordered={false} style={{background:'#fff',width:150,height:30}}>
+                    <Select bordered={false} style={{background:'#fff',width:150,height:30,margin:'0 3px'}}>
                         <Select.Option value={1}>不选择分组</Select.Option>
-                        <Select.Option value={2}>user</Select.Option>
-                        <Select.Option value={3}>zz</Select.Option>
                     </Select>
                 </Form.Item>
                 <Form.Item label='仓库路径' name='address'

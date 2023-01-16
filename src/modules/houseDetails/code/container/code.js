@@ -1,4 +1,4 @@
-import React,{useEffect,useState,useRef} from 'react'
+import React, {useEffect, useState, useRef, Fragment} from 'react'
 import {Select,Input,Table,Dropdown,Tooltip,Button,Divider} from 'antd'
 import {
     SearchOutlined,
@@ -12,27 +12,37 @@ import BreadcrumbContent from '../../../common/breadcrumb/breadcrumb'
 import Btn from '../../../common/btn/btn'
 import EmptyText from '../../../common/emptyText/emptyText'
 import Usher from '../components/usher'
+import RecentSubmitMsg from '../components/recentSubmitMsg'
 import '../components/code.scss'
+import BreadChang from "../components/breadChang";
 
 const Code = props =>{
 
-    const {houseStore,codeStore,match,location} = props
+    const {houseStore,codeStore,location} = props
 
     const {houseInfo} = houseStore
     const {findFileTree,codeTreeData} = codeStore
 
-    let path = location.pathname
     const searValue = useRef(null)
+    const name = location.pathname.split('/index/house')
+    const branch = location.pathname.split('/'+houseInfo.name+'/tree/')
 
-    const [searInput,setSearInput] = useState(false)
     const [isEmpty,setIsEmpty] = useState(false)
+    const [searInput,setSearInput] = useState(false)
+    const [cloneVisible,setCloneVisible] = useState(false)
 
     useEffect(()=>{
-        houseInfo  && findFileTree({
+        houseInfo.name && findFileTree({
             codeId:houseInfo.codeId,
-            path:'',
+            path:branch[1]?name[1]:'',
+            branch:''
         })
-    },[houseInfo,path])
+        .then(res=>{
+            res.code===500001 && props.history.push('/index/404')
+            res.code===100 && setIsEmpty(true)
+        })
+
+    },[houseInfo.name,location.pathname])
 
     useEffect(()=>{
         if(searInput){
@@ -41,20 +51,11 @@ const Code = props =>{
     },[searInput])
 
     const changBranch = value => {
-        props.history.push(`/index/house/${match.params.name}/tree/${value}`)
+        props.history.push(`/index/house/${houseInfo.name}/tree/${value}`)
     }
 
     const fileName = record => {
-        const name = location.pathname.split('/'+match.params.name+'/tree/')
-        const prefix = `/index/house/${match.params.name}/${record.fileType}`
-        let path
-        if(name[1]===undefined){
-            path = `${prefix}/master/${record.fileName}`
-        }
-        if(name[1]){
-            path = `${prefix}/${name[1]}/${record.fileName}`
-        }
-        props.history.push(path)
+        props.history.push(`/index/house${record.path}`)
     }
 
     const renderFileType = text => {
@@ -73,7 +74,7 @@ const Code = props =>{
     }
 
     const goWebIde = () => {
-        props.history.push(`/index/ide/${match.params.name}`)
+        props.history.push(`/index/ide/${houseInfo.name}`)
     }
 
     const columns = [
@@ -160,22 +161,13 @@ const Code = props =>{
     return(
         <div className='code'>
             <div className='code-content xcode-home-limited xcode'>
-                <BreadcrumbContent firstItem={'代码'} secondItem={'node'}/>
+                <BreadcrumbContent firstItem={'代码'}/>
                 <div className='code-content-head'>
-                    <div className='code-head-left'>
-                        <div className='code-branch'>
-                            <Select defaultValue={'master'} onChange={value=>changBranch(value)}>
-                                <Select.Option value={'master'}>master</Select.Option>
-                                <Select.Option value={'xcode-v1.0'}>xcode-v1.0</Select.Option>
-                            </Select>
-                        </div>
-                        <div className='code-bread'>
-                            <div className='bread-item'>node </div>
-                            <div className='bread-item'> / </div>
-                            <div className='bread-item'>node</div>
-                            <div className='bread-item'> / </div>
-                        </div>
-                    </div>
+                    <BreadChang
+                        {...props}
+                        houseInfo={houseInfo}
+                        type={'tree'}
+                    />
                     <div className='code-head-right'>
                         <div className='code-search'>
                             {
@@ -205,26 +197,23 @@ const Code = props =>{
                             />
                         </div>
                         <div className='code-clone'>
-                            <Dropdown overlay={cloneMenu} trigger={['click']} placement={'bottomRight'}>
+                            <Dropdown
+                                overlay={cloneMenu}
+                                trigger={['click']}
+                                placement={'bottomRight'}
+                                visible={cloneVisible}
+                                onVisibleChange={visible=>setCloneVisible(visible)}
+                            >
                                 <Btn
                                     title={'克隆'}
                                     type={'primary'}
+                                    onClick={()=>setCloneVisible(!cloneVisible)}
                                 />
                             </Dropdown>
                         </div>
                     </div>
                 </div>
-                <div className='code-content-commit'>
-                    <div className='code-commit-icon'/>
-                    <div className='code-commit-msg'>
-                        <div className='msg-title'>解决无法登录问题</div>
-                        <div className='msg-desc'>admin 1个小时前提交</div>
-                    </div>
-                    <div className='code-commit-ident'>
-                        <div className='ident-title'> 33128853</div>
-                        <div className='ident-btn'><CopyOutlined /></div>
-                    </div>
-                </div>
+                <RecentSubmitMsg/>
                 <div className='code-content-tables'>
                     <Table
                         bordered={false}

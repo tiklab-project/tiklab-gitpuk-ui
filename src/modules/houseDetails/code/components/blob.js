@@ -1,43 +1,41 @@
-import React from 'react'
+import React,{Fragment} from 'react'
 import {Select} from 'antd'
 import {CopyOutlined,FileTextOutlined} from '@ant-design/icons'
+import {inject,observer} from 'mobx-react'
 import Btn from '../../../common/btn/btn'
 import BreadcrumbContent from '../../../common/breadcrumb/breadcrumb'
 import {MonacoBlob} from '../../../common/monaco/monaco'
+import RecentSubmitMsg from './recentSubmitMsg'
+import BreadChang from './breadChang'
 import './blob.scss'
 
 const Blob = props =>{
 
-    const {match,location} = props
+    const {location,codeStore,houseStore} = props
+
+    const {houseInfo} = houseStore
+    // const {} = codeStore
+
+    const branch = location.pathname.split('/'+houseInfo.name+'/blob/')
 
     const changBranch = value => {
 
     }
 
     const goEdit = () =>{
-        const name = location.pathname.split('/'+match.params.name+'/blob/')
-        props.history.push(`/index/house/${match.params.name}/edit/${name[1]}`)
+        props.history.push(`/index/house/${houseInfo.name}/edit/${branch[1]}`)
     }
 
     return(
         <div className='blob'>
             <div className='blob-content xcode-home-limited xcode'>
-                <BreadcrumbContent firstItem={'代码'} secondItem={'node'}/>
+                <BreadcrumbContent firstItem={'代码'} goBack={()=>props.history.go(-1)}/>
                 <div className='blob-content-head'>
-                    <div className='blob-head-left'>
-                        <div className='blob-branch'>
-                            <Select defaultValue={'master'} onChange={value=>changBranch(value)}>
-                                <Select.Option value={'master'}>master</Select.Option>
-                                <Select.Option value={'xblob-v1.0'}>xblob-v1.0</Select.Option>
-                            </Select>
-                        </div>
-                        <div className='blob-bread'>
-                            <div className='bread-item'>node </div>
-                            <div className='bread-item'> / </div>
-                            <div className='bread-item'>node</div>
-                            <div className='bread-item'> / </div>
-                        </div>
-                    </div>
+                    <BreadChang
+                        {...props}
+                        houseInfo={houseInfo}
+                        type={'blob'}
+                    />
                     <div className='blob-head-right'>
                         <div className='blob-desc'>
                             <Btn
@@ -52,17 +50,7 @@ const Blob = props =>{
                         </div>
                     </div>
                 </div>
-                <div className='blob-content-commit'>
-                    <div className='blob-commit-icon'/>
-                    <div className='blob-commit-msg'>
-                        <div className='msg-title'>解决无法登录问题</div>
-                        <div className='msg-desc'>admin 1个小时前提交</div>
-                    </div>
-                    <div className='blob-commit-ident'>
-                        <div className='ident-title'> 33128853</div>
-                        <div className='ident-btn'><CopyOutlined /></div>
-                    </div>
-                </div>
+                <RecentSubmitMsg/>
                 <div className='blob-content-editor'>
                     <div className='blob-editor-title'>
                         <div className='editor-title-left'>
@@ -90,4 +78,4 @@ const Blob = props =>{
     )
 }
 
-export default Blob
+export default inject('houseStore','codeStore')(observer(Blob))

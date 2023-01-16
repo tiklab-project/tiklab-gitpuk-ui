@@ -22,7 +22,9 @@ const Aside = props =>{
         if(item.name!==houseInfo.name){
             // props.history.push(`/index/house/${item.name}/${name[1]}`)
             props.history.push(`/index/house/${item.name}/tree`)
+            setIsLoading(true)
         }
+        setTimeout(()=>setIsLoading(false),150)
     }
 
     // 切换项目菜单列表

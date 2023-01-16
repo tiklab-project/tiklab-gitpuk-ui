@@ -9,8 +9,6 @@ import './commitsDetails.scss'
 
 const CommitsDetails = props =>{
 
-    const {setDetails} = props
-
     const [expandedTree,setExpandedTree] = useState([])
 
     const isExpandedTree = key => expandedTree.some(item => item === key)
@@ -89,7 +87,7 @@ const CommitsDetails = props =>{
     return (
         <div className='commitsDetails'>
             <div className='commitsDetails-content xcode-home-limited xcode'>
-                <BreadcrumbContent firstItem={'提交'} secondItem={'zsse'} goBack={()=>setDetails(false)}/>
+                <BreadcrumbContent firstItem={'提交'} secondItem={'zsse'} goBack={()=>props.history.go(-1)}/>
                 <div className='commitsDetails-head'>
                     <div className='commitsDetails-head-left'>
                         <div className='head-title-icon'>
@@ -122,7 +120,6 @@ const CommitsDetails = props =>{
                                     {
                                         contrastData.map(item=>{
                                             return <Select.Option value={item.id} key={item.id}>{item.title}</Select.Option>
-
                                         })
                                     }
                                 </Select>

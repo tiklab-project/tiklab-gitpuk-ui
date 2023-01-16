@@ -2,17 +2,13 @@ import React,{useState,useEffect} from 'react'
 import {Input,Avatar,Select} from 'antd'
 import {CopyOutlined,FolderOpenOutlined,SearchOutlined} from '@ant-design/icons'
 import BreadcrumbContent from '../../../common/breadcrumb/breadcrumb'
-import CommitsDetails from '../components/commitsDetails'
 import '../components/commits.scss'
 
 const Commits = props =>{
 
     const {match} = props
 
-    const [details,setDetails] = useState(false)
-
     const changBranch = value => {
-        props.history.push(`/index/house/${match.params.name}/commits/${value}`)
     }
 
     const commitsData = [
@@ -54,7 +50,7 @@ const Commits = props =>{
     ]
 
     const goDetails = item =>{
-        setDetails(true)
+        props.history.push(`/index/house/${match.params.name}/commits/${item.id}`)
     }
 
     const renderCommits = item => {
@@ -105,12 +101,6 @@ const Commits = props =>{
         )
     }
 
-    if(details){
-        return  <CommitsDetails
-                    setDetails={setDetails}
-                />
-    }
-
     return (
         <div className='commits'>
             <div className='commits-content xcode-home-limited xcode'>
@@ -120,7 +110,6 @@ const Commits = props =>{
                         <div className='commits-branch'>
                             <Select defaultValue={'master'} onChange={value=>changBranch(value)}>
                                 <Select.Option value={'master'}>master</Select.Option>
-                                <Select.Option value={'xcommits-v1.0'}>xcommits-v1.0</Select.Option>
                             </Select>
                         </div>
                         <div className='commits-bread'>

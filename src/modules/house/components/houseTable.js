@@ -87,27 +87,6 @@ const HouseTable = props => {
         },
     ]
 
-    const dataSource = [
-        {
-            id:'1',
-            name:'node',
-            update:'昨天',
-            userType:'1'
-        },
-        {
-            id:'2',
-            name:'api',
-            update:'2天前',
-            userType:'2'
-        },
-        {
-            id:'3',
-            name:'boss',
-            update:'20分钟前',
-            userType: '2'
-        }
-    ]
-
     return (
         <div className='house-tables'>
             <Table

@@ -8,6 +8,7 @@ const Login=AsyncComponent(()=>import('./modules/eam/login'))
 const Logout=AsyncComponent(()=>import('./modules/eam/Logout'))
 const Wechat=AsyncComponent(()=>import('./modules/eam/wechat'))
 const NoProductAuthUser=AsyncComponent(()=>import('./modules/eam/noProductAuthUser'))
+const NotFound=AsyncComponent(()=>import('./modules/eam/404'))
 
 /*
     首页
@@ -37,6 +38,7 @@ const Branch=AsyncComponent(()=>import('./modules/houseDetails/branch/container/
 const Tag=AsyncComponent(()=>import('./modules/houseDetails/tag/container/tag'))
 const HouseMerge=AsyncComponent(()=>import('./modules/houseDetails/merge/merge'))
 const Commits=AsyncComponent(()=>import('./modules/houseDetails/commits/container/commits'))
+const CommitsDetails=AsyncComponent(()=>import('./modules/houseDetails/commits/components/commitsDetails'))
 const Question=AsyncComponent(()=>import('./modules/houseDetails/question/container/question'))
 const Pipeline=AsyncComponent(()=>import('./modules/houseDetails/pipeline/container/pipeline'))
 const Statistics=AsyncComponent(()=>import('./modules/houseDetails/statistics/container/statistics'))
@@ -195,8 +197,13 @@ const routers = [
                         component:HouseMerge,
                     },
                     {
-                        path:'/index/house/:name/commits',
+                        path:'/index/house/:name/commits/',
+                        exact: true,
                         component:Commits,
+                    },
+                    {
+                        path:'/index/house/:name/commits/:commitsId',
+                        component:CommitsDetails,
                     },
                     {
                         path:'/index/house/:name/statistics',
@@ -368,7 +375,19 @@ const routers = [
                         path:'/index/sys/version',
                         component: Version,
                     },
+                    {
+                        path:"/index/system/*",
+                        render:()=><Redirect to={"/index/404"}/>,
+                    }
                 ]
+            },
+            {
+                path:"/index/404",
+                component:NotFound,
+            },
+            {
+                path:"/index/*",
+                render:()=><Redirect to={"/index/404"}/>,
             }
         ]
     },
@@ -377,6 +396,10 @@ const routers = [
         component: Home,
         exact: true,
         render:()=><Redirect to='/index'/>,
+    },
+    {
+        path: "*",
+        render:()=><Redirect to="/index/404"/>,
     },
 ]
 

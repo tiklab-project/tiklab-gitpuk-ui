@@ -37,17 +37,25 @@ const HouseDetails= props=>{
     },[path])
 
     useEffect(()=>{
-        findUserCode().then(res=>{
+        houseName && findUserCode().then(res=>{
             const data = res.data
             if(res.code===0){
-                data && data.map(item=>{
-                    if(item.name===houseName){
-                        setHouseInfo(item)
-                    }
-                })
+                if(!isHouse(data)){
+                    props.history.push('/404')
+                }else {
+                    data && data.map(item=>{
+                        if(item.name===houseName){
+                            setHouseInfo(item)
+                        }
+                    })
+                }
             }
         })
     },[houseName])
+
+
+    const isHouse = data => data && data.some(item=>item.name === houseName)
+
 
     // 侧边第一栏导航
     const firstRouters=[

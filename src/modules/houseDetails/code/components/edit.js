@@ -16,7 +16,7 @@ const Edit = props =>{
     return(
         <div className='edit'>
             <div className='edit-content xcode-home-limited xcode'>
-                <BreadcrumbContent firstItem={'代码'} secondItem={'node'} goBack={()=>props.history.go(-1)}/>
+                <BreadcrumbContent firstItem={'代码'} goBack={()=>props.history.go(-1)}/>
                 <div className='edit-content-head'>
                     编辑文件
                 </div>
