@@ -6,7 +6,7 @@ import Btn from '../../../common/btn/btn'
 
 const BranchAdd = props =>{
 
-    const {addVisible,setAddVisible} = props
+    const {addVisible,setAddVisible,createBranch,branchList,houseInfo} = props
 
     const [form] = Form.useForm()
     const [height,setHeight] = useState(0)
@@ -22,15 +22,19 @@ const BranchAdd = props =>{
         setHeight(autoHeight())
     }
 
-    const onOk = () =>{
-
+    const onOk = values =>{
+        createBranch({
+            ...values,
+            codeId:houseInfo.codeId
+        })
+        setAddVisible(false)
     }
 
     const modalFooter = (
         <>
             <Btn
                 onClick={()=>setAddVisible(false)}
-                title={"取消"}
+                title={'取消'}
                 isMar={true}
             />
             <Btn
@@ -42,8 +46,8 @@ const BranchAdd = props =>{
                             onOk(values)
                         })
                 }}
-                title={"确定"}
-                type={"primary"}
+                title={'确定'}
+                type={'primary'}
             />
         </>
     )
@@ -56,7 +60,7 @@ const BranchAdd = props =>{
             footer={modalFooter}
             style={{height:height,top:60}}
             bodyStyle={{padding:0}}
-            className="xcode branch-add-modal"
+            className='xcode branch-add-modal'
             destroyOnClose={true}
         >
             <div className='branch-add-up'>
@@ -70,20 +74,40 @@ const BranchAdd = props =>{
             <div className='branch-add-content'>
                 <Form
                     form={form}
-                    layout="vertical"
-                    autoComplete="off"
-                    initialValues={{'2':2}}
+                    layout='vertical'
+                    autoComplete='off'
                 >
-                    <Form.Item label={'分支名称'} name={'1'}
-                               rules={[{required:true,message:`分支名称不能为空`}]}
+                    <Form.Item label={'分支名称'} name={'branchName'}
+                               rules={[
+                                   {required:true,message:''},
+                                   ({ getFieldValue }) => ({
+                                       validator(rule,value) {
+                                           if(!value || value.trim() === ""){
+                                               return Promise.reject("名称不能为空");
+                                           }
+                                           let nameArray = []
+                                           if(branchList){
+                                               nameArray = branchList && branchList.map(item=>item.branchName)
+                                           }
+                                           if (nameArray.includes(value)) {
+                                               return Promise.reject("名称已经存在");
+                                           }
+                                           return Promise.resolve()
+                                       },
+                                   }),
+                               ]}
                     >
                         <Input/>
                     </Form.Item>
-                    <Form.Item label={'分支来源'} name={'2'}>
+                    <Form.Item label={'分支来源'} name={'point'}
+                               rules={[{required:true,message:`分支来源不能为空`}]}
+                    >
                         <Select>
-                            <Select.Option value={2}>master</Select.Option>
-                            <Select.Option value={3}>xcode-v1.0</Select.Option>
-                            <Select.Option value={4}>xcode-v2.0</Select.Option>
+                            {
+                                branchList && branchList.map(item=>{
+                                    return <Select.Option value={item.branchName} key={item.branchName}>{item.branchName}</Select.Option>
+                                })
+                            }
                         </Select>
                     </Form.Item>
                 </Form>

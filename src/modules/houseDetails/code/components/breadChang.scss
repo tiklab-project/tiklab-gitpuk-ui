@@ -1,7 +1,6 @@
 .code-head-left{
     flex: 1;
     display: flex;
-    align-items: center;
     .code-branch{
         width: 160px;
         margin-right: var(--tiklab-padding-item);
@@ -11,6 +10,8 @@
     }
     .code-bread{
         display: flex;
+        flex-wrap: wrap;
+        padding: 4px 0;
         .bread-item{
             &:not(:last-child){
                 margin-right: 5px;

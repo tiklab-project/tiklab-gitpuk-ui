@@ -1,6 +1,6 @@
 import React,{useEffect,useState} from 'react'
 import {Input,Form} from 'antd'
-import {MonacoEdit,MonacoPreview} from '../../../common/monaco/monaco'
+import {MonacoEdit,MonacoPreview} from '../../../common/editor/monaco'
 import BreadcrumbContent from '../../../common/breadcrumb/breadcrumb'
 import Btn from '../../../common/btn/btn'
 import './edit.scss'

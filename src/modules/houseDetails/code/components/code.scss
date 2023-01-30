@@ -3,20 +3,14 @@
         &-head{
             display: flex;
             justify-content: flex-start;
-            align-items: center;
             margin: var(--tiklab-padding-item) 0;
             .code-head-right{
                 display: flex;
-                align-items: center;
-                .code-search{
+                .code-search,.code-file-add{
                     margin-left: var(--tiklab-padding-item);
                     font-size: 16px;
                     cursor: pointer;
-                }
-                .code-file-add{
-                    margin-left: var(--tiklab-padding-item);
-                    font-size: 16px;
-                    cursor: pointer;
+                    padding: 8px 0;
                 }
                 .code-desc{
                     margin-left: var(--tiklab-padding-item);

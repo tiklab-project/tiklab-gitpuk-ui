@@ -2,7 +2,7 @@ import React,{useEffect,useState} from 'react'
 import {Divider,Select} from 'antd'
 import {CopyOutlined,CaretDownOutlined,CaretRightOutlined} from '@ant-design/icons'
 import BreadcrumbContent from '../../../common/breadcrumb/breadcrumb'
-import {MonacoPreview} from '../../../common/monaco/monaco'
+import {MonacoPreview} from '../../../common/editor/monaco'
 import Btn from '../../../common/btn/btn'
 import './commitsDetails.scss'
 

@@ -4,7 +4,7 @@ import {CopyOutlined,FileTextOutlined} from '@ant-design/icons'
 import {inject,observer} from 'mobx-react'
 import Btn from '../../../common/btn/btn'
 import BreadcrumbContent from '../../../common/breadcrumb/breadcrumb'
-import {MonacoBlob} from '../../../common/monaco/monaco'
+import {MonacoBlob} from '../../../common/editor/monaco'
 import RecentSubmitMsg from './recentSubmitMsg'
 import BreadChang from './breadChang'
 import './blob.scss'
@@ -50,7 +50,10 @@ const Blob = props =>{
                         </div>
                     </div>
                 </div>
-                <RecentSubmitMsg/>
+                <RecentSubmitMsg
+                    {...props}
+                    houseInfo={houseInfo}
+                />
                 <div className='blob-content-editor'>
                     <div className='blob-editor-title'>
                         <div className='editor-title-left'>

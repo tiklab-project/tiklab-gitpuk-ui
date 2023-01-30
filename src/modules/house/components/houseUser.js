@@ -7,7 +7,7 @@ import EmptyText from "../../common/emptyText/emptyText"
 
 const HouseUser = props =>{
 
-    const {yUserList,setYUserList,nUserList,setNUserList,userId,member,setMember} = props
+    const {yUserList,setYUserList,nUserList,setNUserList,userId,member,setMember,userTitle} = props
 
     const [visible,setVisible] = useState(false)
 
@@ -97,7 +97,7 @@ const HouseUser = props =>{
         <div className="storehouseAddModal-user">
             <div className="storehouseAddModal-user-title">
                 <div>
-                    仓库成员
+                    {userTitle}成员
                 </div>
                 <Btn
                     title={"添加成员"}

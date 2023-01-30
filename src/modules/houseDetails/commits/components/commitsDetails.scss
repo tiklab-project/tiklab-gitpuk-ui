@@ -60,9 +60,6 @@
             }
             .contrast-content{
                 .contrast-content-item{
-                    &:not(:last-child){
-                        margin-bottom: var(--tiklab-padding-item);
-                    }
                     .item-head{
                         display: flex;
                         flex-direction: row;

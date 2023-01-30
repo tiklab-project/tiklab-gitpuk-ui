@@ -7,7 +7,7 @@ import './houseAdd.scss'
 
 const HouseAdd = props =>{
 
-    const {addHouseVisible,setAddHouseVisible,createCode} = props
+    const {addHouseVisible,setAddHouseVisible,createCode,groupList} = props
 
     const [form] = Form.useForm()
 
@@ -16,11 +16,23 @@ const HouseAdd = props =>{
     const [yUserList,setYUserList] = useState([])
     const [nUserList,setNUserList] = useState([])
     const [member,setMember] = useState([])
+    const [codeGroup,setCodeGroup] = useState(null)
 
     const onOk = value => {
-        createCode(value).then(res=>{
+        createCode({
+            ...value,
+            codeGroup:{groupId:codeGroup}
+        }).then(res=>{
             res.code===0 && props.history.push(`/index/house/${value.name}/tree`)
         })
+    }
+
+    const onValuesChange = value => {
+        if(value.name){
+            form.setFieldsValue({
+                address:value.name
+            })
+        }
     }
 
     const newStoreHouse = (
@@ -29,6 +41,7 @@ const HouseAdd = props =>{
             autoComplete='off'
             layout='vertical'
             initialValues={{group:1}}
+            onValuesChange={onValuesChange}
         >
             <Form.Item label='仓库名称' name='name'
                        rules={[
@@ -51,9 +64,16 @@ const HouseAdd = props =>{
                         value={'http://xcode/tiklab.net'}
                     />
                 </Form.Item>
-                <Form.Item label={<span style={{opacity:0}}>归属</span>} name='group'>
-                    <Select bordered={false} style={{background:'#fff',width:150,height:30,margin:'0 3px'}}>
-                        <Select.Option value={1}>不选择分组</Select.Option>
+                <Form.Item label={<span style={{opacity:0}}>归属</span>}>
+                    <Select bordered={false} style={{background:'#fff',width:150,height:30,margin:'0 3px'}} defaultValue={null}
+                            onChange={value=>setCodeGroup(value)}
+                    >
+                        <Select.Option value={null}>不选择分组</Select.Option>
+                        {
+                            groupList && groupList.map(item=>{
+                                return <Select.Option value={item.groupId} key={item.groupId}>{item.name}</Select.Option>
+                            })
+                        }
                     </Select>
                 </Form.Item>
                 <Form.Item label='仓库路径' name='address'
@@ -63,7 +83,7 @@ const HouseAdd = props =>{
                                ({ getFieldValue }) => ({
                                    validator(rule, value) {
                                        if(!value || value.trim() === ''){
-                                           return Promise.reject('仓库路径不能为空');
+                                           return Promise.reject('仓库路径不能为空')
                                        }
                                        return Promise.resolve()
                                    },
@@ -77,6 +97,7 @@ const HouseAdd = props =>{
             <HousePower
                 powerType={powerType}
                 setPowerType={setPowerType}
+                powerTitle={'仓库'}
             />
             {
                 powerType===2 &&
@@ -88,6 +109,7 @@ const HouseAdd = props =>{
                     userId={'11111'}
                     member={member}
                     setMember={setMember}
+                    userTitle={'仓库'}
                 />
             }
             <Form.Item name='remark' label='仓库描述'>

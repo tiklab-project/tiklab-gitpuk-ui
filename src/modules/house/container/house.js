@@ -12,14 +12,18 @@ import '../components/house.scss'
 
 const House = props => {
 
-    const {houseStore} = props
+    const {houseStore,houseGroupStore} = props
 
     const {houseType,setHouseType,createCode,findUserCode,houseList} = houseStore
+    const {findUserGroup,groupList} = houseGroupStore
 
     const [addHouseVisible,setAddHouseVisible] = useState(false)
 
     useEffect(()=>{
+        // 初始化仓库
         findUserCode()
+        // 仓库组
+        findUserGroup()
     },[])
 
     const lis = [
@@ -55,6 +59,7 @@ const House = props => {
                     <HouseAdd
                         {...props}
                         createCode={createCode}
+                        groupList={groupList}
                         addHouseVisible={addHouseVisible}
                         setAddHouseVisible={setAddHouseVisible}
                     />
@@ -84,4 +89,4 @@ const House = props => {
     )
 }
 
-export default inject('houseStore')(observer(House))
+export default inject('houseStore','houseGroupStore')(observer(House))

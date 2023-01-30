@@ -1,6 +1,6 @@
 import {observable,action} from 'mobx'
 import {
-    FindFileTree
+    FindFileTree,
 } from '../api/code'
 
 export class CodeStore {
@@ -19,7 +19,6 @@ export class CodeStore {
         }
         return data
     }
-
 }
 
 export const CODE_STORE='codeStore'

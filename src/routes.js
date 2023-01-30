@@ -197,12 +197,12 @@ const routers = [
                         component:HouseMerge,
                     },
                     {
-                        path:'/index/house/:name/commits/',
+                        path:'/index/house/:name/commits/:branch',
                         exact: true,
                         component:Commits,
                     },
                     {
-                        path:'/index/house/:name/commits/:commitsId',
+                        path:'/index/house/:name/commit/:commitsId',
                         component:CommitsDetails,
                     },
                     {

@@ -1,12 +1,26 @@
 import React,{useState,useEffect} from 'react'
+import {inject,observer} from 'mobx-react'
 import {Input,Avatar,Select} from 'antd'
 import {CopyOutlined,FolderOpenOutlined,SearchOutlined} from '@ant-design/icons'
 import BreadcrumbContent from '../../../common/breadcrumb/breadcrumb'
+import {copy} from '../../../common/client/client'
+import BranchChang from '../../branch/components/branchChang'
+import EmptyText from '../../../common/emptyText/emptyText'
 import '../components/commits.scss'
 
 const Commits = props =>{
 
-    const {match} = props
+    const {commitsStore,houseStore,match,location} = props
+
+    const {houseInfo} = houseStore
+    const {findBranchCommit,commitsList} = commitsStore
+
+    useEffect(()=>{
+        houseInfo.name && findBranchCommit({
+            codeId:houseInfo.codeId,
+            branchName: match.params.branch?match.params.branch:'master'
+        })
+    },[houseInfo.name,location.pathname])
 
     const changBranch = value => {
     }
@@ -50,49 +64,55 @@ const Commits = props =>{
     ]
 
     const goDetails = item =>{
-        props.history.push(`/index/house/${match.params.name}/commits/${item.id}`)
+        props.history.push(`/index/house/${houseInfo.name}/commit/${item.commitId}`)
     }
 
     const renderCommits = item => {
         return (
-            <div className='msg-item' key={item.id}>
+            <div className='msg-item' key={item.commitId}>
                 <div className='msg-item-left'>
                     <div className='msg-item-icon'>
                         <Avatar
                             style={{
-                                backgroundColor: "#f56a00",
+                                backgroundColor: '#f56a00',
                                 verticalAlign: 'middle',
                             }}
-                            size="large"
+                            size='large'
                         />
                     </div>
                     <div className='msg-item-msg' onClick={()=>goDetails(item)}>
-                        <div className='msg-item-title'>{item.msg}</div>
+                        <div className='msg-item-title'>{item.commitMessage}</div>
                         <div className='msg-item-desc'>
-                            <span className='desc-user'>{item.user}</span>
-                            <span className='desc-time'>{item.time}</span>
+                            <span className='desc-user'>{item.commitUser}</span>
+                            <span className='desc-time'>{item.commitTime}</span>
                         </div>
                     </div>
                 </div>
                 <div className='msg-item-ident'>
-                    <div className='ident-title'> 33128853</div>
-                    <div className='ident-copy'><CopyOutlined /></div>
+                    <div className='ident-title'> {item.commitId.substring(0,8)}</div>
+                    <div className='ident-copy'>
+                        <CopyOutlined onClick={()=>copy(item.commitId)}/>
+                    </div>
                     <div className='ident-folder'><FolderOpenOutlined /></div>
                 </div>
             </div>
         )
     }
 
-    const renderCommitsData = group => {
+    const renderCommitsData = (group,groupIndex) => {
         return (
-            <div className='commits-msg-item' key={group.id}>
+            <div className='commits-msg-item' key={groupIndex}>
                 <div className='commits-msg-item-title'>
-                    <span className='title-time'>{group.time}</span>
-                    <span className='title-num'>({group.num})</span>
+                    <span className='title-time'>{group.commitTime}</span>
+                    <span className='title-num'>(
+                        {
+                            group.commitMessageList && group.commitMessageList.length
+                        }
+                    )</span>
                 </div>
                 <div className='commits-msg-item-content'>
                     {
-                        group.commit.map(item=>{
+                        group.commitMessageList && group.commitMessageList.map(item=>{
                             return renderCommits(item)
                         })
                     }
@@ -108,15 +128,11 @@ const Commits = props =>{
                 <div className='commits-head'>
                     <div className='commits-head-left'>
                         <div className='commits-branch'>
-                            <Select defaultValue={'master'} onChange={value=>changBranch(value)}>
-                                <Select.Option value={'master'}>master</Select.Option>
-                            </Select>
-                        </div>
-                        <div className='commits-bread'>
-                            <div className='bread-item'>node </div>
-                            <div className='bread-item'> / </div>
-                            <div className='bread-item'>node</div>
-                            <div className='bread-item'> / </div>
+                            <BranchChang
+                                {...props}
+                                houseInfo={houseInfo}
+                                type={'commit'}
+                            />
                         </div>
                     </div>
                     <div className='commits-head-right'>
@@ -139,9 +155,12 @@ const Commits = props =>{
                 </div>
                 <div className='commits-msg'>
                     {
-                        commitsData.map(group=>{
-                            return renderCommitsData(group)
+                        commitsList && commitsList.length > 0 ?
+                        commitsList.map((group,groupIndex)=>{
+                            return renderCommitsData(group,groupIndex)
                         })
+                        :
+                        <EmptyText/>
                     }
                 </div>
             </div>
@@ -149,4 +168,4 @@ const Commits = props =>{
     )
 }
 
-export default Commits
+export default inject('houseStore','commitsStore')(observer(Commits))

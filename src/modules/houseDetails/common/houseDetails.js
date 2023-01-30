@@ -20,6 +20,7 @@ const HouseDetails= props=>{
 
     let path = props.location.pathname
     const houseName = match.params.name
+    const master = match.params.branch ? match.params.branch:'master'
 
     const [nav,setNav] = useState('')
 
@@ -32,6 +33,9 @@ const HouseDetails= props=>{
         }
         if(path.indexOf(`/index/house/${houseName}/edit`)===0){
             path=`/index/house/${houseName}/tree`
+        }
+        if(path.indexOf(`/index/house/${houseName}/commits`)===0){
+            path=`/index/house/${houseName}/commits/master`
         }
         setNav(path)
     },[path])
@@ -53,9 +57,11 @@ const HouseDetails= props=>{
         })
     },[houseName])
 
-
     const isHouse = data => data && data.some(item=>item.name === houseName)
 
+    useEffect(()=>{
+        return setHouseInfo('')
+    },[])
 
     // 侧边第一栏导航
     const firstRouters=[
@@ -66,7 +72,7 @@ const HouseDetails= props=>{
             key:'2',
         },
         {
-            to:`/index/house/${houseName}/commits`,
+            to:`/index/house/${houseName}/commits/${master}`,
             title: '提交',
             icon: <PushpinOutlined />,
             key:'3',

@@ -1,6 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import {PlusOutlined,SearchOutlined,DeleteOutlined,DownOutlined} from '@ant-design/icons'
-import {Input,Space,Tooltip} from 'antd'
+import {Input,Space,Tooltip,Popconfirm} from 'antd'
+import {inject,observer} from 'mobx-react'
 import BreadcrumbContent from '../../../common/breadcrumb/breadcrumb'
 import Btn from '../../../common/btn/btn'
 import Tabs from '../../../common/tabs/tabs'
@@ -10,65 +11,41 @@ import '../components/branch.scss'
 
 const Branch = props =>{
 
+    const {houseStore,branchStore} = props
+
+    const {houseInfo} = houseStore
+    const {createBranch,findAllBranch,branchList,fresh,deleteBranch} = branchStore
+
     const [branchType,setBranchType] = useState(1)
     const [addVisible,setAddVisible] = useState(false)
+
+    useEffect(()=>{
+        houseInfo.name && findAllBranch(houseInfo.codeId)
+    },[houseInfo.name,fresh])
 
     const clickType = item => {
         setBranchType(item.id)
     }
 
-    const lis = [
-        {
-            id:1,
-            title:'所有分支',
-        },
-        {
-            id:2,
-            title:'活跃分支',
-        },
-        {
-            id:3,
-            title:'非活跃分支',
-        }
-    ]
-
-    const data = [
-        {
-            id:'1',
-            name:'zzzz',
-            type:'1',
-            mit:'2'
-        },
-        {
-            id:'2',
-            name:'zzzz',
-            type:'2',
-            mit:'2'
-        },
-        {
-            id:'3',
-            name:'zzzz',
-            type:'2',
-            mit:'1'
-        },
-    ]
+   const delBranch = item =>{
+       deleteBranch({
+           codeId:houseInfo.codeId,
+           branchName:item.branchName
+       })
+   }
 
     const renderData = item => {
         return(
-            <div className='branch-tables-item' key={item.id}>
+            <div className='branch-tables-item' key={item.branchName}>
                 <div className='branch-tables-icon'>
-                    <Listname text={item.name}/>
+                    <Listname text={item.branchName}/>
                 </div>
                 <div className='branch-tables-name'>
                     <div className='name-text-title'>
-                        <span className='name-text-name'>{item.name}</span>
+                        <span className='name-text-name'>{item.branchName}</span>
                         {
-                            item.type==='1' &&
+                            item.defaultBranch &&
                             <span className='name-text-type name-text-default'>默认</span>
-                        }
-                        {
-                            item.mit==='1' &&
-                            <span className='name-text-type'>合并</span>
                         }
                     </div>
                     <div className='name-text-desc'>
@@ -93,17 +70,32 @@ const Branch = props =>{
                     </Tooltip>
                     <Tooltip title='下载'>
                         <span className='branch-tables-download'>
-                            <svg className="icon" aria-hidden="true">
-                                <use xlinkHref="#icon-xiazai"/>
+                            <svg className='icon' aria-hidden='true'>
+                                <use xlinkHref='#icon-xiazai'/>
                             </svg>
                             <DownOutlined style={{fontSize:13,paddingLeft:5}}/>
                         </span>
                     </Tooltip>
-                    <Tooltip title='删除'>
-                         <span className='branch-tables-del'>
+                    {
+                        item.defaultBranch ?
+                        <span className='no-del'>
                             <DeleteOutlined/>
                         </span>
-                    </Tooltip>
+                            :
+                        <Tooltip title='删除'>
+                            <Popconfirm
+                                title="你确定删除吗"
+                                onConfirm={()=>delBranch(item)}
+                                okText="确定"
+                                cancelText="取消"
+                                placement="topRight"
+                            >
+                                <span className='branch-tables-del'>
+                                    <DeleteOutlined/>
+                                </span>
+                            </Popconfirm>
+                        </Tooltip>
+                    }
                 </Space>
             </div>
         )
@@ -121,6 +113,9 @@ const Branch = props =>{
                         onClick={()=>setAddVisible(true)}
                     />
                     <BranchAdd
+                        createBranch={createBranch}
+                        branchList={branchList}
+                        houseInfo={houseInfo}
                         addVisible={addVisible}
                         setAddVisible={setAddVisible}
                     />
@@ -128,7 +123,20 @@ const Branch = props =>{
                 <div className='branch-content-type'>
                     <Tabs
                         type={branchType}
-                        tabLis={lis}
+                        tabLis={ [
+                            {
+                                id:1,
+                                title:'所有分支',
+                            },
+                            {
+                                id:2,
+                                title:'活跃分支',
+                            },
+                            {
+                                id:3,
+                                title:'非活跃分支',
+                            }
+                        ]}
                         onClick={clickType}
                     />
                     <div className='branch-type-input'>
@@ -143,7 +151,7 @@ const Branch = props =>{
                 </div>
                 <div className='branch-content-tables'>
                     {
-                        data && data.map(item=>{
+                        branchList && branchList.map(item=>{
                             return renderData(item)
                         })
                     }
@@ -153,4 +161,4 @@ const Branch = props =>{
     )
 }
 
-export default Branch
+export default inject('houseStore','branchStore')(observer(Branch))

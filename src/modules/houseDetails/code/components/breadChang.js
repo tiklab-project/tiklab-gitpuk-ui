@@ -1,5 +1,5 @@
-import React,{Fragment} from 'react'
-import {Select} from 'antd'
+import React, {Fragment, useEffect} from 'react'
+import BranchChang from '../../branch/components/branchChang'
 import './breadChang.scss'
 
 const BreadChang = props => {
@@ -7,10 +7,6 @@ const BreadChang = props => {
     const {houseInfo,type,location} = props
 
     const branch = location.pathname.split('/'+houseInfo.name+'/'+type+'/')
-
-    const changBranch = value => {
-
-    }
 
     const breadJump = (name,index) =>{
         let path = `/index/house/${houseInfo.name}/tree`
@@ -34,9 +30,11 @@ const BreadChang = props => {
     return (
         <div className='code-head-left'>
             <div className='code-branch'>
-                <Select defaultValue={'master'} onChange={value=>changBranch(value)}>
-                    <Select.Option value={'master'}>master</Select.Option>
-                </Select>
+                <BranchChang
+                    {...props}
+                    houseInfo={houseInfo}
+                    type={'code'}
+                />
             </div>
             <div className='code-bread'>
                 <div className='bread-item'

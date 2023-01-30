@@ -13,12 +13,12 @@ import Btn from '../../../common/btn/btn'
 import EmptyText from '../../../common/emptyText/emptyText'
 import Usher from '../components/usher'
 import RecentSubmitMsg from '../components/recentSubmitMsg'
+import BreadChang from '../components/breadChang'
 import '../components/code.scss'
-import BreadChang from "../components/breadChang";
 
 const Code = props =>{
 
-    const {houseStore,codeStore,location} = props
+    const {houseStore,codeStore,location,match} = props
 
     const {houseInfo} = houseStore
     const {findFileTree,codeTreeData} = codeStore
@@ -35,13 +35,12 @@ const Code = props =>{
         houseInfo.name && findFileTree({
             codeId:houseInfo.codeId,
             path:branch[1]?name[1]:'',
-            branch:''
+            branch:match.params.branch?match.params.branch:'master'
         })
         .then(res=>{
             res.code===500001 && props.history.push('/index/404')
             res.code===100 && setIsEmpty(true)
         })
-
     },[houseInfo.name,location.pathname])
 
     useEffect(()=>{
@@ -69,6 +68,10 @@ const Code = props =>{
                 return 'css'
             case 'txt':
                 return <FileOutlined />
+            case 'json':
+                return
+            case 'xml':
+                return
 
         }
     }
@@ -169,22 +172,24 @@ const Code = props =>{
                         type={'tree'}
                     />
                     <div className='code-head-right'>
-                        <div className='code-search'>
-                            {
-                                searInput ?
-                                <Input
-                                    allowClear
-                                    ref={searValue}
-                                    placeholder='文件名称'
-                                    // onChange={onChangeSearch}
-                                    prefix={<SearchOutlined />}
-                                    onBlur={()=>setSearInput(false)}
-                                    style={{width:200}}
-                                />
+                        {
+                            searInput ?
+                                <div className='code-search-input'>
+                                    <Input
+                                        allowClear
+                                        ref={searValue}
+                                        placeholder='文件名称'
+                                        // onChange={onChangeSearch}
+                                        prefix={<SearchOutlined />}
+                                        onBlur={()=>setSearInput(false)}
+                                        style={{width:200}}
+                                    />
+                                </div>
                                 :
-                                <SearchOutlined onClick={()=>setSearInput(true)}/>
-                            }
-                        </div>
+                                <div className='code-search'>
+                                    <SearchOutlined onClick={()=>setSearInput(true)}/>
+                                </div>
+                        }
                         <div className='code-file-add'>
                             <Dropdown overlay={addFileMenu} trigger={['click']} placement={'bottomRight'}>
                                 <PlusOutlined/>
@@ -213,7 +218,10 @@ const Code = props =>{
                         </div>
                     </div>
                 </div>
-                <RecentSubmitMsg/>
+                <RecentSubmitMsg
+                    {...props}
+                    houseInfo={houseInfo}
+                />
                 <div className='code-content-tables'>
                     <Table
                         bordered={false}

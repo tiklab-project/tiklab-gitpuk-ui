@@ -1,8 +1,8 @@
 @font-face {
-  font-family: "iconfont"; /* Project id 3197798 */
-  src: url('iconfont.woff2?t=1673349628481') format('woff2'),
-       url('iconfont.woff?t=1673349628481') format('woff'),
-       url('iconfont.ttf?t=1673349628481') format('truetype');
+  font-family: "iconfont"; /* Project id 3873189 */
+  src: url('iconfont.woff2?t=1675072891412') format('woff2'),
+       url('iconfont.woff?t=1675072891412') format('woff'),
+       url('iconfont.ttf?t=1675072891412') format('truetype');
 }
 
 .iconfont {
@@ -13,127 +13,27 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-weidaqiadewenjianjia:before {
+  content: "\e600";
+}
+
+.icon-JavaScript:before {
+  content: "\e704";
+}
+
 .icon-xiazai:before {
-  content: "\e617";
+  content: "\e620";
 }
 
-.icon-goujian:before {
-  content: "\e651";
+.icon-postcss:before {
+  content: "\e67f";
 }
 
-.icon-tuisong:before {
-  content: "\e626";
+.icon-webpack:before {
+  content: "\e6ae";
 }
 
-.icon-SVN:before {
-  content: "\e67a";
-}
-
-.icon-sonarqube:before {
-  content: "\ecaa";
-}
-
-.icon-ssh:before {
-  content: "\e73c";
-}
-
-.icon-git:before {
-  content: "\e658";
-}
-
-.icon-Scan:before {
-  content: "\e616";
-}
-
-.icon-chufa:before {
-  content: "\e606";
-}
-
-.icon-jiaoben:before {
-  content: "\e621";
-}
-
-.icon-mes:before {
-  content: "\e60f";
-}
-
-.icon-bushu:before {
-  content: "\e628";
-}
-
-.icon-ceshi:before {
-  content: "\e8ad";
-}
-
-.icon-github:before {
-  content: "\e63a";
-}
-
-.icon-candy:before {
-  content: "\e663";
-}
-
-.icon-helmet:before {
-  content: "\e66a";
-}
-
-.icon-backpack:before {
-  content: "\e660";
-}
-
-.icon-buzzer:before {
-  content: "\e662";
-}
-
-.icon-icon-test:before {
-  content: "\e604";
-}
-
-.icon-renwu:before {
-  content: "\ff84";
-}
-
-.icon-suyuanmabiaoqian:before {
-  content: "\e99d";
-}
-
-.icon-xuniji:before {
-  content: "\ea6b";
-}
-
-.icon-docker:before {
-  content: "\e659";
-}
-
-.icon-nodejs:before {
-  content: "\e683";
-}
-
-.icon-gitlab:before {
-  content: "\e65c";
-}
-
-.icon-gitee:before {
-  content: "\e60c";
-}
-
-.icon-meiyouxiangguan:before {
-  content: "\e610";
-}
-
-.icon-tianjia:before {
-  content: "\e613";
-}
-
-.icon-zengjia:before {
-  content: "\e8c8";
-}
-
-.icon-xingxing1:before {
-  content: "\e603";
-}
-
-.icon-xingxing-kong:before {
-  content: "\e649";
+.icon-json:before {
+  content: "\e639";
 }
 

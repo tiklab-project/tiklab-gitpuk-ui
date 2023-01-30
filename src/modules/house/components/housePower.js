@@ -4,7 +4,7 @@ import './housePower.scss'
 
 const HousePower = props =>{
 
-    const {powerType,setPowerType} = props
+    const {powerType,setPowerType,powerTitle} = props
 
     const powerLis = [
         {
@@ -23,7 +23,7 @@ const HousePower = props =>{
 
     return (
         <div className='house-power'>
-            <div className='house-power-title'>仓库权限</div>
+            <div className='house-power-title'>{powerTitle}权限</div>
             <div className='house-power-content'>
                 {
                     powerLis.map(item=>{
