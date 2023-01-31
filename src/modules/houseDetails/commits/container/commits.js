@@ -1,7 +1,9 @@
 import React,{useState,useEffect} from 'react'
 import {inject,observer} from 'mobx-react'
-import {Input,Avatar,Select} from 'antd'
+import {Input,Select} from 'antd'
 import {CopyOutlined,FolderOpenOutlined,SearchOutlined} from '@ant-design/icons'
+import {Profile} from 'tiklab-eam-ui'
+import {getUser} from 'tiklab-core-ui'
 import BreadcrumbContent from '../../../common/breadcrumb/breadcrumb'
 import {copy} from '../../../common/client/client'
 import BranchChang from '../../branch/components/branchChang'
@@ -70,22 +72,18 @@ const Commits = props =>{
     const renderCommits = item => {
         return (
             <div className='msg-item' key={item.commitId}>
-                <div className='msg-item-left'>
-                    <div className='msg-item-icon'>
-                        <Avatar
-                            style={{
-                                backgroundColor: '#f56a00',
-                                verticalAlign: 'middle',
-                            }}
-                            size='large'
-                        />
+                <div className='msg-item-icon'>
+                    <Profile userInfo={getUser()}/>
+                </div>
+                <div className='msg-item-msg'>
+                    <div className='msg-item-title'>
+                        <span className='title-commitMsg' onClick={()=>goDetails(item)}>
+                            {item.commitMessage}
+                        </span>
                     </div>
-                    <div className='msg-item-msg' onClick={()=>goDetails(item)}>
-                        <div className='msg-item-title'>{item.commitMessage}</div>
-                        <div className='msg-item-desc'>
-                            <span className='desc-user'>{item.commitUser}</span>
-                            <span className='desc-time'>{item.commitTime}</span>
-                        </div>
+                    <div className='msg-item-desc'>
+                        <span className='desc-user'>{item.commitUser}</span>
+                        <span className='desc-time'>{item.commitTime}</span>
                     </div>
                 </div>
                 <div className='msg-item-ident'>

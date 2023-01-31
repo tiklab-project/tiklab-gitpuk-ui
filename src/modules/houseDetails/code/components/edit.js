@@ -1,17 +1,52 @@
 import React,{useEffect,useState} from 'react'
 import {Input,Form} from 'antd'
+import {inject,observer} from 'mobx-react'
 import {MonacoEdit,MonacoPreview} from '../../../common/editor/monaco'
 import BreadcrumbContent from '../../../common/breadcrumb/breadcrumb'
 import Btn from '../../../common/btn/btn'
+import {interceptUrl} from '../../../common/client/client'
 import './edit.scss'
 
 const Edit = props =>{
 
-    const {match} = props
+    const {location,houseStore,codeStore} = props
+
+    const {houseInfo} = houseStore
+    const {readFile,blobFile,writeFile} = codeStore
 
     const [form] = Form.useForm()
+    const fileAddress = interceptUrl(location.pathname,'/'+houseInfo.name+'/edit/master')
 
     const [editType,setEditType] = useState('compile')
+    const [previewValue,setPreviewValue] = useState('')
+    const [fileName,setFileName] = useState('')
+    const [editPosition,setEditPosition] = useState('')  // 获取修改内容的行数
+
+    useEffect(()=>{
+        houseInfo.name && readFile({
+            codeId:houseInfo.codeId,
+            fileAddress:fileAddress[1]
+        })
+        .then(res=>{
+            if(res.code===0){
+                setPreviewValue(res.data && res.data.fileMessage)
+                setFileName(res.data && res.data.fileName)
+            }
+        })
+    },[houseInfo.name])
+
+    const onOk = (value) => {
+        writeFile({
+            codeId:houseInfo.codeId,
+            newFileName:fileName?fileName:blobFile.fileName,
+            oldFileName:blobFile.fileName,
+            fileAddress:fileAddress[1],
+            fileContent:previewValue,
+            ...value
+        }).then(res=>{
+            res.code===0 && props.history.push(`/index/house/${houseInfo.name}/tree`)
+        })
+    }
 
     return(
         <div className='edit'>
@@ -21,12 +56,17 @@ const Edit = props =>{
                     编辑文件
                 </div>
                 <div className='edit-content-title'>
-                    <span className='edit-title'>node</span>
+                    <span className='edit-title'
+                        onClick={()=>props.history.push(`/index/house/${houseInfo.name}/tree`)}
+                    >
+                        {houseInfo.name}
+                    </span>
                     <span className='edit-title'>/</span>
                     <span className='edit-title'>
                         <Input
-                            defaultValue={'.gitignore'}
+                            value={fileName && fileName}
                             style={{width:'auto'}}
+                            onChange={e=>setFileName(e.target.value)}
                         />
                     </span>
                 </div>
@@ -43,14 +83,18 @@ const Edit = props =>{
                         {
                             editType==='compile'?
                             <MonacoEdit
-                                readOnly={editType==='compile'}
+                                blobFile={blobFile}
+                                previewValue={previewValue}
+                                setPreviewValue={setPreviewValue}
+                                setEditPosition={setEditPosition}
                             />
                                 :
                             <MonacoPreview
-                                newValue={'哈哈哈哈'}
-                                oldValue={'呜呜呜呜'}
-                                language={'java'}
+                                oldValue={blobFile && blobFile.fileMessage}
+                                newValue={previewValue}
+                                language={blobFile && blobFile.fileType}
                                 renderOverviewRuler={true}
+                                editPosition={editPosition}
                             />
                         }
 
@@ -61,12 +105,20 @@ const Edit = props =>{
                         form={form}
                         autoComplete='off'
                         layout='vertical'
-                        initialValues={{name1:'更新',name2:'master'}}
+                        initialValues={{commitMessage:`更新`,commitBranch:'master'}}
                     >
-                        <Form.Item label='提交信息' name='name1'>
+                        <Form.Item label='提交信息' name='commitMessage'
+                                   rules={[
+                                       {required:true,message:'提交信息不能为空'},
+                                   ]}
+                        >
                             <Input.TextArea/>
                         </Form.Item>
-                        <Form.Item label='目标分支' name='name2'>
+                        <Form.Item label='目标分支' name='commitBranch'
+                                   rules={[
+                                       {required:true,message:'目标分支不能为空'},
+                                   ]}
+                        >
                             <Input/>
                         </Form.Item>
                     </Form>
@@ -80,6 +132,15 @@ const Edit = props =>{
                     <Btn
                         title={'提交更改'}
                         type={'primary'}
+                        onClick={() => {
+                            form
+                                .validateFields()
+                                .then((values) => {
+                                    onOk(values)
+                                    form.resetFields()
+
+                                })
+                        }}
                     />
                 </div>
             </div>
@@ -87,4 +148,4 @@ const Edit = props =>{
     )
 }
 
-export default Edit
+export default inject('houseStore','codeStore')(observer(Edit))

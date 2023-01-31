@@ -1,12 +1,13 @@
 import React, {Fragment, useEffect} from 'react'
 import BranchChang from '../../branch/components/branchChang'
+import {interceptUrl} from '../../../common/client/client'
 import './breadChang.scss'
 
 const BreadChang = props => {
 
     const {houseInfo,type,location} = props
 
-    const branch = location.pathname.split('/'+houseInfo.name+'/'+type+'/')
+    const fileAddress = interceptUrl(location.pathname,'/'+houseInfo.name+'/'+type+'/')
 
     const breadJump = (name,index) =>{
         let path = `/index/house/${houseInfo.name}/tree`
@@ -21,8 +22,9 @@ const BreadChang = props => {
         return zz && zz.map((item,index)=>{
             return  index>0 &&
                 <Fragment key={index}>
-                    <div className='bread-item' onClick={()=>breadJump(zz,index)}>{item}</div>
                     <div className='bread-item'> / </div>
+                    <div className='bread-item' onClick={()=>breadJump(zz,index)}>{item}</div>
+                    {/*<div className='bread-item'> / </div>*/}
                 </Fragment>
         })
     }
@@ -40,8 +42,8 @@ const BreadChang = props => {
                 <div className='bread-item'
                      onClick={()=>props.history.push(`/index/house/${houseInfo.name}/tree`)}
                 >{houseInfo.name}</div>
-                <div className='bread-item'> / </div>
-                { renderCodeBread(branch) }
+                {/*<div className='bread-item'> / </div>*/}
+                { renderCodeBread(fileAddress) }
 
             </div>
         </div>

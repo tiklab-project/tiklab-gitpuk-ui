@@ -56,6 +56,8 @@
                     justify-content: space-between;
                     align-items: center;
                     .right-title{
+                        display: flex;
+                        flex-direction: row;
                         .title-user{
                             padding: 0 5px;
                             font-size: 13px;
@@ -137,6 +139,8 @@
                         padding-bottom: var(--tiklab-padding-item);
                         .desc-user-title{
                             flex: 1;
+                            display: flex;
+                            flex-direction: row;
                             .desc-user{
                                 padding: 0 5px;
                                 font-size: 13px;

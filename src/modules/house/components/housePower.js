@@ -4,7 +4,7 @@ import './housePower.scss'
 
 const HousePower = props =>{
 
-    const {powerType,setPowerType,powerTitle} = props
+    const {set,powerType,setPowerType,powerTitle} = props
 
     const powerLis = [
         {
@@ -29,7 +29,7 @@ const HousePower = props =>{
                     powerLis.map(item=>{
                         return <div
                             key={item.id}
-                            className={`house-power-item house-power-noSet ${powerType===item.id?'house-power-select':''}`}
+                            className={`house-power-item ${set?'house-power-set':'house-power-noSet'} ${powerType===item.id?'house-power-select':''}`}
                             onClick={()=>setPowerType(item.id)}
                         >
                             <div className='power-item'>

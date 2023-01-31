@@ -31,3 +31,13 @@ export const copy = data => {
     //复制之后再删除元素，否则无法成功赋值
     copyInput.remove();//删除动态创建的节点
 }
+
+// 文件路径截取
+export const interceptUrl = (url,data) =>{
+    if(data){
+        return url.split('/index/house'+ data)
+    }
+    else {
+        return url.split('/index/house')
+    }
+}

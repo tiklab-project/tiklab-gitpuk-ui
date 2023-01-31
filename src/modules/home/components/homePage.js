@@ -47,16 +47,10 @@ const HomePage = props =>{
         },
         {
             id:2,
-            title:"我的仓库",
+            title:"我的仓库组",
             icon:"#icon-icon-test",
             listLength: 2
-        },
-        {
-            id:3,
-            title:"我收藏的",
-            icon:"#icon-icon-test",
-            listLength: 1
-        },
+        }
     ]
 
     const renderStableList = item => {

@@ -13,6 +13,7 @@
         flex-wrap: wrap;
         padding: 4px 0;
         .bread-item{
+            word-break: break-all;
             &:not(:last-child){
                 margin-right: 5px;
             }

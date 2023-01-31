@@ -40,8 +40,8 @@ const RecentSubmitMsg = props =>{
                 <div className='ident-title'>
                     {latelyBranchCommit && latelyBranchCommit.commitId.substring(0,8)}
                 </div>
-                <div className='ident-btn'>
-                    <CopyOutlined onClick={()=>copy(latelyBranchCommit && latelyBranchCommit.commitId)}/>
+                <div className='ident-btn' onClick={()=>copy(latelyBranchCommit && latelyBranchCommit.commitId)}>
+                    <CopyOutlined/>
                 </div>
             </div>
         </div>

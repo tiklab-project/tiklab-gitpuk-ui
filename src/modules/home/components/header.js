@@ -1,6 +1,8 @@
-import React,{useState,useEffect} from 'react';
-import {Dropdown,Badge,Avatar} from 'antd';
-import {useTranslation} from 'react-i18next';
+import React,{useState,useEffect} from 'react'
+import {Dropdown,Badge,Avatar} from 'antd'
+import {useTranslation} from 'react-i18next'
+import {Profile,WorkAppConfig} from 'tiklab-eam-ui'
+import {getUser} from 'tiklab-core-ui'
 import {
     GlobalOutlined,
     BellOutlined,
@@ -95,7 +97,7 @@ const Head = props =>{
         <div className='header-outMenu'>
             <div className='header-outMenu-top'>
                 <div className='outMenu-out'>
-                    {/*<Profile userInfo={getUser()}/>*/}
+                    <Profile userInfo={getUser()}/>
                     <Avatar
                         style={{
                             color: '#f9c6a0',
@@ -153,7 +155,7 @@ const Head = props =>{
     return(
         <div className='frame-header'>
             <div className='frame-header-right'>
-                {/*<WorkAppConfig  isSSO={false}/>*/}
+                <WorkAppConfig  isSSO={false}/>
                 <div className='frame-header-logo'>
                     <img src={logo} alt='logo' />
                 </div>
@@ -178,9 +180,7 @@ const Head = props =>{
                     </div>
                     <Dropdown overlay={outMenu}>
                         <div className='frame-header-user'>
-                            {/*<Profile userInfo={getUser()}/>*/}
-                            <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-
+                            <Profile userInfo={getUser()}/>
                         </div>
                     </Dropdown>
                 </div>

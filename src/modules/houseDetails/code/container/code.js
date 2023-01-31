@@ -1,10 +1,9 @@
 import React, {useEffect, useState, useRef, Fragment} from 'react'
-import {Select,Input,Table,Dropdown,Tooltip,Button,Divider} from 'antd'
+import {Input,Table,Dropdown} from 'antd'
 import {
     SearchOutlined,
     PlusOutlined,
     CopyOutlined,
-    FileOutlined,
     FolderOutlined
 } from '@ant-design/icons'
 import {inject,observer} from 'mobx-react'
@@ -14,6 +13,8 @@ import EmptyText from '../../../common/emptyText/emptyText'
 import Usher from '../components/usher'
 import RecentSubmitMsg from '../components/recentSubmitMsg'
 import BreadChang from '../components/breadChang'
+import Clone from '../components/clone'
+import {interceptUrl} from '../../../common/client/client'
 import '../components/code.scss'
 
 const Code = props =>{
@@ -24,12 +25,11 @@ const Code = props =>{
     const {findFileTree,codeTreeData} = codeStore
 
     const searValue = useRef(null)
-    const name = location.pathname.split('/index/house')
-    const branch = location.pathname.split('/'+houseInfo.name+'/tree/')
+    const name = interceptUrl(location.pathname)
+    const branch = interceptUrl(location.pathname,'/' +houseInfo.name+'/tree/')
 
     const [isEmpty,setIsEmpty] = useState(false)
     const [searInput,setSearInput] = useState(false)
-    const [cloneVisible,setCloneVisible] = useState(false)
 
     useEffect(()=>{
         houseInfo.name && findFileTree({
@@ -49,29 +49,27 @@ const Code = props =>{
         }
     },[searInput])
 
-    const changBranch = value => {
-        props.history.push(`/index/house/${houseInfo.name}/tree/${value}`)
-    }
-
     const fileName = record => {
         props.history.push(`/index/house${record.path}`)
     }
 
-    const renderFileType = text => {
-        const fileType = text.substring(text.lastIndexOf('.') + 1)
+    const renderFileType = fileType => {
         switch (fileType) {
             case 'js':
-                return  <svg className='icon' aria-hidden='true'>
-                            <use xlinkHref='#icon-nodejs'/>
-                        </svg>
+            case 'java':
+                return  'JavaScript'
             case 'css':
                 return 'css'
             case 'txt':
-                return <FileOutlined />
+                return 'TXT'
             case 'json':
-                return
+                return 'json'
             case 'xml':
-                return
+                return 'xml'
+            case 'yaml':
+                return 'YAML'
+            default:
+                return 'JavaScript'
 
         }
     }
@@ -91,10 +89,12 @@ const Code = props =>{
                 return <span className='code-table-name' onClick={()=>fileName(record)}>
                             <span style={{paddingRight:5}}>
                                 {
-                                    record.fileType==='tree' ?
-                                        <FolderOutlined />
+                                    record.type==='tree' ?
+                                        <FolderOutlined/>
                                         :
-                                        renderFileType(text)
+                                        <svg className='icon' aria-hidden='true'>
+                                            <use xlinkHref={`#icon-${renderFileType(record.fileType)}`}/>
+                                        </svg>
                                 }
                             </span>
                             <span>{text}</span>
@@ -132,34 +132,6 @@ const Code = props =>{
     if(isEmpty){
         return <Usher/>
     }
-
-    const cloneMenu = (
-        <div className='clone-menu'>
-            <div className='clone-item'>
-                <div className='clone-item-title'>使用SSH克隆</div>
-                <Input.Group compact>
-                    <Input value='git@github.com:ant-design/ant-design.git' style={{width:'calc(100% - 50px)'}}/>
-                    <Tooltip title='复制地址'>
-                        <Button icon={<CopyOutlined />} />
-                    </Tooltip>
-                </Input.Group>
-            </div>
-            <div className='clone-item'>
-                <div className='clone-item-title'>使用HTTP克隆</div>
-                <Input.Group compact>
-                    <Input value='http://172.12.1.10/devops-itdd/tiklab-xcode-ui.git' style={{width:'calc(100% - 50px)'}}/>
-                    <Tooltip title='复制地址'>
-                        <Button icon={<CopyOutlined />} />
-                    </Tooltip>
-                </Input.Group>
-            </div>
-            <div className='clone-download'>
-                <div className='clone-item-download'>下载ZIP</div>
-                <Divider type='vertical' />
-                <div className='clone-item-download'>下载TAR</div>
-            </div>
-        </div>
-    )
 
     return(
         <div className='code'>
@@ -202,19 +174,7 @@ const Code = props =>{
                             />
                         </div>
                         <div className='code-clone'>
-                            <Dropdown
-                                overlay={cloneMenu}
-                                trigger={['click']}
-                                placement={'bottomRight'}
-                                visible={cloneVisible}
-                                onVisibleChange={visible=>setCloneVisible(visible)}
-                            >
-                                <Btn
-                                    title={'克隆'}
-                                    type={'primary'}
-                                    onClick={()=>setCloneVisible(!cloneVisible)}
-                                />
-                            </Dropdown>
+                            <Clone/>
                         </div>
                     </div>
                 </div>

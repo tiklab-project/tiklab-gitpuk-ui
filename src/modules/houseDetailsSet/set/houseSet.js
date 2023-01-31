@@ -65,6 +65,7 @@ const HouseSet = props =>{
                             <HousePower
                                 powerType={powerType}
                                 setPowerType={setPowerType}
+                                set={true}
                             />
                             <Form.Item name='desc' label='仓库描述'>
                                 <Input.TextArea/>

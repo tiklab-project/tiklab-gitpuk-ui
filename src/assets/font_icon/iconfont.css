@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 3873189 */
-  src: url('iconfont.woff2?t=1675072891412') format('woff2'),
-       url('iconfont.woff?t=1675072891412') format('woff'),
-       url('iconfont.ttf?t=1675072891412') format('truetype');
+  src: url('iconfont.woff2?t=1675142149858') format('woff2'),
+       url('iconfont.woff?t=1675142149858') format('woff'),
+       url('iconfont.ttf?t=1675142149858') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,58 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-YAML:before {
+  content: "\e625";
+}
+
+.icon-TXT:before {
+  content: "\e611";
+}
+
+.icon-xml:before {
+  content: "\e63a";
+}
+
+.icon-backpack:before {
+  content: "\e660";
+}
+
+.icon-buzzer:before {
+  content: "\e662";
+}
+
+.icon-candy:before {
+  content: "\e663";
+}
+
+.icon-helmet:before {
+  content: "\e66a";
+}
+
+.icon-icon-test:before {
+  content: "\e604";
+}
+
+.icon-meiyouxiangguan:before {
+  content: "\e610";
+}
+
+.icon-git:before {
+  content: "\e658";
+}
+
+.icon-renwu:before {
+  content: "\ff84";
+}
+
+.icon-xingxing1:before {
+  content: "\e603";
+}
+
+.icon-xingxing-kong:before {
+  content: "\e649";
 }
 
 .icon-weidaqiadewenjianjia:before {

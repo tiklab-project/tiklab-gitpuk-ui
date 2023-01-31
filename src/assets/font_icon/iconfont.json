@@ -6,6 +6,97 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "5916439",
+      "name": "YAML",
+      "font_class": "YAML",
+      "unicode": "e625",
+      "unicode_decimal": 58917
+    },
+    {
+      "icon_id": "17345729",
+      "name": "TXT",
+      "font_class": "TXT",
+      "unicode": "e611",
+      "unicode_decimal": 58897
+    },
+    {
+      "icon_id": "31260967",
+      "name": "xml",
+      "font_class": "xml",
+      "unicode": "e63a",
+      "unicode_decimal": 58938
+    },
+    {
+      "icon_id": "1194605",
+      "name": "backpack",
+      "font_class": "backpack",
+      "unicode": "e660",
+      "unicode_decimal": 58976
+    },
+    {
+      "icon_id": "1194615",
+      "name": "buzzer",
+      "font_class": "buzzer",
+      "unicode": "e662",
+      "unicode_decimal": 58978
+    },
+    {
+      "icon_id": "1194619",
+      "name": "candy",
+      "font_class": "candy",
+      "unicode": "e663",
+      "unicode_decimal": 58979
+    },
+    {
+      "icon_id": "1194639",
+      "name": "helmet",
+      "font_class": "helmet",
+      "unicode": "e66a",
+      "unicode_decimal": 58986
+    },
+    {
+      "icon_id": "3727835",
+      "name": "星星",
+      "font_class": "icon-test",
+      "unicode": "e604",
+      "unicode_decimal": 58884
+    },
+    {
+      "icon_id": "6306120",
+      "name": "没有相关",
+      "font_class": "meiyouxiangguan",
+      "unicode": "e610",
+      "unicode_decimal": 58896
+    },
+    {
+      "icon_id": "13303493",
+      "name": "git",
+      "font_class": "git",
+      "unicode": "e658",
+      "unicode_decimal": 58968
+    },
+    {
+      "icon_id": "25687575",
+      "name": "任务",
+      "font_class": "renwu",
+      "unicode": "ff84",
+      "unicode_decimal": 65412
+    },
+    {
+      "icon_id": "8962925",
+      "name": "星星",
+      "font_class": "xingxing1",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    },
+    {
+      "icon_id": "9568056",
+      "name": "星星-空",
+      "font_class": "xingxing-kong",
+      "unicode": "e649",
+      "unicode_decimal": 58953
+    },
+    {
       "icon_id": "1129",
       "name": "未打卡的文件夹",
       "font_class": "weidaqiadewenjianjia",

@@ -13,6 +13,10 @@
                 &:not(:last-child){
                     margin-right: 10px;
                 }
+                &:hover{
+                    text-decoration: underline;
+                    cursor: pointer;
+                }
             }
         }
         &-editor{

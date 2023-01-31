@@ -42,24 +42,18 @@
                 .msg-item{
                     display: flex;
                     flex-direction: row;
-                    justify-content: space-between;
                     align-items: center;
                     padding: 8px var(--tiklab-padding-item);
-                    .msg-item-left{
-                        display: flex;
-                        flex-direction: row;
-                        align-items: center;
-                    }
                     .msg-item-icon{
                         margin-right: var(--tiklab-padding-item);
                     }
                     .msg-item-msg{
                         margin-right: var(--tiklab-padding-item);
-                        cursor: pointer;
+                        flex: 1;
                         .msg-item-title{
-                            font-size: 13px;
                             font-weight: var(--tiklab-font-weight-bold);
-                            &:hover{
+                            .title-commitMsg:hover{
+                                cursor: pointer;
                                 text-decoration: underline;
                             }
                         }

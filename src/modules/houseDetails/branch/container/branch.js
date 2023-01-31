@@ -34,6 +34,11 @@ const Branch = props =>{
        })
    }
 
+
+   const goCode = item =>{
+       props.history.push(`/index/house/${houseInfo.name}/tree/${item.branchName}`)
+   }
+
     const renderData = item => {
         return(
             <div className='branch-tables-item' key={item.branchName}>
@@ -42,7 +47,11 @@ const Branch = props =>{
                 </div>
                 <div className='branch-tables-name'>
                     <div className='name-text-title'>
-                        <span className='name-text-name'>{item.branchName}</span>
+                        <span className='name-text-name'
+                              onClick={()=>goCode(item)}
+                        >
+                            {item.branchName}
+                        </span>
                         {
                             item.defaultBranch &&
                             <span className='name-text-type name-text-default'>默认</span>
