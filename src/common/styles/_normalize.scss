@@ -350,7 +350,7 @@ template {
 
 table {
     font-size: 14px;
-    text-align: center;
+    //text-align: center;
 }
 
 table tr td{
@@ -358,8 +358,6 @@ table tr td{
 }
 
 ol, ul {
-    margin-top: 0;
-    margin-bottom: 1em;
-    margin: 0;
+    margin: 0 0 1em 0;
     padding: 0;
 }

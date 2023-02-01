@@ -3,6 +3,7 @@ import {Divider,Select} from 'antd'
 import {CopyOutlined,CaretDownOutlined,CaretRightOutlined} from '@ant-design/icons'
 import BreadcrumbContent from '../../../common/breadcrumb/breadcrumb'
 import {MonacoPreview} from '../../../common/editor/monaco'
+import DiffViewer from '../../../common/editor/diffViewer'
 import Btn from '../../../common/btn/btn'
 import './commitsDetails.scss'
 
@@ -47,6 +48,34 @@ const CommitsDetails = props =>{
             oldValue:'code',
             type:'js'
         },
+        {
+            id:5,
+            title:'tiklab/src222',
+            newValue:'code11',
+            oldValue:'code',
+            type:'java'
+        },
+        {
+            id:6,
+            title:'tiklab/src222',
+            newValue:'code11',
+            oldValue:'code',
+            type:'java'
+        },
+        {
+            id:7,
+            title:'tiklab/src222',
+            newValue:'code11',
+            oldValue:'code',
+            type:'java'
+        },
+        {
+            id:8,
+            title:'tiklab/src222',
+            newValue:'code11',
+            oldValue:'code',
+            type:'java'
+        },
     ]
 
     const renderContrastData = item => {
@@ -73,7 +102,13 @@ const CommitsDetails = props =>{
                     />
                 </div>
                 <div className='item-content' style={isExpandedTree(item.id)?{display:'none'}:{display:'block'}}>
-                    <MonacoPreview
+                    {/*<MonacoPreview*/}
+                    {/*    newValue={item.newValue}*/}
+                    {/*    oldValue={item.oldValue}*/}
+                    {/*    language={item.type}*/}
+                    {/*    renderOverviewRuler={false}*/}
+                    {/*/>*/}
+                    <DiffViewer
                         newValue={item.newValue}
                         oldValue={item.oldValue}
                         language={item.type}

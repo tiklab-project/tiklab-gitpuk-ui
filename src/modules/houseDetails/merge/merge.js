@@ -1,5 +1,5 @@
 import React from 'react'
-import MergeContent from '../../merge/container/merge';
+import MergeContent from '../../merge/container/merge'
 
 const Merge = props =>{
 

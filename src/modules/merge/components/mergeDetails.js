@@ -13,7 +13,6 @@ const MergeDetails = props =>{
     const {setDetails} = props
 
     const descInputValue = useRef()
-    const repayInputValue = useRef()
     const [detailsType,setDetailsType] = useState(1)
     const [descInput,setDescInput] = useState(false)
     const [viewInput,setViewInput] = useState(false)

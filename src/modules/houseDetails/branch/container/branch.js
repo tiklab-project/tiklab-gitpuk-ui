@@ -20,6 +20,11 @@ const Branch = props =>{
     const [addVisible,setAddVisible] = useState(false)
 
     useEffect(()=>{
+        // 避免空仓库时路由自定义到此页面
+        houseInfo.name && !houseInfo.notNull && props.history.push('/index/404')
+    },[houseInfo.name])
+
+    useEffect(()=>{
         houseInfo.name && findAllBranch(houseInfo.codeId)
     },[houseInfo.name,fresh])
 
@@ -47,9 +52,7 @@ const Branch = props =>{
                 </div>
                 <div className='branch-tables-name'>
                     <div className='name-text-title'>
-                        <span className='name-text-name'
-                              onClick={()=>goCode(item)}
-                        >
+                        <span className='name-text-name' onClick={()=>goCode(item)}>
                             {item.branchName}
                         </span>
                         {
@@ -133,18 +136,9 @@ const Branch = props =>{
                     <Tabs
                         type={branchType}
                         tabLis={ [
-                            {
-                                id:1,
-                                title:'所有分支',
-                            },
-                            {
-                                id:2,
-                                title:'活跃分支',
-                            },
-                            {
-                                id:3,
-                                title:'非活跃分支',
-                            }
+                            {id:1, title:'所有分支'},
+                            {id:2, title:'活跃分支'},
+                            {id:3, title:'非活跃分支'}
                         ]}
                         onClick={clickType}
                     />

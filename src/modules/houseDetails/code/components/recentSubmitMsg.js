@@ -1,38 +1,25 @@
-import React,{useEffect} from 'react'
+import React from 'react'
 import {CopyOutlined} from '@ant-design/icons'
-import {inject,observer} from 'mobx-react'
 import {copy} from '../../../common/client/client'
 import './recentSubmitMsg.scss'
 
 const RecentSubmitMsg = props =>{
 
-    const {houseInfo,commitsStore,match} = props
-
-    const {findLatelyBranchCommit,latelyBranchCommit} = commitsStore
-
-    useEffect(()=>{
-        houseInfo.name && findLatelyBranchCommit({
-            codeId:houseInfo.codeId,
-            branchName:match.params.branch?match.params.branch:'master'
-        })
-    },[houseInfo.name])
+    const {latelyBranchCommit} = props
 
     return (
         <div className='recent-submit-msg'>
             <div className='code-commit-icon'/>
             <div className='code-commit-msg'>
                 <div className='msg-title'>
-                    {
-                        latelyBranchCommit && latelyBranchCommit.commitMessage
-                    }
+                    { latelyBranchCommit && latelyBranchCommit.commitMessage }
                 </div>
                 <div className='msg-desc'>
                     {
                         latelyBranchCommit ?
                             latelyBranchCommit.commitUser + ' ' +
                             latelyBranchCommit.commitTime + ' '
-                            :
-                            null
+                            : null
                     }
                     提交</div>
             </div>
@@ -48,4 +35,4 @@ const RecentSubmitMsg = props =>{
     )
 }
 
-export default inject('commitsStore')(observer(RecentSubmitMsg))
+export default RecentSubmitMsg

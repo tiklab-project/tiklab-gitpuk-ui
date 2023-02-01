@@ -25,10 +25,17 @@ export function  UpdateCode (data) {
     })
 }
 
-
 export function  FindUserCode (data) {
     return serviceLoc.request({
         url: '/code/findUserCode',
+        method: 'post',
+        data
+    })
+}
+
+export function  FindNameCode (data) {
+    return serviceLoc.request({
+        url: '/code/findNameCode',
         method: 'post',
         data
     })

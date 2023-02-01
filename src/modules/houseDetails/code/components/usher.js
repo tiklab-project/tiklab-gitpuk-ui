@@ -1,13 +1,19 @@
 import React,{useEffect,useState} from 'react'
 import {Input} from 'antd'
 import {CopyOutlined} from '@ant-design/icons'
+import {observer} from 'mobx-react'
 import BreadcrumbContent from '../../../common/breadcrumb/breadcrumb'
+import {copy} from '../../../common/client/client'
 import './usher.scss'
 
 /*
     仓库为空
 */
 const Usher = props =>{
+
+    const {houseInfo,codeStore} = props
+
+    const {cloneAddress} = codeStore
 
     const courseList = [
         {
@@ -49,17 +55,18 @@ const Usher = props =>{
                                 <div className={`url-switch-prefix ${urlPrefix==='http'?'prefix-active':''}`}
                                      onClick={()=>setUrlPrefix('http')}
                                 >HTTP</div>
-                                <div
-                                    className={`url-switch-prefix ${urlPrefix==='SSH'?'prefix-active':''}`}
-                                    onClick={()=>setUrlPrefix('SSH')}
+                                <div className={`url-switch-prefix ${urlPrefix==='SSH'?'prefix-active':''}`}
+                                     onClick={()=>setUrlPrefix('SSH')}
                                 >SSH</div>
                             </div>
                             <div className='usher-url-input'>
                                 <Input
                                     disabled
-                                    value={'http://'}
+                                    value={urlPrefix==='SSH'? cloneAddress && cloneAddress.sshaddress : cloneAddress && cloneAddress.httpAddress}
                                 />
-                                <div className='url-input-icon'>
+                                <div className='url-input-icon'
+                                     onClick={()=>copy(urlPrefix==='SSH'? cloneAddress && cloneAddress.sshaddress : cloneAddress && cloneAddress.httpAddress)}
+                                >
                                     <CopyOutlined/>
                                 </div>
                             </div>
@@ -94,4 +101,4 @@ const Usher = props =>{
     )
 }
 
-export default Usher
+export default observer(Usher)

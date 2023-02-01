@@ -174,6 +174,10 @@ const Tag = props =>{
                 />
     }
 
+    // if(!houseInfo.notNull) {
+    //     props.history.push('/index/404')
+    // }
+
     return(
         <div className='tag'>
             <div className='tag-content xcode-home-limited xcode'>

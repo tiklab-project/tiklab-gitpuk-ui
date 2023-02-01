@@ -11,13 +11,3 @@ export function  FindBranchCommit (data) {
     })
 }
 
-/*
-    最新提交信息
- */
-export function  FindLatelyBranchCommit (data) {
-    return serviceLoc.request({
-        url: '/codeCommit/findLatelyBranchCommit',
-        method: 'post',
-        data
-    })
-}

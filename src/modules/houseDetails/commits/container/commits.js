@@ -18,52 +18,22 @@ const Commits = props =>{
     const {findBranchCommit,commitsList} = commitsStore
 
     useEffect(()=>{
-        houseInfo.name && findBranchCommit({
-            codeId:houseInfo.codeId,
-            branchName: match.params.branch?match.params.branch:'master'
-        })
+        houseInfo.name && !houseInfo.notNull && props.history.push('/index/404')
+    },[houseInfo.name])
+
+    useEffect(()=>{
+        if(houseInfo.name){
+            const branch = match.params.branch ? match.params.branch:houseInfo.defaultBranch
+            findBranchCommit({
+                codeId:houseInfo.codeId,
+                branchName:branch
+            })
+        }
     },[houseInfo.name,location.pathname])
 
     const changBranch = value => {
-    }
 
-    const commitsData = [
-        {
-            id:'1',
-            time:'200-11-11 12:20:01',
-            num:'2',
-            commit:[
-                {
-                    id:'1-1',
-                    msg:'更改认证方式',
-                    time:'1个小时前提交',
-                    user:'admin',
-                    code:'2212'
-                },
-                {
-                    id:'1-2',
-                    msg:'更改动态',
-                    time:'2个小时前提交',
-                    user:'admin',
-                    code:'232454'
-                }
-            ]
-        },
-        {
-            id:'2',
-            time:'200-11-11 12:20:01',
-            num:'1',
-            commit:[
-                {
-                    id:'2-1',
-                    msg:'更改配置',
-                    time:'5天前',
-                    user:'admin',
-                    code:'23532523'
-                },
-            ]
-        }
-    ]
+    }
 
     const goDetails = item =>{
         props.history.push(`/index/house/${houseInfo.name}/commit/${item.commitId}`)

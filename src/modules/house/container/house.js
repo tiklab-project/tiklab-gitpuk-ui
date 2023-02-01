@@ -60,6 +60,7 @@ const House = props => {
                         {...props}
                         createCode={createCode}
                         groupList={groupList}
+                        houseList={houseList}
                         addHouseVisible={addHouseVisible}
                         setAddHouseVisible={setAddHouseVisible}
                     />

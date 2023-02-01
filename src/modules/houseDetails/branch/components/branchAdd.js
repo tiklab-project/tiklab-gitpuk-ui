@@ -65,18 +65,12 @@ const BranchAdd = props =>{
         >
             <div className='branch-add-up'>
                 <div>新建分支</div>
-                <div style={{cursor:'pointer'}}
-                     onClick={()=>setAddVisible(false)}
-                >
+                <div style={{cursor:'pointer'}} onClick={()=>setAddVisible(false)}>
                     <CloseOutlined />
                 </div>
             </div>
             <div className='branch-add-content'>
-                <Form
-                    form={form}
-                    layout='vertical'
-                    autoComplete='off'
-                >
+                <Form form={form} layout='vertical' autoComplete='off'>
                     <Form.Item label={'分支名称'} name={'branchName'}
                                rules={[
                                    {required:true,message:''},

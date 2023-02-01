@@ -10,7 +10,7 @@ const HouseTable = props => {
     const {houseList} = props
 
     const goDetails = (text,record) => {
-        props.history.push(`/index/house/${record.name}/tree`)
+        props.history.push(`/index/house/${record.address}/tree`)
     }
 
     const goSet = (text,record) => {

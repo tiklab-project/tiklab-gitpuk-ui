@@ -27,3 +27,20 @@ export function  WriteFile (data) {
     })
 }
 
+// 克隆
+export function  FindCloneAddress (data) {
+    return serviceLoc.request({
+        url: '/code/findCloneAddress',
+        method: 'post',
+        data
+    })
+}
+
+// 最新提交信息
+export function  FindLatelyBranchCommit (data) {
+    return serviceLoc.request({
+        url: '/codeCommit/findLatelyBranchCommit',
+        method: 'post',
+        data
+    })
+}

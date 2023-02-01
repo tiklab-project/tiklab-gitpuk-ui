@@ -1,7 +1,6 @@
 import React,{useState,useEffect} from 'react'
 import {CopyOutlined,FileTextOutlined} from '@ant-design/icons'
 import {inject,observer} from 'mobx-react'
-import Btn from '../../../common/btn/btn'
 import BreadcrumbContent from '../../../common/breadcrumb/breadcrumb'
 import {MonacoBlob} from '../../../common/editor/monaco'
 import {copy,interceptUrl} from '../../../common/client/client'
@@ -14,21 +13,32 @@ import './blob.scss'
 
 const Blob = props =>{
 
-    const {location,houseStore,codeStore} = props
+    const {houseStore,codeStore,location,match} = props
 
     const {houseInfo} = houseStore
-    const {readFile,blobFile} = codeStore
+    const {readFile,blobFile,findCloneAddress,cloneAddress,findLatelyBranchCommit,latelyBranchCommit} = codeStore
 
     const filePath = interceptUrl(location.pathname,'/'+houseInfo.name+'/blob')
-    const fileAddress = interceptUrl(location.pathname,'/'+houseInfo.name+'/blob/master')
+    const fileAddress = interceptUrl(location.pathname,'/'+houseInfo.name+'/blob/'+match.params.branch)
 
     const [delVisible,setDelVisible] = useState(false)
 
     useEffect(()=>{
-        houseInfo.name && readFile({
-            codeId:houseInfo.codeId,
-            fileAddress:fileAddress[1]
-        })
+        if(houseInfo.name){
+            // 文本内容
+            readFile({
+                codeId:houseInfo.codeId,
+                fileAddress:fileAddress[1],
+                commitBranch:match.params.branch
+            })
+            // 最近提交信息
+            findLatelyBranchCommit({
+                codeId:houseInfo.codeId,
+                branchName:match.params.branch
+            })
+            // 文本地址
+            findCloneAddress(houseInfo.codeId)
+        }
     },[houseInfo.name])
 
     const goEdit = () =>{
@@ -46,30 +56,23 @@ const Blob = props =>{
                         type={'blob'}
                     />
                     <div className='blob-head-right'>
-                        {/* <div className='blob-desc'>
-                            <Btn
-                                title={'下载'}
-                            />
-                        </div> */}
+                        {/*<div className='blob-desc'>*/}
+                        {/*    <Btn title={'下载'}/>*/}
+                        {/*</div>*/}
                         <div className='blob-clone'>
-                            <Clone/>
+                            <Clone
+                                cloneAddress={cloneAddress}
+                            />
                         </div>
                     </div>
                 </div>
-                <RecentSubmitMsg
-                    {...props}
-                    houseInfo={houseInfo}
-                />
+                <RecentSubmitMsg {...props} latelyBranchCommit={latelyBranchCommit}/>
                 <div className='blob-content-editor'>
                     <div className='blob-editor-title'>
                         <div className='editor-title-left'>
                             <span className='editor-title-icon'><FileTextOutlined /></span>
-                            <span className='editor-title-text'>
-                                {blobFile && blobFile.fileName}
-                            </span>
-                            <span className='editor-title-size'>
-                                {blobFile && blobFile.fileSize}
-                            </span>
+                            <span className='editor-title-text'>{blobFile && blobFile.fileName}</span>
+                            <span className='editor-title-size'>{blobFile && blobFile.fileSize}</span>
                             <span className='editor-title-copy'>
                                 <CopyOutlined onClick={()=>copy(blobFile && blobFile.fileName)}/>
                             </span>

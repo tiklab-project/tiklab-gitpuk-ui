@@ -10,7 +10,7 @@
         background: var(--xcode-backdrop-color);
     }
     &-item{
-        padding: 10px;
+        padding: 8px;
         cursor: pointer;
         &:hover{
             background: var(--tiklab-gray-300);
@@ -22,7 +22,7 @@
     }
     &-select{
         background: var(--tiklab-gray-400);
-        border-left: 3px solid var(--tiklab-blue);
+        //border-left: 3px solid var(--tiklab-blue);
     }
     &-content{
         flex: 1;

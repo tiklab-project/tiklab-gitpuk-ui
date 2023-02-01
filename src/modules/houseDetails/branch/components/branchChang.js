@@ -4,9 +4,11 @@ import {inject,observer} from 'mobx-react'
 
 const BranchChang = props => {
 
-    const {branchStore,houseInfo,type} = props
+    const {branchStore,houseInfo,type,match} = props
 
     const {findAllBranch,branchList} = branchStore
+
+    const branch = match.params.branch?match.params.branch:houseInfo && houseInfo.defaultBranch
 
     useEffect(()=>{
         houseInfo.name && findAllBranch(houseInfo.codeId)
@@ -23,7 +25,7 @@ const BranchChang = props => {
     }
 
     return (
-        <Select defaultValue={'master'} onChange={value=>changBranch(value)}>
+        <Select defaultValue={branch} onChange={value=>changBranch(value)}>
             {
                 branchList && branchList.map(item=>{
                     return <Select.Option value={item.branchName} key={item.branchName}>{item.branchName}</Select.Option>

@@ -246,6 +246,10 @@ const routers = [
                                 component: DomainRole
                             }
                         ]
+                    },
+                    {
+                        path:'/index/house/:name/*',
+                        render:()=><Redirect to={'/index/404'}/>,
                     }
                 ]
             },
@@ -376,18 +380,18 @@ const routers = [
                         component: Version,
                     },
                     {
-                        path:"/index/system/*",
-                        render:()=><Redirect to={"/index/404"}/>,
+                        path:'/index/system/*',
+                        render:()=><Redirect to={'/index/404'}/>,
                     }
                 ]
             },
             {
-                path:"/index/404",
+                path:'/index/404',
                 component:NotFound,
             },
             {
-                path:"/index/*",
-                render:()=><Redirect to={"/index/404"}/>,
+                path:'/index/*',
+                render:()=><Redirect to={'/index/404'}/>,
             }
         ]
     },
@@ -398,8 +402,8 @@ const routers = [
         render:()=><Redirect to='/index'/>,
     },
     {
-        path: "*",
-        render:()=><Redirect to="/index/404"/>,
+        path: '*',
+        render:()=><Redirect to='/index/404'/>,
     },
 ]
 

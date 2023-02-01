@@ -4,6 +4,7 @@ import {
     DeleteCode,
     UpdateCode,
     FindUserCode,
+    FindNameCode,
 } from '../api/house'
 
 import {message} from 'antd'
@@ -16,13 +17,13 @@ export class HouseStore {
     @observable houseList = []
 
     @action
-    setHouseType = value =>{
-        this.houseType = value
-    }
-
-    @observable
     setHouseInfo = value =>{
         this.houseInfo = value
+    }
+
+    @action
+    setHouseType = value =>{
+        this.houseType = value
     }
 
     @action
@@ -41,10 +42,12 @@ export class HouseStore {
     }
 
     @action
-    deleteCode = async values =>{
-        const data = await DeleteCode(values)
-        if(data){
-
+    deleteCode = async value =>{
+        const param = new FormData()
+        param.append('codeId',value)
+        const data = await DeleteCode(param)
+        if(data.code===0){
+            message.info('删除成功',0.5)
         }
         return data
     }
@@ -65,6 +68,17 @@ export class HouseStore {
         const data = await FindUserCode(param)
         if(data.code===0){
             this.houseList = data.data && data.data
+        }
+        return data
+    }
+
+    @action
+    findNameCode = async values =>{
+        const param = new FormData()
+        param.append('codeName',values)
+        const data = await FindNameCode(param)
+        if(data.code===0){
+            this.houseInfo = data.data && data.data
         }
         return data
     }

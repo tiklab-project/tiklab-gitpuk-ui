@@ -20,7 +20,7 @@ export class BranchStore{
         params.append('codeId',value)
         const data = await FindAllBranch(params)
         if(data.code===0){
-            this.branchList = data.data &&  data.data
+            this.branchList = data.data && data.data
         }
     }
 

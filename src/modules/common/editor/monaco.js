@@ -117,17 +117,15 @@ export const MonacoPreview = props => {
                 minimap: { enabled: false }, // 小地图
                 readOnly: true, //是否只读
                 linkedEditing:false,
+                automaticLayout:true,
                 formatOnPaste: true,
                 quickSuggestions:false, // 默认的提示关掉
                 overviewRulerBorder: false, // 滚动条的边框
                 scrollBeyondLastLine: false,
                 theme: 'vs', // 主题
                 renderSideBySide:false,
+                enableSplitViewResizing:false,
                 renderOverviewRuler:renderOverviewRuler,
-                hover:{
-                    sticky:false,
-                    enabled:false
-                }
             })
             monacoEditorRef.current.setModel({
                 original: monaco.editor.createModel(oldValue && oldValue, language && language),
@@ -139,7 +137,7 @@ export const MonacoPreview = props => {
 
 
     return (
-        <div ref={monacoEditorDomRef} style={{height:400}}/>
+        <div ref={monacoEditorDomRef} style={{height:200}}/>
     )
 }
 

@@ -2,7 +2,9 @@ import {observable,action} from 'mobx'
 import {
     FindFileTree,
     ReadFile,
-    WriteFile
+    WriteFile,
+    FindCloneAddress,
+    FindLatelyBranchCommit
 } from '../api/code'
 
 import {message} from 'antd'
@@ -11,6 +13,14 @@ export class CodeStore {
 
     @observable codeTreeData = []
     @observable blobFile = ''
+    @observable branch = ''
+    @observable cloneAddress = ''
+    @observable latelyBranchCommit = ''
+
+    @action
+    setBranch = value =>{
+        this.branch = value
+    }
 
     @action
     findFileTree = async value =>{
@@ -26,10 +36,7 @@ export class CodeStore {
 
     @action
     readFile = async value =>{
-        const params = new FormData()
-        params.append('codeId',value.codeId)
-        params.append('fileAddress',value.fileAddress)
-        const data = await ReadFile(params)
+        const data = await ReadFile(value)
         if(data.code===0){
             this.blobFile = data.data && data.data
         }
@@ -47,6 +54,35 @@ export class CodeStore {
         }
         return data
     }
+
+
+    @action
+    findCloneAddress = async value =>{
+        const param = new FormData()
+        param.append('codeId',value)
+        const data = await FindCloneAddress(param)
+        if(data.code===0){
+            this.cloneAddress = data.data && data.data
+        }
+        else {
+            this.cloneAddress = ''
+        }
+        return data
+    }
+
+    @action
+    findLatelyBranchCommit = async value =>{
+        const params = new FormData()
+        params.append('codeId',value.codeId)
+        params.append('branchName',value.branchName)
+        const data = await FindLatelyBranchCommit(params)
+        if(data.code===0){
+            this.latelyBranchCommit = data.data && data.data
+        }
+        return data
+    }
+
+
 
 }
 

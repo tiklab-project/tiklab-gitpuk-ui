@@ -10,58 +10,52 @@ import {
     TagOutlined
 } from '@ant-design/icons'
 import {inject,observer} from 'mobx-react'
+import {interceptUrl} from '../../common/client/client'
 import Aside from '../../common/aside/aside'
 
 const HouseDetails= props=>{
 
-    const {match,houseStore}=props
+    const {location,match,houseStore}=props
 
-    const {findUserCode,houseInfo,setHouseInfo,houseList} = houseStore
+    const {findNameCode,findUserCode,houseInfo,setHouseInfo,houseList} = houseStore
 
-    let path = props.location.pathname
+    let path = location.pathname
     const houseName = match.params.name
-    const master = match.params.branch ? match.params.branch:'master'
+    const branch = match.params.branch ? match.params.branch:'master'
 
     const [nav,setNav] = useState('')
 
     useEffect(()=>{
-        if(path.indexOf(`/index/house/${houseName}/tree`)===0){
-            path=`/index/house/${houseName}/tree`
-        }
-        if(path.indexOf(`/index/house/${houseName}/blob`)===0){
-            path=`/index/house/${houseName}/tree`
-        }
-        if(path.indexOf(`/index/house/${houseName}/edit`)===0){
-            path=`/index/house/${houseName}/tree`
-        }
-        if(path.indexOf(`/index/house/${houseName}/commits`)===0){
-            path=`/index/house/${houseName}/commits/master`
-        }
-        setNav(path)
-    },[path])
+        // 所有仓库
+        findUserCode()
+        return setHouseInfo('')
+    },[])
 
     useEffect(()=>{
-        houseName && findUserCode().then(res=>{
-            const data = res.data
-            if(res.code===0){
-                if(!isHouse(data)){
-                    props.history.push('/404')
-                }else {
-                    data && data.map(item=>{
-                        if(item.name===houseName){
-                            setHouseInfo(item)
-                        }
-                    })
-                }
-            }
+        // 仓库信息
+        findNameCode(houseName).then(res=>{
+            !res.data && props.history.push('/index/404')
         })
     },[houseName])
 
-    const isHouse = data => data && data.some(item=>item.name === houseName)
-
     useEffect(()=>{
-        return setHouseInfo('')
-    },[])
+        const indexPath = `/index/house/${houseName}/${renderType(interceptUrl(path)[4])}`
+        setNav(indexPath)
+    },[path,houseName])
+
+    const renderType = pathType =>{
+        switch (pathType) {
+            case 'tree':
+            case 'blob':
+            case 'edit':
+                return 'tree'
+            case 'commit':
+            case 'commits':
+                return `commits/${branch}`
+            default:
+                return pathType
+        }
+    }
 
     // 侧边第一栏导航
     const firstRouters=[
@@ -72,7 +66,7 @@ const HouseDetails= props=>{
             key:'2',
         },
         {
-            to:`/index/house/${houseName}/commits/${master}`,
+            to:`/index/house/${houseName}/commits/${branch}`,
             title: '提交',
             icon: <PushpinOutlined />,
             key:'3',
@@ -115,9 +109,42 @@ const HouseDetails= props=>{
         },
     ]
 
+    const secondRouter = [
+        {
+            to:`/index/house/${houseName}/tree`,
+            title:'代码',
+            icon:<ApartmentOutlined />,
+            key:'2',
+        },
+        {
+            to:`/index/house/${houseName}/merge`,
+            title: '合并请求',
+            icon: <PullRequestOutlined />,
+            key:'6',
+        },
+        {
+            to:`/index/house/${houseName}/question`,
+            title: '问题',
+            icon: <QuestionCircleOutlined />,
+            key:'7',
+        },
+        {
+            to:`/index/house/${houseName}/pipeline`,
+            title: '流水线',
+            icon: <ContainerOutlined />,
+            key:'8',
+        },
+        {
+            to:`/index/house/${houseName}/statistics`,
+            title: '统计',
+            icon: <RadarChartOutlined />,
+            key:'9',
+        },
+    ]
+
     return  <Aside
                 {...props}
-                firstRouters={firstRouters}
+                firstRouters={houseInfo && houseInfo.notNull?firstRouters:secondRouter}
                 nav={nav}
                 houseName={houseName}
                 houseList={houseList}

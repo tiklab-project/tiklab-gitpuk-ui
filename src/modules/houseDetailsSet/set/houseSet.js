@@ -18,7 +18,7 @@ const HouseSet = props =>{
 
     const {houseStore} = props
 
-    const {houseInfo} = houseStore
+    const {houseInfo,deleteCode} = houseStore
 
     const [form] = Form.useForm()
     const [expandedTree,setExpandedTree] = useState([])  // 树的展开与闭合
@@ -40,7 +40,9 @@ const HouseSet = props =>{
     }
 
     const del = () =>{
-
+        deleteCode(houseInfo.codeId).then(res=>{
+            res.code===0 && props.history.push('/index/storehouse')
+        })
     }
 
     const lis = [
@@ -73,7 +75,6 @@ const HouseSet = props =>{
                         </Form>
                         <div className='bottom-rename-btn'>
                             <Btn
-                                type={'common'}
                                 title={'取消'}
                                 isMar={true}
                                 onClick={()=>setOpenOrClose(1)}
@@ -104,7 +105,6 @@ const HouseSet = props =>{
                             此操作无法恢复！请慎重操作！
                         </div>
                         <Btn
-                            type={'common'}
                             title={'取消'}
                             isMar={true}
                             onClick={()=>setOpenOrClose(2)}

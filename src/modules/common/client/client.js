@@ -38,6 +38,6 @@ export const interceptUrl = (url,data) =>{
         return url.split('/index/house'+ data)
     }
     else {
-        return url.split('/index/house')
+        return url.split('/')
     }
 }

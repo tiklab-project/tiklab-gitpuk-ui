@@ -7,7 +7,7 @@ import './houseAdd.scss'
 
 const HouseAdd = props =>{
 
-    const {addHouseVisible,setAddHouseVisible,createCode,groupList} = props
+    const {addHouseVisible,setAddHouseVisible,createCode,houseList,groupList} = props
 
     const [form] = Form.useForm()
 
@@ -45,12 +45,27 @@ const HouseAdd = props =>{
         >
             <Form.Item label='仓库名称' name='name'
                        rules={[
-                           {required:true,message:'仓库名称不能为空'},
+                           {required:true,message:''},
                            {max:30,message:'请输入1~31位以内的名称'},
                            {
                                pattern: /^[a-zA-Z0-9_]([a-zA-Z0-9_\-.])*$/,
                                message: "只能包含字母和数字、 '_'、 '.'和'-'，且只能以字母、数字或'_'开头",
                            },
+                           ({ getFieldValue }) => ({
+                               validator(rule,value) {
+                                   if(!value || value.trim() === ''){
+                                       return Promise.reject('名称不能为空');
+                                   }
+                                   let nameArray = []
+                                   if(houseList){
+                                       nameArray = houseList && houseList.map(item=>item.address)
+                                   }
+                                   if (nameArray.includes(value)) {
+                                       return Promise.reject('名称已经存在')
+                                   }
+                                   return Promise.resolve()
+                               },
+                           }),
                        ]}
             >
                 <Input bordered={false} style={{background:'#fff'}}/>
@@ -61,7 +76,7 @@ const HouseAdd = props =>{
                         bordered={false}
                         style={{background:'#fff'}}
                         disabled={true}
-                        value={'http://xcode/tiklab.net'}
+                        value={'http://xcode.tiklab.net'}
                     />
                 </Form.Item>
                 <Form.Item label={<span style={{opacity:0}}>归属</span>}>

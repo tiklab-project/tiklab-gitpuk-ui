@@ -66,18 +66,12 @@ const BlobDelModal = props =>{
         >
             <div className='bold-del-up'>
                 <div>删除{blobFile && blobFile.fileName}</div>
-                <div style={{cursor:'pointer'}}
-                     onClick={()=>setDelVisible(false)}
-                >
+                <div style={{cursor:'pointer'}} onClick={()=>setDelVisible(false)}>
                     <CloseOutlined />
                 </div>
             </div>
             <div className='bold-del-content'>
-                <Form
-                    form={form}
-                    layout="vertical"
-                    autoComplete="off"
-                >
+                <Form form={form} layout="vertical" autoComplete="off">
                     <Form.Item label={'提交信息'} name={'commitMessage'}
                                rules={[{required:true,message:`提交信息不能为空`}]}
                     >

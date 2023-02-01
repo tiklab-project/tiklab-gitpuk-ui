@@ -1,9 +1,8 @@
-import React, {useEffect, useState, useRef, Fragment} from 'react'
+import React, {useEffect,useState,useRef,} from 'react'
 import {Input,Table,Dropdown} from 'antd'
 import {
     SearchOutlined,
     PlusOutlined,
-    CopyOutlined,
     FolderOutlined
 } from '@ant-design/icons'
 import {inject,observer} from 'mobx-react'
@@ -15,6 +14,7 @@ import RecentSubmitMsg from '../components/recentSubmitMsg'
 import BreadChang from '../components/breadChang'
 import Clone from '../components/clone'
 import {interceptUrl} from '../../../common/client/client'
+import Loading from '../../../common/loading/loading'
 import '../components/code.scss'
 
 const Code = props =>{
@@ -22,28 +22,43 @@ const Code = props =>{
     const {houseStore,codeStore,location,match} = props
 
     const {houseInfo} = houseStore
-    const {findFileTree,codeTreeData} = codeStore
+    const {findFileTree,codeTreeData,findCloneAddress,cloneAddress,findLatelyBranchCommit,latelyBranchCommit} = codeStore
 
     const searValue = useRef(null)
-    const name = interceptUrl(location.pathname)
-    const branch = interceptUrl(location.pathname,'/' +houseInfo.name+'/tree/')
 
-    const [isEmpty,setIsEmpty] = useState(false)
+    const branch = match.params.branch?match.params.branch:houseInfo.defaultBranch
+    const fileAddress = interceptUrl(location.pathname,'/' +houseInfo.name+'/tree/'+branch)
     const [searInput,setSearInput] = useState(false)
+    const [isLoading,setIsLoading] = useState(true)
 
     useEffect(()=>{
-        houseInfo.name && findFileTree({
-            codeId:houseInfo.codeId,
-            path:branch[1]?name[1]:'',
-            branch:match.params.branch?match.params.branch:'master'
-        })
-        .then(res=>{
-            res.code===500001 && props.history.push('/index/404')
-            res.code===100 && setIsEmpty(true)
-        })
+        if(houseInfo.name){
+            // 树文件
+            findFileTree({
+                codeId:houseInfo.codeId,
+                path:fileAddress[1],
+                branch:branch
+            }).then(res=>{
+                setIsLoading(false)
+                res.code===500001 && props.history.push('/index/404')
+            })
+            // 最近提交信息
+            findLatelyBranchCommit({
+                codeId:houseInfo.codeId,
+                branchName:branch
+            })
+        }
     },[houseInfo.name,location.pathname])
 
     useEffect(()=>{
+        if(houseInfo.name){
+            // 文件地址
+            findCloneAddress(houseInfo.codeId)
+        }
+    },[houseInfo.name])
+
+    useEffect(()=>{
+        // 监听文本框聚焦
         if(searInput){
             searValue.current.focus()
         }
@@ -70,7 +85,6 @@ const Code = props =>{
                 return 'YAML'
             default:
                 return 'JavaScript'
-
         }
     }
 
@@ -129,8 +143,15 @@ const Code = props =>{
         </div>
     )
 
-    if(isEmpty){
-        return <Usher/>
+    if(isLoading){
+        return <Loading/>
+    }
+
+    if(!houseInfo.notNull){
+        return  <Usher
+                    houseInfo={houseInfo}
+                    codeStore={codeStore}
+                />
     }
 
     return(
@@ -174,13 +195,13 @@ const Code = props =>{
                             />
                         </div>
                         <div className='code-clone'>
-                            <Clone/>
+                            <Clone cloneAddress={cloneAddress}/>
                         </div>
                     </div>
                 </div>
                 <RecentSubmitMsg
                     {...props}
-                    houseInfo={houseInfo}
+                    latelyBranchCommit={latelyBranchCommit}
                 />
                 <div className='code-content-tables'>
                     <Table

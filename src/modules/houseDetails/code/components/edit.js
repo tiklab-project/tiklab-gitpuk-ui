@@ -9,13 +9,13 @@ import './edit.scss'
 
 const Edit = props =>{
 
-    const {location,houseStore,codeStore} = props
+    const {houseStore,codeStore,location,match} = props
 
     const {houseInfo} = houseStore
     const {readFile,blobFile,writeFile} = codeStore
 
     const [form] = Form.useForm()
-    const fileAddress = interceptUrl(location.pathname,'/'+houseInfo.name+'/edit/master')
+    const fileAddress = interceptUrl(location.pathname,'/'+houseInfo.name+'/edit/'+match.params.branch)
 
     const [editType,setEditType] = useState('compile')
     const [previewValue,setPreviewValue] = useState('')
@@ -25,7 +25,8 @@ const Edit = props =>{
     useEffect(()=>{
         houseInfo.name && readFile({
             codeId:houseInfo.codeId,
-            fileAddress:fileAddress[1]
+            fileAddress:fileAddress[1],
+            commitBranch:match.params.branch
         })
         .then(res=>{
             if(res.code===0){
@@ -35,7 +36,7 @@ const Edit = props =>{
         })
     },[houseInfo.name])
 
-    const onOk = (value) => {
+    const onOk = value => {
         writeFile({
             codeId:houseInfo.codeId,
             newFileName:fileName?fileName:blobFile.fileName,

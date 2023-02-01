@@ -2,7 +2,6 @@ import React,{useState,useEffect} from 'react'
 import ReactDOM from 'react-dom'
 import {HashRouter} from 'react-router-dom'
 import enableAxiosCE from 'tiklab-enable-axios-ce'
-import {useAccountConfig} from 'tiklab-eam-ui/es/_utils'
 import {orgStores} from 'tiklab-user-ui/es/store'
 import {privilegeStores} from 'tiklab-privilege-ui/es/store'
 import {messageModuleStores} from 'tiklab-message-ui/es/store'
@@ -42,7 +41,6 @@ const Index = observer(() => {
         ...store,
     }
 
-    useAccountConfig()
     useEffect(() => {
         initFetch('post',routers,resources).then(res => {
             setPluginData(res)

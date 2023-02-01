@@ -9,18 +9,15 @@ const Aside = props =>{
 
     const {route,firstRouters,nav,houseInfo,houseList} = props
 
-    const path = props.location.pathname
     const [isLoading,setIsLoading] = useState(false)
 
     const changeNav = item=>{
-        props.history.push(item)
+        props.history.push(item.to)
     }
 
     // 切换路由跳转
     const changeHouseDetails = item => {
-        const name = path.split('/'+ houseInfo.name +'/')
         if(item.name!==houseInfo.name){
-            // props.history.push(`/index/house/${item.name}/${name[1]}`)
             props.history.push(`/index/house/${item.name}/tree`)
             setIsLoading(true)
         }
@@ -57,7 +54,7 @@ const Aside = props =>{
     const renderTaskRouter = item => {
         return      <div  key={item.key}
                           className={`aside_content ${nav===item.to ? 'aside_active':''}`}
-                          onClick={()=>changeNav(item.to)}
+                          onClick={()=>changeNav(item)}
                     >
                         <div className='aside_content_icon'>
                             {item.icon}

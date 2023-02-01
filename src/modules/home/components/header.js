@@ -98,12 +98,6 @@ const Head = props =>{
             <div className='header-outMenu-top'>
                 <div className='outMenu-out'>
                     <Profile userInfo={getUser()}/>
-                    <Avatar
-                        style={{
-                            color: '#f9c6a0',
-                            backgroundColor: '#f9c6a0',
-                        }}
-                    />
                     <div className='outMenu-out-info'>
                         <div className='outMenu-out-name'>name</div>
                         <div className='outMenu-out-eamil'>tiklab@</div>
