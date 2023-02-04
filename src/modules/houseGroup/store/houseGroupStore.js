@@ -13,6 +13,12 @@ export class HouseGroupStore {
 
     @observable houseGroupType = 1
     @observable groupList = []
+    @observable groupInfo = ''
+
+    @action
+    setGroupInfo = value =>{
+        this.groupInfo = value
+    }
 
     @action
     setHouseGroupType = value =>{

@@ -1,10 +1,10 @@
 import React,{useEffect,useState} from 'react'
-import {Divider,Select} from 'antd'
+import {Divider,Select,Tooltip} from 'antd'
 import {CopyOutlined,CaretDownOutlined,CaretRightOutlined} from '@ant-design/icons'
 import BreadcrumbContent from '../../../common/breadcrumb/breadcrumb'
-import {MonacoPreview} from '../../../common/editor/monaco'
 import DiffViewer from '../../../common/editor/diffViewer'
 import Btn from '../../../common/btn/btn'
+import {copy} from '../../../common/client/client'
 import './commitsDetails.scss'
 
 
@@ -23,7 +23,18 @@ const CommitsDetails = props =>{
         }
     }
 
-    const contrastData = [
+    // 锚点，跳转
+    const changFile = anchorName => {
+        const scrollTop=document.getElementById("commits_contrast")
+        if (anchorName) {
+            const anchorElement = document.getElementById(anchorName)
+            if (anchorElement) {
+                scrollTop.scrollTop = anchorElement.offsetTop - 50
+            }
+        }
+    }
+
+    const contrastData =    [
         {
             id:2,
             title:'tiklab/src111',
@@ -57,7 +68,7 @@ const CommitsDetails = props =>{
         },
         {
             id:6,
-            title:'tiklab/src222',
+            title:'tiklab/src222src222src222src222src222src222src222src222src222src222src222src222',
             newValue:'code11',
             oldValue:'code',
             type:'java'
@@ -80,7 +91,7 @@ const CommitsDetails = props =>{
 
     const renderContrastData = item => {
         return (
-            <div className='contrast-content-item' key={item.id}>
+            <div className='contrast-content-item' key={item.id} id={item.id}>
                 <div className='item-head'>
                     <div className='item-title-icon'>
                         <div className='item-icon' onClick={()=>setOpenOrClose(item)}>
@@ -93,7 +104,9 @@ const CommitsDetails = props =>{
                         </div>
                         <div className='item-title'>
                             <span className='title-text'>{item.title}</span>
-                            <span className='title-icon'><CopyOutlined /></span>
+                            <span className='title-icon' onClick={()=>copy(item.title)}>
+                                <CopyOutlined />
+                            </span>
                         </div>
                     </div>
                     <Btn
@@ -120,14 +133,16 @@ const CommitsDetails = props =>{
     }
 
     return (
-        <div className='commitsDetails'>
+        <div className='commitsDetails' id='commits_contrast'>
             <div className='commitsDetails-content xcode-home-limited xcode'>
                 <BreadcrumbContent firstItem={'提交'} secondItem={'zsse'} goBack={()=>props.history.go(-1)}/>
                 <div className='commitsDetails-head'>
                     <div className='commitsDetails-head-left'>
                         <div className='head-title-icon'>
                             <span className='head-title'>提交zsse</span>
-                            <span className='head-icon'><CopyOutlined /></span>
+                            <Tooltip title={'复制'}>
+                                <span className='head-icon'><CopyOutlined /></span>
+                            </Tooltip>
                         </div>
                         <Divider type='vertical'/>
                         <div className='head-user-time'>
@@ -146,12 +161,11 @@ const CommitsDetails = props =>{
                     <div className='commitsDetails-contrast-title'>更改认证方式</div>
                     <div className='commitsDetails-contrast-content'>
                         <div className='contrast-title'>
-                            变化（10）
+                            变化（{contrastData && contrastData.length}）
                         </div>
                         <div className='contrast-affected'>
                             <div className='contrast-affected-opt'>
-                                <Select defaultValue={1} bordered={false}>
-                                    <Select.Option value={1}>文件变更</Select.Option>
+                                <Select defaultValue={'文件变更'} bordered={false} onChange={value=>changFile(value)}>
                                     {
                                         contrastData.map(item=>{
                                             return <Select.Option value={item.id} key={item.id}>{item.title}</Select.Option>

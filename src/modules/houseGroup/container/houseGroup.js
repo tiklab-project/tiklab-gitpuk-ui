@@ -20,7 +20,7 @@ const StorehouseGroup = props => {
     const [addHouseVisible,setAddHouseVisible] = useState(false)
 
     useEffect(()=>{
-        // 初始化仓库z组
+        // 初始化仓库组
         findUserGroup()
     },[])
 

@@ -15,11 +15,13 @@ const Blob = props =>{
 
     const {houseStore,codeStore,location,match} = props
 
-    const {houseInfo} = houseStore
+    const {houseInfo,webUrl} = houseStore
     const {readFile,blobFile,findCloneAddress,cloneAddress,findLatelyBranchCommit,latelyBranchCommit} = codeStore
 
-    const filePath = interceptUrl(location.pathname,'/'+houseInfo.name+'/blob')
-    const fileAddress = interceptUrl(location.pathname,'/'+houseInfo.name+'/blob/'+match.params.branch)
+    const urlInfo = match.params
+    const branch = urlInfo.branch
+    const filePath = interceptUrl(location.pathname,webUrl+'/blob/')
+    const fileAddress = interceptUrl(location.pathname, webUrl+'/blob/'+urlInfo.branch)
 
     const [delVisible,setDelVisible] = useState(false)
 
@@ -29,12 +31,12 @@ const Blob = props =>{
             readFile({
                 codeId:houseInfo.codeId,
                 fileAddress:fileAddress[1],
-                commitBranch:match.params.branch
+                commitBranch:branch
             })
             // 最近提交信息
             findLatelyBranchCommit({
                 codeId:houseInfo.codeId,
-                branchName:match.params.branch
+                branchName:branch
             })
             // 文本地址
             findCloneAddress(houseInfo.codeId)
@@ -42,7 +44,7 @@ const Blob = props =>{
     },[houseInfo.name])
 
     const goEdit = () =>{
-        props.history.push(`/index/house/${houseInfo.name}/edit${filePath[1]}`)
+        props.history.push(`/index/house/${webUrl}/edit/${filePath[1]}`)
     }
 
     return(
@@ -53,6 +55,8 @@ const Blob = props =>{
                     <BreadChang
                         {...props}
                         houseInfo={houseInfo}
+                        webUrl={webUrl}
+                        branch={branch}
                         type={'blob'}
                     />
                     <div className='blob-head-right'>

@@ -5,12 +5,12 @@ import './breadChang.scss'
 
 const BreadChang = props => {
 
-    const {houseInfo,type,location,match} = props
+    const {location,houseInfo,type,branch,webUrl} = props
 
-    const fileAddress = interceptUrl(location.pathname,'/'+houseInfo.name+'/'+type+'/')
+    const fileAddress = interceptUrl(location.pathname,webUrl+'/'+type+'/')
 
     const breadJump = (name,index) =>{
-        let path = `/index/house/${houseInfo.name}/tree`
+        let path = `/index/house/${webUrl}/tree`
         for (let i = 0;i <= index;i++){
             path = path + '/' + name[i]
         }
@@ -34,12 +34,13 @@ const BreadChang = props => {
                 <BranchChang
                     {...props}
                     houseInfo={houseInfo}
+                    webUrl={webUrl}
                     type={'code'}
                 />
             </div>
             <div className='code-bread'>
                 <div className='bread-item'
-                     onClick={()=>props.history.push(`/index/house/${houseInfo.name}/tree/${match.params.branch}`)}
+                     onClick={()=>props.history.push(`/index/house/${webUrl}/tree/${branch}`)}
                 >{houseInfo.name}</div>
                 <div className='bread-item'> / </div>
                 { renderCodeBread(fileAddress) }

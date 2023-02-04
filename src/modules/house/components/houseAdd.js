@@ -1,5 +1,6 @@
 import React,{useState} from 'react'
 import {Modal,Steps,Form,Input,Select,Switch,Checkbox,Row,Col} from 'antd'
+import {getUser} from 'tiklab-core-ui'
 import Btn from '../../common/btn/btn'
 import HouseUser from './houseUser'
 import HousePower from './housePower'
@@ -11,6 +12,7 @@ const HouseAdd = props =>{
 
     const [form] = Form.useForm()
 
+    const userName = getUser().name
     const [addType,setAddType] = useState(1)
     const [powerType,setPowerType] = useState(1)
     const [yUserList,setYUserList] = useState([])
@@ -23,7 +25,9 @@ const HouseAdd = props =>{
             ...value,
             codeGroup:{groupId:codeGroup}
         }).then(res=>{
-            res.code===0 && props.history.push(`/index/house/${value.name}/tree`)
+            if(res.code===0){
+                props.history.push(`/index/house/${codeGroup?codeGroup:userName}/${value.name}/tree`)
+            }
         })
     }
 
@@ -58,7 +62,7 @@ const HouseAdd = props =>{
                                    }
                                    let nameArray = []
                                    if(houseList){
-                                       nameArray = houseList && houseList.map(item=>item.address)
+                                       nameArray = houseList && houseList.map(item=>item.name)
                                    }
                                    if (nameArray.includes(value)) {
                                        return Promise.reject('名称已经存在')
@@ -96,13 +100,20 @@ const HouseAdd = props =>{
                                {max:30,message:'请输入1~31位以内的名称'},
                                {required:true,message:''},
                                ({ getFieldValue }) => ({
-                                   validator(rule, value) {
+                                   validator(rule,value) {
                                        if(!value || value.trim() === ''){
-                                           return Promise.reject('仓库路径不能为空')
+                                           return Promise.reject('名称不能为空');
+                                       }
+                                       let nameArray = []
+                                       if(houseList){
+                                           nameArray = houseList && houseList.map(item=>item.address)
+                                       }
+                                       if (nameArray.includes(value)) {
+                                           return Promise.reject('路径已经存在')
                                        }
                                        return Promise.resolve()
                                    },
-                               })
+                               }),
                            ]}
                            className='path-tips'
                 >

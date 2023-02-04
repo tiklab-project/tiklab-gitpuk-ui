@@ -1,4 +1,5 @@
 import React,{useState,useEffect} from 'react'
+import {useTranslation} from 'react-i18next'
 import {
     ApartmentOutlined,
     BranchesOutlined,
@@ -12,36 +13,49 @@ import {
 import {inject,observer} from 'mobx-react'
 import {interceptUrl} from '../../common/client/client'
 import Aside from '../../common/aside/aside'
+import Loading from '../../common/loading/loading'
 
 const HouseDetails= props=>{
 
     const {location,match,houseStore}=props
 
-    const {findNameCode,findUserCode,houseInfo,setHouseInfo,houseList} = houseStore
+    const {findNameCode,findUserCode,houseInfo,setHouseInfo,setWebUrl,houseList} = houseStore
 
     let path = location.pathname
-    const houseName = match.params.name
-    const branch = match.params.branch ? match.params.branch:'master'
 
+    const webUrl = `${match.params.namespace}/${match.params.name}`
+
+    const {t} = useTranslation()
     const [nav,setNav] = useState('')
+    const [isLoading,setIsLoading] = useState(true)
 
     useEffect(()=>{
         // 所有仓库
         findUserCode()
-        return setHouseInfo('')
+        return ()=>{
+            setHouseInfo('')
+            setWebUrl('')
+        }
     },[])
 
     useEffect(()=>{
         // 仓库信息
-        findNameCode(houseName).then(res=>{
-            !res.data && props.history.push('/index/404')
+        findNameCode(webUrl).then(res=>{
+            if(res.data){
+                setIsLoading(false)
+            }else {
+                props.history.push('/index/404')
+            }
         })
-    },[houseName])
+        // webUrl
+        setWebUrl(webUrl)
+
+    },[webUrl])
 
     useEffect(()=>{
-        const indexPath = `/index/house/${houseName}/${renderType(interceptUrl(path)[4])}`
+        const indexPath = `/index/house/${webUrl}/${renderType(interceptUrl(path)[5])}`
         setNav(indexPath)
-    },[path,houseName])
+    },[path,houseInfo])
 
     const renderType = pathType =>{
         switch (pathType) {
@@ -51,7 +65,7 @@ const HouseDetails= props=>{
                 return 'tree'
             case 'commit':
             case 'commits':
-                return `commits/${branch}`
+                return `commits/${houseInfo && houseInfo.defaultBranch}`
             default:
                 return pathType
         }
@@ -60,50 +74,50 @@ const HouseDetails= props=>{
     // 侧边第一栏导航
     const firstRouters=[
         {
-            to:`/index/house/${houseName}/tree`,
-            title:'代码',
+            to:`/index/house/${webUrl}/tree`,
+            title:`${t('code')}`,
             icon:<ApartmentOutlined />,
             key:'2',
         },
         {
-            to:`/index/house/${houseName}/commits/${branch}`,
-            title: '提交',
+            to:`/index/house/${webUrl}/commits/${houseInfo && houseInfo.defaultBranch}`,
+            title: `${t('commits')}`,
             icon: <PushpinOutlined />,
             key:'3',
         },
         {
-            to:`/index/house/${houseName}/branch`,
-            title: '分支',
+            to:`/index/house/${webUrl}/branch`,
+            title: `${t('branch')}`,
             icon: <BranchesOutlined />,
             key:'4',
         },
         {
-            to:`/index/house/${houseName}/tag`,
-            title: '标签',
+            to:`/index/house/${webUrl}/tag`,
+            title: `${t('tag')}`,
             icon: <TagOutlined />,
             key:'5',
         },
         {
-            to:`/index/house/${houseName}/merge`,
-            title: '合并请求',
+            to:`/index/house/${webUrl}/merge`,
+            title: `${t('merge')}`,
             icon: <PullRequestOutlined />,
             key:'6',
         },
         {
-            to:`/index/house/${houseName}/question`,
-            title: '问题',
+            to:`/index/house/${webUrl}/issue`,
+            title: `${t('issue')}`,
             icon: <QuestionCircleOutlined />,
             key:'7',
         },
         {
-            to:`/index/house/${houseName}/pipeline`,
-            title: '流水线',
+            to:`/index/house/${webUrl}/pipeline`,
+            title: `${t('pipeline')}`,
             icon: <ContainerOutlined />,
             key:'8',
         },
         {
-            to:`/index/house/${houseName}/statistics`,
-            title: '统计',
+            to:`/index/house/${webUrl}/statistics`,
+            title: `${t('statistics')}`,
             icon: <RadarChartOutlined />,
             key:'9',
         },
@@ -111,46 +125,50 @@ const HouseDetails= props=>{
 
     const secondRouter = [
         {
-            to:`/index/house/${houseName}/tree`,
-            title:'代码',
+            to:`/index/house/${webUrl}/tree`,
+            title:`${t('code')}`,
             icon:<ApartmentOutlined />,
             key:'2',
         },
         {
-            to:`/index/house/${houseName}/merge`,
-            title: '合并请求',
+            to:`/index/house/${webUrl}/merge`,
+            title: `${t('merge')}`,
             icon: <PullRequestOutlined />,
             key:'6',
         },
         {
-            to:`/index/house/${houseName}/question`,
-            title: '问题',
+            to:`/index/house/${webUrl}/issue`,
+            title: `${t('issue')}`,
             icon: <QuestionCircleOutlined />,
             key:'7',
         },
         {
-            to:`/index/house/${houseName}/pipeline`,
-            title: '流水线',
+            to:`/index/house/${webUrl}/pipeline`,
+            title: `${t('pipeline')}`,
             icon: <ContainerOutlined />,
             key:'8',
         },
         {
-            to:`/index/house/${houseName}/statistics`,
-            title: '统计',
+            to:`/index/house/${webUrl}/statistics`,
+            title: `${t('statistics')}`,
             icon: <RadarChartOutlined />,
             key:'9',
         },
     ]
 
+    if(isLoading){
+        return <Loading/>
+    }
+
     return  <Aside
                 {...props}
-                firstRouters={houseInfo && houseInfo.notNull?firstRouters:secondRouter}
+                routers={houseInfo && houseInfo.notNull?firstRouters:secondRouter}
                 nav={nav}
-                houseName={houseName}
-                houseList={houseList}
-                houseInfo={houseInfo}
+                list={houseList}
+                info={houseInfo}
+                webUrl={webUrl}
+                asideType={'house'}
             />
-
 }
 
 export default inject('houseStore')(observer(HouseDetails))

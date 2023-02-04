@@ -66,33 +66,37 @@ const Branch = props =>{
                     </div>
                 </div>
                 <div className='branch-tables-commit'>
-                    <span className='commit-num-left'>13</span>
-                    <span className='commit-num-right'>0</span>
+                    <Tooltip title={'超前master0个提交，滞后13个提交'}>
+                        <span className='commit-num-left'>13</span>
+                        <span className='commit-num-right'>0</span>
+                    </Tooltip>
                 </div>
-                <Space className='branch-tables-action'>
+                <div className='branch-tables-action'>
                     <Tooltip title='合并请求'>
-                        <span className='branch-tables-combine'>
+                        <div className='branch-tables-combine'>
                             合并请求
-                        </span>
+                        </div>
                     </Tooltip>
                     <Tooltip title='对比'>
-                        <span className='branch-tables-compare'>
+                        <div className='branch-tables-compare'>
                             对比
-                        </span>
+                        </div>
                     </Tooltip>
                     <Tooltip title='下载'>
-                        <span className='branch-tables-download'>
+                        <div className='branch-tables-download'>
                             <svg className='icon' aria-hidden='true'>
                                 <use xlinkHref='#icon-xiazai'/>
                             </svg>
                             <DownOutlined style={{fontSize:13,paddingLeft:5}}/>
-                        </span>
+                        </div>
                     </Tooltip>
                     {
                         item.defaultBranch ?
-                        <span className='no-del'>
-                            <DeleteOutlined/>
-                        </span>
+                        <div className='no-del'>
+                            <svg className="icon" aria-hidden="true">
+                                <use xlinkHref="#icon-delete"/>
+                            </svg>
+                        </div>
                             :
                         <Tooltip title='删除'>
                             <Popconfirm
@@ -102,13 +106,15 @@ const Branch = props =>{
                                 cancelText="取消"
                                 placement="topRight"
                             >
-                                <span className='branch-tables-del'>
-                                    <DeleteOutlined/>
-                                </span>
+                                <div className='branch-tables-del'>
+                                    <svg className="icon" aria-hidden="true">
+                                        <use xlinkHref="#icon-delete"/>
+                                    </svg>
+                                </div>
                             </Popconfirm>
                         </Tooltip>
                     }
-                </Space>
+                </div>
             </div>
         )
     }

@@ -1,5 +1,6 @@
 import React,{useState,useEffect} from 'react';
 import {LockOutlined,PlusOutlined} from '@ant-design/icons'
+import {inject,observer} from 'mobx-react'
 import Btn from '../../../common/btn/btn'
 import BreadcrumbContent from '../../../common/breadcrumb/breadcrumb'
 import HouseTable from '../../../house/components/houseTable'
@@ -48,4 +49,4 @@ const House = props =>{
     )
 }
 
-export default House
+export default inject('houseGroupStore')(observer(House))

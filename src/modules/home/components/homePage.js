@@ -64,14 +64,14 @@ const HomePage = props =>{
             title: '我的仓库',
             icon:'#icon-renwu',
             listLength:codeNum,
-            to:'/index/storehouse'
+            to:'/index/house'
         },
         {
             id:2,
             title:'我的仓库组',
             icon:'#icon-icon-test',
             listLength: groupNum,
-            to:'/index/storehouseGroup'
+            to:'/index/group'
         }
     ]
 

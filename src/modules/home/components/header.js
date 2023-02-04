@@ -31,10 +31,10 @@ const Head = props =>{
 
     useEffect(()=>{
         if(path.indexOf('/index/house')===0){
-            path='/index/storehouse'
+            path='/index/house'
         }
         if(path.indexOf('/index/group')===0){
-            path='/index/storehouseGroup'
+            path='/index/group'
         }
         setCurrentLink(path)
     },[path])
@@ -43,17 +43,17 @@ const Head = props =>{
         {
             key:'home',
             to:'/index/home',
-            title: 'home',
+            title: `${t('home')}`,
         },
         {
-            key:'storehouse',
-            to:'/index/storehouse',
-            title: 'storehouse',
+            key:'house',
+            to:'/index/house',
+            title: `${t('storehouse')}`,
         },
         {
-            key:'storehouse group',
-            to:'/index/storehouseGroup',
-            title: 'storehouse group',
+            key:'group',
+            to:'/index/group',
+            title: `${t('storehouse group')}`,
         },
     ]
 
@@ -67,7 +67,7 @@ const Head = props =>{
                          onClick={()=>changeCurrentLink(routers)}
                          className={currentLink===routers.to ? 'headers-active' : null}
                     >
-                {t(routers.title)}
+                {routers.title}
             </div>
         })
     }

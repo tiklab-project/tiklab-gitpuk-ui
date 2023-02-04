@@ -15,6 +15,9 @@
                 .head-title{
                     padding-right: 5px;
                 }
+                .head-icon{
+                    cursor: pointer;
+                }
             }
             .head-user-time{
                 .head-time{
@@ -78,6 +81,9 @@
                                 .title-text{
                                     padding-right: 5px;
                                 }
+                                .title-icon{
+                                    cursor: pointer;
+                                }
                             }
                         }
                     }
@@ -92,3 +98,5 @@
         line-height: initial !important;
     }
 }
+
+

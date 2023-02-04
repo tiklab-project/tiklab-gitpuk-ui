@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react'
 import {inject,observer} from 'mobx-react'
-import {Input,Select} from 'antd'
+import {Input,Select,Tooltip} from 'antd'
 import {CopyOutlined,FolderOpenOutlined,SearchOutlined} from '@ant-design/icons'
 import {Profile} from 'tiklab-eam-ui'
 import {getUser} from 'tiklab-core-ui'
@@ -14,8 +14,10 @@ const Commits = props =>{
 
     const {commitsStore,houseStore,match,location} = props
 
-    const {houseInfo} = houseStore
+    const {houseInfo,webUrl} = houseStore
     const {findBranchCommit,commitsList} = commitsStore
+
+    const urlInfo = match.params
 
     useEffect(()=>{
         houseInfo.name && !houseInfo.notNull && props.history.push('/index/404')
@@ -23,7 +25,7 @@ const Commits = props =>{
 
     useEffect(()=>{
         if(houseInfo.name){
-            const branch = match.params.branch ? match.params.branch:houseInfo.defaultBranch
+            const branch = urlInfo.branch ? urlInfo.branch:houseInfo.defaultBranch
             findBranchCommit({
                 codeId:houseInfo.codeId,
                 branchName:branch
@@ -36,7 +38,7 @@ const Commits = props =>{
     }
 
     const goDetails = item =>{
-        props.history.push(`/index/house/${houseInfo.name}/commit/${item.commitId}`)
+        props.history.push(`/index/house/${webUrl}/commit/${item.commitId}`)
     }
 
     const renderCommits = item => {
@@ -58,10 +60,16 @@ const Commits = props =>{
                 </div>
                 <div className='msg-item-ident'>
                     <div className='ident-title'> {item.commitId.substring(0,8)}</div>
-                    <div className='ident-copy'>
-                        <CopyOutlined onClick={()=>copy(item.commitId)}/>
-                    </div>
-                    <div className='ident-folder'><FolderOpenOutlined /></div>
+                    <Tooltip title={'复制'}>
+                        <div className='ident-copy' onClick={()=>copy(item.commitId)}>
+                            <CopyOutlined />
+                        </div>
+                    </Tooltip>
+                    <Tooltip title={'查看源文件'}>
+                        <div className='ident-folder'>
+                            <FolderOpenOutlined />
+                        </div>
+                    </Tooltip>
                 </div>
             </div>
         )
@@ -99,6 +107,7 @@ const Commits = props =>{
                             <BranchChang
                                 {...props}
                                 houseInfo={houseInfo}
+                                webUrl={webUrl}
                                 type={'commit'}
                             />
                         </div>

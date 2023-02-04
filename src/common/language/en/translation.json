@@ -2,9 +2,21 @@
     "home": "home",
     "storehouse": "storehouse",
     "storehouse group": "storehouse group",
-    "sys" : "sys",
-    "my": "my",
+    "system" : "sys",
     "collection": "collection",
-    "environment": "enviroment"
-
+    "environment": "environment",
+    "code":"code",
+    "commits": "commits",
+    "branch": "branch",
+    "tag": "tag",
+    "merge": "merge",
+    "issue": "issue",
+    "pipeline": "pipeline",
+    "statistics": "statistics",
+    "setting": "setting",
+    "member": "member",
+    "privilege": "privilege",
+    "push_rules": "push_rules",
+    "access_keys": "access_keys",
+    "survey": "survey"
 }

@@ -21,13 +21,14 @@ const Code = props =>{
 
     const {houseStore,codeStore,location,match} = props
 
-    const {houseInfo} = houseStore
+    const {houseInfo,webUrl} = houseStore
     const {findFileTree,codeTreeData,findCloneAddress,cloneAddress,findLatelyBranchCommit,latelyBranchCommit} = codeStore
 
     const searValue = useRef(null)
+    const urlInfo = match.params
 
-    const branch = match.params.branch?match.params.branch:houseInfo.defaultBranch
-    const fileAddress = interceptUrl(location.pathname,'/' +houseInfo.name+'/tree/'+branch)
+    const branch = urlInfo.branch?urlInfo.branch:houseInfo.defaultBranch
+    const fileAddress = interceptUrl(location.pathname,webUrl+'/tree/'+urlInfo.branch)
     const [searInput,setSearInput] = useState(false)
     const [isLoading,setIsLoading] = useState(true)
 
@@ -42,11 +43,6 @@ const Code = props =>{
                 setIsLoading(false)
                 res.code===500001 && props.history.push('/index/404')
             })
-            // 最近提交信息
-            findLatelyBranchCommit({
-                codeId:houseInfo.codeId,
-                branchName:branch
-            })
         }
     },[houseInfo.name,location.pathname])
 
@@ -54,6 +50,11 @@ const Code = props =>{
         if(houseInfo.name){
             // 文件地址
             findCloneAddress(houseInfo.codeId)
+            // 最近提交信息
+            houseInfo.notNull && findLatelyBranchCommit({
+                codeId:houseInfo.codeId,
+                branchName:branch
+            })
         }
     },[houseInfo.name])
 
@@ -65,7 +66,7 @@ const Code = props =>{
     },[searInput])
 
     const fileName = record => {
-        props.history.push(`/index/house${record.path}`)
+        props.history.push(`/index/house/${urlInfo.namespace}${record.path}`)
     }
 
     const renderFileType = fileType => {
@@ -162,6 +163,8 @@ const Code = props =>{
                     <BreadChang
                         {...props}
                         houseInfo={houseInfo}
+                        webUrl={webUrl}
+                        branch={branch}
                         type={'tree'}
                     />
                     <div className='code-head-right'>
@@ -169,7 +172,6 @@ const Code = props =>{
                             searInput ?
                                 <div className='code-search-input'>
                                     <Input
-                                        allowClear
                                         ref={searValue}
                                         placeholder='文件名称'
                                         // onChange={onChangeSearch}

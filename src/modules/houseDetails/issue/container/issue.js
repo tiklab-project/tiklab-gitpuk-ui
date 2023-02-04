@@ -1,8 +1,8 @@
 import React from 'react'
 import Btn from '../../../common/btn/btn'
-import '../components/question.scss'
+import '../components/issue.scss'
 
-const Question =  props => {
+const Issue = props => {
     return (
         <div className='question'>
             <div className='question-content xcode-home-limited xcode'>
@@ -17,4 +17,4 @@ const Question =  props => {
     )
 }
 
-export default Question
+export default Issue

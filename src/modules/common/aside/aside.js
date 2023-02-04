@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import {Dropdown} from 'antd'
 import {CaretDownOutlined, SettingOutlined} from '@ant-design/icons'
 import Loading from '../loading/loading'
@@ -7,9 +7,14 @@ import './aside.scss'
 
 const Aside = props =>{
 
-    const {route,firstRouters,nav,houseInfo,houseList} = props
+    const {route,routers,nav,info,list,webUrl,asideType} = props
 
     const [isLoading,setIsLoading] = useState(false)
+
+    let timeout
+    useEffect(()=>{
+        return clearTimeout(timeout)
+    },[webUrl])
 
     const changeNav = item=>{
         props.history.push(item.to)
@@ -17,20 +22,34 @@ const Aside = props =>{
 
     // 切换路由跳转
     const changeHouseDetails = item => {
-        if(item.name!==houseInfo.name){
-            props.history.push(`/index/house/${item.name}/tree`)
+        if(item.name!==info.name){
+            switch (asideType) {
+                case 'group':
+                    props.history.push(`/index/group/${item.name}/survey`)
+                    break
+                case 'house':
+                    item.codeGroup ?
+                        props.history.push(`/index/house/${item.codeGroup.name}/${item.name}/tree`)
+                        :
+                        props.history.push(`/index/house/${item.user.name}/${item.name}/tree`)
+            }
             setIsLoading(true)
+            timeout = setTimeout(()=>setIsLoading(false),150)
         }
-        setTimeout(()=>setIsLoading(false),150)
     }
 
     // 切换项目菜单列表
-    const houseMenu = item =>{
-        return  <div onClick={()=>{changeHouseDetails(item)}} key={item.codeId} className={`houseDetails-opt-item ${item.name===houseInfo.name ?'houseDetails-opt-active':''}`}>
+    const houseMenu = (item,index) =>{
+        return  <div onClick={()=>{changeHouseDetails(item)}} key={index}
+                     className={`houseDetails-opt-item ${info && info.name===item.name?'houseDetails-opt-active':''}`}
+                >
                     <span className={`houseDetails-opt-icon xcode-icon-1`}>
                         {item.name.substring(0,1).toUpperCase()}
                     </span>
                     <span className='houseDetails-opt-name'>
+                        {
+                            item.codeGroup && item.codeGroup.name + '/'
+                        }
                         {item.name}
                     </span>
                 </div>
@@ -42,8 +61,8 @@ const Aside = props =>{
             <div className='houseDetails-opt-title'>切换仓库</div>
             <div className='houseDetails-opt-group'>
                 {
-                    houseList && houseList.map(item=>{
-                        return houseMenu(item)
+                    list && list.map((item,index)=>{
+                        return houseMenu(item,index)
                     })
                 }
             </div>
@@ -86,14 +105,14 @@ const Aside = props =>{
                        </div>
                    </Dropdown>
                    {
-                       firstRouters && firstRouters.map(item=>{
+                       routers && routers.map(item=>{
                            return renderTaskRouter(item)
                        })
                    }
                </div>
 
                <div className='houseDetails-sys'
-                    onClick={()=>props.history.push(`/index/house/${houseInfo.name}/sys`)}
+                    onClick={()=>props.history.push(`/index/${asideType}/${webUrl}/sys`)}
                >
                    <div className='aside_content_icon'>
                        <SettingOutlined/>

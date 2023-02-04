@@ -10,11 +10,21 @@ const HouseTable = props => {
     const {houseList} = props
 
     const goDetails = (text,record) => {
-        props.history.push(`/index/house/${record.address}/tree`)
+        if(record.codeGroup){
+            props.history.push(`/index/house/${record.address}/tree`)
+        }
+        else {
+            props.history.push(`/index/house/${record.user.name}/${record.name}/tree`)
+        }
     }
 
     const goSet = (text,record) => {
-        props.history.push(`/index/house/${record.name}/sys/set`)
+        if(record.codeGroup){
+            props.history.push(`/index/house/${record.address}/sys/set`)
+        }
+        else {
+            props.history.push(`/index/house/${record.user.name}/${record.name}/sys/set`)
+        }
     }
 
     const columns = [
@@ -32,12 +42,20 @@ const HouseTable = props => {
                         </div>
                         <div className='name-text'>
                             <div className='name-text-title'>
-                                <span className='name-text-name'>{text}</span>
+                                <span className='name-text-name'>
+                                    {
+                                        record.codeGroup ?
+                                            record.codeGroup.name
+                                            :
+                                            record.user.name
+                                    }
+                                    /{text}
+                                </span>
                                 <span className='name-text-lock'><LockOutlined/></span>
                                 <span className='name-text-type'>{record.userType === '3' ? '管理员':'开发者'}</span>
                             </div>
                             {
-                                record.userType === '2' &&
+                                record.codeGroup &&
                                 <div className='name-text-desc'>{text}</div>
                             }
                         </div>

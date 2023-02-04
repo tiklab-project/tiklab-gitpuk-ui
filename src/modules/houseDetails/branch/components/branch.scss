@@ -37,6 +37,12 @@
                         font-weight: var(--tiklab-font-weight-bold);
                         margin-right: 8px;
                         cursor: pointer;
+                        display: inline-block;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        vertical-align: top;
+                        white-space: nowrap;
+                        max-width: 270px;
                         &:hover{
                             text-decoration: underline;
                         }
@@ -64,24 +70,36 @@
                     }
                 }
                 .branch-tables-action{
-                    .branch-tables-combine,.branch-tables-compare,.branch-tables-download{
-                        padding: 6px 10px;
+                    display: flex;
+                    flex-direction: row;
+                    .branch-tables-combine,.branch-tables-compare{
                         background: #f4f4f4;
-                        display: inline-block;
                         border-radius: 4px;
-                        border: 1px solid #f4f4f4;
+                        margin-right: 8px;
+                        padding: 6px;
+                        cursor: pointer;
+                    }
+                    .branch-tables-download{
+                        background: #f4f4f4;
+                        padding: 8px 6px;
+                        margin-right: 8px;
+                        border-radius: 4px;
+                        cursor: pointer;
                     }
                     .branch-tables-del{
                         background: #ff0000;
                         color: #ffffff;
-                        padding: 6px 8px;
+                        height: 32px;
+                        padding: 8px 6px;
                         border-radius: 4px;
+                        cursor: pointer;
                     }
                     .no-del{
                         color: rgba(0,0,0,.25);
                         background: #f5f5f5;
                         cursor: not-allowed;
-                        padding: 6px 8px;
+                        height: 32px;
+                        padding: 8px 6px;
                         border-radius: 4px;
                     }
                 }

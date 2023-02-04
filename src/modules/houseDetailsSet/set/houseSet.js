@@ -41,7 +41,7 @@ const HouseSet = props =>{
 
     const del = () =>{
         deleteCode(houseInfo.codeId).then(res=>{
-            res.code===0 && props.history.push('/index/storehouse')
+            res.code===0 && props.history.push('/index/house')
         })
     }
 

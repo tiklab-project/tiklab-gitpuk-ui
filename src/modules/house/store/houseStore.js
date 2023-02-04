@@ -14,11 +14,17 @@ export class HouseStore {
 
     @observable houseType = 1
     @observable houseInfo = ''
+    @observable webUrl = ''
     @observable houseList = []
 
     @action
     setHouseInfo = value =>{
         this.houseInfo = value
+    }
+
+    @action
+    setWebUrl = value =>{
+        this.webUrl = value
     }
 
     @action
@@ -82,7 +88,6 @@ export class HouseStore {
         }
         return data
     }
-
 
 
 }

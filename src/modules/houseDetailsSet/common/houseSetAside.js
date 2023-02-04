@@ -1,4 +1,5 @@
 import React,{useState,useEffect} from 'react'
+import {useTranslation} from 'react-i18next'
 import {PrivilegeProjectButton} from 'tiklab-privilege-ui'
 import {SettingOutlined} from '@ant-design/icons'
 import './houseSetAside.scss'
@@ -6,39 +7,44 @@ import './houseSetAside.scss'
 const HouseSetAside = props =>{
 
     const {match} = props
+
     let path = props.location.pathname
+    const webUrl = `${match.params.namespace}/${match.params.name}`
+
+    const {t} = useTranslation()
+
     const [nav,setNav] = useState('')
 
 
     // 侧边流水线设置的第二级导航
     const secondRouter = [
         {
-            key:`/index/house/${match.params.name}/sys/set`,
-            label:'设置',
+            key:`/index/house/${webUrl}/sys/set`,
+            label:`${t('setting')}`,
             enCode:'pipeline_seting',
         },
         {
-            key:`/index/house/${match.params.name}/sys/user`,
-            label:"成员",
+            key:`/index/house/${webUrl}/sys/member`,
+            label:`${t('member')}`,
             enCode:"pipeline_user",
         },
         {
-            key:`/index/house/${match.params.name}/sys/role`,
-            label:"权限",
+            key:`/index/house/${webUrl}/sys/role`,
+            label:`${t('privilege')}`,
             enCode:"pipeline_auth",
         },
         {
-            key:`/index/house/${match.params.name}/sys/pushRule`,
-            label:'推送规则',
+            key:`/index/house/${webUrl}/sys/pushRule`,
+            label:`${t('push_rules')}`,
             enCode:'pipeline_seting',
         },
         {
-            key:`/index/house/${match.params.name}/sys/keys`,
-            label:'访问秘钥',
+            key:`/index/house/${webUrl}/sys/keys`,
+            label:`${t('access_keys')}`,
             enCode:'pipeline_seting',
         },
         {
-            key:`/index/house/${match.params.name}/sys/hooks`,
+            key:`/index/house/${webUrl}/sys/hooks`,
             label:'WebHooks',
             enCode:'pipeline_seting',
         },
@@ -68,8 +74,6 @@ const HouseSetAside = props =>{
                     {navContent(item)}
                 </PrivilegeProjectButton>
     }
-
-
 
     return(
         <div className='houseSet-aside'>

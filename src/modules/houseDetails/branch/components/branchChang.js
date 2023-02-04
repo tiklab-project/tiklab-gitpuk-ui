@@ -4,7 +4,7 @@ import {inject,observer} from 'mobx-react'
 
 const BranchChang = props => {
 
-    const {branchStore,houseInfo,type,match} = props
+    const {branchStore,houseInfo,webUrl,type,match} = props
 
     const {findAllBranch,branchList} = branchStore
 
@@ -17,15 +17,27 @@ const BranchChang = props => {
     const changBranch = value => {
         switch (type) {
             case 'commit':
-                props.history.push(`/index/house/${houseInfo.name}/commits/${value}`)
+                props.history.push(`/index/house/${webUrl}/commits/${value}`)
                 break
             case 'code':
-                props.history.push(`/index/house/${houseInfo.name}/tree/${value}`)
+                props.history.push(`/index/house/${webUrl}/tree/${value}`)
         }
     }
 
     return (
-        <Select defaultValue={branch} onChange={value=>changBranch(value)}>
+        <Select
+            showSearch
+            defaultValue={branch}
+            onChange={value=>changBranch(value)}
+            filterOption={(input, option) =>
+                option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+            }
+            dropdownRender={(menu) => (
+                <>
+                    {menu}
+                </>
+            )}
+        >
             {
                 branchList && branchList.map(item=>{
                     return <Select.Option value={item.branchName} key={item.branchName}>{item.branchName}</Select.Option>

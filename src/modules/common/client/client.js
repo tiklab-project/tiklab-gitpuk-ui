@@ -35,7 +35,7 @@ export const copy = data => {
 // 文件路径截取
 export const interceptUrl = (url,data) =>{
     if(data){
-        return url.split('/index/house'+ data)
+        return url.split('/index/house/'+data)
     }
     else {
         return url.split('/')

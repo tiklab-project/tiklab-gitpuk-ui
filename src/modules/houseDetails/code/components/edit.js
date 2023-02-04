@@ -11,11 +11,12 @@ const Edit = props =>{
 
     const {houseStore,codeStore,location,match} = props
 
-    const {houseInfo} = houseStore
+    const {houseInfo,webUrl} = houseStore
     const {readFile,blobFile,writeFile} = codeStore
 
     const [form] = Form.useForm()
-    const fileAddress = interceptUrl(location.pathname,'/'+houseInfo.name+'/edit/'+match.params.branch)
+    const urlInfo = match.params
+    const fileAddress = interceptUrl(location.pathname,webUrl+'/edit/'+urlInfo.branch)
 
     const [editType,setEditType] = useState('compile')
     const [previewValue,setPreviewValue] = useState('')
@@ -26,7 +27,7 @@ const Edit = props =>{
         houseInfo.name && readFile({
             codeId:houseInfo.codeId,
             fileAddress:fileAddress[1],
-            commitBranch:match.params.branch
+            commitBranch:urlInfo.branch
         })
         .then(res=>{
             if(res.code===0){
@@ -45,7 +46,7 @@ const Edit = props =>{
             fileContent:previewValue,
             ...value
         }).then(res=>{
-            res.code===0 && props.history.push(`/index/house/${houseInfo.name}/tree`)
+            res.code===0 && props.history.push(`/index/${webUrl}/tree/${urlInfo.branch}`)
         })
     }
 

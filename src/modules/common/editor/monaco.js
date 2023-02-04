@@ -137,7 +137,7 @@ export const MonacoPreview = props => {
 
 
     return (
-        <div ref={monacoEditorDomRef} style={{height:200}}/>
+        <div ref={monacoEditorDomRef} style={{height:400}}/>
     )
 }
 

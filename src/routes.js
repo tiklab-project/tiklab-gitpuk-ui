@@ -39,7 +39,7 @@ const Tag=AsyncComponent(()=>import('./modules/houseDetails/tag/container/tag'))
 const HouseMerge=AsyncComponent(()=>import('./modules/houseDetails/merge/merge'))
 const Commits=AsyncComponent(()=>import('./modules/houseDetails/commits/container/commits'))
 const CommitsDetails=AsyncComponent(()=>import('./modules/houseDetails/commits/components/commitsDetails'))
-const Question=AsyncComponent(()=>import('./modules/houseDetails/question/container/question'))
+const Issue=AsyncComponent(()=>import('./modules/houseDetails/issue/container/issue'))
 const Pipeline=AsyncComponent(()=>import('./modules/houseDetails/pipeline/container/pipeline'))
 const Statistics=AsyncComponent(()=>import('./modules/houseDetails/statistics/container/statistics'))
 
@@ -144,12 +144,12 @@ const routers = [
                 component:Homepage,
             },
             {
-                path:'/index/storehouse',
+                path:'/index/house',
                 exact:true,
                 component:Storehouse,
             },
             {
-                path:'/index/storehouseGroup',
+                path:'/index/group',
                 exact:true,
                 component:StorehouseGroup,
             },
@@ -157,100 +157,99 @@ const routers = [
                 path:'/index/ide/*',
                 component:WEBIDE,
             },
-
             {
-                path:'/index/house/:name',
+                path:'/index/house/:namespace/:name',
                 component:StorehouseDetails,
                 routes:[
                     {
-                        path:'/index/house/:name/tree',
+                        path:'/index/house/:namespace/:name/tree',
                         exact: true,
                         component:Code,
                     },
                     {
-                        path:'/index/house/:name/tree/:branch',
+                        path:'/index/house/:namespace/:name/tree/:branch',
                         component:Code,
                     },
                     {
-                        path:'/index/house/:name/blob/:branch/*',
+                        path:'/index/house/:namespace/:name/blob/:branch/*',
                         exact:false,
                         component:Blob,
                     },
                     {
-                        path:'/index/house/:name/edit/:branch/*',
+                        path:'/index/house/:namespace/:name/edit/:branch/*',
                         exact:false,
                         component:Edit,
                     },
                     {
-                        path:'/index/house/:name/branch',
+                        path:'/index/house/:namespace/:name/branch',
                         exact:true,
                         component:Branch,
                     },
                     {
-                        path:'/index/house/:name/tag',
+                        path:'/index/house/:namespace/:name/tag',
                         exact:true,
                         component:Tag,
                     },
                     {
-                        path:'/index/house/:name/merge',
+                        path:'/index/house/:namespace/:name/merge',
                         exact:true,
                         component:HouseMerge,
                     },
                     {
-                        path:'/index/house/:name/commits/:branch',
+                        path:'/index/house/:namespace/:name/commits/:branch',
                         exact: true,
                         component:Commits,
                     },
                     {
-                        path:'/index/house/:name/commit/:commitsId',
+                        path:'/index/house/:namespace/:name/commit/:commitsId',
                         component:CommitsDetails,
                     },
                     {
-                        path:'/index/house/:name/statistics',
+                        path:'/index/house/:namespace/:name/statistics',
                         component: Statistics
                     },
                     {
-                        path:'/index/house/:name/question',
-                        component: Question
+                        path:'/index/house/:namespace/:name/issue',
+                        component: Issue
                     },
                     {
-                        path:'/index/house/:name/pipeline',
+                        path:'/index/house/:namespace/:name/pipeline',
                         component: Pipeline
                     },
                     {
-                        path:'/index/house/:name/sys',
+                        path:'/index/house/:namespace/:name/sys',
                         component: StorehouseSet,
                         routes:[
                             {
-                                path:'/index/house/:name/sys/set',
+                                path:'/index/house/:namespace/:name/sys/set',
                                 component:HouseSet
                             },
                             {
-                                path:'/index/house/:name/sys/pushRule',
+                                path:'/index/house/:namespace/:name/sys/pushRule',
                                 component:PushRule
                             },
                             {
-                                path:'/index/house/:name/sys/keys',
+                                path:'/index/house/:namespace/:name/sys/keys',
                                 component:Keys
                             },
                             {
-                                path:'/index/house/:name/sys/hooks',
+                                path:'/index/house/:namespace/:name/sys/hooks',
                                 component:WebHooks
                             },
                             {
-                                path:'/index/house/:name/sys/user',
+                                path:'/index/house/:namespace/:name/sys/member',
                                 component: DomainUser
                             },
                             {
-                                path:'/index/house/:name/sys/role',
+                                path:'/index/house/:namespace/:name/sys/role',
                                 component: DomainRole
                             }
                         ]
                     },
-                    {
-                        path:'/index/house/:name/*',
-                        render:()=><Redirect to={'/index/404'}/>,
-                    }
+                    // {
+                    //     path:'/index/house/:name/*',
+                    //     render:()=><Redirect to={'/index/404'}/>,
+                    // }
                 ]
             },
             {

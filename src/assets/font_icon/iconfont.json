@@ -6,6 +6,34 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "10142371",
+      "name": "删除",
+      "font_class": "delete",
+      "unicode": "e605",
+      "unicode_decimal": 58885
+    },
+    {
+      "icon_id": "12600894",
+      "name": "scss",
+      "font_class": "scss",
+      "unicode": "e657",
+      "unicode_decimal": 58967
+    },
+    {
+      "icon_id": "31260983",
+      "name": "css",
+      "font_class": "css",
+      "unicode": "e63c",
+      "unicode_decimal": 58940
+    },
+    {
+      "icon_id": "31260973",
+      "name": "sql",
+      "font_class": "sql",
+      "unicode": "e63b",
+      "unicode_decimal": 58939
+    },
+    {
       "icon_id": "5916439",
       "name": "YAML",
       "font_class": "YAML",

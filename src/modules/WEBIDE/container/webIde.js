@@ -1,5 +1,7 @@
 import React,{useEffect,useState,useRef} from 'react'
-import WebIdeTree from "../components/webIdeTree"
+import WebIdeTree from '../components/webIdeTree'
+// import WangEditor from '../../common/editor/wangeditor'
+// import SlateEditor from '../../common/editor/slate/slateEditor'
 import '../components/webIde.scss'
 
 const WebIde = props =>{
@@ -92,7 +94,7 @@ const WebIde = props =>{
                 </div>
             </div>
             <div className='web-ide-content'>
-                sskdlfsdfsd
+                124
             </div>
         </div>
     )
