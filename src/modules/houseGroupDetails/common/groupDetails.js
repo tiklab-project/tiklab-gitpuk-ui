@@ -14,16 +14,9 @@ const GroupDetails= props =>{
 
     const {findUserGroup,groupList,groupInfo,setGroupInfo} = houseGroupStore
 
-    let path = props.location.pathname
     const groupName = match.params.name
 
     const {t} = useTranslation()
-
-    const [nav,setNav] = useState('')
-
-    useEffect(()=>{
-        setNav(path)
-    },[path])
 
     useEffect(()=>{
         // 初始化仓库组
@@ -41,28 +34,24 @@ const GroupDetails= props =>{
     const firstRouters=[
         {
             to:`/index/group/${groupName}/survey`,
-            title:`${t('survey')}`,
+            title:`${t('Survey')}`,
             icon:<CreditCardOutlined />,
-            key:'2',
         },
         {
             to:`/index/group/${groupName}/house`,
-            title:`${t('storehouse')}`,
+            title:`${t('Storehouse')}`,
             icon: <BankOutlined />,
-            key:'3',
         },
         {
-            to:`/index/group/${groupName}/merge`,
-            title: `${t('merge')}`,
+            to:`/index/group/${groupName}/merge_requests`,
+            title: `${t('Merge Requests')}`,
             icon: <PullRequestOutlined />,
-            key:'4',
         },
     ]
 
     return  <Aside
                 {...props}
-                routers={firstRouters}
-                nav={nav}
+                firstRouters={firstRouters}
                 list={groupList}
                 info={groupInfo}
                 webUrl={groupName}

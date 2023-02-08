@@ -69,29 +69,26 @@
                         display: flex;
                         flex-direction: row;
                         align-items: center;
+                        .ident-title,.ident-copy,.ident-folder{
+                            background-color: #fafafa;
+                            border: 1px solid #e5e5e5;
+                        }
                         .ident-title{
                             border-bottom-left-radius: 4px;
                             border-top-left-radius: 4px;
-                            background-color: #fafafa;
                             padding: 6px 10px;
-                            border: 1px solid #e5e5e5;
                             min-width: 80px;
+                            font-size: 13px;
+                            font-weight: 500;
                         }
-                        .ident-copy{
+                        .ident-copy,.ident-folder{
                             padding: 10px;
-                            border: 1px solid #e5e5e5;
                             border-left: none;
                             cursor: pointer;
-                            background-color: #fafafa;
                         }
                         .ident-folder{
-                            padding: 10px;
-                            border: 1px solid #e5e5e5;
-                            border-left: none;
                             border-bottom-right-radius: 4px;
                             border-top-right-radius: 4px;
-                            cursor: pointer;
-                            background-color: #fafafa;
                         }
                     }
                 }

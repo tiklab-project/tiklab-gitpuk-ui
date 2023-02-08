@@ -85,9 +85,7 @@ const HooksAdd = props =>{
         >
             <div className='hooks-add-up'>
                 <div>新建WebHooks</div>
-                <div style={{cursor:'pointer'}}
-                     onClick={()=>setAddVisible(false)}
-                >
+                <div style={{cursor:'pointer'}} onClick={()=>setAddVisible(false)}>
                     <CloseOutlined />
                 </div>
             </div>
@@ -111,11 +109,7 @@ const HooksAdd = props =>{
                                 {
                                     enevLis.map(item=>{
                                         return  <Col span={24} key={item.value}>
-                                            <Checkbox value={item.value}
-                                                      style={{
-                                                          lineHeight: '32px',
-                                                      }}
-                                            >
+                                            <Checkbox value={item.value} style={{lineHeight: '32px'}}>
                                                 <div className='event-check'>
                                                     <div className='event-check-value'>{item.value}</div>
                                                     <div className='event-check-desc'>{item.desc}</div>

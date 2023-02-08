@@ -49,12 +49,8 @@ const Publish = props =>{
                     <span className='title-icon'>{renderType(item.type)}</span>
                     <span>{item.title}</span>
                 </div>
-                <div className='annex-item-size'>
-                    {item.size}
-                </div>
-                <div className='annex-item-time'>
-                    {item.time}
-                </div>
+                <div className='annex-item-size'>{item.size}</div>
+                <div className='annex-item-time'>{item.time}</div>
             </div>
         )
     }
@@ -79,9 +75,7 @@ const Publish = props =>{
                     </div>
                 </div>
                 <div className='publish-title'>
-                    <div className='publish-title-msg'>
-                        莫凶凶发布于今天
-                    </div>
+                    <div className='publish-title-msg'>莫凶凶发布于今天</div>
                     <Divider type='vertical' />
                     <div className='publish-title-line'>
                         <div className='line-item'>
@@ -102,9 +96,7 @@ const Publish = props =>{
                     <div className='publish-annex-title'>附件(5)</div>
                     <div className='publish-annex-content'>
                         {
-                            annex.map(item=>{
-                                return renderAnnex(item)
-                            })
+                            annex.map(item=>renderAnnex(item))
                         }
                     </div>
                 </div>

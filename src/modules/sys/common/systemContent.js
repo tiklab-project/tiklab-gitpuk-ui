@@ -1,16 +1,19 @@
-import React,{useEffect,useState} from 'react';
-import {DownOutlined,UpOutlined} from '@ant-design/icons';
-import {PrivilegeButton} from 'tiklab-privilege-ui';
-import {departmentRouters,templateRouter} from './sysRouters';
-import {inject,observer} from 'mobx-react';
-import {SYSTEM_ROLE_STORE} from 'tiklab-privilege-ui/lib/store';
-import {getUser} from 'tiklab-core-ui';
-import {renderRoutes} from 'react-router-config';
+import React,{useEffect,useState} from 'react'
+import {DownOutlined,UpOutlined} from '@ant-design/icons'
+import {PrivilegeButton} from 'tiklab-privilege-ui'
+import {departmentRouters,templateRouter} from './sysRouters'
+import {inject,observer} from 'mobx-react'
+import {SYSTEM_ROLE_STORE} from 'tiklab-privilege-ui/lib/store'
+import {getUser} from 'tiklab-core-ui'
+import {renderRoutes} from 'react-router-config'
+import {useTranslation} from 'react-i18next'
 import './system.scss';
 
 const SystemContent= props =>  {
 
     const {route,isDepartment,applicationRouters} = props
+
+    const {t} = useTranslation()
 
     const path = props.location.pathname
     const [selectKey,setSelectKey] = useState(path)
@@ -46,7 +49,7 @@ const SystemContent= props =>  {
                 key={data.id}
             >
                 <span className='sys-content-icon'>{data.icon}</span>
-                <span>{data.title}</span>
+                <span>{t(data.title)}</span>
             </li>
         )
     }
@@ -68,7 +71,7 @@ const SystemContent= props =>  {
                 >
                     <span>
                         <span className='sys-content-icon'>{item.icon}</span>
-                        <span className='system-aside-title'>{item.title}</span>
+                        <span className='system-aside-title'>{t(item.title)}</span>
                     </span>
                     <div className='system-aside-item-icon'>
                         {
@@ -103,7 +106,7 @@ const SystemContent= props =>  {
                     >
                         <span>
                             <span className='sys-content-icon'>{item.icon}</span>
-                            <span className='system-aside-title'>{item.title}</span>
+                            <span className='system-aside-title'>{t(item.title)}</span>
                         </span>
                         <div className='system-aside-item-icon'>
                             {

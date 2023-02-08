@@ -53,16 +53,12 @@ const Edit = props =>{
     return(
         <div className='edit'>
             <div className='edit-content xcode-home-limited xcode'>
-                <BreadcrumbContent firstItem={'代码'} goBack={()=>props.history.go(-1)}/>
-                <div className='edit-content-head'>
-                    编辑文件
-                </div>
+                <BreadcrumbContent firstItem={'Code'} goBack={()=>props.history.go(-1)}/>
+                <div className='edit-content-head'>编辑文件</div>
                 <div className='edit-content-title'>
                     <span className='edit-title'
-                        onClick={()=>props.history.push(`/index/house/${houseInfo.name}/tree`)}
-                    >
-                        {houseInfo.name}
-                    </span>
+                          onClick={()=>props.history.push(`/index/house/${webUrl}/tree/${urlInfo.branch}`)}
+                    >{houseInfo.name}</span>
                     <span className='edit-title'>/</span>
                     <span className='edit-title'>
                         <Input
@@ -110,19 +106,11 @@ const Edit = props =>{
                         initialValues={{commitMessage:`更新`,commitBranch:'master'}}
                     >
                         <Form.Item label='提交信息' name='commitMessage'
-                                   rules={[
-                                       {required:true,message:'提交信息不能为空'},
-                                   ]}
-                        >
-                            <Input.TextArea/>
-                        </Form.Item>
+                                   rules={[{required:true,message:'提交信息不能为空'},]}
+                        ><Input.TextArea/></Form.Item>
                         <Form.Item label='目标分支' name='commitBranch'
-                                   rules={[
-                                       {required:true,message:'目标分支不能为空'},
-                                   ]}
-                        >
-                            <Input/>
-                        </Form.Item>
+                                   rules={[{required:true,message:'目标分支不能为空'},]}
+                        ><Input/></Form.Item>
                     </Form>
                 </div>
                 <div className='edit-content-btn'>

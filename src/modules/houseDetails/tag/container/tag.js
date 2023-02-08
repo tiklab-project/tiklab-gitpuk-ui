@@ -1,11 +1,10 @@
 import React,{useEffect,useState} from 'react'
 import {Input,Space,Table,Tooltip,Popconfirm} from 'antd'
-import {PlusOutlined, SearchOutlined,EditOutlined,DeleteOutlined} from '@ant-design/icons'
+import {PlusOutlined, SearchOutlined,EditOutlined,DeleteOutlined,TagOutlined} from '@ant-design/icons'
 import BreadcrumbContent from '../../../common/breadcrumb/breadcrumb'
 import Btn from '../../../common/btn/btn'
 import Tabs from '../../../common/tabs/tabs'
 import EmptyText from '../../../common/emptyText/emptyText'
-import Listname from '../../../common/list/listname'
 import Publish from '../components/publish'
 import TagAdd from '../components/tagAdd'
 import '../components/tag.scss'
@@ -45,12 +44,10 @@ const Tag = props =>{
     const renderName = (text,record) =>{
         return <div className='tag-tables-name' onClick={()=>goDetails(text,record)}>
             <div className='name-icon'>
-                <Listname text={text}/>
+                <TagOutlined/>
             </div>
             <div className='name-text'>
-                <div className='name-text-title'>
-                    {text}
-                </div>
+                <div className='name-text-title'>{text}</div>
                 <div className='name-text-desc'>
                     <span className='desc-name'>admin</span>
                     <span>信息完善</span>
@@ -182,7 +179,7 @@ const Tag = props =>{
         <div className='tag'>
             <div className='tag-content xcode-home-limited xcode'>
                 <div className='tag-top'>
-                    <BreadcrumbContent firstItem={'标签'}/>
+                    <BreadcrumbContent firstItem={'Tag'}/>
                     <Btn
                         type={'primary'}
                         title={'新建标签'}
@@ -214,10 +211,10 @@ const Tag = props =>{
                     <Table
                         bordered={false}
                         columns={tagType===1?columnsTag:columnsPublish}
-                        dataSource={dataSource}
+                        dataSource={[]}
                         rowKey={record=>record.id}
                         pagination={false}
-                        locale={{emptyText: <EmptyText/>}}
+                        locale={{emptyText: <EmptyText title={tagType===1?'暂无标签':'暂无发行版'}/>}}
                     />
                 </div>
             </div>

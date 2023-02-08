@@ -1,11 +1,11 @@
 import React,{useState,useEffect} from 'react'
-import {PlusOutlined,SearchOutlined,DeleteOutlined,DownOutlined} from '@ant-design/icons'
+import {PlusOutlined,SearchOutlined,DownOutlined,BranchesOutlined} from '@ant-design/icons'
 import {Input,Space,Tooltip,Popconfirm} from 'antd'
 import {inject,observer} from 'mobx-react'
 import BreadcrumbContent from '../../../common/breadcrumb/breadcrumb'
 import Btn from '../../../common/btn/btn'
 import Tabs from '../../../common/tabs/tabs'
-import Listname from '../../../common/list/listname'
+import EmptyText from '../../../common/emptyText/emptyText'
 import BranchAdd from '../components/branchAdd'
 import '../components/branch.scss'
 
@@ -13,16 +13,11 @@ const Branch = props =>{
 
     const {houseStore,branchStore} = props
 
-    const {houseInfo} = houseStore
+    const {houseInfo,webUrl} = houseStore
     const {createBranch,findAllBranch,branchList,fresh,deleteBranch} = branchStore
 
     const [branchType,setBranchType] = useState(1)
     const [addVisible,setAddVisible] = useState(false)
-
-    useEffect(()=>{
-        // 避免空仓库时路由自定义到此页面
-        houseInfo.name && !houseInfo.notNull && props.history.push('/index/404')
-    },[houseInfo.name])
 
     useEffect(()=>{
         houseInfo.name && findAllBranch(houseInfo.codeId)
@@ -39,16 +34,15 @@ const Branch = props =>{
        })
    }
 
-
    const goCode = item =>{
-       props.history.push(`/index/house/${houseInfo.name}/tree/${item.branchName}`)
+       props.history.push(`/index/house/${webUrl}/tree/${item.branchName}`)
    }
 
     const renderData = item => {
         return(
             <div className='branch-tables-item' key={item.branchName}>
                 <div className='branch-tables-icon'>
-                    <Listname text={item.branchName}/>
+                    <BranchesOutlined/>
                 </div>
                 <div className='branch-tables-name'>
                     <div className='name-text-title'>
@@ -73,14 +67,10 @@ const Branch = props =>{
                 </div>
                 <div className='branch-tables-action'>
                     <Tooltip title='合并请求'>
-                        <div className='branch-tables-combine'>
-                            合并请求
-                        </div>
+                        <div className='branch-tables-combine'>合并请求</div>
                     </Tooltip>
                     <Tooltip title='对比'>
-                        <div className='branch-tables-compare'>
-                            对比
-                        </div>
+                        <div className='branch-tables-compare'>对比</div>
                     </Tooltip>
                     <Tooltip title='下载'>
                         <div className='branch-tables-download'>
@@ -123,7 +113,7 @@ const Branch = props =>{
         <div className='branch'>
             <div className='branch-content xcode-home-limited xcode'>
                 <div className='branch-content-top'>
-                    <BreadcrumbContent firstItem={'分支'}/>
+                    <BreadcrumbContent firstItem={'Branch'}/>
                     <Btn
                         type={'primary'}
                         title={'新建分支'}
@@ -160,9 +150,10 @@ const Branch = props =>{
                 </div>
                 <div className='branch-content-tables'>
                     {
-                        branchList && branchList.map(item=>{
-                            return renderData(item)
-                        })
+                        branchList && branchList.length > 0 ?
+                        branchList.map(item=> renderData(item) )
+                        :
+                        <EmptyText title={'暂无分支'}/>
                     }
                 </div>
             </div>

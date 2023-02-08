@@ -67,6 +67,7 @@ const Code = props =>{
 
     const fileName = record => {
         props.history.push(`/index/house/${urlInfo.namespace}${record.path}`)
+
     }
 
     const renderFileType = fileType => {
@@ -102,19 +103,18 @@ const Code = props =>{
             ellipsis:true,
             render:(text,record)=>{
                 return <span className='code-table-name' onClick={()=>fileName(record)}>
-                            <span style={{paddingRight:5}}>
-                                {
-                                    record.type==='tree' ?
-                                        <FolderOutlined/>
-                                        :
-                                        <svg className='icon' aria-hidden='true'>
-                                            <use xlinkHref={`#icon-${renderFileType(record.fileType)}`}/>
-                                        </svg>
-                                }
-                            </span>
-                            <span>{text}</span>
-                        </span>
-
+                    <span style={{paddingRight:5}}>
+                        {
+                            record.type==='tree' ?
+                                <FolderOutlined/>
+                                :
+                                <svg className='icon' aria-hidden='true'>
+                                    <use xlinkHref={`#icon-${renderFileType(record.fileType)}`}/>
+                                </svg>
+                        }
+                    </span>
+                    <span>{text}</span>
+                </span>
             }
         },
         {
@@ -158,7 +158,7 @@ const Code = props =>{
     return(
         <div className='code'>
             <div className='code-content xcode-home-limited xcode'>
-                <BreadcrumbContent firstItem={'代码'}/>
+                <BreadcrumbContent firstItem={'Code'}/>
                 <div className='code-content-head'>
                     <BreadChang
                         {...props}
@@ -186,25 +186,19 @@ const Code = props =>{
                                 </div>
                         }
                         <div className='code-file-add'>
-                            <Dropdown overlay={addFileMenu} trigger={['click']} placement={'bottomRight'}>
+                            <Dropdown overlay={addFileMenu} trigger={['click']} placement={'bottomCenter'}>
                                 <PlusOutlined/>
                             </Dropdown>
                         </div>
                         <div className='code-desc'>
-                            <Btn
-                                title={'WEB IDE'}
-                                onClick={()=>goWebIde()}
-                            />
+                            <Btn title={'WEB IDE'} onClick={()=>goWebIde()}/>
                         </div>
                         <div className='code-clone'>
                             <Clone cloneAddress={cloneAddress}/>
                         </div>
                     </div>
                 </div>
-                <RecentSubmitMsg
-                    {...props}
-                    latelyBranchCommit={latelyBranchCommit}
-                />
+                <RecentSubmitMsg {...props} latelyBranchCommit={latelyBranchCommit}/>
                 <div className='code-content-tables'>
                     <Table
                         bordered={false}
@@ -212,7 +206,7 @@ const Code = props =>{
                         dataSource={codeTreeData}
                         rowKey={record=>record.fileName}
                         pagination={false}
-                        locale={{emptyText: <EmptyText/>}}
+                        locale={{emptyText: <EmptyText title='暂无数据'/>}}
                     />
                 </div>
             </div>

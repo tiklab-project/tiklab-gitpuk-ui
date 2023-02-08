@@ -6,8 +6,8 @@ import {Profile} from 'tiklab-eam-ui'
 import {getUser} from 'tiklab-core-ui'
 import BreadcrumbContent from '../../../common/breadcrumb/breadcrumb'
 import {copy} from '../../../common/client/client'
-import BranchChang from '../../branch/components/branchChang'
 import EmptyText from '../../../common/emptyText/emptyText'
+import TriggerSelect from '../../code/components/triggerSelect'
 import '../components/commits.scss'
 
 const Commits = props =>{
@@ -20,10 +20,6 @@ const Commits = props =>{
     const urlInfo = match.params
 
     useEffect(()=>{
-        houseInfo.name && !houseInfo.notNull && props.history.push('/index/404')
-    },[houseInfo.name])
-
-    useEffect(()=>{
         if(houseInfo.name){
             const branch = urlInfo.branch ? urlInfo.branch:houseInfo.defaultBranch
             findBranchCommit({
@@ -33,12 +29,18 @@ const Commits = props =>{
         }
     },[houseInfo.name,location.pathname])
 
-    const changBranch = value => {
+    const changCommitsUser = value => {
 
     }
 
+    // 提交详情
     const goDetails = item =>{
         props.history.push(`/index/house/${webUrl}/commit/${item.commitId}`)
+    }
+
+    // 查看源文件
+    const findFile = item => {
+        props.history.push(`/index/house/${webUrl}/tree/${item.commitId}`)
     }
 
     const renderCommits = item => {
@@ -66,7 +68,7 @@ const Commits = props =>{
                         </div>
                     </Tooltip>
                     <Tooltip title={'查看源文件'}>
-                        <div className='ident-folder'>
+                        <div className='ident-folder' onClick={()=>findFile(item)}>
                             <FolderOpenOutlined />
                         </div>
                     </Tooltip>
@@ -88,9 +90,7 @@ const Commits = props =>{
                 </div>
                 <div className='commits-msg-item-content'>
                     {
-                        group.commitMessageList && group.commitMessageList.map(item=>{
-                            return renderCommits(item)
-                        })
+                        group.commitMessageList && group.commitMessageList.map(item=>renderCommits(item))
                     }
                 </div>
             </div>
@@ -100,11 +100,11 @@ const Commits = props =>{
     return (
         <div className='commits'>
             <div className='commits-content xcode-home-limited xcode'>
-                <BreadcrumbContent firstItem={'提交'}/>
+                <BreadcrumbContent firstItem={'Commits'}/>
                 <div className='commits-head'>
                     <div className='commits-head-left'>
                         <div className='commits-branch'>
-                            <BranchChang
+                            <TriggerSelect
                                 {...props}
                                 houseInfo={houseInfo}
                                 webUrl={webUrl}
@@ -114,7 +114,7 @@ const Commits = props =>{
                     </div>
                     <div className='commits-head-right'>
                         <div className='commits-user'>
-                            <Select defaultValue={'admin'} onChange={value=>changBranch(value)}>
+                            <Select defaultValue={'admin'} onChange={value=>changCommitsUser(value)}>
                                 <Select.Option value={'admin'}>admin</Select.Option>
                                 <Select.Option value={'root'}>root</Select.Option>
                             </Select>
@@ -133,11 +133,9 @@ const Commits = props =>{
                 <div className='commits-msg'>
                     {
                         commitsList && commitsList.length > 0 ?
-                        commitsList.map((group,groupIndex)=>{
-                            return renderCommitsData(group,groupIndex)
-                        })
+                        commitsList.map((group,groupIndex)=>renderCommitsData(group,groupIndex))
                         :
-                        <EmptyText/>
+                        <EmptyText title={'暂无提交信息'}/>
                     }
                 </div>
             </div>

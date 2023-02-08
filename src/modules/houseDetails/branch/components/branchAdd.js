@@ -70,7 +70,9 @@ const BranchAdd = props =>{
                 </div>
             </div>
             <div className='branch-add-content'>
-                <Form form={form} layout='vertical' autoComplete='off'>
+                <Form form={form} layout='vertical' autoComplete='off'
+                      initialValues={{point:houseInfo.defaultBranch}}
+                >
                     <Form.Item label={'分支名称'} name={'branchName'}
                                rules={[
                                    {required:true,message:''},
@@ -93,9 +95,7 @@ const BranchAdd = props =>{
                     >
                         <Input/>
                     </Form.Item>
-                    <Form.Item label={'分支来源'} name={'point'}
-                               rules={[{required:true,message:`分支来源不能为空`}]}
-                    >
+                    <Form.Item label={'分支来源'} name={'point'} rules={[{required:true,message:`分支来源不能为空`}]}>
                         <Select>
                             {
                                 branchList && branchList.map(item=>{

@@ -1,5 +1,5 @@
-import React from "react";
-import "./tabs.scss";
+import React from 'react'
+import './tabs.scss'
 
 const Tabs = props =>{
 
@@ -8,19 +8,15 @@ const Tabs = props =>{
     const renderTabItem = item =>{
         return  <div
                     key={item.id}
-                    className={`code-tab ${type===item.id?"code-active-tab":null}`}
+                    className={`xcode-tab ${type===item.id?'xcode-active-tab':null}`}
                     onClick={()=>onClick(item)}
-                >
-                    {item.title}
-                </div>
+                >{item.title}</div>
     }
 
     return (
-        <div className="code-tabs">
+        <div className='xcode-tabs'>
             {
-                tabLis.map(item=>{
-                    return renderTabItem(item)
-                })
+                tabLis.map(item=>renderTabItem(item))
             }
         </div>
     )

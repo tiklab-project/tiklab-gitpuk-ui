@@ -34,21 +34,14 @@ const HousePower = props =>{
                         >
                             <div className='power-item'>
                                 <div>
-                                    <div className='power-title power-icon'>
-                                        {item.icon}
-                                    </div>
-                                    <div className='power-title power-name'>
-                                        {item.title}
-                                    </div>
+                                    <div className='power-title power-icon'>{item.icon}</div>
+                                    <div className='power-title power-name'>{item.title}</div>
                                 </div>
                                 {
-                                    powerType===item.id &&
-                                    <div className='power-select-show'/>
+                                    powerType===item.id && <div className='power-select-show'/>
                                 }
                             </div>
-                            <div className='power-desc'>
-                                {item.desc}
-                            </div>
+                            <div className='power-desc'> {item.desc} </div>
                         </div>
                     })
                 }

@@ -4,15 +4,11 @@
     overflow: auto;
     background: var(--xcode-backdrop-color);
     &-content{
-        &-top{
+        &-top,&-center,&-bottom{
             display: flex;
         }
         &-center{
-            display: flex;
             margin: 15px 0;
-        }
-        &-bottom{
-            display: flex;
         }
         .homePage-empty{
             padding-top: 20px;
@@ -39,12 +35,10 @@
                     .quickIn-group-title{
                         font-weight: var(--tiklab-font-weight-bold);
                     }
-                    .quickIn-group-icon{
-                        .icon{
-                            width: 30px;
-                            height: 30px;
-                            vertical-align: -0.55rem;
-                        }
+                    .quickIn-group-icon .icon{
+                        width: 30px;
+                        height: 30px;
+                        vertical-align: -0.55rem;
                     }
                     .quickIn-group-number{
                         margin-left: 5px;

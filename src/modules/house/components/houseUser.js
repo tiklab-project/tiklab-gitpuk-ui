@@ -96,9 +96,7 @@ const HouseUser = props =>{
     return (
         <div className="storehouseAddModal-user">
             <div className="storehouseAddModal-user-title">
-                <div>
-                    {userTitle}成员
-                </div>
+                <div>{userTitle}成员</div>
                 <Btn
                     title={"添加成员"}
                     icon={<PlusOutlined/>}

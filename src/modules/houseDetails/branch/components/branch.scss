@@ -1,15 +1,9 @@
 .branch{
     .branch-content{
-        &-top{
+        &-top,&-type{
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
-        }
-        &-type{
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
             padding-bottom: 10px;
         }
         &-tables{
@@ -19,7 +13,11 @@
                 align-items: center;
                 padding: 8px;
                 .branch-tables-icon{
-                    margin-right: 5px;
+                    border: 1px solid #d9d9d9;
+                    padding: 8px;
+                    display: inline-block;
+                    height: 32px;
+                    margin-right: 10px;
                 }
                 .branch-tables-commit{
                     width: 130px;
@@ -72,35 +70,32 @@
                 .branch-tables-action{
                     display: flex;
                     flex-direction: row;
-                    .branch-tables-combine,.branch-tables-compare{
+                    .branch-tables-combine,.branch-tables-compare,.branch-tables-download{
                         background: #f4f4f4;
-                        border-radius: 4px;
-                        margin-right: 8px;
-                        padding: 6px;
                         cursor: pointer;
+                        margin-right: 8px;
+                        border-radius: 4px;
+                    }
+                    .branch-tables-combine,.branch-tables-compare{
+                        padding: 6px;
                     }
                     .branch-tables-download{
-                        background: #f4f4f4;
                         padding: 8px 6px;
-                        margin-right: 8px;
+                    }
+                    .branch-tables-del,.no-del{
+                        height: 32px;
+                        padding: 8px 6px;
                         border-radius: 4px;
-                        cursor: pointer;
                     }
                     .branch-tables-del{
                         background: #ff0000;
                         color: #ffffff;
-                        height: 32px;
-                        padding: 8px 6px;
-                        border-radius: 4px;
                         cursor: pointer;
                     }
                     .no-del{
                         color: rgba(0,0,0,.25);
                         background: #f5f5f5;
                         cursor: not-allowed;
-                        height: 32px;
-                        padding: 8px 6px;
-                        border-radius: 4px;
                     }
                 }
             }

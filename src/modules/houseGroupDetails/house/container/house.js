@@ -16,7 +16,7 @@ const House = props =>{
     return (
         <div className='group-house'>
             <div className='group-house-content xcode-home-limited xcode'>
-                <BreadcrumbContent firstItem={'仓库'} />
+                <BreadcrumbContent firstItem={'Storehouse'} />
                 <div className='group-house-head'>
                     <div className='head-left'>
                         <div className='head-left-icon'>

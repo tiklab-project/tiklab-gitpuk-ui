@@ -1,14 +1,16 @@
 import React,{useState,useEffect} from 'react'
 import {Select} from 'antd'
+import {BranchesOutlined} from '@ant-design/icons'
 import {inject,observer} from 'mobx-react'
+import EmptyText from '../../../common/emptyText/emptyText'
 
-const BranchChang = props => {
+const TriggerSelect = props => {
 
     const {branchStore,houseInfo,webUrl,type,match} = props
 
     const {findAllBranch,branchList} = branchStore
 
-    const branch = match.params.branch?match.params.branch:houseInfo && houseInfo.defaultBranch
+    const branch = match.params.branch ? match.params.branch:houseInfo && houseInfo.defaultBranch
 
     useEffect(()=>{
         houseInfo.name && findAllBranch(houseInfo.codeId)
@@ -32,19 +34,21 @@ const BranchChang = props => {
             filterOption={(input, option) =>
                 option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
             }
-            dropdownRender={(menu) => (
-                <>
-                    {menu}
-                </>
-            )}
+            notFoundContent={<EmptyText/>}
         >
-            {
-                branchList && branchList.map(item=>{
-                    return <Select.Option value={item.branchName} key={item.branchName}>{item.branchName}</Select.Option>
-                })
-            }
+            <Select.OptGroup label='分支'>
+                {
+                    branchList && branchList.map(item=>(
+                        <Select.Option value={item.branchName} key={item.branchName}>
+                            {item.branchName}
+                        </Select.Option>
+                    ))
+                }
+            </Select.OptGroup>
+            {/*<Select.OptGroup label='标签'>*/}
+            {/*</Select.OptGroup>*/}
         </Select>
     )
 }
 
-export default inject('branchStore')(observer(BranchChang))
+export default inject('branchStore')(observer(TriggerSelect))

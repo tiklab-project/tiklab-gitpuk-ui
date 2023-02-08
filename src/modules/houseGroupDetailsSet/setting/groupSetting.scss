@@ -1,0 +1,55 @@
+.groupSetting{
+    .groupSetting-up{
+        padding-bottom: var(--tiklab-padding-item);
+    }
+    &-ul{
+        border: 1px solid #ececec;
+        border-radius: 4px;
+    }
+    &-li{
+        &:not(:last-child){
+            border-bottom: 1px solid var(--tiklab-gray-200);
+        }
+        .groupSetting-li-top{
+            display: flex;
+            align-items: flex-start;
+            padding: 10px 20px;
+            cursor: pointer;
+            &:hover{
+                background: #f4f4f4;
+            }
+        }
+        .groupSetting-li-icon{
+            width: 16px;
+            height: 16px;
+            line-height: 16px;
+            margin-right: 10px;
+            margin-top: 4px;
+            font-weight: var(--tiklab-font-weight-bold);
+        }
+        .groupSetting-li-center{
+            flex-grow: 1;
+        }
+        .groupSetting-li-title{
+            font-weight: var(--tiklab-font-weight-bold);
+        }
+        .groupSetting-li-desc{
+            font-size: var(--tiklab-font-13);
+            color: var(--tiklab-gray-500);
+        }
+        .groupSetting-li-down{
+            align-self: center;
+        }
+        .groupSetting-li-select{
+            background: #f4f4f4;
+        }
+        .groupSetting-li-bottom{
+            padding:10px 20px;
+        }
+        .groupSetting-li-none{
+            display: none;
+        }
+    }
+}
+
+

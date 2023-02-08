@@ -5,7 +5,7 @@ const Listname = props => {
 
     const {text,colors} = props
 
-    return  <span className={`xcode-listname-icon ${colors?`xcode-icon-${colors}`:"xcode-icon-2"}`}>
+    return  <span className={`xcode-listname-icon ${colors?`xcode-icon-${colors}`:"xcode-icon-1"}`}>
                 {text && text.substring(0,1).toUpperCase()}
             </span>
 

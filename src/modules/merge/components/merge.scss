@@ -19,7 +19,7 @@
                 padding: 8px;
                 display: inline-block;
                 height: 32px;
-                margin-right: 8px;
+                margin-right: 10px;
             }
             .tables-title-text{
                 font-weight: var(--tiklab-font-weight-bold);
@@ -64,11 +64,13 @@
         .merge-add-branch{
             display: flex;
             flex-direction: row;
+            align-items: center;
             .ant-form-item{
                 flex: 1;
             }
             .add-branch-arrow{
-                margin: 40px var(--tiklab-padding-item) 0;
+                margin: 0 var(--tiklab-padding-item);
+                padding-top: 20px;
             }
         }
     }

@@ -16,25 +16,25 @@ const sys = props =>{
         return [
             {
                 id:'/index/sys/role',
-                title:'权限',
+                title:'Privilege',
                 icon: <SafetyCertificateOutlined />,
                 purviewCode:'pipeline_permission',
             },
             {
                 id:'2',
-                title: '消息',
+                title: 'Message',
                 icon:<SoundOutlined/>,
                 purviewCode: a[2],
                 children: [
                     {
                         id:'/index/sys/mes/notice',
-                        title:'消息通知方案',
+                        title:'Message Notification Scheme',
                         icon:<SoundOutlined />,
                         purviewCode:'message_setting',
                     },
                     {
                         id:'/index/sys/mes/send',
-                        title: '消息发送方式',
+                        title: 'Message Send Type',
                         icon:<SoundOutlined />,
                         purviewCode: 'message_type',
                     },
@@ -42,7 +42,7 @@ const sys = props =>{
             },
             {
                 id:'/index/sys/keys',
-                title: '秘钥',
+                title: 'Keys',
                 icon:<KeyOutlined />,
             },
             {
@@ -52,19 +52,19 @@ const sys = props =>{
             },
             {
                 id:'/index/sys/plugin',
-                title:'插件',
+                title:'Plugin',
                 icon:<MergeCellsOutlined />,
                 purviewCode:'pipeline_plugin',
             },
             {
                 id:'5',
-                title:'安全',
+                title:'Security',
                 icon:<LayoutOutlined />,
                 purviewCode:a[3],
                 children: [
                     {
                         id:'/index/sys/myLog',
-                        title:'操作日志',
+                        title:'Operation Log',
                         icon:<LayoutOutlined />,
                         purviewCode:'pipeline_log',
                     }
@@ -72,7 +72,7 @@ const sys = props =>{
             },
             {
                 id:'/index/sys/version',
-                title:'版本与许可证',
+                title:'Version And Licence',
                 icon:<VerifiedOutlined />,
                 purviewCode:'pipeline_version',
             },

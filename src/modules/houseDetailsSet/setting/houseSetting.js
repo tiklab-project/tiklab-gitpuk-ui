@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react'
-import {Modal, Form, Input} from 'antd'
+import {Modal,Form, Input} from 'antd'
 import {
     ExclamationCircleOutlined,
     DeleteOutlined,
@@ -11,14 +11,15 @@ import {PrivilegeProjectButton} from 'tiklab-privilege-ui'
 import {inject,observer} from 'mobx-react'
 import Btn from '../../common/btn/btn'
 import BreadcrumbContent from '../../common/breadcrumb/breadcrumb'
+import Loading from '../../common/loading/loading'
 import HousePower from '../../house/components/housePower'
-import './houseSet.scss'
+import './houseSetting.scss'
 
-const HouseSet = props =>{
+const HouseSetting = props =>{
 
     const {houseStore} = props
 
-    const {houseInfo,deleteCode} = houseStore
+    const {houseInfo,deleteCode,isLoading} = houseStore
 
     const [form] = Form.useForm()
     const [expandedTree,setExpandedTree] = useState([])  // 树的展开与闭合
@@ -61,15 +62,13 @@ const HouseSet = props =>{
                         >
                             <Form.Item label='仓库名称' name='name'
                                        rules={[{max:30,message:'请输入1~31位以内的名称'}]}
-                            >
-                                <Input/>
-                            </Form.Item>
+                            ><Input/></Form.Item>
                             <HousePower
                                 powerType={powerType}
                                 setPowerType={setPowerType}
                                 set={true}
                             />
-                            <Form.Item name='desc' label='仓库描述'>
+                            <Form.Item name='remarks' label='仓库描述'>
                                 <Input.TextArea/>
                             </Form.Item>
                         </Form>
@@ -80,7 +79,7 @@ const HouseSet = props =>{
                                 onClick={()=>setOpenOrClose(1)}
                             />
                             <Btn
-                                type={'dangerous'}
+                                type={'primary'}
                                 title={'确定'}
                                 onClick={() => {
                                     form
@@ -152,15 +151,14 @@ const HouseSet = props =>{
                 </div>
                 <div className='houseReDel-li-down'>
                     {
-                        isExpandedTree(item.key)?
-                            <DownOutlined />:<RightOutlined />
+                        isExpandedTree(item.key)? <DownOutlined />:<RightOutlined />
                     }
                 </div>
             </div>
             <div className={`${isExpandedTree(item.key)? 'houseReDel-li-bottom':'houseReDel-li-none'}`}>
                 {
                     isExpandedTree(item.key) &&
-                        item.content
+                    item.content
                 }
             </div>
         </div>
@@ -175,22 +173,20 @@ const HouseSet = props =>{
     return(
         <div className='houseReDel xcode-home-limited xcode'>
             <div className='houseReDel-up'>
-                <BreadcrumbContent firstItem={'设置'}/>
+                <BreadcrumbContent firstItem={'Setting'}/>
             </div>
             <div className='houseReDel-content'>
                 <div className='houseReDel-ul'>
                     {
-                        lis.map(item=>{
-                            return lisItem(item)
-                        })
+                        lis.map(item=> lisItem(item) )
                     }
                 </div>
             </div>
-            {/*{*/}
-            {/*    isLoading && <Loading/>*/}
-            {/*}*/}
+            {
+                isLoading && <Loading/>
+            }
         </div>
     )
 }
 
-export default inject('houseStore')(observer(HouseSet))
+export default inject('houseStore')(observer(HouseSetting))

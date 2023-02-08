@@ -6,14 +6,14 @@
 //     pipelineStore,
 // }
 
-import {store as pipelineStore} from "./module/store";
-import routesSaas  from "./module/routesSass";
+import {store as xcodeStore} from "./module/store";
+import routesSaas  from "./module/routes";
 import Portal from "././module/modules/home/container/portal";
-import SystemContent from "././module/modules/system/common/systemContent";
+import SystemContent from "././module/modules/sys/common/systemContent";
 
 export {
     routesSaas ,
-    pipelineStore,
+    xcodeStore,
     Portal,
     SystemContent
 }

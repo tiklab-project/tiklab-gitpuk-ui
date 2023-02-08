@@ -61,11 +61,7 @@ const HouseUserAdd = props =>{
             key:'nickname',
             width:'25%',
             ellipsis:true,
-            render:(text,record)=>{
-                return <Space>
-                    {text}
-                </Space>
-            }
+            render:(text,record)=><Space>{text}</Space>
         },
         {
             title:'名称',

@@ -8,7 +8,7 @@ const Survey = props =>{
     return (
         <div className='survey'>
             <div className='survey-content xcode-home-limited xcode'>
-                <BreadcrumbContent firstItem={'概况'}/>
+                <BreadcrumbContent firstItem={'Survey'}/>
                 <div className='survey-dyna'>
                     <Guide title={"动态"} icon={<AimOutlined/>} type={"dynamic"}/>
                 </div>

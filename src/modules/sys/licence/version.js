@@ -104,7 +104,6 @@ const VersionContent = props =>{
             dataSource={dataSource}
             pagination={false}
         />
-
     </Version>
 }
 

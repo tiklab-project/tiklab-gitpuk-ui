@@ -1,5 +1,5 @@
 import React, {Fragment, useEffect} from 'react'
-import BranchChang from '../../branch/components/branchChang'
+import TriggerSelect from './triggerSelect'
 import {interceptUrl} from '../../../common/client/client'
 import './breadChang.scss'
 
@@ -31,7 +31,7 @@ const BreadChang = props => {
     return (
         <div className='code-head-left'>
             <div className='code-branch'>
-                <BranchChang
+                <TriggerSelect
                     {...props}
                     houseInfo={houseInfo}
                     webUrl={webUrl}

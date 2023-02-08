@@ -31,6 +31,7 @@ export class CodeStore {
         else {
             this.codeTreeData = []
         }
+        data.code===50001 && message.info(data.msg,0.5)
         return data
     }
 

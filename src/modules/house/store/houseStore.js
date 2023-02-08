@@ -16,6 +16,7 @@ export class HouseStore {
     @observable houseInfo = ''
     @observable webUrl = ''
     @observable houseList = []
+    @observable isLoading = false
 
     @action
     setHouseInfo = value =>{
@@ -34,28 +35,41 @@ export class HouseStore {
 
     @action
     createCode = async values =>{
-        const data = await CreateCode({
-            ...values,
-            user:{id:getUser().userId}
-        })
-        if(data.code===0){
-            message.info('创建成功',0.5)
-        }
-        else {
-            message.info(data.msg)
-        }
-        return data
+        this.isLoading = true
+        return new Promise(((resolve, reject) => {
+            CreateCode({
+                ...values,
+                user:{id:getUser().userId}
+            }).then(res=>{
+                if(res.code===0){
+                    message.info('创建成功',0.5)
+                }
+                this.isLoading = false
+                resolve(res)
+            }).catch(error=>{
+                console.log(error)
+                reject()
+            })
+        }))
     }
 
     @action
     deleteCode = async value =>{
+        this.isLoading = true
         const param = new FormData()
         param.append('codeId',value)
-        const data = await DeleteCode(param)
-        if(data.code===0){
-            message.info('删除成功',0.5)
-        }
-        return data
+        return new Promise((resolve, reject) => {
+            DeleteCode(param).then(res=>{
+                if(res.code===0){
+                    message.info('删除成功')
+                }
+                this.isLoading = false
+                resolve(res)
+            }).catch(error=>{
+                console.log(error)
+                reject()
+            })
+        })
     }
 
     @action

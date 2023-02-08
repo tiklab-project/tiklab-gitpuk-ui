@@ -61,9 +61,7 @@ const KeysAdd = props =>{
         >
             <div className='keys-add-up'>
                 <div>新建秘钥</div>
-                <div style={{cursor:'pointer'}}
-                     onClick={()=>setAddVisible(false)}
-                >
+                <div style={{cursor:'pointer'}} onClick={()=>setAddVisible(false)}>
                     <CloseOutlined />
                 </div>
             </div>

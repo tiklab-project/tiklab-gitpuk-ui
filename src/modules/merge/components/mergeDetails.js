@@ -126,9 +126,7 @@ const MergeDetails = props =>{
         return  <div className='log-comment'>
                     <div className='log-right-node'>
                         {
-                            nodeData.map(item=>{
-                                return renderNodeData(item)
-                            })
+                            nodeData.map(item=>renderNodeData(item))
                         }
                     </div>
                     <div className='log-right-comment'>
@@ -198,7 +196,7 @@ const MergeDetails = props =>{
     return (
         <div className='mergeDetails'>
             <div className='mergeDetails-content xcode-home-limited xcode'>
-                <BreadcrumbContent firstItem={'合并请求'} secondItem={'34567'} goBack={()=>setDetails(false)}/>
+                <BreadcrumbContent firstItem={'Merge Requests'} secondItem={'34567'} goBack={()=>setDetails(false)}/>
                 <div className='mergeDetails-head'>
                     <div className='mergeDetails-head-left'>
                         <div className={`head-left-status status-1`}>已关闭</div>
@@ -274,9 +272,7 @@ const MergeDetails = props =>{
                     </div>
                     <div className='mergeDetails-log-content'>
                         {
-                            mergeDetailsData.map(item=>{
-                                return renderMergeDetailsData(item)
-                            })
+                            mergeDetailsData.map(item=>renderMergeDetailsData(item))
                         }
                         <div className='log-content-view'>
                             <div className='view-user'>

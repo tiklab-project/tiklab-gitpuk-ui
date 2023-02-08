@@ -17,9 +17,7 @@ const Statistics = props =>{
             let myChart=chartDom && echarts.getInstanceByDom(chartDom)
 
             if (!myChart) // 如果不存在则创建
-            {
-                myChart=chartDom && echarts.init(chartDom)
-            }
+            {   myChart=chartDom && echarts.init(chartDom)  }
             const option={
                 color:"#77b3eb",
                 xAxis: {data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']},
@@ -28,8 +26,6 @@ const Statistics = props =>{
                     type: "line",
                     data:[0,3,5,23,5,2,1]
                 }
-
-
             }
             myChart && myChart.setOption(option)
         }catch {}
@@ -77,12 +73,10 @@ const Statistics = props =>{
     return (
         <div className='statistics'>
             <div className='statistics-content xcode-home-limited xcode'>
-                <BreadcrumbContent firstItem={'统计'} />
+                <BreadcrumbContent firstItem={'Statistics'} />
                 <div className='statistics-head'>
                     {
-                        sta.map(item=>{
-                            return renderSta(item)
-                        })
+                        sta.map(item=> renderSta(item) )
                     }
                 </div>
                 <div className="statistics-census">

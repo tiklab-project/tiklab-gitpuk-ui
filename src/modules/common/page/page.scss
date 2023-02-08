@@ -1,19 +1,19 @@
-.code-page{
+.xcode-page{
     width: 100%;
     text-align: center;
     padding-top: 10px;
     height: 47px;
-    .code-page-ban{
+    .xcode-page-ban{
         cursor:not-allowed;
         color: var(--tiklab-gray-500);
     }
-    .code-page-allow{
+    .xcode-page-allow{
         cursor: pointer;
         &:hover{
           color: var(--tiklab-blue);
         }
     }
-    .code-page-current{
+    .xcode-page-current{
         color: var(--tiklab-blue);
     }
 }

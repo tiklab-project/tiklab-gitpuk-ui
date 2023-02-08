@@ -19,7 +19,6 @@ const MessageDrawer = props =>{
     const [selected,setSelected] = useState(2)
 
     const moreMessage = () =>{
-
         setIsLoading(true)
     }
 
@@ -137,7 +136,7 @@ const MessageDrawer = props =>{
                 <div className='messageModal-content'>
                     <div className='messageModal-title'>
                         {
-                            tabs.map(item=>{return renderTabs(item)})
+                            tabs.map(item=>renderTabs(item))
                         }
                     </div>
                     <div className='messageModal-list'>

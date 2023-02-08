@@ -1,6 +1,6 @@
 import React,{useEffect,useRef,useState} from 'react'
-// import * as monaco from 'monaco-editor'
-import * as monaco from 'monaco-editor/esm/vs/editor/editor.api.js'
+import * as monaco from 'monaco-editor/esm/vs/editor/editor.api'
+import 'monaco-editor/esm/vs/basic-languages/monaco.contribution'
 
 export const MonacoBlob = props =>{
 
@@ -21,7 +21,7 @@ export const MonacoBlob = props =>{
         try {
             monacoEditorRef.current = monaco.editor.create(monacoEditorDomRef.current, {
                 value: blobFile && blobFile.fileMessage,
-                language: blobFile && blobFile.fileType, // 编辑器类型支持
+                language: blobFile && blobFile.fileType==='md'?'markdown':blobFile.fileType, // 编辑器类型支持
                 minimap: { enabled: false }, // 小地图
                 automaticLayout: true, // 自动布局,
                 codeLens: true,
@@ -65,7 +65,7 @@ export const MonacoEdit = props =>{
         try {
             monacoEditorRef.current = monaco.editor.create(monacoEditorDomRef.current, {
                 value: value && value,
-                language: blobFile && blobFile.fileType, // 编辑器类型支持
+                language: blobFile && blobFile.fileType==='md'?'markdown':blobFile.fileType, // 编辑器类型支持
                 minimap: { enabled: false }, // 小地图
                 automaticLayout: true, // 自动布局,
                 codeLens: true,
@@ -128,8 +128,8 @@ export const MonacoPreview = props => {
                 renderOverviewRuler:renderOverviewRuler,
             })
             monacoEditorRef.current.setModel({
-                original: monaco.editor.createModel(oldValue && oldValue, language && language),
-                modified: monaco.editor.createModel(newValue && newValue, language && language),
+                original: monaco.editor.createModel(oldValue && oldValue, language && language==='md'?'markdown':language),
+                modified: monaco.editor.createModel(newValue && newValue, language && language==='md'?'markdown':language),
             })
             monacoEditorRef.current.revealLineInCenter(editPosition && editPosition.lineNumber)
         } catch {}

@@ -28,7 +28,6 @@ const HouseGroupAdd = props =>{
             form={form}
             autoComplete='off'
             layout='vertical'
-            initialValues={{group:1}}
         >
             <Form.Item label='仓库组名称' name='name'
                        rules={[
@@ -82,7 +81,6 @@ const HouseGroupAdd = props =>{
                     <div className='storehouseAddModal-top-title'>
                         新建仓库组
                     </div>
-
                     <div className='storehouseAddModal-top-close'>
                         <CloseOutlined onClick={()=>setAddHouseVisible(false)}/>
                     </div>

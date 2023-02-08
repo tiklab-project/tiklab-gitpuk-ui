@@ -29,33 +29,35 @@ const HomePage = props =>{
 
     // 最近访问的仓库
     const renderList = item => {
-        return  <div className='houseRecent-item' key={item.openId}
-                     onClick={()=> props.history.push(`/index/task/${item.house && item.house.id}/survey`)}
-                >
-            <div className='houseRecent-item-title'>
-                {
-                    item && item.house &&
-                    <Space>
-                        <span className={`mf-icon-${item.house.color?item.house.color:0} houseRecent-icon`}>
-                            {item.house.name && item.house.name.substring(0,1).toUpperCase()}
-                        </span>
-                        <span className='houseRecent-name'>
-                            {item.house.name && item.house.name}
-                        </span>
-                    </Space>
-                }
-            </div>
-            <div className='houseRecent-item-details'>
-                <div className='houseRecent-item-detail'>
-                    <span className='details-desc'>成功</span>
-                    <span>{item.houseExecState.successNumber}</span>
+        return (
+            <div className='houseRecent-item' key={item.openId}
+                 onClick={()=> props.history.push(`/index/task/${item.house && item.house.id}/survey`)}
+            >
+                <div className='houseRecent-item-title'>
+                    {
+                        item && item.house &&
+                        <Space>
+                            <span className={`mf-icon-${item.house.color?item.house.color:0} houseRecent-icon`}>
+                                {item.house.name && item.house.name.substring(0,1).toUpperCase()}
+                            </span>
+                                <span className='houseRecent-name'>
+                                {item.house.name && item.house.name}
+                            </span>
+                        </Space>
+                    }
                 </div>
-                <div className='houseRecent-item-detail'>
-                    <span className='details-desc'>失败</span>
-                    <span>{item.houseExecState.errorNumber}</span>
+                <div className='houseRecent-item-details'>
+                    <div className='houseRecent-item-detail'>
+                        <span className='details-desc'>成功</span>
+                        <span>{item.houseExecState.successNumber}</span>
+                    </div>
+                    <div className='houseRecent-item-detail'>
+                        <span className='details-desc'>失败</span>
+                        <span>{item.houseExecState.errorNumber}</span>
+                    </div>
                 </div>
             </div>
-        </div>
+        )
     }
 
     const stableList = [
@@ -100,13 +102,12 @@ const HomePage = props =>{
             <div className='homePage-content xcode-home-limited'>
                 <div className='quickIn'>
                     {
-                        stableList && stableList.map(item=>{
-                            return renderStableList(item)
-                        })
+                        stableList && stableList.map(item=>renderStableList(item))
                     }
                 </div>
                 <div className='houseRecent'>
                     <Guide title={'最近访问的仓库'} icon={<HistoryOutlined />}/>
+                    <EmptyText title={'暂无访问的仓库'}/>
                 </div>
                 <div className='home-dyna'>
                     <Guide
@@ -114,6 +115,7 @@ const HomePage = props =>{
                         icon={<AimOutlined/>}
                         type={'dynamic'}
                     />
+                    <EmptyText title={'暂无近期动态'}/>
                 </div>
             </div>
         </div>

@@ -96,10 +96,7 @@ const CommitsDetails = props =>{
                     <div className='item-title-icon'>
                         <div className='item-icon' onClick={()=>setOpenOrClose(item)}>
                             {
-                                (isExpandedTree(item.id)?
-                                        <CaretRightOutlined/>:
-                                        <CaretDownOutlined/>
-                                )
+                                isExpandedTree(item.id)? <CaretRightOutlined/>: <CaretDownOutlined/>
                             }
                         </div>
                         <div className='item-title'>
@@ -115,12 +112,6 @@ const CommitsDetails = props =>{
                     />
                 </div>
                 <div className='item-content' style={isExpandedTree(item.id)?{display:'none'}:{display:'block'}}>
-                    {/*<MonacoPreview*/}
-                    {/*    newValue={item.newValue}*/}
-                    {/*    oldValue={item.oldValue}*/}
-                    {/*    language={item.type}*/}
-                    {/*    renderOverviewRuler={false}*/}
-                    {/*/>*/}
                     <DiffViewer
                         newValue={item.newValue}
                         oldValue={item.oldValue}
@@ -135,7 +126,7 @@ const CommitsDetails = props =>{
     return (
         <div className='commitsDetails' id='commits_contrast'>
             <div className='commitsDetails-content xcode-home-limited xcode'>
-                <BreadcrumbContent firstItem={'提交'} secondItem={'zsse'} goBack={()=>props.history.go(-1)}/>
+                <BreadcrumbContent firstItem={'Commits'} secondItem={'zsse'} goBack={()=>props.history.go(-1)}/>
                 <div className='commitsDetails-head'>
                     <div className='commitsDetails-head-left'>
                         <div className='head-title-icon'>
@@ -167,9 +158,9 @@ const CommitsDetails = props =>{
                             <div className='contrast-affected-opt'>
                                 <Select defaultValue={'文件变更'} bordered={false} onChange={value=>changFile(value)}>
                                     {
-                                        contrastData.map(item=>{
-                                            return <Select.Option value={item.id} key={item.id}>{item.title}</Select.Option>
-                                        })
+                                        contrastData.map(item=>(
+                                            <Select.Option value={item.id} key={item.id}>{item.title}</Select.Option>
+                                        ))
                                     }
                                 </Select>
                             </div>
@@ -181,9 +172,7 @@ const CommitsDetails = props =>{
                         </div>
                         <div className='contrast-content'>
                             {
-                                contrastData.map(item=>{
-                                    return renderContrastData(item)
-                                })
+                                contrastData.map(item=>renderContrastData(item))
                             }
                         </div>
                     </div>

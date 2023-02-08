@@ -7,7 +7,7 @@ const PushRule = props => {
     return (
         <div className='push-rule'>
             <div className='push-rule-content xcode-home-limited xcode'>
-                <BreadcrumbContent firstItem={'推送规则'}/>
+                <BreadcrumbContent firstItem={'Push_rules'}/>
                 <div className='push-rule-mode'>
                     <div className='mode-title'>推送评审模式</div>
                     <div className='mode-swith'>

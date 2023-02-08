@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react'
-import {Dropdown,Badge,Avatar} from 'antd'
+import {Dropdown,Badge} from 'antd'
 import {useTranslation} from 'react-i18next'
 import {Profile,WorkAppConfig} from 'tiklab-eam-ui'
 import {getUser} from 'tiklab-core-ui'
@@ -13,9 +13,7 @@ import {
     ExpandOutlined,
     ScheduleOutlined,
     WhatsAppOutlined,
-    UserOutlined
 } from '@ant-design/icons'
-import {withRouter} from 'react-router'
 import {inject,observer} from 'mobx-react'
 import logo from '../../../assets/images/img/matflow3.png'
 import MessageDrawer from './messageDrawer'
@@ -43,17 +41,17 @@ const Head = props =>{
         {
             key:'home',
             to:'/index/home',
-            title: `${t('home')}`,
+            title: `${t('Home')}`,
         },
         {
             key:'house',
             to:'/index/house',
-            title: `${t('storehouse')}`,
+            title: `${t('Storehouse')}`,
         },
         {
             key:'group',
             to:'/index/group',
-            title: `${t('storehouse group')}`,
+            title: `${t('Storehouse_group')}`,
         },
     ]
 
@@ -62,13 +60,11 @@ const Head = props =>{
     }
 
     const renderRouter = routers => {
-        return routers && routers.map(routers=>{
+        return routers.map(routers=>{
             return  <div key={routers.key}
                          onClick={()=>changeCurrentLink(routers)}
                          className={currentLink===routers.to ? 'headers-active' : null}
-                    >
-                {routers.title}
-            </div>
+                    >{routers.title}</div>
         })
     }
 
@@ -87,12 +83,12 @@ const Head = props =>{
 
     const languageMenu = (
         <div className='outMenu-lan-menu'>
-            <div className='lan-menu'>中文</div>
+            <div className='lan-menu' onClick={()=>changeLan('zh')}>中文</div>
             {/*<div className='lan-menu'>英文</div>*/}
         </div>
     )
 
-    // 退出登录页面
+    // 个人信息
     const outMenu = (
         <div className='header-outMenu'>
             <div className='header-outMenu-top'>
@@ -154,6 +150,7 @@ const Head = props =>{
                     <img src={logo} alt='logo' />
                 </div>
                 <div className='headers-link'>
+
                     {renderRouter(routers)}
                 </div>
             </div>
@@ -190,4 +187,4 @@ const Head = props =>{
     )
 }
 
-export default withRouter(Head)
+export default Head

@@ -14,7 +14,7 @@ const House = props => {
 
     const {houseStore,houseGroupStore} = props
 
-    const {houseType,setHouseType,createCode,findUserCode,houseList} = houseStore
+    const {houseType,setHouseType,createCode,isLoading,findUserCode,houseList} = houseStore
     const {findUserGroup,groupList} = houseGroupStore
 
     const [addHouseVisible,setAddHouseVisible] = useState(false)
@@ -49,7 +49,7 @@ const House = props => {
         <div className='storehouse'>
             <div className='storehouse-content xcode-home-limited xcode'>
                 <div className='storehouse-top'>
-                    <BreadcrumbContent firstItem={'仓库'}/>
+                    <BreadcrumbContent firstItem={'Storehouse'}/>
                     <Btn
                         type={'primary'}
                         title={'新建仓库'}
@@ -61,6 +61,7 @@ const House = props => {
                         createCode={createCode}
                         groupList={groupList}
                         houseList={houseList}
+                        isLoading={isLoading}
                         addHouseVisible={addHouseVisible}
                         setAddHouseVisible={setAddHouseVisible}
                     />

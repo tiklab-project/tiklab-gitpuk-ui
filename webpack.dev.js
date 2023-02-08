@@ -41,7 +41,9 @@ module.exports = merge(baseWebpackConfig,{
             ignoreOrder: true
         }),
         new CssMinimizerPlugin(),
-        new MonacoWebpackPlugin(),
+        new MonacoWebpackPlugin({
+            languages:[]
+        }),
         new MonacoLocalesPlugin({
             //设置支持的语言
             languages: ["es", "zh-cn"],
@@ -50,15 +52,19 @@ module.exports = merge(baseWebpackConfig,{
             //打印不匹配的文本
             logUnmatched: false,
             //自定义文本翻译
-            mapLanguages: { "zh-cn": { "Peek References": "查找引用", "Go to Symbol...": "跳到变量位置", "Cannot edit in read-only editor": "无法在只读编辑器中编辑" } }
-        })
+            // mapLanguages: { "zh-cn": { "Peek References": "查找引用", "Go to Symbol...": "跳到变量位置", "Cannot edit in read-only editor": "无法在只读编辑器中编辑" } }
+        }),
+        new webpack.ContextReplacementPlugin(
+            /moment[/\\]locale$/,
+            /zh-cn|es/,
+        ),
     ],
     // 开发环境本地启动的服务配置
     devServer: {
         contentBase: path.join(__dirname, './dist'),
         hot:true,
         compress:true,
-        port:3000,
+        port:3010,
         host: '192.168.10.23',
         historyApiFallback: true,
         disableHostCheck: true,

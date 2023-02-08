@@ -11,31 +11,31 @@ export const departmentRouters = a =>{
     return [
         {
             id: '1',
-            title: '用户与部门',
+            title: 'Users And Departments',
             purviewCode: a[0],
             icon: <TeamOutlined/>,
             children: [
                 {
                     id: '/index/sys/user/org',
-                    title: '部门',
+                    title: 'Departments',
                     icon: <GroupOutlined/>,
                     purviewCode: 'orga',
                 },
                 {
                     id: '/index/sys/user/list',
-                    title: '用户',
+                    title: 'Users',
                     icon: <TeamOutlined/>,
                     purviewCode: 'user',
                 },
                 {
                     id: '/index/sys/user/userGroup',
-                    title: '用户组',
+                    title: 'Users Group',
                     icon: <TeamOutlined/>,
                     purviewCode: 'user',
                 },
                 {
                     id: '/index/sys/user/directory',
-                    title: '用户目录',
+                    title: 'Users Directory',
                     icon: <BarsOutlined/>,
                     purviewCode: 'user_dir',
                 },

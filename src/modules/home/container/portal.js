@@ -7,7 +7,7 @@ const Portal= props=>{
     const {route}=props
     return(
         <div className='frame'>
-            <Heads/>
+            <Heads {...props}/>
             <div className='frame-content'>
                 {renderRoutes(route.routes)}
             </div>

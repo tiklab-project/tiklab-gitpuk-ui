@@ -11,30 +11,30 @@ import '../components/merge.scss'
 
 const Merge = props => {
 
-    const [mergeType,setmergeType] = useState(1)
+    const [mergeType,setMergeType] = useState(1)
     const [details,setDetails] = useState(false)
     const [addVisible,setAddVisible] = useState(false)
 
     const clickType = item => {
-        setmergeType(item.id)
+        setMergeType(item.id)
     }
 
     const lis = [
         {
             id:1,
-            title:`全部(${9})`,
+            title:`全部(${0})`,
         },
         {
             id:2,
-            title:`已开启(${1})`,
+            title:`已开启(${0})`,
         },
         {
             id:3,
-            title:`已合并(${7})`,
+            title:`已合并(${0})`,
         },
         {
             id:4,
-            title:`已关闭(${1})`,
+            title:`已关闭(${0})`,
         },
     ]
 
@@ -150,7 +150,7 @@ const Merge = props => {
         <div className='merge'>
             <div className='merge-content xcode-home-limited xcode'>
                 <div className='merge-top'>
-                    <BreadcrumbContent firstItem={'合并请求'}/>
+                    <BreadcrumbContent firstItem={'Merge Requests'}/>
                     <Btn
                         type={'primary'}
                         title={'新建合并请求'}
@@ -182,10 +182,10 @@ const Merge = props => {
                     <Table
                         bordered={false}
                         columns={columns}
-                        dataSource={dataSource}
+                        dataSource={[]}
                         rowKey={record=>record.id}
                         pagination={false}
-                        locale={{emptyText: <EmptyText/>}}
+                        locale={{emptyText: <EmptyText title={'暂无合并请求'}/>}}
                     />
                 </div>
             </div>

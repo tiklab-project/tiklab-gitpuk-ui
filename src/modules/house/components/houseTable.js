@@ -37,9 +37,7 @@ const HouseTable = props => {
             render:(text,record)=>{
                 return (
                     <div className='house-tables-name' onClick={()=>goDetails(text,record)}>
-                        <div className='name-icon'>
-                            <Listname text={text}/>
-                        </div>
+                        <Listname text={text}/>
                         <div className='name-text'>
                             <div className='name-text-title'>
                                 <span className='name-text-name'>
@@ -113,7 +111,7 @@ const HouseTable = props => {
                 dataSource={houseList}
                 rowKey={record=>record.codeId}
                 pagination={false}
-                locale={{emptyText: <EmptyText/>}}
+                locale={{emptyText: <EmptyText title={'暂无仓库'}/>}}
             />
         </div>
     )

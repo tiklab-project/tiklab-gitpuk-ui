@@ -46,8 +46,8 @@ const Statistics=AsyncComponent(()=>import('./modules/houseDetails/statistics/co
 /*
     仓库设置
  */
-const StorehouseSet=AsyncComponent(()=>import('./modules/houseDetailsSet/common/houseSet'))
-const HouseSet=AsyncComponent(()=>import('./modules/houseDetailsSet/set/houseSet'))
+const HouseDetailsSet=AsyncComponent(()=>import('./modules/houseDetailsSet/common/houseDetailsSet'))
+const HouseSetting=AsyncComponent(()=>import('./modules/houseDetailsSet/setting/houseSetting'))
 const PushRule=AsyncComponent(()=>import('./modules/houseDetailsSet/pushRule/container/pushRule'))
 const Keys=AsyncComponent(()=>import('./modules/houseDetailsSet/keys/container/keys'))
 const WebHooks=AsyncComponent(()=>import('./modules/houseDetailsSet/webHooks/container/hooks'))
@@ -59,6 +59,12 @@ const HouseGroupDetails=AsyncComponent(()=>import('./modules/houseGroupDetails/c
 const Survey=AsyncComponent(()=>import('./modules/houseGroupDetails/survey/container/survey'))
 const GroupMerge=AsyncComponent(()=>import('./modules/houseGroupDetails/merge/merge'))
 const GroupHouse=AsyncComponent(()=>import('./modules/houseGroupDetails/house/container/house'))
+
+/*
+    仓库组详情设置
+ */
+const GroupDetailsSet=AsyncComponent(()=>import('./modules/houseGroupDetailsSet/common/groupDetailsSet'))
+const GroupSetting=AsyncComponent(()=>import('./modules/houseGroupDetailsSet/setting/groupSetting'))
 
 /* 系统设置 */
 const sys=AsyncComponent(()=>import('./modules/sys/common/system'))
@@ -191,7 +197,7 @@ const routers = [
                         component:Tag,
                     },
                     {
-                        path:'/index/house/:namespace/:name/merge',
+                        path:'/index/house/:namespace/:name/merge_requests',
                         exact:true,
                         component:HouseMerge,
                     },
@@ -218,11 +224,11 @@ const routers = [
                     },
                     {
                         path:'/index/house/:namespace/:name/sys',
-                        component: StorehouseSet,
+                        component: HouseDetailsSet,
                         routes:[
                             {
                                 path:'/index/house/:namespace/:name/sys/set',
-                                component:HouseSet
+                                component:HouseSetting
                             },
                             {
                                 path:'/index/house/:namespace/:name/sys/pushRule',
@@ -246,10 +252,10 @@ const routers = [
                             }
                         ]
                     },
-                    // {
-                    //     path:'/index/house/:name/*',
-                    //     render:()=><Redirect to={'/index/404'}/>,
-                    // }
+                    {
+                        path:'/index/house/:namespace/:name/*',
+                        render:()=><Redirect to={'/index/404'}/>,
+                    }
                 ]
             },
             {
@@ -258,16 +264,44 @@ const routers = [
                 routes: [
                     {
                         path:'/index/group/:name/survey',
-                        component: Survey
+                        component: Survey,
+                        exact: true,
                     },
                     {
-                        path:'/index/group/:name/merge',
-                        component: GroupMerge
+                        path:'/index/group/:name/merge_requests',
+                        component: GroupMerge,
+                        exact: true,
                     },
                     {
                         path:'/index/group/:name/house',
-                        component: GroupHouse
+                        component: GroupHouse,
+                        exact: true,
                     },
+                    {
+                        path:'/index/group/:name/sys',
+                        component: GroupDetailsSet,
+                        routes:[
+                            {
+                                path:'/index/group/:name/sys/set',
+                                component:GroupSetting,
+                                exact:true
+                            },
+                            {
+                                path:'/index/group/:name/sys/member',
+                                component: DomainUser,
+                                exact:true
+                            },
+                            {
+                                path:'/index/group/:name/sys/role',
+                                component: DomainRole,
+                                exact:true
+                            }
+                        ]
+                    },
+                    {
+                        path:'/index/group/:name/*',
+                        render:()=><Redirect to={'/index/404'}/>,
+                    }
                 ]
             },
             {

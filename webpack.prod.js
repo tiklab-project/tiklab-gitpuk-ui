@@ -9,6 +9,7 @@ const optimizeCss = require('optimize-css-assets-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
+const MonacoLocalesPlugin = require('monaco-editor-locales-plugin');
 const webpack = require('webpack');
 const customEnv = process.env.CUSTOM_ENV;
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
@@ -53,24 +54,24 @@ module.exports = merge(baseWebpackConfig, {
         }),
         new CssMinimizerPlugin(),
         new ProgressBarPlugin(),
-        new BundleAnalyzerPlugin(),
+        // new BundleAnalyzerPlugin(),
+        new MonacoWebpackPlugin({
+            languages:[]
+        }),
+        new MonacoLocalesPlugin({
+            //设置支持的语言
+            languages: ['es', 'zh-cn'],
+            //默认语言
+            defaultLanguage: 'zh-cn',
+            //打印不匹配的文本
+            logUnmatched: false,
+            //自定义文本翻译
+            // mapLanguages: { 'zh-cn': { 'Peek References': '查找引用', 'Go to Symbol...': '跳到变量位置', 'Cannot edit in read-only editor': '无法在只读编辑器中编辑' } }
+        }),
         new webpack.ContextReplacementPlugin(
             /moment[/\\]locale$/,
             /zh-cn|es/,
         ),
-        new MonacoWebpackPlugin({
-            languages: [],
-        }),
-        new CompressionPlugin({
-            filename: '[path].br[query]',
-            algorithm: 'brotliCompress',
-            test: new RegExp('\\.(js|css|sass|scss|json|html|text|ico)$'),
-            threshold: 1024,
-            minRatio: 0.99,
-            //删除原始文件只保留压缩后的文件
-            deleteOriginalAssets: false,
-        }),
-
     ],
     optimization: {
         minimize: true,
@@ -138,13 +139,6 @@ module.exports = merge(baseWebpackConfig, {
                     chunks: 'all',
                     test: /echarts/,
                     priority: 60,
-                    reuseExistingChunk: true
-                },
-                codemirror: {
-                    name: 'chunk-codemirror',
-                    chunks: 'all',
-                    test: /codemirror/,
-                    priority: 70,
                     reuseExistingChunk: true
                 },
                 monacoEditor: {

@@ -50,7 +50,7 @@ const Blob = props =>{
     return(
         <div className='blob'>
             <div className='blob-content xcode-home-limited xcode'>
-                <BreadcrumbContent firstItem={'代码'} goBack={()=>props.history.go(-1)}/>
+                <BreadcrumbContent firstItem={'Code'} goBack={()=>props.history.go(-1)}/>
                 <div className='blob-content-head'>
                     <BreadChang
                         {...props}
@@ -64,9 +64,7 @@ const Blob = props =>{
                         {/*    <Btn title={'下载'}/>*/}
                         {/*</div>*/}
                         <div className='blob-clone'>
-                            <Clone
-                                cloneAddress={cloneAddress}
-                            />
+                            <Clone cloneAddress={cloneAddress}/>
                         </div>
                     </div>
                 </div>

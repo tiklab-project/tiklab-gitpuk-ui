@@ -121,7 +121,7 @@ const StorehouseGroup = props => {
         <div className='storehouse'>
             <div className='storehouse-content xcode-home-limited xcode'>
                 <div className='storehouse-top'>
-                    <BreadcrumbContent firstItem={'仓库组'}/>
+                    <BreadcrumbContent firstItem={'Storehouse_group'}/>
                     <Btn
                         type={'primary'}
                         title={'新建仓库组'}
@@ -158,7 +158,7 @@ const StorehouseGroup = props => {
                         dataSource={groupList}
                         rowKey={record=>record.groupId}
                         pagination={false}
-                        locale={{emptyText: <EmptyText/>}}
+                        locale={{emptyText: <EmptyText title={'暂无仓库组'}/>}}
                     />
                 </div>
             </div>

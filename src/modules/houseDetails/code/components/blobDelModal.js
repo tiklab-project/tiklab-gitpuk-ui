@@ -74,14 +74,10 @@ const BlobDelModal = props =>{
                 <Form form={form} layout="vertical" autoComplete="off">
                     <Form.Item label={'提交信息'} name={'commitMessage'}
                                rules={[{required:true,message:`提交信息不能为空`}]}
-                    >
-                        <Input/>
-                    </Form.Item>
+                    ><Input/></Form.Item>
                     <Form.Item label={'提交分支'} name={'commitBranch'}
                                rules={[{required:true,message:`提交分支不能为空`}]}
-                    >
-                        <Input/>
-                    </Form.Item>
+                    ><Input/></Form.Item>
                 </Form>
             </div>
         </Modal>

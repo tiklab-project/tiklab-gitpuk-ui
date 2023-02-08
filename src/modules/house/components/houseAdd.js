@@ -2,13 +2,14 @@ import React,{useState} from 'react'
 import {Modal,Steps,Form,Input,Select,Switch,Checkbox,Row,Col} from 'antd'
 import {getUser} from 'tiklab-core-ui'
 import Btn from '../../common/btn/btn'
+import Loading from '../../common/loading/loading'
 import HouseUser from './houseUser'
 import HousePower from './housePower'
 import './houseAdd.scss'
 
 const HouseAdd = props =>{
 
-    const {addHouseVisible,setAddHouseVisible,createCode,houseList,groupList} = props
+    const {addHouseVisible,setAddHouseVisible,createCode,isLoading,houseList,groupList} = props
 
     const [form] = Form.useForm()
 
@@ -222,6 +223,9 @@ const HouseAdd = props =>{
                     }
                 </div>
             </div>
+            {
+                isLoading && <Loading/>
+            }
         </Modal>
     )
 }

@@ -61,9 +61,7 @@ const MergeAdd = props =>{
         >
             <div className='merge-add-up'>
                 <div>新建合并请求</div>
-                <div style={{cursor:'pointer'}}
-                     onClick={()=>setAddVisible(false)}
-                >
+                <div style={{cursor:'pointer'}} onClick={()=>setAddVisible(false)}>
                     <CloseOutlined />
                 </div>
             </div>
@@ -75,9 +73,7 @@ const MergeAdd = props =>{
                     initialValues={{'1-2':2}}
                 >
                     <div className='merge-add-branch'>
-                        <Form.Item label='源分支'  name={'1-1'}
-                                   rules={[{required:true,message:`源分支不能为空`}]}
-                        >
+                        <Form.Item label='源分支' name={'1-1'} rules={[{required:true,message:`源分支不能为空`}]}>
                             <Select>
                                 <Select.Option value={2}>master</Select.Option>
                                 <Select.Option value={3}>xcode-v1.0</Select.Option>
@@ -85,9 +81,7 @@ const MergeAdd = props =>{
                             </Select>
                         </Form.Item>
                         <div className='add-branch-arrow'><ArrowRightOutlined /></div>
-                        <Form.Item label='目标分支'  name={'1-2'}
-                                   rules={[{required:true,message:`源分支不能为空`}]}
-                        >
+                        <Form.Item label='目标分支'  name={'1-2'} rules={[{required:true,message:`源分支不能为空`}]}>
                             <Select>
                                 <Select.Option value={2}>master</Select.Option>
                                 <Select.Option value={3}>xcode-v1.0</Select.Option>
@@ -95,9 +89,7 @@ const MergeAdd = props =>{
                             </Select>
                         </Form.Item>
                     </div>
-                    <Form.Item label={'标题'} name={'2'}
-                               rules={[{required:true,message:`分支名称不能为空`}]}
-                    >
+                    <Form.Item label={'标题'} name={'2'} rules={[{required:true,message:`分支名称不能为空`}]}>
                         <Input/>
                     </Form.Item>
                     <Form.Item

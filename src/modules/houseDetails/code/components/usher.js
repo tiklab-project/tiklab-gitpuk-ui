@@ -2,6 +2,7 @@ import React,{useEffect,useState} from 'react'
 import {Input} from 'antd'
 import {CopyOutlined} from '@ant-design/icons'
 import {observer} from 'mobx-react'
+import {getUser} from 'tiklab-core-ui'
 import BreadcrumbContent from '../../../common/breadcrumb/breadcrumb'
 import {copy} from '../../../common/client/client'
 import './usher.scss'
@@ -15,38 +16,16 @@ const Usher = props =>{
 
     const {cloneAddress} = codeStore
 
-    const courseList = [
-        {
-            name:'Git全局设置：',
-            content:'git config --global user.name "高梦园"\n' +
-                'git config --global user.email "2780288581@qq.com"'
-        },
-        {
-            name:'创建 git 仓库：',
-            content:'mkdir try\n' +
-                'cd try\n' +
-                'git init \n' +
-                'touch README.md\n' +
-                'git add README.md\n' +
-                'git commit -m "first commit"\n' +
-                'git remote add origin https://gitee.com/gaomengyuana/try.git\n' +
-                'git push -u origin "master"'
-        },
-        {
-            name:'已有仓库?',
-            content:'cd existing_git_repo\n' +
-                'git remote add origin https://gitee.com/gaomengyuana/try.git\n' +
-                'git push -u origin "master"'
-        },
-
-    ]
-
     const [urlPrefix,setUrlPrefix] = useState('http')
+
+    const readme = () => {
+
+    }
 
     return (
         <div className='usher'>
             <div className='usher-content xcode-home-limited xcode'>
-                <BreadcrumbContent firstItem={'代码'} secondItem={'node'}/>
+                <BreadcrumbContent firstItem={'Code'}/>
                 <div className='usher-segment'>
                     <div className='usher-segment-url'>
                         <div className='usher-title'>快速设置--如果你知道该怎么操作，直接使用下面的地址</div>
@@ -60,15 +39,12 @@ const Usher = props =>{
                                 >SSH</div>
                             </div>
                             <div className='usher-url-input'>
-                                <Input
-                                    disabled
-                                    value={urlPrefix==='SSH'? cloneAddress && cloneAddress.sshaddress : cloneAddress && cloneAddress.httpAddress}
+                                <Input disabled
+                                       value={urlPrefix==='SSH'? cloneAddress && cloneAddress.sshaddress : cloneAddress.httpAddress}
                                 />
                                 <div className='url-input-icon'
-                                     onClick={()=>copy(urlPrefix==='SSH'? cloneAddress && cloneAddress.sshaddress : cloneAddress && cloneAddress.httpAddress)}
-                                >
-                                    <CopyOutlined/>
-                                </div>
+                                     onClick={()=>copy(urlPrefix==='SSH'? cloneAddress && cloneAddress.sshaddress :cloneAddress.httpAddress)}
+                                ><CopyOutlined/></div>
                             </div>
                         </div>
                         <div className='usher-suggest'>
@@ -78,22 +54,41 @@ const Usher = props =>{
                             <span className='usher-suggest-item'>.gitignore</span>
                             文件
                         </div>
-                        <div className='usher-readme'>
+                        <div className='usher-readme' onClick={()=>readme()}>
                             初始化readme文件
                         </div>
                     </div>
                     <div className='usher-segment-course'>
                         <div className='usher-title'>简易的命令入门教程</div>
-                        {
-                            courseList.map(item=>{
-                                return (
-                                    <div key={item.name} className='usher-course-item'>
-                                        <div className='course-item-name'>{item.name}</div>
-                                        <div className='course-item-content'>{item.content}</div>
-                                    </div>
-                                )
-                            })
-                        }
+                        <div className='usher-course-item'>
+                            <div className='course-item-name'>Git全局设置：</div>
+                            <div className='course-item-content'>
+                                <div>git config --global user.name  "{getUser().name}"</div>
+                                <div>git config --global user.email  "{getUser().email?getUser().email:' '}"</div>
+                            </div>
+                        </div>
+                        <div className='usher-course-item'>
+                            <div className='course-item-name'>创建 git 仓库：</div>
+                            <div className='course-item-content'>
+                                <div>mkdir {houseInfo && houseInfo.name}</div>
+                                <div>cd {houseInfo && houseInfo.name}</div>
+                                <div>git init</div>
+                                <div>touch README.md</div>
+                                <div>git add README.md</div>
+                                <div>git commit -m "first commit"</div>
+                                <div>git remote add origin {urlPrefix==='SSH'? cloneAddress && cloneAddress.sshaddress :cloneAddress.httpAddress}
+                                </div>
+                                <div>git push -u origin master</div>
+                            </div>
+                        </div>
+                        <div className='usher-course-item'>
+                            <div className='course-item-name'>已有仓库?</div>
+                            <div className='course-item-content'>
+                                <div>cd {houseInfo && houseInfo.name}</div>
+                                <div>git commit -m "first commit"</div>
+                                <div>git push -u origin master</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
