@@ -29,7 +29,6 @@ const HouseDetails= props=>{
         findUserCode()
         return ()=>{
             setHouseInfo('')
-            setWebUrl('')
         }
     },[])
 
@@ -44,9 +43,6 @@ const HouseDetails= props=>{
         })
         // webUrl
         setWebUrl(webUrl)
-        return ()=>{
-            setIsLoading(true)
-        }
     },[webUrl])
 
     // 侧边第一栏导航
@@ -66,31 +62,31 @@ const HouseDetails= props=>{
             title: `Branch`,
             icon: <BranchesOutlined />,
         },
-        {
-            to:`/index/house/${webUrl}/tag`,
-            title: `Tag`,
-            icon: <TagOutlined />,
-        },
-        {
-            to:`/index/house/${webUrl}/merge_requests`,
-            title: `Merge Requests`,
-            icon: <PullRequestOutlined />,
-        },
-        {
-            to:`/index/house/${webUrl}/issue`,
-            title: `Issue`,
-            icon: <QuestionCircleOutlined />,
-        },
-        {
-            to:`/index/house/${webUrl}/pipeline`,
-            title: `Pipeline`,
-            icon: <ContainerOutlined />,
-        },
-        {
-            to:`/index/house/${webUrl}/statistics`,
-            title: `Statistics`,
-            icon: <RadarChartOutlined />,
-        },
+        // {
+        //     to:`/index/house/${webUrl}/tag`,
+        //     title: `Tag`,
+        //     icon: <TagOutlined />,
+        // },
+        // {
+        //     to:`/index/house/${webUrl}/merge_requests`,
+        //     title: `Merge Requests`,
+        //     icon: <PullRequestOutlined />,
+        // },
+        // {
+        //     to:`/index/house/${webUrl}/issue`,
+        //     title: `Issue`,
+        //     icon: <QuestionCircleOutlined />,
+        // },
+        // {
+        //     to:`/index/house/${webUrl}/pipeline`,
+        //     title: `Pipeline`,
+        //     icon: <ContainerOutlined />,
+        // },
+        // {
+        //     to:`/index/house/${webUrl}/statistics`,
+        //     title: `Statistics`,
+        //     icon: <RadarChartOutlined />,
+        // },
     ]
 
     if(isLoading){

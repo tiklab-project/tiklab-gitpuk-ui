@@ -56,7 +56,7 @@ module.exports = merge(baseWebpackConfig, {
         new ProgressBarPlugin(),
         // new BundleAnalyzerPlugin(),
         new MonacoWebpackPlugin({
-            languages:[]
+            languages:['json','typescript']
         }),
         new MonacoLocalesPlugin({
             //设置支持的语言
@@ -131,6 +131,13 @@ module.exports = merge(baseWebpackConfig, {
                     name: 'chunk-tiklab-message-ui',
                     chunks: 'all',
                     test: /tiklab-message-ui/,
+                    priority: 70,
+                    reuseExistingChunk: true
+                },
+                tiklabSlateUI: {
+                    name: 'chunk-tiklab-slate-ui',
+                    chunks: 'all',
+                    test: /tiklab-slate-ui/,
                     priority: 70,
                     reuseExistingChunk: true
                 },

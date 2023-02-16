@@ -42,12 +42,8 @@ const HouseTable = props => {
                             <div className='name-text-title'>
                                 <span className='name-text-name'>
                                     {
-                                        record.codeGroup ?
-                                            record.codeGroup.name
-                                            :
-                                            record.user.name
-                                    }
-                                    /{text}
+                                        record.codeGroup ? record.codeGroup.name : record.user.name
+                                    } / {text}
                                 </span>
                                 <span className='name-text-lock'><LockOutlined/></span>
                                 <span className='name-text-type'>{record.userType === '3' ? '管理员':'开发者'}</span>

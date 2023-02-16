@@ -34,6 +34,9 @@
         .scrum-aside-item{
             padding: 8px 12px;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            flex-direction: row;
             &:hover{
                 background: var(--tiklab-gray-300);
             }
@@ -88,7 +91,7 @@
                 margin-bottom: 5px;
             }
         }
-        .nomal-aside_active{
+        .nomal-aside-select{
             background: var(--tiklab-gray-400);
             border-left: 3px solid var(--tiklab-blue);
         }

@@ -12,12 +12,9 @@
                     cursor: pointer;
                     padding: 8px 0;
                 }
-                .code-desc{
+                .code-desc,.code-clone{
                     margin-left: var(--tiklab-padding-item);
 
-                }
-                .code-clone{
-                    margin-left: var(--tiklab-padding-item);
                 }
             }
         }
@@ -26,6 +23,41 @@
                 &:hover{
                     cursor: pointer;
                     text-decoration: underline;
+                }
+            }
+            .code-data-item{
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                padding: 8px;
+                &:first-child{
+                    border-bottom: 1px solid #f0f0f0;
+                }
+                &:nth-child(2){
+                    cursor: pointer;
+                }
+                &:not(:first-child):hover{
+                    background: #f8f8f8;
+                }
+                .code-item-fileName{
+                    width: 60%;
+                    &:hover{
+                        cursor: pointer;
+                        text-decoration: underline;
+                    }
+                }
+                .code-item-commitMessage{
+                    width: 30%;
+                    padding: 0 var(--tiklab-padding-item);
+                }
+                .code-item-commitTime{
+                    width: 10%;
+                }
+                .code-item-fileName,.code-item-commitMessage,.code-item-commitTime{
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    -o-text-overflow: ellipsis;
                 }
             }
         }

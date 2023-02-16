@@ -79,6 +79,7 @@ const sysRoleTrue=AsyncComponent(()=>import('./modules/sys/privilege/systemRoleT
 const ProjectRole=AsyncComponent(()=>import('./modules/sys/privilege/projectRole'))
 const ProjectFeature=AsyncComponent(()=>import('./modules/sys/privilege/projectFeature'))
 const DomainRole=AsyncComponent(()=>import('./modules/sys/privilege/domainRole'))
+const ProductAuth=AsyncComponent(()=>import('./modules/sys/privilege/productAuth'))
 
 /* 消息 */
 const MessageManagement=AsyncComponent(()=>import('./modules/sys/message/messageManagement'))
@@ -91,7 +92,6 @@ const MessageNoticeTrue=AsyncComponent(()=>import('./modules/sys/message/message
 /* 日志 */
 const MyLogList=AsyncComponent(()=>import('./modules/sys/oplog/myLogList'))
 const LogTemplateList=AsyncComponent(()=>import('./modules/sys/oplog/logTemplateList'))
-const LogList=AsyncComponent(()=>import('./modules/sys/oplog/logList'))
 const LogType=AsyncComponent(()=>import('./modules/sys/oplog/logType'))
 
 /* 代办 */
@@ -103,9 +103,7 @@ const TodoType=AsyncComponent(()=>import('./modules/sys/todotask/todoType'))
 /*
     licence管理
  */
-// 产品授权页面
 const ProductUser=AsyncComponent(()=>import('./modules/sys/licence/productUser'))
-
 const Version=AsyncComponent(()=>import('./modules/sys/licence/version'))
 
 const UserList=AsyncComponent(()=>import('./modules/sys/user/list'))
@@ -114,7 +112,6 @@ const Org=AsyncComponent(()=>import('./modules/sys/user/org'))
 const UserGroup=AsyncComponent(()=>import('./modules/sys/user/group'))
 const UserGroupTrue=AsyncComponent(()=>import('./modules/sys/user/groupture'))
 const DomainUser=AsyncComponent(()=>import('./modules/sys/user/domainUser'))
-
 
 const routers = [
     {
@@ -201,9 +198,13 @@ const routers = [
                         exact:true,
                         component:HouseMerge,
                     },
+                    // {
+                    //     path:'/index/house/:namespace/:name/commits/',
+                    //     exact: true,
+                    //     component:Commits,
+                    // },
                     {
                         path:'/index/house/:namespace/:name/commits/:branch',
-                        exact: true,
                         component:Commits,
                     },
                     {
@@ -310,7 +311,7 @@ const routers = [
                 routes: [
                     {
                         path: '/index/sys/productUser',
-                        component: ProductUser,
+                        component: ProductAuth,
                     },
                     {
                         path: '/index/sys/plugin',

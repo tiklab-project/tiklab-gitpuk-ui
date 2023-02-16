@@ -1,0 +1,19 @@
+.branch-select{
+    min-width: 160px;
+    max-width: 330px;
+    margin-right: var(--tiklab-padding-item);
+    .ant-select{
+        width: 100% !important;
+    }
+}
+.xcode-branch-select{
+    .branchSelect-title{
+        padding: 5px;
+        font-size: var(--tiklab-font-13);
+        color: var(--tiklab-gray-500);
+    }
+    .branchSelect-commit{
+        background-color: #e7f6ff;
+    }
+}
+

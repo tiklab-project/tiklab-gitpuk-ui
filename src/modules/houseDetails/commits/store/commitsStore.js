@@ -9,10 +9,7 @@ export class CommitsStore{
 
     @action
     findBranchCommit = async value =>{
-        const params = new FormData()
-        params.append('codeId',value.codeId)
-        params.append('branchName',value.branchName)
-        const data = await FindBranchCommit(params)
+        const data = await FindBranchCommit(value)
         if(data.code===0){
             this.commitsList = data.data && data.data
         }

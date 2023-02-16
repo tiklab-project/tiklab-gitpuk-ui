@@ -7,9 +7,9 @@ import BreadcrumbContent from '../../../common/breadcrumb/breadcrumb'
 import {copy} from '../../../common/client/client'
 import './usher.scss'
 
-/*
-    仓库为空
-*/
+/**
+ * 空仓库
+ */
 const Usher = props =>{
 
     const {houseInfo,codeStore} = props

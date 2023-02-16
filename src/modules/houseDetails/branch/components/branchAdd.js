@@ -73,29 +73,34 @@ const BranchAdd = props =>{
                 <Form form={form} layout='vertical' autoComplete='off'
                       initialValues={{point:houseInfo.defaultBranch}}
                 >
-                    <Form.Item label={'分支名称'} name={'branchName'}
-                               rules={[
-                                   {required:true,message:''},
-                                   ({ getFieldValue }) => ({
-                                       validator(rule,value) {
-                                           if(!value || value.trim() === ""){
-                                               return Promise.reject("名称不能为空");
-                                           }
-                                           let nameArray = []
-                                           if(branchList){
-                                               nameArray = branchList && branchList.map(item=>item.branchName)
-                                           }
-                                           if (nameArray.includes(value)) {
-                                               return Promise.reject("名称已经存在");
-                                           }
-                                           return Promise.resolve()
-                                       },
-                                   }),
-                               ]}
-                    >
-                        <Input/>
+                    <Form.Item
+                        label={'分支名称'}
+                        name={'branchName'}
+                        rules={[
+                               {required:true,message:''},
+                               ({ getFieldValue }) => ({
+                                   validator(rule,value) {
+                                       if(!value || value.trim() === ''){
+                                           return Promise.reject('名称不能为空');
+                                       }
+                                       let nameArray = []
+                                       if(branchList){
+                                           nameArray = branchList && branchList.map(item=>item.branchName)
+                                       }
+                                       if (nameArray.includes(value)) {
+                                           return Promise.reject('名称已经存在');
+                                       }
+                                       return Promise.resolve()
+                                   },
+                               }),
+                           ]}
+                    ><Input/>
                     </Form.Item>
-                    <Form.Item label={'分支来源'} name={'point'} rules={[{required:true,message:`分支来源不能为空`}]}>
+                    <Form.Item
+                        label={'分支来源'}
+                        name={'point'}
+                        rules={[{required:true,message:`分支来源不能为空`}]}
+                    >
                         <Select>
                             {
                                 branchList && branchList.map(item=>{

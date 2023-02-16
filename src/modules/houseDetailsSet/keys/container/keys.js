@@ -1,8 +1,8 @@
 import React,{useState} from 'react'
-import {Switch} from 'antd'
 import BreadcrumbContent from '../../../common/breadcrumb/breadcrumb'
 import Btn from '../../../common/btn/btn'
 import KeysAdd from '../components/keysAdd'
+import EmptyText from '../../../common/emptyText/emptyText'
 import '../components/keys.scss'
 
 const Keys = props => {
@@ -36,6 +36,7 @@ const Keys = props => {
                 </div>
                 <div className='keys-status'>
                     已启用秘钥
+                    <EmptyText title={'暂无秘钥'}/>
                 </div>
             </div>
         </div>

@@ -2,7 +2,7 @@ import React,{useEffect} from 'react'
 
 const ToggleMenu = props =>{
 
-    const {list,setIsLoading,asideType,info} = props
+    const {list,setIsLoading,asideType,info,setTriggerVisible} = props
 
     let timeout = null
     useEffect(()=>{
@@ -14,6 +14,7 @@ const ToggleMenu = props =>{
     // 切换路由跳转
     const changeHouseDetails = item => {
         if(item.name!==info.name){
+            setTriggerVisible(false)
             switch (asideType) {
                 case 'group':
                     props.history.push(`/index/group/${item.name}/survey`)
@@ -38,10 +39,8 @@ const ToggleMenu = props =>{
                         {item.name.substring(0,1).toUpperCase()}
                     </span>
                     <span className='menu-toggle-name'>
-                        {
-                            item.codeGroup && item.codeGroup.name + '/'
-                        }
-                        {item.name}
+                        { item.codeGroup && item.codeGroup.name + '/'}
+                        { item.name }
                     </span>
                 </div>
     }

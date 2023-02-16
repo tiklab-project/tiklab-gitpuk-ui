@@ -21,11 +21,9 @@ import MessageDrawer from './messageDrawer'
 const Head = props =>{
 
     let path = props.location.pathname
-
+    const {i18n,t} = useTranslation()
     const [currentLink,setCurrentLink] = useState(path)
     const [visible,setVisible] = useState(false)
-
-    const {i18n,t} = useTranslation()
 
     useEffect(()=>{
         if(path.indexOf('/index/house')===0){

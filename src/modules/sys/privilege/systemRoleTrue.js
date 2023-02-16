@@ -1,8 +1,8 @@
 import React from 'react'
 import {SystemRoleList} from 'tiklab-privilege-ui'
 
-/*
-    系统权限
+/**
+ * 系统权限
  */
 const SystemRoleTrue = props =>{
 

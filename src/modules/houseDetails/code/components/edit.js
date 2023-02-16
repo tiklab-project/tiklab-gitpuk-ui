@@ -4,7 +4,8 @@ import {inject,observer} from 'mobx-react'
 import {MonacoEdit,MonacoPreview} from '../../../common/editor/monaco'
 import BreadcrumbContent from '../../../common/breadcrumb/breadcrumb'
 import Btn from '../../../common/btn/btn'
-import {interceptUrl} from '../../../common/client/client'
+import {findCommitId, setBranch, setFileAddress} from './common'
+
 import './edit.scss'
 
 const Edit = props =>{
@@ -15,19 +16,24 @@ const Edit = props =>{
     const {readFile,blobFile,writeFile} = codeStore
 
     const [form] = Form.useForm()
-    const urlInfo = match.params
-    const fileAddress = interceptUrl(location.pathname,webUrl+'/edit/'+urlInfo.branch)
-
+    const urlInfo = match.params.branch
+    const branch = setBranch(urlInfo,houseInfo)
+    const fileAddress = setFileAddress(location,webUrl+'/edit/'+urlInfo)
     const [editType,setEditType] = useState('compile')
     const [previewValue,setPreviewValue] = useState('')
     const [fileName,setFileName] = useState('')
     const [editPosition,setEditPosition] = useState('')  // 获取修改内容的行数
 
+    if(findCommitId(urlInfo)){
+        props.history.go(-1)
+    }
+
     useEffect(()=>{
         houseInfo.name && readFile({
             codeId:houseInfo.codeId,
             fileAddress:fileAddress[1],
-            commitBranch:urlInfo.branch
+            commitBranch:branch,
+            findCommitId:false
         })
         .then(res=>{
             if(res.code===0){
@@ -46,18 +52,18 @@ const Edit = props =>{
             fileContent:previewValue,
             ...value
         }).then(res=>{
-            res.code===0 && props.history.push(`/index/${webUrl}/tree/${urlInfo.branch}`)
+            res.code===0 && props.history.push(`/index/${webUrl}/tree/${urlInfo}`)
         })
     }
 
     return(
-        <div className='edit'>
+        <div className='xcode-edit'>
             <div className='edit-content xcode-home-limited xcode'>
                 <BreadcrumbContent firstItem={'Code'} goBack={()=>props.history.go(-1)}/>
                 <div className='edit-content-head'>编辑文件</div>
                 <div className='edit-content-title'>
                     <span className='edit-title'
-                          onClick={()=>props.history.push(`/index/house/${webUrl}/tree/${urlInfo.branch}`)}
+                          onClick={()=>props.history.push(`/index/house/${webUrl}/tree/${branch}`)}
                     >{houseInfo.name}</span>
                     <span className='edit-title'>/</span>
                     <span className='edit-title'>
@@ -88,14 +94,12 @@ const Edit = props =>{
                             />
                                 :
                             <MonacoPreview
-                                oldValue={blobFile && blobFile.fileMessage}
                                 newValue={previewValue}
-                                language={blobFile && blobFile.fileType}
+                                blobFile={blobFile}
                                 renderOverviewRuler={true}
                                 editPosition={editPosition}
                             />
                         }
-
                     </div>
                 </div>
                 <div className='edit-content-msg'>

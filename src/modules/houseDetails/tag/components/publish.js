@@ -7,7 +7,7 @@ import './publish.scss'
 
 const Publish = props =>{
 
-    const {setPublishVisible} = props
+    const {setPublishDetails} = props
 
     const annex = [
         {
@@ -55,7 +55,7 @@ const Publish = props =>{
         )
     }
 
-    const goBack = () =>setPublishVisible(false)
+    const goBack = () =>setPublishDetails(false)
 
     return (
         <div className='publish'>

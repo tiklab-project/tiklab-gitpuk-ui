@@ -9,19 +9,17 @@ import {initFetch,createContainer} from 'tiklab-plugin-ui/es/_utils'
 import {ConfigProvider} from 'antd'
 import zhCN from 'antd/es/locale/zh_CN'
 import {observer,Provider} from 'mobx-react'
-import {useTranslation} from 'react-i18next'
 import {renderRoutes} from 'react-router-config'
 import {store} from './store'
 import routers from './routes'
 import resources from './common/language/resources'
+import Loading from './modules/common/loading/loading'
 import './index.scss'
 import './assets/font_icon/iconfont'
 import './common/language/i18n'
 
 enableAxiosCE()
 const Index = observer(() => {
-
-    const {i18n} = useTranslation()
 
     const [visible,setVisible] = useState(true)
     const [initPluginData,setPluginData] = useState({
@@ -48,7 +46,7 @@ const Index = observer(() => {
         })
     }, [])
 
-    if (visible) return <div>加载。。。</div>
+    if (visible) return <Loading/>
 
     return (
         <PluginContainer.Provider initialState={initPluginData}>
@@ -64,7 +62,3 @@ const Index = observer(() => {
 })
 
 ReactDOM.render(<Index/>, document.getElementById('root'))
-
-if (module.hot) {
-    module.hot.accept()
-}

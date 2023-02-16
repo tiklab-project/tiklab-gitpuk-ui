@@ -7,15 +7,17 @@ import Tabs from '../../../common/tabs/tabs'
 import EmptyText from '../../../common/emptyText/emptyText'
 import Publish from '../components/publish'
 import TagAdd from '../components/tagAdd'
+import PublishAdd from '../components/publishAdd'
 import '../components/tag.scss'
 
 const Tag = props =>{
 
     const {match} = props
 
-    const [tagType,setTagType] = useState(1)
-    const [publishVisible,setPublishVisible] = useState(false)
-    const [addVisible,setAddVisible] = useState(false)
+    const [tagType,setTagType] = useState(2)
+    const [publishDetails,setPublishDetails] = useState(false)
+    const [addTagVisible,setAddTagVisible] = useState(false)
+    const [addPublishVisible,setAddPublishVisible] = useState(false)
 
     const clickType = item => {
         setTagType(item.id)
@@ -37,7 +39,7 @@ const Tag = props =>{
             case 1:
                 break
             case 2:
-                setPublishVisible(true)
+                setPublishDetails(true)
         }
     }
 
@@ -165,9 +167,9 @@ const Tag = props =>{
         }
     ]
 
-    if(publishVisible){
+    if(publishDetails){
         return  <Publish
-                    setPublishVisible={setPublishVisible}
+                    setPublishDetails={setPublishDetails}
                 />
     }
 
@@ -180,15 +182,29 @@ const Tag = props =>{
             <div className='tag-content xcode-home-limited xcode'>
                 <div className='tag-top'>
                     <BreadcrumbContent firstItem={'Tag'}/>
-                    <Btn
-                        type={'primary'}
-                        title={'新建标签'}
-                        icon={<PlusOutlined/>}
-                        onClick={()=>setAddVisible(true)}
-                    />
+                    {
+                        tagType===1?
+                            <Btn
+                                type={'primary'}
+                                title={'新建标签'}
+                                icon={<PlusOutlined/>}
+                                onClick={()=>setAddTagVisible(true)}
+                            />
+                            :
+                            <Btn
+                                type={'primary'}
+                                title={'新建发行版'}
+                                icon={<PlusOutlined/>}
+                                onClick={()=>setAddPublishVisible(true)}
+                            />
+                    }
                     <TagAdd
-                        addVisible={addVisible}
-                        setAddVisible={setAddVisible}
+                        addTagVisible={addTagVisible}
+                        setAddTagVisible={setAddTagVisible}
+                    />
+                    <PublishAdd
+                        addPublishVisible={addPublishVisible}
+                        setAddPublishVisible={setAddPublishVisible}
                     />
                 </div>
                 <div className='tag-type'>

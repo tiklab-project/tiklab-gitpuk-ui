@@ -6,7 +6,7 @@ import Btn from '../../../common/btn/btn'
 
 const TagAdd = props =>{
 
-    const {addVisible,setAddVisible} = props
+    const {addTagVisible,setAddTagVisible} = props
 
     const [form] = Form.useForm()
     const [height,setHeight] = useState(0)
@@ -29,7 +29,7 @@ const TagAdd = props =>{
     const modalFooter = (
         <>
             <Btn
-                onClick={()=>setAddVisible(false)}
+                onClick={()=>setAddTagVisible(false)}
                 title={"取消"}
                 isMar={true}
             />
@@ -50,8 +50,8 @@ const TagAdd = props =>{
 
     return (
         <Modal
-            visible={addVisible}
-            onCancel={()=>setAddVisible(false)}
+            visible={addTagVisible}
+            onCancel={()=>setAddTagVisible(false)}
             closable={false}
             footer={modalFooter}
             style={{height:height,top:60}}
@@ -61,9 +61,7 @@ const TagAdd = props =>{
         >
             <div className='tag-add-up'>
                 <div>新建标签</div>
-                <div style={{cursor:'pointer'}}
-                     onClick={()=>setAddVisible(false)}
-                >
+                <div style={{cursor:'pointer'}} onClick={()=>setAddTagVisible(false)}>
                     <CloseOutlined />
                 </div>
             </div>
@@ -74,10 +72,11 @@ const TagAdd = props =>{
                     autoComplete="off"
                     initialValues={{'2':2}}
                 >
-                    <Form.Item label={'标签名称'} name={'1'}
-                               rules={[{required:true,message:`分支名称不能为空`}]}
-                    >
-                        <Input/>
+                    <Form.Item
+                        label={'标签名称'}
+                        name={'1'}
+                        rules={[{required:true,message:`分支名称不能为空`}]}
+                    ><Input/>
                     </Form.Item>
                     <Form.Item label={'分支来源'} name={'2'}>
                         <Select>

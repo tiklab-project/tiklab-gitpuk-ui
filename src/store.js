@@ -1,4 +1,5 @@
 import {EAM_STORE,EamStore} from 'tiklab-eam-ui/es/store'
+import {SLATE_STORE,SlateStore} from 'tiklab-slate-ui/es/dist'
 import {HOUSE_STORE,HouseStore} from './modules/house/store/houseStore'
 import {CODE_STORE,CodeStore} from './modules/houseDetails/code/store/codeStore'
 import {HOUSEGRROUP_STORE,HouseGroupStore} from './modules/houseGroup/store/houseGroupStore'
@@ -15,6 +16,7 @@ function createStores() {
         [BRANCH_STORE]:new BranchStore(),
         [COMMITS_STORE]:new CommitsStore(),
         [EAM_STORE]:new EamStore(),
+        [SLATE_STORE]:new SlateStore(),
     }
 }
 

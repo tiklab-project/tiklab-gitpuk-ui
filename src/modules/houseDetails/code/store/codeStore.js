@@ -73,10 +73,7 @@ export class CodeStore {
 
     @action
     findLatelyBranchCommit = async value =>{
-        const params = new FormData()
-        params.append('codeId',value.codeId)
-        params.append('branchName',value.branchName)
-        const data = await FindLatelyBranchCommit(params)
+        const data = await FindLatelyBranchCommit(value)
         if(data.code===0){
             this.latelyBranchCommit = data.data && data.data
         }

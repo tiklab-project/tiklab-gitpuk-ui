@@ -10,9 +10,7 @@ const Setting = props =>{
     const {location,route,secondRouter} = props
 
     let path = location.pathname
-
     const {t} = useTranslation()
-
     const [nav,setNav] = useState('')
 
     useEffect(()=>{

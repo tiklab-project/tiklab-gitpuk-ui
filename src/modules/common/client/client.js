@@ -41,3 +41,11 @@ export const interceptUrl = (url,data) =>{
         return url.split('/')
     }
 }
+
+// 非法字符效验
+export const Validation = name =>{
+    return {
+        pattern: /^[\u4e00-\u9fa5a-zA-Z0-9_-]{0,}$/,
+        message: `${name}不能包含非法字符，如&,%，&，#……等`,
+    }
+}

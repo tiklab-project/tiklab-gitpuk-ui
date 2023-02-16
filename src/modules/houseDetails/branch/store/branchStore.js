@@ -7,7 +7,6 @@ import {
 } from '../api/branch'
 
 import {message} from 'antd'
-import {getUser} from 'tiklab-core-ui'
 
 export class BranchStore{
 

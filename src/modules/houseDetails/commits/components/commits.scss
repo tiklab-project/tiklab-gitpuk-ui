@@ -1,4 +1,6 @@
 .commits{
+    height: 100%;
+    overflow: auto;
     &-head{
         display: flex;
         justify-content: flex-start;
@@ -9,13 +11,6 @@
             display: flex;
             flex-direction: row;
             align-items: center;
-            .commits-branch{
-                width: 160px;
-                margin-right: var(--tiklab-padding-item);
-                .ant-select{
-                    width: 100% !important;
-                }
-            }
         }
         .commits-head-right{
             display: flex;

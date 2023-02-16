@@ -35,20 +35,12 @@
             .blob-head-right{
                 display: flex;
                 align-items: center;
-                .blob-search{
+                .blob-search,.blob-file-add{
                     margin-left: var(--tiklab-padding-item);
                     font-size: 16px;
                     cursor: pointer;
                 }
-                .blob-file-add{
-                    margin-left: var(--tiklab-padding-item);
-                    font-size: 16px;
-                    cursor: pointer;
-                }
-                .blob-desc{
-                    margin-left: var(--tiklab-padding-item);
-                }
-                .blob-clone{
+                .blob-download,.blob-clone{
                     margin-left: var(--tiklab-padding-item);
                 }
             }

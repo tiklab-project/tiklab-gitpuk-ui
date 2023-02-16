@@ -1,5 +1,5 @@
 import React, {useEffect,useState,useRef,} from 'react'
-import {Input,Table,Dropdown} from 'antd'
+import {Input,Dropdown} from 'antd'
 import {
     SearchOutlined,
     PlusOutlined,
@@ -13,7 +13,7 @@ import Usher from '../components/usher'
 import RecentSubmitMsg from '../components/recentSubmitMsg'
 import BreadChang from '../components/breadChang'
 import Clone from '../components/clone'
-import {interceptUrl} from '../../../common/client/client'
+import {setBranch,setFileAddress,findCommitId} from '../components/common'
 import Loading from '../../../common/loading/loading'
 import '../components/code.scss'
 
@@ -25,20 +25,20 @@ const Code = props =>{
     const {findFileTree,codeTreeData,findCloneAddress,cloneAddress,findLatelyBranchCommit,latelyBranchCommit} = codeStore
 
     const searValue = useRef(null)
-    const urlInfo = match.params
-
-    const branch = urlInfo.branch?urlInfo.branch:houseInfo.defaultBranch
-    const fileAddress = interceptUrl(location.pathname,webUrl+'/tree/'+urlInfo.branch)
+    const urlInfo = match.params.branch
+    const branch = setBranch(urlInfo,houseInfo)
+    const fileAddress = setFileAddress(location,webUrl+'/tree/'+urlInfo)
     const [searInput,setSearInput] = useState(false)
     const [isLoading,setIsLoading] = useState(true)
 
     useEffect(()=>{
         if(houseInfo.name){
-            // 树文件
+            // 树文件dd
             findFileTree({
                 codeId:houseInfo.codeId,
                 path:fileAddress[1],
-                branch:branch
+                branch:branch,
+                findCommitId:findCommitId(urlInfo)
             }).then(res=>{
                 setIsLoading(false)
                 res.code===500001 && props.history.push('/index/404')
@@ -53,7 +53,8 @@ const Code = props =>{
             // 最近提交信息
             houseInfo.notNull && findLatelyBranchCommit({
                 codeId:houseInfo.codeId,
-                branchName:branch
+                branch:branch,
+                findCommitId:findCommitId(urlInfo)
             })
         }
     },[houseInfo.name])
@@ -65,76 +66,41 @@ const Code = props =>{
         }
     },[searInput])
 
-    const fileName = record => {
-        props.history.push(`/index/house/${urlInfo.namespace}${record.path}`)
+    const goFileName = record => {
+        props.history.push(`/index/house/${webUrl}${record.path}`)
+    }
 
+    const goFileParent = fileParent => {
+        props.history.push(`/index/house/${webUrl}/tree/${urlInfo}${fileParent}`)
     }
 
     const renderFileType = fileType => {
         switch (fileType) {
-            case 'js':
-            case 'java':
-                return  'JavaScript'
-            case 'css':
-                return 'css'
             case 'txt':
-                return 'TXT'
-            case 'json':
-                return 'json'
-            case 'xml':
-                return 'xml'
             case 'yaml':
-                return 'YAML'
-            default:
+            case 'css':
+            case 'json':
+            case 'xml':
+            case 'cmd':
+            case 'md':
+            case 'sql':
+            case 'ts':
+            case 'java':
+                return fileType
+            case 'js':
                 return 'JavaScript'
+            case 'sh':
+                return 'powershell'
+            case 'gitignore':
+                return 'git'
+            default:
+                return 'txt'
         }
     }
 
     const goWebIde = () => {
-        props.history.push(`/index/ide/${houseInfo.name}`)
+        // props.history.push(`/index/ide/${houseInfo.name}`)
     }
-
-    const columns = [
-        {
-            title: '名称',
-            dataIndex: 'fileName',
-            key: 'fileName',
-            width:'60%',
-            ellipsis:true,
-            render:(text,record)=>{
-                return <span className='code-table-name' onClick={()=>fileName(record)}>
-                    <span style={{paddingRight:5}}>
-                        {
-                            record.type==='tree' ?
-                                <FolderOutlined/>
-                                :
-                                <svg className='icon' aria-hidden='true'>
-                                    <use xlinkHref={`#icon-${renderFileType(record.fileType)}`}/>
-                                </svg>
-                        }
-                    </span>
-                    <span>{text}</span>
-                </span>
-            }
-        },
-        {
-            title: '提交信息',
-            dataIndex: 'commitMessage',
-            key: 'commitMessage',
-            width:'30%',
-            ellipsis:true,
-            render:(text,record)=> {
-                return <span className='code-table-msg'>{text}</span>
-            }
-        },
-        {
-            title: '提交时间',
-            dataIndex: 'commitTime',
-            key:'commitTime',
-            width:'10%',
-            ellipsis:true,
-        },
-    ]
 
     const addFileMenu = (
         <div className='file-add-menu'>
@@ -155,6 +121,28 @@ const Code = props =>{
                 />
     }
 
+    const renderCode = item => {
+        return (
+            <div key={item.fileName} className='code-data-item'>
+                <div className='code-item-fileName' onClick={()=>goFileName(item)}>
+                    <span style={{paddingRight:5}}>
+                        {
+                            item.type==='tree' ?
+                                <FolderOutlined/>
+                                :
+                                <svg className='icon' aria-hidden='true'>
+                                    <use xlinkHref={`#icon-${renderFileType(item.fileType)}`}/>
+                                </svg>
+                        }
+                    </span>
+                    <span>{item.fileName}</span>
+                </div>
+                <div className='code-item-commitMessage'>{item.commitMessage}</div>
+                <div className='code-item-commitTime'>{item.commitTime}</div>
+            </div>
+        )
+    }
+
     return(
         <div className='code'>
             <div className='code-content xcode-home-limited xcode'>
@@ -164,7 +152,8 @@ const Code = props =>{
                         {...props}
                         houseInfo={houseInfo}
                         webUrl={webUrl}
-                        branch={branch}
+                        branch={urlInfo}
+                        fileAddress={fileAddress}
                         type={'tree'}
                     />
                     <div className='code-head-right'>
@@ -200,14 +189,25 @@ const Code = props =>{
                 </div>
                 <RecentSubmitMsg {...props} latelyBranchCommit={latelyBranchCommit}/>
                 <div className='code-content-tables'>
-                    <Table
-                        bordered={false}
-                        columns={columns}
-                        dataSource={codeTreeData}
-                        rowKey={record=>record.fileName}
-                        pagination={false}
-                        locale={{emptyText: <EmptyText title='暂无数据'/>}}
-                    />
+                    <div className='code-data-item'>
+                        <div className='code-item-fileName'>名称</div>
+                        <div className='code-item-commitMessage'>提交信息</div>
+                        <div className='code-item-commitTime'>提交时间</div>
+                    </div>
+                    {
+                        fileAddress[1] &&
+                        <div className='code-data-item' onClick={()=>goFileParent(codeTreeData[0].fileParent)}>
+                            <svg className='icon' aria-hidden='true'>
+                                <use xlinkHref={`#icon-fanhui`}/>
+                            </svg>...
+                        </div>
+                    }
+                    {
+                        codeTreeData && codeTreeData.length > 0 ?
+                            codeTreeData.map(item=>renderCode(item))
+                            :
+                            <EmptyText title={'暂无文件'}/>
+                    }
                 </div>
             </div>
         </div>

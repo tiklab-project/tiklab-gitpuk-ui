@@ -44,7 +44,7 @@ const StorehouseGroup = props => {
     }
 
     const goDetails = (text,record) => {
-        props.history.push(`/index/group/${text}/survey`)
+        // props.history.push(`/index/group/${text}/survey`)
     }
 
     const columns = [

@@ -42,7 +42,7 @@ module.exports = merge(baseWebpackConfig,{
         }),
         new CssMinimizerPlugin(),
         new MonacoWebpackPlugin({
-            languages:[]
+            languages:['json','typescript']
         }),
         new MonacoLocalesPlugin({
             //设置支持的语言

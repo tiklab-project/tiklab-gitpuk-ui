@@ -3,11 +3,12 @@ import {CopyOutlined,FileTextOutlined} from '@ant-design/icons'
 import {inject,observer} from 'mobx-react'
 import BreadcrumbContent from '../../../common/breadcrumb/breadcrumb'
 import {MonacoBlob} from '../../../common/editor/monaco'
-import {copy,interceptUrl} from '../../../common/client/client'
+import {copy} from '../../../common/client/client'
 import RecentSubmitMsg from './recentSubmitMsg'
 import BreadChang from './breadChang'
 import Clone from './clone'
 import BlobDelModal from './blobDelModal'
+import { findCommitId, setBranch, setFileAddress} from './common'
 import './blob.scss'
 
 
@@ -18,11 +19,10 @@ const Blob = props =>{
     const {houseInfo,webUrl} = houseStore
     const {readFile,blobFile,findCloneAddress,cloneAddress,findLatelyBranchCommit,latelyBranchCommit} = codeStore
 
-    const urlInfo = match.params
-    const branch = urlInfo.branch
-    const filePath = interceptUrl(location.pathname,webUrl+'/blob/')
-    const fileAddress = interceptUrl(location.pathname, webUrl+'/blob/'+urlInfo.branch)
-
+    const urlInfo = match.params.branch
+    const branch = setBranch(urlInfo,houseInfo)
+    const filePath = setFileAddress(location,webUrl+'/blob/')
+    const fileAddress = setFileAddress(location, webUrl+'/blob/'+urlInfo)
     const [delVisible,setDelVisible] = useState(false)
 
     useEffect(()=>{
@@ -31,12 +31,14 @@ const Blob = props =>{
             readFile({
                 codeId:houseInfo.codeId,
                 fileAddress:fileAddress[1],
-                commitBranch:branch
+                commitBranch:branch,
+                findCommitId:findCommitId(urlInfo)
             })
             // 最近提交信息
             findLatelyBranchCommit({
                 codeId:houseInfo.codeId,
-                branchName:branch
+                branch:branch,
+                findCommitId:findCommitId(urlInfo)
             })
             // 文本地址
             findCloneAddress(houseInfo.codeId)
@@ -56,13 +58,11 @@ const Blob = props =>{
                         {...props}
                         houseInfo={houseInfo}
                         webUrl={webUrl}
-                        branch={branch}
+                        branch={urlInfo}
+                        fileAddress={fileAddress}
                         type={'blob'}
                     />
                     <div className='blob-head-right'>
-                        {/*<div className='blob-desc'>*/}
-                        {/*    <Btn title={'下载'}/>*/}
-                        {/*</div>*/}
                         <div className='blob-clone'>
                             <Clone cloneAddress={cloneAddress}/>
                         </div>
@@ -80,15 +80,20 @@ const Blob = props =>{
                             </span>
                         </div>
                         <div className='editor-title-right'>
+                            {
+                                findCommitId(urlInfo) ? null :
+                                    <>
+                                        <div className='editor-title-item' onClick={()=>goEdit()}>编辑</div>
+                                        <div className='editor-title-item'>WEB IDE</div>
+                                        <div className='editor-title-item' onClick={()=>setDelVisible(true)}>删除</div>
+                                        <BlobDelModal
+                                            delVisible={delVisible}
+                                            setDelVisible={setDelVisible}
+                                            blobFile={blobFile}
+                                        />
+                                    </>
+                            }
                             <div className='editor-title-item' onClick={()=>copy(blobFile && blobFile.fileMessage)}>复制</div>
-                            <div className='editor-title-item' onClick={()=>goEdit()}>编辑</div>
-                            <div className='editor-title-item'>WEB IDE</div>
-                            <div className='editor-title-item' onClick={()=>setDelVisible(true)}>删除</div>
-                            <BlobDelModal
-                                delVisible={delVisible}
-                                setDelVisible={setDelVisible}
-                                blobFile={blobFile}
-                            />
                             <div className='editor-title-item'>下载</div>
                         </div>
                     </div>

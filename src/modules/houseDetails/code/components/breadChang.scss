@@ -1,13 +1,6 @@
 .code-head-left{
     flex: 1;
     display: flex;
-    .code-branch{
-        width: 160px;
-        margin-right: var(--tiklab-padding-item);
-        .ant-select{
-            width: 100% !important;
-        }
-    }
     .code-bread{
         display: flex;
         flex-wrap: wrap;

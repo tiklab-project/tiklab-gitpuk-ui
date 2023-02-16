@@ -4,10 +4,12 @@ import {Input,Select,Tooltip} from 'antd'
 import {CopyOutlined,FolderOpenOutlined,SearchOutlined} from '@ant-design/icons'
 import {Profile} from 'tiklab-eam-ui'
 import {getUser} from 'tiklab-core-ui'
-import BreadcrumbContent from '../../../common/breadcrumb/breadcrumb'
 import {copy} from '../../../common/client/client'
+import BreadcrumbContent from '../../../common/breadcrumb/breadcrumb'
 import EmptyText from '../../../common/emptyText/emptyText'
-import TriggerSelect from '../../code/components/triggerSelect'
+import Loading from '../../../common/loading/loading'
+import BranchSelect from '../../code/components/branchSelect'
+import {commitU4,setBranch,findCommitId} from '../../code/components/common'
 import '../components/commits.scss'
 
 const Commits = props =>{
@@ -17,17 +19,35 @@ const Commits = props =>{
     const {houseInfo,webUrl} = houseStore
     const {findBranchCommit,commitsList} = commitsStore
 
-    const urlInfo = match.params
+    const urlInfo = match.params.branch
+    const branch = setBranch(urlInfo,houseInfo)
+    const [isLoading,setIsLoading] = useState(true)
 
     useEffect(()=>{
         if(houseInfo.name){
-            const branch = urlInfo.branch ? urlInfo.branch:houseInfo.defaultBranch
             findBranchCommit({
                 codeId:houseInfo.codeId,
-                branchName:branch
+                branch:branch,
+                findCommitId:findCommitId(urlInfo)
+            }).then(()=>{
+                setIsLoading(false)
             })
         }
     },[houseInfo.name,location.pathname])
+
+    // 页面滚动到底部重新获取数据
+    const handleScroll = () =>{
+        const dom = document.getElementById('xcode-commits')
+        if (dom) {
+            const contentScrollTop = dom.scrollTop; //滚动条距离顶部
+            const clientHeight = dom.clientHeight; //可视区域
+            const scrollHeight = dom.scrollHeight; //滚动条内容的总高度
+            if (contentScrollTop + clientHeight >= scrollHeight) {
+                // 滚动到底部获取数据的方法
+                console.log('zzzz')
+            }
+        }
+    }
 
     const changCommitsUser = value => {
 
@@ -35,12 +55,17 @@ const Commits = props =>{
 
     // 提交详情
     const goDetails = item =>{
-        props.history.push(`/index/house/${webUrl}/commit/${item.commitId}`)
+        // props.history.push(`/index/house/${webUrl}/commit/${item.commitId}`)
     }
 
     // 查看源文件
     const findFile = item => {
-        props.history.push(`/index/house/${webUrl}/tree/${item.commitId}`)
+        props.history.push(`/index/house/${webUrl}/tree/${item.commitId+commitU4}`)
+    }
+
+
+    if(isLoading){
+        return <Loading/>
     }
 
     const renderCommits = item => {
@@ -98,19 +123,18 @@ const Commits = props =>{
     }
 
     return (
-        <div className='commits'>
-            <div className='commits-content xcode-home-limited xcode'>
+        <div className='commits' id='xcode-commits' onScroll={handleScroll}>
+            <div className='commits-content xcode-home-limited'>
                 <BreadcrumbContent firstItem={'Commits'}/>
                 <div className='commits-head'>
                     <div className='commits-head-left'>
-                        <div className='commits-branch'>
-                            <TriggerSelect
-                                {...props}
-                                houseInfo={houseInfo}
-                                webUrl={webUrl}
-                                type={'commit'}
-                            />
-                        </div>
+                        <BranchSelect
+                            {...props}
+                            houseInfo={houseInfo}
+                            webUrl={webUrl}
+                            type={'commit'}
+                        />
+
                     </div>
                     <div className='commits-head-right'>
                         <div className='commits-user'>

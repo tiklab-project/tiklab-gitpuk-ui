@@ -13,12 +13,12 @@ const HouseUser = props =>{
 
     // 用户权限
     const changePower = (record,value) => {
-        if(value==="1"){
-            value=true
-        }
-        if(value==="2"){
-            value=false
-        }
+        // if(value==="1"){
+        //     value=true
+        // }
+        // if(value==="2"){
+        //     value=false
+        // }
         member && member.map(item=>{
             if(item.id===record.id){
                 item.adminRole = value
@@ -29,7 +29,6 @@ const HouseUser = props =>{
 
     // 移出用户
     const del = (text,record) =>{
-
         // yUserList（已选择） 减少
         setYUserList(yUserList.filter(item=>item.id!==record.id))
 
@@ -65,15 +64,15 @@ const HouseUser = props =>{
             ellipsis:true,
             render: (text,record)=>(
                 <Select
-                    defaultValue={record.id===userId ?"1":"2"}
+                    defaultValue={record.id===userId}
                     bordered={false}
                     showarrow={"false"}
                     style={{width:120}}
                     disabled={record.id===userId}
                     onChange={value=>changePower(record,value)}
                 >
-                    <Select.Option value={"1"}>管理员角色</Select.Option>
-                    <Select.Option value={"2"}>默认角色</Select.Option>
+                    <Select.Option value={true}>管理员角色</Select.Option>
+                    <Select.Option value={false}>默认角色</Select.Option>
                 </Select>
             )
         },

@@ -12,7 +12,6 @@ const HouseAdd = props =>{
     const {addHouseVisible,setAddHouseVisible,createCode,isLoading,houseList,groupList} = props
 
     const [form] = Form.useForm()
-
     const userName = getUser().name
     const [addType,setAddType] = useState(1)
     const [powerType,setPowerType] = useState(1)
@@ -41,13 +40,7 @@ const HouseAdd = props =>{
     }
 
     const newStoreHouse = (
-        <Form
-            form={form}
-            autoComplete='off'
-            layout='vertical'
-            initialValues={{group:1}}
-            onValuesChange={onValuesChange}
-        >
+        <Form form={form} autoComplete='off' layout='vertical' initialValues={{group:1}} onValuesChange={onValuesChange}>
             <Form.Item label='仓库名称' name='name'
                        rules={[
                            {required:true,message:''},
