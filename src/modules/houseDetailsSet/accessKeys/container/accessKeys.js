@@ -1,11 +1,13 @@
 import React,{useState} from 'react'
+import {PlusOutlined} from '@ant-design/icons'
 import BreadcrumbContent from '../../../common/breadcrumb/breadcrumb'
 import Btn from '../../../common/btn/btn'
-import KeysAdd from '../components/keysAdd'
+import AccessKeysAdd from '../components/accessKeysAdd'
 import EmptyText from '../../../common/emptyText/emptyText'
-import '../components/keys.scss'
+import '../components/accessKeys.scss'
 
-const Keys = props => {
+
+const AccessKeys = props => {
 
     const [addVisible,setAddVisible] = useState(false)
 
@@ -17,9 +19,10 @@ const Keys = props => {
                     <Btn
                         type={'primary'}
                         title={'新建密钥'}
+                        icon={<PlusOutlined/>}
                         onClick={()=>setAddVisible(true)}
                     />
-                    <KeysAdd
+                    <AccessKeysAdd
                         addVisible={addVisible}
                         setAddVisible={setAddVisible}
                     />
@@ -43,4 +46,4 @@ const Keys = props => {
     )
 }
 
-export default Keys
+export default AccessKeys

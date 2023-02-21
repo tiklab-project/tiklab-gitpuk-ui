@@ -54,9 +54,9 @@ module.exports = merge(baseWebpackConfig, {
         }),
         new CssMinimizerPlugin(),
         new ProgressBarPlugin(),
-        // new BundleAnalyzerPlugin(),
+        new BundleAnalyzerPlugin(),
         new MonacoWebpackPlugin({
-            languages:['json','typescript']
+            languages:['json']
         }),
         new MonacoLocalesPlugin({
             //设置支持的语言

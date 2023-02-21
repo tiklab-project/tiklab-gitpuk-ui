@@ -49,7 +49,7 @@ const Statistics=AsyncComponent(()=>import('./modules/houseDetails/statistics/co
 const HouseDetailsSet=AsyncComponent(()=>import('./modules/houseDetailsSet/common/houseDetailsSet'))
 const HouseSetting=AsyncComponent(()=>import('./modules/houseDetailsSet/setting/houseSetting'))
 const PushRule=AsyncComponent(()=>import('./modules/houseDetailsSet/pushRule/container/pushRule'))
-const Keys=AsyncComponent(()=>import('./modules/houseDetailsSet/keys/container/keys'))
+const AccessKeys=AsyncComponent(()=>import('./modules/houseDetailsSet/accessKeys/container/accessKeys'))
 const WebHooks=AsyncComponent(()=>import('./modules/houseDetailsSet/webHooks/container/hooks'))
 
 /*
@@ -68,6 +68,8 @@ const GroupSetting=AsyncComponent(()=>import('./modules/houseGroupDetailsSet/set
 
 /* 系统设置 */
 const sys=AsyncComponent(()=>import('./modules/sys/common/system'))
+
+const Keys_sys=AsyncComponent(()=>import('./modules/sys/keys/container/keys'))
 
 /* 插件 */
 const Plugin=AsyncComponent(()=>import('./modules/sys/plug-in/plugin'))
@@ -198,11 +200,6 @@ const routers = [
                         exact:true,
                         component:HouseMerge,
                     },
-                    // {
-                    //     path:'/index/house/:namespace/:name/commits/',
-                    //     exact: true,
-                    //     component:Commits,
-                    // },
                     {
                         path:'/index/house/:namespace/:name/commits/:branch',
                         component:Commits,
@@ -237,7 +234,7 @@ const routers = [
                             },
                             {
                                 path:'/index/house/:namespace/:name/sys/keys',
-                                component:Keys
+                                component:AccessKeys
                             },
                             {
                                 path:'/index/house/:namespace/:name/sys/hooks',
@@ -309,6 +306,10 @@ const routers = [
                 path:'/index/sys',
                 component: sys,
                 routes: [
+                    {
+                        path: '/index/sys/keys',
+                        component: Keys_sys,
+                    },
                     {
                         path: '/index/sys/productUser',
                         component: ProductAuth,

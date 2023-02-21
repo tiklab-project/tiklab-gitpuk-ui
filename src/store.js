@@ -5,6 +5,7 @@ import {CODE_STORE,CodeStore} from './modules/houseDetails/code/store/codeStore'
 import {HOUSEGRROUP_STORE,HouseGroupStore} from './modules/houseGroup/store/houseGroupStore'
 import {BRANCH_STORE,BranchStore} from './modules/houseDetails/branch/store/branchStore'
 import {COMMITS_STORE,CommitsStore} from './modules/houseDetails/commits/store/commitsStore'
+import {KEY_STORE,KeyStore} from './modules/sys/keys/store/keyStore'
 
 import {createContext} from 'react'
 
@@ -15,6 +16,7 @@ function createStores() {
         [HOUSEGRROUP_STORE]:new HouseGroupStore(),
         [BRANCH_STORE]:new BranchStore(),
         [COMMITS_STORE]:new CommitsStore(),
+        [KEY_STORE]:new KeyStore(),
         [EAM_STORE]:new EamStore(),
         [SLATE_STORE]:new SlateStore(),
     }

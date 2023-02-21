@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import {inject,observer} from 'mobx-react'
-import {Input,Select,Tooltip} from 'antd'
-import {CopyOutlined,FolderOpenOutlined,SearchOutlined} from '@ant-design/icons'
+import {Input,Select,Tooltip,Spin} from 'antd'
+import {CopyOutlined,FolderOpenOutlined,SearchOutlined,LoadingOutlined} from '@ant-design/icons'
 import {Profile} from 'tiklab-eam-ui'
 import {getUser} from 'tiklab-core-ui'
 import {copy} from '../../../common/client/client'
@@ -17,22 +17,19 @@ const Commits = props =>{
     const {commitsStore,houseStore,match,location} = props
 
     const {houseInfo,webUrl} = houseStore
-    const {findBranchCommit,commitsList} = commitsStore
+    const {findBranchCommit,commitsList,setCommitsList} = commitsStore
 
     const urlInfo = match.params.branch
     const branch = setBranch(urlInfo,houseInfo)
-    const [isLoading,setIsLoading] = useState(true)
+    const [isLoading,setIsLoading] = useState(true) // 初始化加载状态
+    const [hasData,setHasData] = useState(true) // 第二次加载状态
+    const [findNumber,setFindNumber] = useState(false) // 第二次获取提交文件加载状态
 
     useEffect(()=>{
         if(houseInfo.name){
-            findBranchCommit({
-                codeId:houseInfo.codeId,
-                branch:branch,
-                findCommitId:findCommitId(urlInfo)
-            }).then(()=>{
-                setIsLoading(false)
-            })
+            findCommitsList()
         }
+        return ()=>setCommitsList()
     },[houseInfo.name,location.pathname])
 
     // 页面滚动到底部重新获取数据
@@ -42,11 +39,28 @@ const Commits = props =>{
             const contentScrollTop = dom.scrollTop; //滚动条距离顶部
             const clientHeight = dom.clientHeight; //可视区域
             const scrollHeight = dom.scrollHeight; //滚动条内容的总高度
-            if (contentScrollTop + clientHeight >= scrollHeight) {
+            if (contentScrollTop + clientHeight >= scrollHeight && hasData) {
+                setFindNumber(true)
                 // 滚动到底部获取数据的方法
-                console.log('zzzz')
+                findCommitsList({number:'all'})
             }
         }
+    }
+
+    const findCommitsList = number => {
+        findBranchCommit({
+            codeId:houseInfo.codeId,
+            branch:branch,
+            findCommitId:findCommitId(urlInfo),
+            ...number
+        }).then(()=>{
+            if(number){
+                setHasData(false)
+                setFindNumber(false)
+                return
+            }
+            setIsLoading(false)
+        })
     }
 
     const changCommitsUser = value => {
@@ -55,7 +69,7 @@ const Commits = props =>{
 
     // 提交详情
     const goDetails = item =>{
-        // props.history.push(`/index/house/${webUrl}/commit/${item.commitId}`)
+        props.history.push(`/index/house/${webUrl}/commit/${item.commitId}`)
     }
 
     // 查看源文件
@@ -160,6 +174,12 @@ const Commits = props =>{
                         commitsList.map((group,groupIndex)=>renderCommitsData(group,groupIndex))
                         :
                         <EmptyText title={'暂无提交信息'}/>
+                    }
+                    {
+                        findNumber && <div style={{textAlign:'center',paddingTop:30}}><Spin size="large" /></div>
+                    }
+                    {
+                        !hasData && <div style={{textAlign:'center',paddingTop:30,color:'#999'}}>没有更多了</div>
                     }
                 </div>
             </div>

@@ -13,13 +13,13 @@ const BreadcrumbContent = props =>{
     const {t} = useTranslation()
 
     return  <div className='xcode-breadcrumb'>
-                <Space>
+                <div className='xcode-breadcrumb-content'>
                     {goBack && <LeftOutlined onClick={goBack} style={{color:'#0063FF'}}/>}
                     <span className={secondItem ? 'xcode-breadcrumb-span':''}>
                         {t(firstItem)}
                     </span>
-                    {secondItem && <span> / &nbsp; {secondItem}</span>}
-                </Space>
+                    {secondItem && <span className='xcode-breadcrumb-secondItem'>&nbsp;/&nbsp;{secondItem}</span>}
+                </div>
             </div>
 }
 

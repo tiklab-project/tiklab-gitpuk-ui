@@ -19,19 +19,12 @@
                     cursor: pointer;
                 }
             }
-            .head-user-time{
-                .head-time{
-                    padding-right: 5px;
-                }
+            .head-user-time .head-time{
+                padding-right: 5px;
             }
         }
     }
     &-contrast{
-        .commitsDetails-contrast-title{
-            font-size: 13px;
-            font-weight: var(--tiklab-font-weight-bold);
-            margin-bottom: var(--tiklab-padding-item);
-        }
         .commitsDetails-contrast-content{
             .contrast-title{
                 border-bottom: 1px solid #d9d9d9;
@@ -43,18 +36,14 @@
                 align-items: center;
                 .contrast-affected-opt{
                     margin-right: 10px;
-                    .ant-select-selector{
-                        padding: 0 11px 0 0;
-                        min-width: 85px;
-                    }
+                    cursor: pointer;
                 }
                 .contrast-affected-num{
-                    .num-title{
+                    .num-title,.num-add{
                         padding-right: 5px;
                     }
                     .num-add{
                         color: var(--tiklab-blue);
-                        padding-right: 5px;
                     }
                     .num-reduce{
                         color: #ff0000;
@@ -66,27 +55,37 @@
                     .item-head{
                         display: flex;
                         flex-direction: row;
-                        justify-content: space-between;
                         align-items: center;
                         padding: 8px;
-                        .item-title-icon{
-                            display: flex;
-                            flex-direction: row;
-                            align-items: center;
-                            .item-icon{
-                                margin-right: 8px;
+                        .item-head-icon{
+                            margin-right: 8px;
+                            cursor: pointer;
+                        }
+                        .item-head-file{
+                            flex: 1;
+                            .item-title-title{
+                                display: inline-block;
+                                vertical-align: middle;
+                                max-width: 570px;
+                                overflow: hidden;
+                                white-space: nowrap;
+                                text-overflow: ellipsis;
+                                -o-text-overflow: ellipsis;
+                                font-weight: 500;
+                                padding-right: 8px;
+                            }
+                            .item-title-type{
+                                font-size: var(--tiklab-font-13);
+                                color: var(--tiklab-gray-500);
+                                padding-right: 8px;
+                            }
+                            .item-title-icon{
                                 cursor: pointer;
                             }
-                            .item-title{
-                                font-weight: 500;
-                                .title-text{
-                                    padding-right: 5px;
-                                }
-                                .title-icon{
-                                    cursor: pointer;
-                                }
-                            }
                         }
+                    }
+                    .item-content{
+                        padding: 8px;
                     }
                 }
             }
@@ -100,4 +99,106 @@
     }
 }
 
+.diff-file{
+    .diff-line-num{
+        width: 1%;
+        min-width: 36px;
+        font-size: 12px;
+        white-space: nowrap;
+        margin: 0;
+        text-align: right;
+        padding: 0 5px;
+        color: #999;
+    }
+    .diff-line-code{
+        padding: 3px 0 3px 32px;
+        font-family: Consolas,Courier,monospace;
+        border-left: 1px solid #f8f8f8;
+        white-space:pre-wrap;
+        position: relative;
+    }
+    .diff-add .diff-line-num{
+        background-color: #d6fedb;
+    }
+    .diff-delete .diff-line-num{
+        background-color: #fadde0;
+    }
+    .diff-expand .diff-line-double-num{
+        width: 1%;
+        min-width: 72px;
+        text-align: center;
+        cursor: pointer;
+        background-color: #d8ecff;
+    }
+    .diff-expand .diff-line-code{
+        background-color: #f1f8ff;
+        color: var(--tiklab-gray-500);
+    }
+    .diff-add .diff-line-code{
+        background-color: #e6ffed;
+        &:before{
+            content: '+';
+            position: absolute;
+            left: 0.5em
+        }
+    }
+    .diff-delete .diff-line-code{
+        background-color: #feedf0;
+        &:before{
+            content: '-';
+            position: absolute;
+            left: 0.5em
+        }
+    }
+    .diff-expand-normal{
+        .diff-line-num,.diff-line-code{
+            background-color: #f7f7f7;
+        }
+    }
+}
 
+.commits-diff-drop-title{
+    box-shadow: 0 4px 8px -2px #091e4240, 0 0 1px #091e424f;
+    border-radius: 4px;
+    background-color: #ffffff;
+    width: 500px;
+    .commits-diff-drop-title-input{
+        padding: 8px;
+    }
+    .commits-diff-drop-title-content{
+        max-height: 300px;
+        overflow-y: auto;
+        padding-bottom: 10px;
+    }
+    .commits-diff-drop-title-item{
+        padding: 8px 15px;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        &:hover{
+            cursor: pointer;
+            background-color: #f8f8f8;
+        }
+        .diff-drop-title-item-icon{
+            margin-right: 8px;
+        }
+        .diff-drop-title-item-title{
+            display: inline-block;
+            overflow: hidden;
+            width: calc(100% - 50px);
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            -o-text-overflow: ellipsis;
+            vertical-align: middle;
+        }
+        .diff-drop-title-item-add,.diff-drop-title-item-delete{
+            padding-left: 8px;
+        }
+        .diff-drop-title-item-add{
+            color: var(--tiklab-blue);
+        }
+        .diff-drop-title-item-delete{
+            color: #ff0000;
+        }
+    }
+}

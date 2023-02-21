@@ -70,8 +70,11 @@ const BranchAdd = props =>{
                 </div>
             </div>
             <div className='branch-add-content'>
-                <Form form={form} layout='vertical' autoComplete='off'
-                      initialValues={{point:houseInfo.defaultBranch}}
+                <Form
+                    form={form}
+                    layout='vertical'
+                    autoComplete='off'
+                    initialValues={{point:houseInfo.defaultBranch}}
                 >
                     <Form.Item
                         label={'分支名称'}

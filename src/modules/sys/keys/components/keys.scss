@@ -1,0 +1,47 @@
+.sys-keys{
+    .sys-keys-up{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .sys-keys-ill{
+        margin: var(--tiklab-padding-item) 0;
+        padding: 10px;
+        background: #F8FFFF;
+        color: var(--tiklab-blue);
+        border: 1px solid #e3e9ed;
+    }
+    .sys-keys-table-title{
+        color: var(--tiklab-blue);
+        cursor: pointer;
+    }
+}
+
+.sys-keys-detail{
+    .keys-detail-title{
+        padding-top: var(--tiklab-padding-item);
+        font-weight: var(--tiklab-font-weight-bold);
+    }
+    .keys-detail-time{
+        padding: var(--tiklab-padding-item) 0;
+        color: var(--tiklab-gray-500);
+    }
+}
+
+
+.sys-keys-add-modal{
+    .sys-keys-add-up{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: var(--tiklab-font-weight-bold);
+        padding: var(--tiklab-padding) var(--tiklab-padding) var(--tiklab-padding-item);
+    }
+    .sys-keys-add-content{
+        padding: 0 var(--tiklab-padding);
+        max-height:calc(100% - 120px);
+        overflow:auto;
+    }
+}

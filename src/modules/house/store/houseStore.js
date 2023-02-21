@@ -34,7 +34,7 @@ export class HouseStore {
     }
 
     @action
-    createCode = async values =>{
+    createCode = values =>{
         this.isLoading = true
         return new Promise(((resolve, reject) => {
             CreateCode({
@@ -54,7 +54,7 @@ export class HouseStore {
     }
 
     @action
-    deleteCode = async value =>{
+    deleteCode = value =>{
         this.isLoading = true
         const param = new FormData()
         param.append('codeId',value)

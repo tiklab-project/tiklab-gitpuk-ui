@@ -42,7 +42,7 @@ module.exports = merge(baseWebpackConfig,{
         }),
         new CssMinimizerPlugin(),
         new MonacoWebpackPlugin({
-            languages:['json','typescript']
+            languages:['json']
         }),
         new MonacoLocalesPlugin({
             //设置支持的语言
@@ -65,7 +65,7 @@ module.exports = merge(baseWebpackConfig,{
         hot:true,
         compress:true,
         port:3010,
-        host: '192.168.10.23',
+        host: '0.0.0.0',
         historyApiFallback: true,
         disableHostCheck: true,
     }

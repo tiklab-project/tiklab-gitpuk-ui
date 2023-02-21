@@ -27,7 +27,7 @@ export const copy = data => {
     copyInput.setAttribute('value', url);//添加属性，将url赋值给input元素的value属性
     copyInput.select();//选择input元素
     document.execCommand('Copy');//执行复制命令
-    message.success('复制成功',0.5);//弹出提示信息，不同组件可能存在写法不同
+    message.success('复制成功');//弹出提示信息，不同组件可能存在写法不同
     //复制之后再删除元素，否则无法成功赋值
     copyInput.remove();//删除动态创建的节点
 }
@@ -44,8 +44,12 @@ export const interceptUrl = (url,data) =>{
 
 // 非法字符效验
 export const Validation = name =>{
+    // return {
+    //     pattern: /^[\u4e00-\u9fa5a-zA-Z0-9_-]{0,}$/,
+    //     message: `${name}不能包含非法字符，如&,%，&，#……等`,
+    // }
     return {
-        pattern: /^[\u4e00-\u9fa5a-zA-Z0-9_-]{0,}$/,
-        message: `${name}不能包含非法字符，如&,%，&，#……等`,
+        pattern:/^[^\s]*$/,
+        message:`${name}不能包含空格`
     }
 }

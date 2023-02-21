@@ -4,7 +4,7 @@ import {CloseOutlined} from '@ant-design/icons'
 import {autoHeight} from '../../../common/client/client'
 import Btn from '../../../common/btn/btn'
 
-const KeysAdd = props =>{
+const AccessKeysAdd = props =>{
 
     const {addVisible,setAddVisible} = props
 
@@ -86,4 +86,4 @@ const KeysAdd = props =>{
     )
 }
 
-export default KeysAdd
+export default AccessKeysAdd
