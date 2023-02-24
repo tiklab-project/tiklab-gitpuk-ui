@@ -14,11 +14,11 @@ const BreadcrumbContent = props =>{
 
     return  <div className='xcode-breadcrumb'>
                 <div className='xcode-breadcrumb-content'>
-                    {goBack && <LeftOutlined onClick={goBack} style={{color:'#0063FF'}}/>}
+                    { goBack && <LeftOutlined onClick={goBack} style={{color:'#0063FF',paddingRight:8}}/>}
                     <span className={secondItem ? 'xcode-breadcrumb-span':''}>
                         {t(firstItem)}
                     </span>
-                    {secondItem && <span className='xcode-breadcrumb-secondItem'>&nbsp;/&nbsp;{secondItem}</span>}
+                    {secondItem && <span className='xcode-breadcrumb-secondItem'>/&nbsp;&nbsp;{secondItem}</span>}
                 </div>
             </div>
 }

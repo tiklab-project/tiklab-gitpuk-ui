@@ -10,7 +10,10 @@ const languages = blobFile => {
             case 'sh':
                 return 'shell'
             case 'ts':
+            case 'tsx':
                 return 'typescript'
+            case 'js':
+                return 'javascript'
             default:
                 return blobFile.fileType
         }
@@ -45,7 +48,7 @@ const MonacoBlob = props =>{
                 contextmenu: false,
                 quickSuggestions:false,
                 readOnly: true, //是否只读
-                formatOnPaste: true,
+                formatOnPaste: false,
                 overviewRulerBorder: false, // 滚动条的边框
                 scrollBeyondLastLine: true,
                 theme: 'vs', // 主题
@@ -129,15 +132,17 @@ const MonacoPreview = props => {
     const newMonaco = () => {
         try {
             monacoEditorRef.current = monaco.editor.createDiffEditor(monacoEditorDomRef.current, {
+                value:'',
+                originalModel:'',
+                modified:'',
                 minimap: { enabled: false }, // 小地图
                 readOnly: true, //是否只读
-                linkedEditing:false,
                 automaticLayout:true,
-                formatOnPaste: true,
                 quickSuggestions:false, // 默认的提示关掉
                 overviewRulerBorder: false, // 滚动条的边框
                 scrollBeyondLastLine: false,
                 theme: 'vs', // 主题
+                lightbulb:{enabled:false},
                 renderSideBySide:false,
                 enableSplitViewResizing:false,
                 renderOverviewRuler:renderOverviewRuler,

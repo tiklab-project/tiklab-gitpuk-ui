@@ -52,7 +52,7 @@ module.exports = merge(baseWebpackConfig,{
             //打印不匹配的文本
             logUnmatched: false,
             //自定义文本翻译
-            // mapLanguages: { "zh-cn": { "Peek References": "查找引用", "Go to Symbol...": "跳到变量位置", "Cannot edit in read-only editor": "无法在只读编辑器中编辑" } }
+            mapLanguages: { "zh-cn": { "Copy changed line": "复制更改的行"} }
         }),
         new webpack.ContextReplacementPlugin(
             /moment[/\\]locale$/,

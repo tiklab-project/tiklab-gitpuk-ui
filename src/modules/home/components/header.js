@@ -46,11 +46,11 @@ const Head = props =>{
             to:'/index/house',
             title: `${t('Storehouse')}`,
         },
-        {
-            key:'group',
-            to:'/index/group',
-            title: `${t('Storehouse_group')}`,
-        },
+        // {
+        //     key:'group',
+        //     to:'/index/group',
+        //     title: `${t('Storehouse_group')}`,
+        // },
     ]
 
     const changeCurrentLink = item => {

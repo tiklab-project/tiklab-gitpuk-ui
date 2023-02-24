@@ -4,11 +4,11 @@ import AsyncComponent from './common/lazy/SyncComponent';
 
 const Home=AsyncComponent(()=>import('./modules/home/container/home'))
 
-const Login=AsyncComponent(()=>import('./modules/eam/login'))
-const Logout=AsyncComponent(()=>import('./modules/eam/Logout'))
-const Wechat=AsyncComponent(()=>import('./modules/eam/wechat'))
-const NoProductAuthUser=AsyncComponent(()=>import('./modules/eam/noProductAuthUser'))
-const NotFound=AsyncComponent(()=>import('./modules/eam/404'))
+const Login=AsyncComponent(()=>import('./modules/login/login'))
+const Logout=AsyncComponent(()=>import('./modules/login/Logout'))
+const Wechat=AsyncComponent(()=>import('./modules/login/wechat'))
+const NoProductAuthUser=AsyncComponent(()=>import('./modules/login/noProductAuthUser'))
+const NotFound=AsyncComponent(()=>import('./modules/login/404'))
 
 /*
     首页
@@ -18,102 +18,103 @@ const Homepage=AsyncComponent(()=>import('./modules/home/components/homePage'))
 /*
     仓库
  */
-const Storehouse=AsyncComponent(()=>import('./modules/house/container/house'))
-
-/*
-     仓库组
- */
-const StorehouseGroup=AsyncComponent(()=>import('./modules/houseGroup/container/houseGroup'))
+const Storehouse=AsyncComponent(()=>import('./modules/repository/container/repository'))
 
 const WEBIDE=AsyncComponent(()=>import('./modules/WEBIDE/container/webIde'))
 
 /*
     仓库详情
  */
-const StorehouseDetails=AsyncComponent(()=>import('./modules/houseDetails/common/houseDetails'))
-const Code=AsyncComponent(()=>import('./modules/houseDetails/code/container/code'))
-const Blob=AsyncComponent(()=>import('./modules/houseDetails/code/components/blob'))
-const Edit=AsyncComponent(()=>import('./modules/houseDetails/code/components/edit'))
-const Branch=AsyncComponent(()=>import('./modules/houseDetails/branch/container/branch'))
-const Tag=AsyncComponent(()=>import('./modules/houseDetails/tag/container/tag'))
-const HouseMerge=AsyncComponent(()=>import('./modules/houseDetails/merge/merge'))
-const Commits=AsyncComponent(()=>import('./modules/houseDetails/commits/container/commits'))
-const CommitsDetails=AsyncComponent(()=>import('./modules/houseDetails/commits/components/commitsDetails'))
-const Issue=AsyncComponent(()=>import('./modules/houseDetails/issue/container/issue'))
-const Pipeline=AsyncComponent(()=>import('./modules/houseDetails/pipeline/container/pipeline'))
-const Statistics=AsyncComponent(()=>import('./modules/houseDetails/statistics/container/statistics'))
+const RepositoryDetails=AsyncComponent(()=>import('./modules/repositoryDetails/repositoryDetails/repositoryDetails'))
+const Code=AsyncComponent(()=>import('./modules/repositoryDetails/code/container/code'))
+const Blob=AsyncComponent(()=>import('./modules/repositoryDetails/code/components/blob'))
+const Edit=AsyncComponent(()=>import('./modules/repositoryDetails/code/components/edit'))
+const Branch=AsyncComponent(()=>import('./modules/repositoryDetails/branch/container/branch'))
+const Tag=AsyncComponent(()=>import('./modules/repositoryDetails/tag/container/tag'))
+const HouseMerge=AsyncComponent(()=>import('./modules/repositoryDetails/merge/merge'))
+const Commits=AsyncComponent(()=>import('./modules/repositoryDetails/commits/container/commits'))
+const CommitsDetails=AsyncComponent(()=>import('./modules/repositoryDetails/commits/components/commitsDetails'))
+const Issue=AsyncComponent(()=>import('./modules/repositoryDetails/issue/container/issue'))
+const Pipeline=AsyncComponent(()=>import('./modules/repositoryDetails/pipeline/container/pipeline'))
+const Statistics=AsyncComponent(()=>import('./modules/repositoryDetails/statistics/container/statistics'))
 
 /*
     仓库设置
  */
-const HouseDetailsSet=AsyncComponent(()=>import('./modules/houseDetailsSet/common/houseDetailsSet'))
-const HouseSetting=AsyncComponent(()=>import('./modules/houseDetailsSet/setting/houseSetting'))
-const PushRule=AsyncComponent(()=>import('./modules/houseDetailsSet/pushRule/container/pushRule'))
-const AccessKeys=AsyncComponent(()=>import('./modules/houseDetailsSet/accessKeys/container/accessKeys'))
-const WebHooks=AsyncComponent(()=>import('./modules/houseDetailsSet/webHooks/container/hooks'))
+const RepositoryDetailsSet=AsyncComponent(()=>import('./modules/repositoryDetailsSet/repositoryDetailsSet/repositoryDetailsSet'))
+const RepositoryBasic=AsyncComponent(()=>import('./modules/repositoryDetailsSet/basic/repositoryBasic'))
+const PushRule=AsyncComponent(()=>import('./modules/repositoryDetailsSet/pushRule/container/pushRule'))
+const AccessKeys=AsyncComponent(()=>import('./modules/repositoryDetailsSet/accessKeys/container/accessKeys'))
+const WebHooks=AsyncComponent(()=>import('./modules/repositoryDetailsSet/webHooks/container/hooks'))
+
+
+/*
+     仓库组
+ */
+const Group=AsyncComponent(()=>import('./modules/group/container/group'))
 
 /*
     仓库组详情
  */
-const HouseGroupDetails=AsyncComponent(()=>import('./modules/houseGroupDetails/common/groupDetails'))
-const Survey=AsyncComponent(()=>import('./modules/houseGroupDetails/survey/container/survey'))
-const GroupMerge=AsyncComponent(()=>import('./modules/houseGroupDetails/merge/merge'))
-const GroupHouse=AsyncComponent(()=>import('./modules/houseGroupDetails/house/container/house'))
+const GroupDetails=AsyncComponent(()=>import('./modules/groupDetails/groupDetails/groupDetails'))
+const Survey=AsyncComponent(()=>import('./modules/groupDetails/survey/container/survey'))
+const GroupMerge=AsyncComponent(()=>import('./modules/groupDetails/merge/merge'))
+const GroupRepository=AsyncComponent(()=>import('./modules/groupDetails/repository/container/repository'))
 
 /*
     仓库组详情设置
  */
-const GroupDetailsSet=AsyncComponent(()=>import('./modules/houseGroupDetailsSet/common/groupDetailsSet'))
-const GroupSetting=AsyncComponent(()=>import('./modules/houseGroupDetailsSet/setting/groupSetting'))
+const GroupDetailsSet=AsyncComponent(()=>import('./modules/groupDetailsSet/common/groupDetailsSet'))
+const GroupSetting=AsyncComponent(()=>import('./modules/groupDetailsSet/setting/groupSetting'))
 
 /* 系统设置 */
-const sys=AsyncComponent(()=>import('./modules/sys/common/system'))
+const sys=AsyncComponent(()=>import('./modules/sysmgr/common/system'))
 
-const Keys_sys=AsyncComponent(()=>import('./modules/sys/keys/container/keys'))
+const Keys_sys=AsyncComponent(()=>import('./modules/sysmgr/keys/container/keys'))
 
 /* 插件 */
-const Plugin=AsyncComponent(()=>import('./modules/sys/plug-in/plugin'))
+const Plugin=AsyncComponent(()=>import('./modules/sysmgr/plug-in/plugin'))
 
 /* 权限 */
-const sysFeature=AsyncComponent(()=>import('./modules/sys/privilege/systemFeature'))
-const sysRole=AsyncComponent(()=>import('./modules/sys/privilege/systemRole'))
-const sysRoleTrue=AsyncComponent(()=>import('./modules/sys/privilege/systemRoleTrue'))
-const ProjectRole=AsyncComponent(()=>import('./modules/sys/privilege/projectRole'))
-const ProjectFeature=AsyncComponent(()=>import('./modules/sys/privilege/projectFeature'))
-const DomainRole=AsyncComponent(()=>import('./modules/sys/privilege/domainRole'))
-const ProductAuth=AsyncComponent(()=>import('./modules/sys/privilege/productAuth'))
+const sysFeature=AsyncComponent(()=>import('./modules/sysmgr/privilege/systemFeature'))
+const sysRole=AsyncComponent(()=>import('./modules/sysmgr/privilege/systemRole'))
+const sysRoleTrue=AsyncComponent(()=>import('./modules/sysmgr/privilege/systemRoleTrue'))
+const ProjectRole=AsyncComponent(()=>import('./modules/sysmgr/privilege/projectRole'))
+const ProjectFeature=AsyncComponent(()=>import('./modules/sysmgr/privilege/projectFeature'))
+const DomainRole=AsyncComponent(()=>import('./modules/sysmgr/privilege/domainRole'))
+const ProductAuth=AsyncComponent(()=>import('./modules/sysmgr/privilege/productAuth'))
 
 /* 消息 */
-const MessageManagement=AsyncComponent(()=>import('./modules/sys/message/messageManagement'))
-const MessageType=AsyncComponent(()=>import('./modules/sys/message/messageType'))
-const MessageSendType=AsyncComponent(()=>import('./modules/sys/message/messageSendType'))
-const MessageSendTypeTrue=AsyncComponent(()=>import('./modules/sys/message/messageSendTypeTrue'))
-const MessageNotice=AsyncComponent(()=>import('./modules/sys/message/messageNotice'))
-const MessageNoticeTrue=AsyncComponent(()=>import('./modules/sys/message/messageNoticeTrue'))
+const MessageManagement=AsyncComponent(()=>import('./modules/sysmgr/message/messageManagement'))
+const MessageType=AsyncComponent(()=>import('./modules/sysmgr/message/messageType'))
+const MessageSendType=AsyncComponent(()=>import('./modules/sysmgr/message/messageSendType'))
+const MessageSendTypeTrue=AsyncComponent(()=>import('./modules/sysmgr/message/messageSendTypeTrue'))
+const MessageNotice=AsyncComponent(()=>import('./modules/sysmgr/message/messageNotice'))
+const MessageNoticeTrue=AsyncComponent(()=>import('./modules/sysmgr/message/messageNoticeTrue'))
 
 /* 日志 */
-const MyLogList=AsyncComponent(()=>import('./modules/sys/oplog/myLogList'))
-const LogTemplateList=AsyncComponent(()=>import('./modules/sys/oplog/logTemplateList'))
-const LogType=AsyncComponent(()=>import('./modules/sys/oplog/logType'))
+const MyLogList=AsyncComponent(()=>import('./modules/sysmgr/oplog/myLogList'))
+const LogTemplateList=AsyncComponent(()=>import('./modules/sysmgr/oplog/logTemplateList'))
+const LogType=AsyncComponent(()=>import('./modules/sysmgr/oplog/logType'))
 
 /* 代办 */
-const MyTodoTask=AsyncComponent(()=>import('./modules/sys/todotask/myTodoTask'))
-const TaskList=AsyncComponent(()=>import('./modules/sys/todotask/taskList'))
-const TodoTemp=AsyncComponent(()=>import('./modules/sys/todotask/todoTemp'))
-const TodoType=AsyncComponent(()=>import('./modules/sys/todotask/todoType'))
+const MyTodoTask=AsyncComponent(()=>import('./modules/sysmgr/todotask/myTodoTask'))
+const TaskList=AsyncComponent(()=>import('./modules/sysmgr/todotask/taskList'))
+const TodoTemp=AsyncComponent(()=>import('./modules/sysmgr/todotask/todoTemp'))
+const TodoType=AsyncComponent(()=>import('./modules/sysmgr/todotask/todoType'))
 
 /*
     licence管理
  */
-const ProductUser=AsyncComponent(()=>import('./modules/sys/licence/productUser'))
-const Version=AsyncComponent(()=>import('./modules/sys/licence/version'))
+const ProductUser=AsyncComponent(()=>import('./modules/sysmgr/licence/productUser'))
+const Version=AsyncComponent(()=>import('./modules/sysmgr/licence/version'))
 
-const UserList=AsyncComponent(()=>import('./modules/sys/user/list'))
-const UserDirectory=AsyncComponent(()=>import('./modules/sys/user/directory'))
-const Org=AsyncComponent(()=>import('./modules/sys/user/org'))
-const UserGroup=AsyncComponent(()=>import('./modules/sys/user/group'))
-const UserGroupTrue=AsyncComponent(()=>import('./modules/sys/user/groupture'))
-const DomainUser=AsyncComponent(()=>import('./modules/sys/user/domainUser'))
+const UserList=AsyncComponent(()=>import('./modules/sysmgr/user/list'))
+const UserDirectory=AsyncComponent(()=>import('./modules/sysmgr/user/directory'))
+const Org=AsyncComponent(()=>import('./modules/sysmgr/user/org'))
+const UserGroup=AsyncComponent(()=>import('./modules/sysmgr/user/group'))
+const UserGroupTrue=AsyncComponent(()=>import('./modules/sysmgr/user/groupture'))
+const DomainUser=AsyncComponent(()=>import('./modules/sysmgr/user/domainUser'))
 
 const routers = [
     {
@@ -154,18 +155,23 @@ const routers = [
                 component:Storehouse,
             },
             {
-                path:'/index/group',
-                exact:true,
-                component:StorehouseGroup,
-            },
-            {
                 path:'/index/ide/*',
                 component:WEBIDE,
             },
             {
+                path:'/index/group',
+                exact:true,
+                component:Group,
+            },
+            {
                 path:'/index/house/:namespace/:name',
-                component:StorehouseDetails,
+                component:RepositoryDetails,
                 routes:[
+                    {
+                        path:'/index/house/:namespace/:name',
+                        exact: true,
+                        component:Code,
+                    },
                     {
                         path:'/index/house/:namespace/:name/tree',
                         exact: true,
@@ -222,11 +228,11 @@ const routers = [
                     },
                     {
                         path:'/index/house/:namespace/:name/sys',
-                        component: HouseDetailsSet,
+                        component: RepositoryDetailsSet,
                         routes:[
                             {
                                 path:'/index/house/:namespace/:name/sys/set',
-                                component:HouseSetting
+                                component:RepositoryBasic
                             },
                             {
                                 path:'/index/house/:namespace/:name/sys/pushRule',
@@ -258,7 +264,7 @@ const routers = [
             },
             {
                 path:'/index/group/:name',
-                component: HouseGroupDetails,
+                component: GroupDetails,
                 routes: [
                     {
                         path:'/index/group/:name/survey',
@@ -272,7 +278,7 @@ const routers = [
                     },
                     {
                         path:'/index/group/:name/house',
-                        component: GroupHouse,
+                        component: GroupRepository,
                         exact: true,
                     },
                     {

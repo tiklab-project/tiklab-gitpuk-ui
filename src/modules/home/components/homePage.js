@@ -8,10 +8,10 @@ import './homePage.scss';
 
 const HomePage = props =>{
 
-    const {houseStore,houseGroupStore} = props
+    const {repositoryStore,groupStore} = props
 
-    const {findUserCode} = houseStore
-    const {findUserGroup} = houseGroupStore
+    const {findUserCode} = repositoryStore
+    const {findUserGroup} = groupStore
 
     const [codeNum,setCodeNum] = useState(0)
     const [groupNum,setGroupNum] = useState(0)
@@ -122,4 +122,4 @@ const HomePage = props =>{
     )
 }
 
-export default inject('houseStore','houseGroupStore')(observer(HomePage))
+export default inject('repositoryStore','groupStore')(observer(HomePage))

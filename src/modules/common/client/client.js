@@ -43,13 +43,26 @@ export const interceptUrl = (url,data) =>{
 }
 
 // 非法字符效验
-export const Validation = name =>{
-    // return {
-    //     pattern: /^[\u4e00-\u9fa5a-zA-Z0-9_-]{0,}$/,
-    //     message: `${name}不能包含非法字符，如&,%，&，#……等`,
-    // }
-    return {
-        pattern:/^[^\s]*$/,
-        message:`${name}不能包含空格`
+export const Validation = (name,type) =>{
+
+    if(type==='blank'){
+        return {
+            pattern:/^[^\s]*$/,
+            message:`${name}不能包含空格`
+        }
     }
+
+    if(type==='appoint'){
+        return {
+            pattern: /^[a-zA-Z0-9_]([a-zA-Z0-9_\-.])*$/,
+            message: `只能包含字母和数字、 '_'、 '.'和'-'，且只能以字母、数字或'_'开头`,
+        }
+    }
+
+    return {
+        pattern: /^[\u4e00-\u9fa5a-zA-Z0-9_-]{0,}$/,
+        message: `${name}不能包含非法字符，如&,%，&，#……等`,
+    }
+
+
 }

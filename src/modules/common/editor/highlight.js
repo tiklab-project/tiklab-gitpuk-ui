@@ -9,7 +9,10 @@ const languages = fileType => {
         case 'sh':
             return 'shell'
         case 'ts':
+        case 'tsx':
             return 'typescript'
+        case 'js':
+            return 'javascript'
         case 'gitignore':
             return 'plainText'
         default:
@@ -29,7 +32,7 @@ const Highlighter = props => {
             ignoreUnescapedHTML: true
         })
         // 获取到内容中所有的code标签
-        const codes = document.querySelectorAll('.diff-code-insert')
+        const codes = document.querySelectorAll('.diff-hi-lite')
 
         codes.forEach((el) => {
             // 让code进行高亮
@@ -39,7 +42,7 @@ const Highlighter = props => {
 
 
     return (
-        <td className={`diff-line-code diff-code-insert language-${languages(language)}`}>
+        <td className={`diff-line-code diff-hi-lite language-${languages(language)} language-plainText`}>
             {code?code:' '}
         </td>
     )

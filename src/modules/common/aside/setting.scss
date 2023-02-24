@@ -6,15 +6,19 @@
         height: 100%;
         width: 180px;
         background: var(--xcode-backdrop-color);
+        .xcode-setting-aside-head{
+            height: 40px;
+            line-height: 40px;
+            width: 100%;
+            padding: 0 20px;
+            font-weight: var(--tiklab-font-weight-bold);
+            border-bottom: 1px solid #ececec;
+        }
         .setting-aside-item{
-            padding: 8px 12px;
+            padding: 8px 20px;
             cursor: pointer;
             &:hover{
                 background: var(--tiklab-gray-300);
-            }
-            .setting-aside-item-icon{
-                padding-right: 10px;
-                font-size: 16px;
             }
         }
         .setting-aside-select{

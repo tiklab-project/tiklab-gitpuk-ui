@@ -1,0 +1,57 @@
+.repository-power{
+    padding-bottom: var(--tiklab-padding);
+    .repository-power-title{
+        padding: 0 0 8px;
+    }
+    .repository-power-content{
+        display: flex;
+    }
+    .repository-power-item{
+        height: 150px;
+        background: #ffffff;
+        padding: 10px;
+        cursor: pointer;
+        border-radius: 4px;
+        border: 1px solid #d9d9d9;
+        &:first-child{
+            margin-right: 15px;
+        }
+        .power-item{
+            display: flex;
+            justify-content: space-between;
+        }
+        .power-title{
+            font-size: 16px;
+        }
+        .power-desc{
+            padding-top: 20px;
+        }
+        .power-select-show{
+            width: 13px;
+            height: 13px;
+            background: var(--tiklab-blue);
+            border-radius: 50px;
+            position: relative;
+            &:after{
+                position: absolute;
+                content: "";
+                width: 23px;
+                height: 23px;
+                top: -5px;
+                left: -5px;
+                border: 3px solid var(--tiklab-blue);
+                border-radius: 50px;
+            }
+        }
+    }
+    .repository-power-set{
+        max-width: 300px;
+        width: 300px;
+    }
+    .repository-power-noSet{
+        flex: 1;
+    }
+    .repository-power-select{
+        border: 2px solid var(--tiklab-blue) !important;
+    }
+}

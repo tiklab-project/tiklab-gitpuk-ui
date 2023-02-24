@@ -1,7 +1,6 @@
 import React,{useEffect,useState} from 'react'
 import {renderRoutes} from 'react-router-config'
 import {useTranslation} from 'react-i18next'
-import {SettingOutlined} from '@ant-design/icons'
 import {PrivilegeProjectButton} from 'tiklab-privilege-ui'
 import './setting.scss'
 
@@ -18,13 +17,10 @@ const Setting = props =>{
     },[path])
 
     const navContent = item =>{
-        return  <div
-                    key={item.to}
-                    className={`setting-aside-item ${nav===item.to?'setting-aside-select':''} `}
-                    onClick={()=>props.history.push(item.to)}
-                >
-                    <span className='setting-aside-item-icon'><SettingOutlined/></span>
-                    <span className='setting-aside-item-title'>{t(item.title)}</span>
+        return  <div key={item.to}
+                     className={`setting-aside-item ${nav===item.to?'setting-aside-select':''} `}
+                     onClick={()=>props.history.push(item.to)}
+                ><span className='setting-aside-item-title'>{t(item.title)}</span>
                 </div>
     }
 
@@ -37,6 +33,7 @@ const Setting = props =>{
     return (
         <div className='xcode-setting'>
             <div className='xcode-setting-aside'>
+                <div className='xcode-setting-aside-head'>设置</div>
                 {
                     secondRouter.map(item=>navContent(item))
                 }

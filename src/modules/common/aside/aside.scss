@@ -20,19 +20,18 @@
         .scrum-aside_chang{
             display: flex;
             align-items: center;
-            padding: 0 12px;
+            padding: 0 20px;
             height: 50px;
             cursor: pointer;
             .dropdowns_name{
                 overflow: hidden;
                 text-overflow: ellipsis;
                 display: inline-block;
-                width: calc(100% - 55px);
-                padding:0 5px;
+                width: calc(100% - 50px);
             }
         }
         .scrum-aside-item{
-            padding: 8px 12px;
+            padding: 8px 20px;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -58,17 +57,17 @@
             border-left: 3px solid var(--tiklab-blue);
         }
     }
-    .nomal-aside{
+    .normal-aside{
         display: flex;
         flex-direction: column;
         flex-shrink: 0;
         width: 80px;
         height: 100%;
         background: var(--xcode-sider-color);
-        .nomal-aside-up{
+        .normal-aside-up{
             flex: 1;
         }
-        .nomal-aside_chang{
+        .normal-aside_chang{
             display: flex;
             align-items: center;
             justify-content: center;
@@ -76,7 +75,7 @@
             height: 50px;
             cursor: pointer;
         }
-        .nomal-aside-item{
+        .normal-aside-item{
             cursor: pointer;
             display: flex;
             height: 50px;
@@ -91,17 +90,17 @@
                 margin-bottom: 5px;
             }
         }
-        .nomal-aside-select{
+        .normal-aside-select{
             background: var(--tiklab-gray-400);
             border-left: 3px solid var(--tiklab-blue);
         }
-        .nomal-aside-sys{
+        .normal-aside-sys{
             width: 100%;
             text-align: center;
             padding: 10px 0;
             cursor: pointer;
         }
-        .nomal-aside_content_icon{
+        .normal-aside_content_icon{
             font-size: var(--tiklab-icon-size-16);
         }
     }
@@ -113,7 +112,7 @@
     box-shadow: 0 4px 8px -2px #091e4240, 0 0 1px #091e424f;
     border-radius: 4px ;
     background-color: #ffffff;
-    &-nomal{
+    &-normal{
         left: 80px !important;
     }
     &-scrum{

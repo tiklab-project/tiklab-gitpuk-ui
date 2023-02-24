@@ -1,19 +1,19 @@
 import {EAM_STORE,EamStore} from 'tiklab-eam-ui/es/store'
 import {SLATE_STORE,SlateStore} from 'tiklab-slate-ui/es/dist'
-import {HOUSE_STORE,HouseStore} from './modules/house/store/houseStore'
-import {CODE_STORE,CodeStore} from './modules/houseDetails/code/store/codeStore'
-import {HOUSEGRROUP_STORE,HouseGroupStore} from './modules/houseGroup/store/houseGroupStore'
-import {BRANCH_STORE,BranchStore} from './modules/houseDetails/branch/store/branchStore'
-import {COMMITS_STORE,CommitsStore} from './modules/houseDetails/commits/store/commitsStore'
-import {KEY_STORE,KeyStore} from './modules/sys/keys/store/keyStore'
+import {REPOSITORY_STORE,RepositoryStore} from './modules/repository/store/repositoryStore'
+import {CODE_STORE,CodeStore} from './modules/repositoryDetails/code/store/codeStore'
+import {GROUP_STORE,GroupStore} from './modules/group/store/groupStore'
+import {BRANCH_STORE,BranchStore} from './modules/repositoryDetails/branch/store/branchStore'
+import {COMMITS_STORE,CommitsStore} from './modules/repositoryDetails/commits/store/commitsStore'
+import {KEY_STORE,KeyStore} from './modules/sysmgr/keys/store/keyStore'
 
 import {createContext} from 'react'
 
 function createStores() {
     return{
-        [HOUSE_STORE]:new HouseStore(),
+        [REPOSITORY_STORE]:new RepositoryStore(),
         [CODE_STORE]:new CodeStore(),
-        [HOUSEGRROUP_STORE]:new HouseGroupStore(),
+        [GROUP_STORE]:new GroupStore(),
         [BRANCH_STORE]:new BranchStore(),
         [COMMITS_STORE]:new CommitsStore(),
         [KEY_STORE]:new KeyStore(),
