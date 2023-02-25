@@ -1,14 +1,14 @@
-import React,{useEffect,useState} from 'react'
-import {Drawer,Space,Tooltip} from 'antd'
+import React,{useEffect,useState} from 'react';
+import {Drawer,Space,Tooltip} from 'antd';
 import {
     BellOutlined,
     LoadingOutlined,
     CloseOutlined,
     MessageOutlined,
     DeleteOutlined
-} from '@ant-design/icons'
-import EmptyText from '../../common/emptyText/emptyText'
-import './messageDrawer.scss'
+} from '@ant-design/icons';
+import EmptyText from '../../common/emptyText/emptyText';
+import './messageDrawer.scss';
 
 const MessageDrawer = props =>{
 

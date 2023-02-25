@@ -1,14 +1,12 @@
-import {action, observable} from 'mobx'
-
+import {action, observable} from 'mobx';
 import {
     CreateAuth,
     DeleteAuth,
     FindUserAuth,
     FindOneAuth
-} from '../api/keys'
-
-import {message} from 'antd'
-import {getUser} from 'tiklab-core-ui'
+} from '../api/keys';
+import {message} from 'antd';
+import {getUser} from 'tiklab-core-ui';
 
 export class KeyStore{
 

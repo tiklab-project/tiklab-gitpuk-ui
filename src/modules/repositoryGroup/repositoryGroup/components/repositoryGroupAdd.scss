@@ -1,0 +1,24 @@
+.repository-group-add{
+    height: 100%;
+    overflow: auto;
+    .repository-group-add-content{
+        max-width: 900px;
+        margin: auto;
+        padding: 20px;
+        .repository-group-add-top{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--tiklab-padding-item);
+            .repository-group-add-top-title{
+                font-size: 15px;
+                font-weight: var(--tiklab-font-weight-bold);
+            }
+            .repository-group-add-top-leadingIn .leadingIn{
+                color: var(--tiklab-blue);
+                cursor: pointer;
+            }
+        }
+    }
+}
+

@@ -1,9 +1,9 @@
-import {serviceLoc} from '../../../../common/utils/requset'
+import {serviceLoc} from '../../../../common/utils/requset';
 
 export function CreateAuth(data) {
     return serviceLoc.request({
         method:'post',
-        url:'/codeAuth/createAuth',
+        url:'/auth/createAuth',
         data
     })
 }
@@ -11,7 +11,7 @@ export function CreateAuth(data) {
 export function DeleteAuth(data) {
     return serviceLoc.request({
         method:'post',
-        url:'/codeAuth/deleteAuth',
+        url:'/auth/deleteAuth',
         data
     })
 }
@@ -19,7 +19,7 @@ export function DeleteAuth(data) {
 export function FindUserAuth(data) {
     return serviceLoc.request({
         method:'post',
-        url:'/codeAuth/findUserAuth',
+        url:'/auth/findUserAuth',
         data
     })
 }
@@ -27,7 +27,7 @@ export function FindUserAuth(data) {
 export function FindOneAuth(data) {
     return serviceLoc.request({
         method:'post',
-        url:'/codeAuth/findOneAuth',
+        url:'/auth/findOneAuth',
         data
     })
 }

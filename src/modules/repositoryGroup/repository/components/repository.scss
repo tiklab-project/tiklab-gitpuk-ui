@@ -1,0 +1,38 @@
+.group-repository{
+    &-head{
+        margin: var(--tiklab-padding-item) 0 ;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        .head-left{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            .head-left-icon{
+                margin-right: 8px;
+            }
+            .head-left-desc{
+                .desc-name{
+                    font-weight: var(--tiklab-font-weight-bold);
+                    &:hover{
+                        text-decoration: underline;
+                    }
+                }
+                .desc-lock{
+                    padding: 0 8px;
+                }
+                .desc-type{
+                    display: inline-block;
+                    color: #707070;
+                    font-size: 12px;
+                    line-height: 20px;
+                    padding: 0 7px;
+                    border: 1px solid #e5e5e5;
+                    border-radius: 100px;
+                    font-weight: 400;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,50 @@
+.repository-add{
+    height: 100%;
+    overflow: auto;
+    .repository-add-content{
+        max-width: 900px;
+        margin: auto;
+        padding: 20px;
+        .repository-add-top{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--tiklab-padding-item);
+            .repository-add-top-title{
+                font-size: 15px;
+                font-weight: var(--tiklab-font-weight-bold);
+            }
+            .repository-add-top-leadingIn .leadingIn{
+                color: var(--tiklab-blue);
+                cursor: pointer;
+            }
+        }
+        .repository-add-bottom{
+            .repository-add-path{
+                display: flex;
+                .path-tips{
+                    flex: 1;
+                    .ant-form-item-label,.ant-form-item-explain{
+                        margin-left: -336px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.repository-add-user-drop{
+    box-shadow: 0 4px 8px -2px #091e4240, 0 0 1px #091e424f;
+    border-radius: 4px;
+    background: #ffffff;
+    padding: 15px;
+    .repository-user-add-table{
+        max-height: 220px;
+        overflow: auto;
+    }
+    .repository-user-add-btn{
+        padding-top: 10px;
+        text-align: right;
+    }
+}
+

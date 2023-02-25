@@ -1,30 +1,23 @@
-import React,{useEffect,useState} from 'react'
-import {Space} from 'antd'
-import {AimOutlined,HistoryOutlined} from '@ant-design/icons'
-import {inject,observer} from 'mobx-react'
-import Guide from '../../common/guide/guide'
-import EmptyText from '../../common/emptyText/emptyText'
+import React,{useEffect,useState} from 'react';
+import {Space} from 'antd';
+import {AimOutlined,HistoryOutlined} from '@ant-design/icons';
+import {inject,observer} from 'mobx-react';
+import Guide from '../../common/guide/guide';
+import EmptyText from '../../common/emptyText/emptyText';
 import './homePage.scss';
 
 const HomePage = props =>{
 
     const {repositoryStore,groupStore} = props
 
-    const {findUserCode} = repositoryStore
-    const {findUserGroup} = groupStore
-
-    const [codeNum,setCodeNum] = useState(0)
-    const [groupNum,setGroupNum] = useState(0)
+    const {findUserRpy,repositoryList} = repositoryStore
+    const {findUserGroup,groupList} = groupStore
 
     useEffect(()=>{
         // 仓库
-        findUserCode().then(res=>{
-            res.code===0 && setCodeNum(res.data && res.data.length)
-        })
+        findUserRpy()
         // 仓库组
-        findUserGroup().then(res=>{
-            res.code===0 && setGroupNum(res.data && res.data.length)
-        })
+        findUserGroup()
     },[])
 
     // 最近访问的仓库
@@ -65,14 +58,14 @@ const HomePage = props =>{
             id:1,
             title: '我的仓库',
             icon:'#icon-renwu',
-            listLength:codeNum,
+            listLength:repositoryList && repositoryList.length,
             to:'/index/house'
         },
         {
             id:2,
             title:'我的仓库组',
             icon:'#icon-icon-test',
-            listLength: groupNum,
+            listLength: groupList && groupList.length,
             to:'/index/group'
         }
     ]

@@ -1,5 +1,5 @@
-import React from 'react'
-import {TaskList} from 'tiklab-todotask-ui'
+import React from 'react';
+import {TaskList} from 'tiklab-todotask-ui';
 
 /**
  * 待办列表

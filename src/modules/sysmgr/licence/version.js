@@ -1,7 +1,7 @@
-import React from 'react'
-import {Version} from 'tiklab-licence-ui'
-import {Table} from 'antd'
-import {CloseOutlined,CheckOutlined} from '@ant-design/icons'
+import React from 'react';
+import {Version} from 'tiklab-licence-ui';
+import {Table} from 'antd';
+import {CloseOutlined,CheckOutlined} from '@ant-design/icons';
 
 /**
  * 版本与许可证

@@ -1,6 +1,6 @@
-import React from 'react'
-import {verifyUserHoc} from 'tiklab-eam-ui'
-import {connect} from 'tiklab-plugin-ui/es/_utils'
+import React from 'react';
+import {verifyUserHoc} from 'tiklab-eam-ui';
+import {connect} from 'tiklab-plugin-ui/es/_utils';
 import Portal from './portal';
 
 const Home = props => {

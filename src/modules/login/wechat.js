@@ -1,5 +1,5 @@
-import React from 'react'
-import {InternalWechatEntry} from 'tiklab-eam-ui'
+import React from 'react';
+import {InternalWechatEntry} from 'tiklab-eam-ui';
 
 const Wechat = props =>{
 

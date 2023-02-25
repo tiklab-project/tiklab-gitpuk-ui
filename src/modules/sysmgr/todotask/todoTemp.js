@@ -1,5 +1,5 @@
-import React from 'react'
-import {TodoTempList} from 'tiklab-todotask-ui'
+import React from 'react';
+import {TodoTempList} from 'tiklab-todotask-ui';
 
 /**
  * 待办模板

@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 const Nav = React.forwardRef(({...props}, ref) => (
             <span {...props} ref={ref}/>

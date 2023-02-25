@@ -1,6 +1,6 @@
-import React from 'react'
-import {Input} from 'antd'
-import BreadcrumbContent from '../../../common/breadcrumb/breadcrumb'
+import React from 'react';
+import {Input} from 'antd';
+import BreadcrumbContent from '../../../common/breadcrumb/breadcrumb';
 
 const KeysDetail = props =>{
 

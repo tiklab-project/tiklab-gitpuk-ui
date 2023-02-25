@@ -1,13 +1,13 @@
-import React,{useState,useEffect} from 'react'
+import React,{useState,useEffect} from 'react';
 import {Table,Tooltip,Popconfirm} from 'antd';
-import {PlusOutlined,DeleteOutlined,EyeOutlined} from '@ant-design/icons'
-import {inject,observer} from 'mobx-react'
-import BreadcrumbContent from '../../../common/breadcrumb/breadcrumb'
-import Btn from '../../../common/btn/btn'
-import EmptyText from '../../../common/emptyText/emptyText'
-import KeysAdd from '../components/keysAdd'
-import KeysDetail from '../components/keysDetail'
-import '../components/keys.scss'
+import {PlusOutlined,DeleteOutlined,EyeOutlined} from '@ant-design/icons';
+import {inject,observer} from 'mobx-react';
+import BreadcrumbContent from '../../../common/breadcrumb/breadcrumb';
+import Btn from '../../../common/btn/btn';
+import EmptyText from '../../../common/emptyText/emptyText';
+import KeysAdd from '../components/keysAdd';
+import KeysDetail from '../components/keysDetail';
+import '../components/keys.scss';
 
 const Keys = props => {
 

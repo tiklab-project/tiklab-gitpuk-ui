@@ -1,7 +1,7 @@
 {
     "Home": "首页",
-    "Storehouse": "仓库",
-    "Storehouse_group": "仓库组",
+    "Repository": "仓库",
+    "Repository_group": "仓库组",
     "Code":"代码",
     "Commits": "提交",
     "Branch": "分支",

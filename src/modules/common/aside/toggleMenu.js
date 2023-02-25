@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react'
+import React,{useEffect} from 'react';
 
 const ToggleMenu = props =>{
 
@@ -21,9 +21,9 @@ const ToggleMenu = props =>{
                     break
                 case 'house':
                     item.codeGroup ?
-                        props.history.push(`/index/house/${item.codeGroup.name}/${item.name}/tree`)
+                        props.history.push(`/index/repository/${item.codeGroup.name}/${item.name}/tree`)
                         :
-                        props.history.push(`/index/house/${item.user.name}/${item.name}/tree`)
+                        props.history.push(`/index/repository/${item.user.name}/${item.name}/tree`)
             }
             setIsLoading(true)
             timeout = setTimeout(()=>setIsLoading(false),150)

@@ -1,5 +1,5 @@
-import React from 'react'
-import {LogTypeList} from 'tiklab-oplog-ui'
+import React from 'react';
+import {LogTypeList} from 'tiklab-oplog-ui';
 
 /**
  * 日志类型

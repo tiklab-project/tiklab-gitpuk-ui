@@ -1,5 +1,5 @@
-import React from 'react'
-import {MessageManagement} from 'tiklab-message-ui'
+import React from 'react';
+import {MessageManagement} from 'tiklab-message-ui';
 
 /**
  * 消息管理

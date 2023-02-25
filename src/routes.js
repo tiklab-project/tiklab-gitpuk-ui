@@ -10,72 +10,59 @@ const Wechat=AsyncComponent(()=>import('./modules/login/wechat'))
 const NoProductAuthUser=AsyncComponent(()=>import('./modules/login/noProductAuthUser'))
 const NotFound=AsyncComponent(()=>import('./modules/login/404'))
 
-/*
-    首页
+/**
+ * 首页
  */
 const Homepage=AsyncComponent(()=>import('./modules/home/components/homePage'))
 
-/*
-    仓库
- */
-const Storehouse=AsyncComponent(()=>import('./modules/repository/container/repository'))
-
 const WEBIDE=AsyncComponent(()=>import('./modules/WEBIDE/container/webIde'))
 
-/*
-    仓库详情
+/**
+ * 仓库
  */
-const RepositoryDetails=AsyncComponent(()=>import('./modules/repositoryDetails/repositoryDetails/repositoryDetails'))
-const Code=AsyncComponent(()=>import('./modules/repositoryDetails/code/container/code'))
-const Blob=AsyncComponent(()=>import('./modules/repositoryDetails/code/components/blob'))
-const Edit=AsyncComponent(()=>import('./modules/repositoryDetails/code/components/edit'))
-const Branch=AsyncComponent(()=>import('./modules/repositoryDetails/branch/container/branch'))
-const Tag=AsyncComponent(()=>import('./modules/repositoryDetails/tag/container/tag'))
-const HouseMerge=AsyncComponent(()=>import('./modules/repositoryDetails/merge/merge'))
-const Commits=AsyncComponent(()=>import('./modules/repositoryDetails/commits/container/commits'))
-const CommitsDetails=AsyncComponent(()=>import('./modules/repositoryDetails/commits/components/commitsDetails'))
-const Issue=AsyncComponent(()=>import('./modules/repositoryDetails/issue/container/issue'))
-const Pipeline=AsyncComponent(()=>import('./modules/repositoryDetails/pipeline/container/pipeline'))
-const Statistics=AsyncComponent(()=>import('./modules/repositoryDetails/statistics/container/statistics'))
+const Repository=AsyncComponent(()=>import('./modules/repository/repository/container/repository'))
+const RepositoryAdd=AsyncComponent(()=>import('./modules/repository/repository/components/repositoryAdd'))
+const RepositoryDetails=AsyncComponent(()=>import('./modules/repository/common/repositoryDetails'))
+const Code=AsyncComponent(()=>import('./modules/repository/code/container/code'))
+const Blob=AsyncComponent(()=>import('./modules/repository/code/components/blob'))
+const Edit=AsyncComponent(()=>import('./modules/repository/code/components/edit'))
+const Branch=AsyncComponent(()=>import('./modules/repository/branch/container/branch'))
+const Tag=AsyncComponent(()=>import('./modules/repository/tag/container/tag'))
+const RepositoryMerge=AsyncComponent(()=>import('./modules/repository/merge/merge'))
+const Commits=AsyncComponent(()=>import('./modules/repository/commits/container/commits'))
+const CommitsDetails=AsyncComponent(()=>import('./modules/repository/commits/components/commitsDetails'))
+const Issue=AsyncComponent(()=>import('./modules/repository/issue/container/issue'))
+const Pipeline=AsyncComponent(()=>import('./modules/repository/pipeline/container/pipeline'))
+const Statistics=AsyncComponent(()=>import('./modules/repository/statistics/container/statistics'))
+const RepositoryDetailsSet=AsyncComponent(()=>import('./modules/repositorySet/common/repositorySet'))
+const RepositoryBasic=AsyncComponent(()=>import('./modules/repositorySet/basicInfo/repositoryBasic'))
+const PushRule=AsyncComponent(()=>import('./modules/repositorySet/pushRule/container/pushRule'))
+const AccessKeys=AsyncComponent(()=>import('./modules/repositorySet/accessKeys/container/accessKeys'))
+const WebHooks=AsyncComponent(()=>import('./modules/repositorySet/webHooks/container/hooks'))
 
-/*
-    仓库设置
+/**
+ * 仓库组
  */
-const RepositoryDetailsSet=AsyncComponent(()=>import('./modules/repositoryDetailsSet/repositoryDetailsSet/repositoryDetailsSet'))
-const RepositoryBasic=AsyncComponent(()=>import('./modules/repositoryDetailsSet/basic/repositoryBasic'))
-const PushRule=AsyncComponent(()=>import('./modules/repositoryDetailsSet/pushRule/container/pushRule'))
-const AccessKeys=AsyncComponent(()=>import('./modules/repositoryDetailsSet/accessKeys/container/accessKeys'))
-const WebHooks=AsyncComponent(()=>import('./modules/repositoryDetailsSet/webHooks/container/hooks'))
+const RepositoryGroup=AsyncComponent(()=>import('./modules/repositoryGroup/repositoryGroup/container/repositoryGroup'))
+const RepositoryGroupAdd=AsyncComponent(()=>import('./modules/repositoryGroup/repositoryGroup/components/repositoryGroupAdd'))
+const RepositoryGroupDetails=AsyncComponent(()=>import('./modules/repositoryGroup/common/repositoryGroupDetails'))
+const Survey=AsyncComponent(()=>import('./modules/repositoryGroup/survey/container/survey'))
+const GroupMerge=AsyncComponent(()=>import('./modules/repositoryGroup/merge/merge'))
+const GroupRepository=AsyncComponent(()=>import('./modules/repositoryGroup/repository/container/repository'))
+const GroupDetailsSet=AsyncComponent(()=>import('./modules/repositoryGroupSet/common/repositoryGroupSet'))
+const GroupBasic=AsyncComponent(()=>import('./modules/repositoryGroupSet/basicInfo/groupBasic'))
 
-
-/*
-     仓库组
+/**
+ * 系统设置
  */
-const Group=AsyncComponent(()=>import('./modules/group/container/group'))
-
-/*
-    仓库组详情
- */
-const GroupDetails=AsyncComponent(()=>import('./modules/groupDetails/groupDetails/groupDetails'))
-const Survey=AsyncComponent(()=>import('./modules/groupDetails/survey/container/survey'))
-const GroupMerge=AsyncComponent(()=>import('./modules/groupDetails/merge/merge'))
-const GroupRepository=AsyncComponent(()=>import('./modules/groupDetails/repository/container/repository'))
-
-/*
-    仓库组详情设置
- */
-const GroupDetailsSet=AsyncComponent(()=>import('./modules/groupDetailsSet/common/groupDetailsSet'))
-const GroupSetting=AsyncComponent(()=>import('./modules/groupDetailsSet/setting/groupSetting'))
-
-/* 系统设置 */
-const sys=AsyncComponent(()=>import('./modules/sysmgr/common/system'))
+const sys=AsyncComponent(()=>import('./modules/sysmgr/sysmgr/system'))
 
 const Keys_sys=AsyncComponent(()=>import('./modules/sysmgr/keys/container/keys'))
 
-/* 插件 */
-const Plugin=AsyncComponent(()=>import('./modules/sysmgr/plug-in/plugin'))
+// plugin
+const Plugin=AsyncComponent(()=>import('./modules/sysmgr/plugins/plugin'))
 
-/* 权限 */
+// privilege
 const sysFeature=AsyncComponent(()=>import('./modules/sysmgr/privilege/systemFeature'))
 const sysRole=AsyncComponent(()=>import('./modules/sysmgr/privilege/systemRole'))
 const sysRoleTrue=AsyncComponent(()=>import('./modules/sysmgr/privilege/systemRoleTrue'))
@@ -84,7 +71,7 @@ const ProjectFeature=AsyncComponent(()=>import('./modules/sysmgr/privilege/proje
 const DomainRole=AsyncComponent(()=>import('./modules/sysmgr/privilege/domainRole'))
 const ProductAuth=AsyncComponent(()=>import('./modules/sysmgr/privilege/productAuth'))
 
-/* 消息 */
+// message
 const MessageManagement=AsyncComponent(()=>import('./modules/sysmgr/message/messageManagement'))
 const MessageType=AsyncComponent(()=>import('./modules/sysmgr/message/messageType'))
 const MessageSendType=AsyncComponent(()=>import('./modules/sysmgr/message/messageSendType'))
@@ -92,23 +79,22 @@ const MessageSendTypeTrue=AsyncComponent(()=>import('./modules/sysmgr/message/me
 const MessageNotice=AsyncComponent(()=>import('./modules/sysmgr/message/messageNotice'))
 const MessageNoticeTrue=AsyncComponent(()=>import('./modules/sysmgr/message/messageNoticeTrue'))
 
-/* 日志 */
+// oplog
 const MyLogList=AsyncComponent(()=>import('./modules/sysmgr/oplog/myLogList'))
 const LogTemplateList=AsyncComponent(()=>import('./modules/sysmgr/oplog/logTemplateList'))
 const LogType=AsyncComponent(()=>import('./modules/sysmgr/oplog/logType'))
 
-/* 代办 */
+// todotask
 const MyTodoTask=AsyncComponent(()=>import('./modules/sysmgr/todotask/myTodoTask'))
 const TaskList=AsyncComponent(()=>import('./modules/sysmgr/todotask/taskList'))
 const TodoTemp=AsyncComponent(()=>import('./modules/sysmgr/todotask/todoTemp'))
 const TodoType=AsyncComponent(()=>import('./modules/sysmgr/todotask/todoType'))
 
-/*
-    licence管理
- */
+// licence
 const ProductUser=AsyncComponent(()=>import('./modules/sysmgr/licence/productUser'))
 const Version=AsyncComponent(()=>import('./modules/sysmgr/licence/version'))
 
+// user
 const UserList=AsyncComponent(()=>import('./modules/sysmgr/user/list'))
 const UserDirectory=AsyncComponent(()=>import('./modules/sysmgr/user/directory'))
 const Org=AsyncComponent(()=>import('./modules/sysmgr/user/org'))
@@ -150,121 +136,131 @@ const routers = [
                 component:Homepage,
             },
             {
-                path:'/index/house',
-                exact:true,
-                component:Storehouse,
-            },
-            {
                 path:'/index/ide/*',
                 component:WEBIDE,
             },
             {
-                path:'/index/group',
+                path:'/index/repository',
                 exact:true,
-                component:Group,
+                component:Repository,
             },
             {
-                path:'/index/house/:namespace/:name',
+                path:'/index/repository/new',
+                exact:true,
+                component:RepositoryAdd,
+            },
+            {
+                path:'/index/group',
+                exact:true,
+                component:RepositoryGroup,
+            },
+            {
+                path:'/index/group/new',
+                exact:true,
+                component:RepositoryGroupAdd,
+            },
+            {
+                path:'/index/repository/:namespace/:name',
                 component:RepositoryDetails,
                 routes:[
                     {
-                        path:'/index/house/:namespace/:name',
+                        path:'/index/repository/:namespace/:name',
                         exact: true,
                         component:Code,
                     },
                     {
-                        path:'/index/house/:namespace/:name/tree',
+                        path:'/index/repository/:namespace/:name/tree',
                         exact: true,
                         component:Code,
                     },
                     {
-                        path:'/index/house/:namespace/:name/tree/:branch',
+                        path:'/index/repository/:namespace/:name/tree/:branch',
                         component:Code,
                     },
                     {
-                        path:'/index/house/:namespace/:name/blob/:branch/*',
+                        path:'/index/repository/:namespace/:name/blob/:branch/*',
                         exact:false,
                         component:Blob,
                     },
                     {
-                        path:'/index/house/:namespace/:name/edit/:branch/*',
+                        path:'/index/repository/:namespace/:name/edit/:branch/*',
                         exact:false,
                         component:Edit,
                     },
                     {
-                        path:'/index/house/:namespace/:name/branch',
+                        path:'/index/repository/:namespace/:name/branch',
                         exact:true,
                         component:Branch,
                     },
                     {
-                        path:'/index/house/:namespace/:name/tag',
+                        path:'/index/repository/:namespace/:name/tag',
                         exact:true,
                         component:Tag,
                     },
                     {
-                        path:'/index/house/:namespace/:name/merge_requests',
+                        path:'/index/repository/:namespace/:name/merge_requests',
                         exact:true,
-                        component:HouseMerge,
+                        component:RepositoryMerge,
                     },
                     {
-                        path:'/index/house/:namespace/:name/commits/:branch',
+                        path:'/index/repository/:namespace/:name/commits/:branch',
                         component:Commits,
                     },
                     {
-                        path:'/index/house/:namespace/:name/commit/:commitsId',
+                        path:'/index/repository/:namespace/:name/commit/:commitsId',
                         component:CommitsDetails,
                     },
                     {
-                        path:'/index/house/:namespace/:name/statistics',
+                        path:'/index/repository/:namespace/:name/statistics',
                         component: Statistics
                     },
                     {
-                        path:'/index/house/:namespace/:name/issue',
+                        path:'/index/repository/:namespace/:name/issue',
                         component: Issue
                     },
                     {
-                        path:'/index/house/:namespace/:name/pipeline',
+                        path:'/index/repository/:namespace/:name/pipeline',
                         component: Pipeline
                     },
                     {
-                        path:'/index/house/:namespace/:name/sys',
+                        path:'/index/repository/:namespace/:name/sys',
                         component: RepositoryDetailsSet,
                         routes:[
                             {
-                                path:'/index/house/:namespace/:name/sys/set',
+                                path:'/index/repository/:namespace/:name/sys/set',
                                 component:RepositoryBasic
                             },
                             {
-                                path:'/index/house/:namespace/:name/sys/pushRule',
+                                path:'/index/repository/:namespace/:name/sys/pushRule',
                                 component:PushRule
                             },
                             {
-                                path:'/index/house/:namespace/:name/sys/keys',
+                                path:'/index/repository/:namespace/:name/sys/keys',
                                 component:AccessKeys
                             },
                             {
-                                path:'/index/house/:namespace/:name/sys/hooks',
+                                path:'/index/repository/:namespace/:name/sys/hooks',
                                 component:WebHooks
                             },
                             {
-                                path:'/index/house/:namespace/:name/sys/member',
+                                path:'/index/repository/:namespace/:name/sys/member',
                                 component: DomainUser
                             },
                             {
-                                path:'/index/house/:namespace/:name/sys/role',
+                                path:'/index/repository/:namespace/:name/sys/role',
                                 component: DomainRole
                             }
                         ]
                     },
                     {
-                        path:'/index/house/:namespace/:name/*',
+                        path:'/index/repository/:namespace/:name/*',
                         render:()=><Redirect to={'/index/404'}/>,
                     }
                 ]
             },
             {
                 path:'/index/group/:name',
-                component: GroupDetails,
+                component: RepositoryGroupDetails,
                 routes: [
                     {
                         path:'/index/group/:name/survey',
@@ -277,7 +273,7 @@ const routers = [
                         exact: true,
                     },
                     {
-                        path:'/index/group/:name/house',
+                        path:'/index/group/:name/repository',
                         component: GroupRepository,
                         exact: true,
                     },
@@ -287,7 +283,7 @@ const routers = [
                         routes:[
                             {
                                 path:'/index/group/:name/sys/set',
-                                component:GroupSetting,
+                                component:GroupBasic,
                                 exact:true
                             },
                             {

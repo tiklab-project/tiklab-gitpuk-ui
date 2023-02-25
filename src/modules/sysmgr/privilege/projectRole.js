@@ -1,5 +1,5 @@
-import React from 'react'
-import {ProjectRoleList} from 'tiklab-privilege-ui'
+import React from 'react';
+import {ProjectRoleList} from 'tiklab-privilege-ui';
 
 /**
  * 项目权限

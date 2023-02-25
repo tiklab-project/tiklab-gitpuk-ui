@@ -1,6 +1,6 @@
-import React from 'react'
-import {Space} from 'antd'
-import './btn.scss'
+import React from 'react';
+import {Space} from 'antd';
+import './btn.scss';
 
 const Btn = props =>{
 

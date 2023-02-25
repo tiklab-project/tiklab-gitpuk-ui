@@ -1,5 +1,5 @@
 import React from 'react';
-import {DomainUserList} from 'tiklab-user-ui'
+import {DomainUserList} from 'tiklab-user-ui';
 
 /**
  * 项目成员

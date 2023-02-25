@@ -44,14 +44,6 @@
                 font-size: 16px;
             }
         }
-        .scrum-aside-sys{
-            width: 100%;
-            padding: 10px 12px;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            cursor: pointer;
-        }
         .scrum-aside-select{
             background: var(--tiklab-gray-400);
             border-left: 3px solid var(--tiklab-blue);
@@ -93,12 +85,6 @@
         .normal-aside-select{
             background: var(--tiklab-gray-400);
             border-left: 3px solid var(--tiklab-blue);
-        }
-        .normal-aside-sys{
-            width: 100%;
-            text-align: center;
-            padding: 10px 0;
-            cursor: pointer;
         }
         .normal-aside_content_icon{
             font-size: var(--tiklab-icon-size-16);

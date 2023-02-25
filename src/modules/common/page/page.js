@@ -1,6 +1,6 @@
-import React from 'react'
-import {LeftOutlined,RightOutlined} from '@ant-design/icons'
-import './page.scss'
+import React from 'react';
+import {LeftOutlined,RightOutlined} from '@ant-design/icons';
+import './page.scss';
 
 const Page = props =>{
 
@@ -13,13 +13,12 @@ const Page = props =>{
                     <RightOutlined/>
                 </span>
             )
-        }else {
-            return (
-                <span className='xcode-page-allow' onClick={()=>changPage(pageCurrent+1)}>
-                    <RightOutlined/>
-                </span>
-            )
         }
+        return (
+            <span className='xcode-page-allow' onClick={()=>changPage(pageCurrent+1)}>
+                <RightOutlined/>
+            </span>
+        )
     }
 
     return <div className='xcode-page'>

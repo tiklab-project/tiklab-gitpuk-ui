@@ -1,8 +1,8 @@
-import React,{useState,useEffect} from 'react'
-import {Dropdown,Badge} from 'antd'
-import {useTranslation} from 'react-i18next'
-import {Profile,WorkAppConfig} from 'tiklab-eam-ui'
-import {getUser} from 'tiklab-core-ui'
+import React,{useState,useEffect} from 'react';
+import {Dropdown,Badge} from 'antd';
+import {useTranslation} from 'react-i18next';
+import {Profile,WorkAppConfig} from 'tiklab-eam-ui';
+import {getUser} from 'tiklab-core-ui';
 import {
     GlobalOutlined,
     BellOutlined,
@@ -14,9 +14,9 @@ import {
     ScheduleOutlined,
     WhatsAppOutlined,
 } from '@ant-design/icons'
-import {inject,observer} from 'mobx-react'
-import logo from '../../../assets/images/img/matflow3.png'
-import MessageDrawer from './messageDrawer'
+import {inject,observer} from 'mobx-react';
+import logo from '../../../assets/images/img/matflow3.png';
+import MessageDrawer from './messageDrawer';
 
 const Head = props =>{
 
@@ -26,8 +26,8 @@ const Head = props =>{
     const [visible,setVisible] = useState(false)
 
     useEffect(()=>{
-        if(path.indexOf('/index/house')===0){
-            path='/index/house'
+        if(path.indexOf('/index/repository')===0){
+            path='/index/repository'
         }
         if(path.indexOf('/index/group')===0){
             path='/index/group'
@@ -42,14 +42,14 @@ const Head = props =>{
             title: `${t('Home')}`,
         },
         {
-            key:'house',
-            to:'/index/house',
-            title: `${t('Storehouse')}`,
+            key:'repository',
+            to:'/index/repository',
+            title: `${t('Repository')}`,
         },
         // {
         //     key:'group',
         //     to:'/index/group',
-        //     title: `${t('Storehouse_group')}`,
+        //     title: `${t('Repository_group')}`,
         // },
     ]
 
@@ -148,7 +148,6 @@ const Head = props =>{
                     <img src={logo} alt='logo' />
                 </div>
                 <div className='headers-link'>
-
                     {renderRouter(routers)}
                 </div>
             </div>

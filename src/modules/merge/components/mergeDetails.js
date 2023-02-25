@@ -1,12 +1,12 @@
-import React,{useState,useRef,useEffect} from 'react'
-import {Input} from 'antd'
-import {FolderOutlined} from '@ant-design/icons'
-import {Profile} from 'tiklab-eam-ui'
-import {getUser} from 'tiklab-core-ui'
-import BreadcrumbContent from '../../common/breadcrumb/breadcrumb'
-import Btn from '../../common/btn/btn'
+import React,{useState,useRef,useEffect} from 'react';
+import {Input} from 'antd';
+import {FolderOutlined} from '@ant-design/icons';
+import {Profile} from 'tiklab-eam-ui';
+import {getUser} from 'tiklab-core-ui';
+import BreadcrumbContent from '../../common/breadcrumb/breadcrumb';
+import Btn from '../../common/btn/btn';
 import Tabs from '../../common/tabs/tabs';
-import './mergeDetails.scss'
+import './mergeDetails.scss';
 
 const MergeDetails = props =>{
 

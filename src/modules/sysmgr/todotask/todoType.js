@@ -1,5 +1,5 @@
-import React from 'react'
-import {TodoTypeList} from 'tiklab-todotask-ui'
+import React from 'react';
+import {TodoTypeList} from 'tiklab-todotask-ui';
 
 /**
  * 待办类型

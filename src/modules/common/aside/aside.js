@@ -1,13 +1,13 @@
-import React,{useState,useEffect} from 'react'
-import {renderRoutes} from 'react-router-config'
-import {Dropdown} from 'antd'
-import {CaretDownOutlined, MenuUnfoldOutlined, SettingOutlined} from '@ant-design/icons'
-import {useTranslation} from 'react-i18next'
-import {Loading} from '../loading/loading'
-import {interceptUrl} from '../client/client'
-import {ToggleMenu} from './toggleMenu'
-import Listname from '../list/listname'
-import './aside.scss'
+import React,{useState,useEffect} from 'react';
+import {renderRoutes} from 'react-router-config';
+import {Dropdown} from 'antd';
+import {CaretDownOutlined, MenuUnfoldOutlined, SettingOutlined} from '@ant-design/icons';
+import {useTranslation} from 'react-i18next';
+import {Loading} from '../loading/loading';
+import {interceptUrl} from '../client/client';
+import {ToggleMenu} from './toggleMenu';
+import Listname from '../list/listname';
+import './aside.scss';
 
 const Aside = props => {
 
@@ -29,7 +29,7 @@ const Aside = props => {
     useEffect(()=>{
         let indexPath
         switch (asideType) {
-            case 'house':
+            case 'repository':
                 indexPath = renderType(interceptUrl(path)[5])
                 break
             case 'group':
@@ -39,7 +39,7 @@ const Aside = props => {
     },[path,info])
 
     const renderType = pathType =>{
-        let path = `/index/house/${webUrl}`
+        let path = `/index/repository/${webUrl}`
         if(!pathType){
             return path
         }
@@ -70,11 +70,11 @@ const Aside = props => {
     // 项目设置
     const goSys = () =>{
         switch (asideType) {
-            case 'house':
-                props.history.push(`/index/${asideType}/${webUrl}/sys/set`)
+            case 'repository':
+                props.history.push(`/index/repository/${webUrl}/sys/set`)
                 break
             case 'group':
-                props.history.push(`/index/group/${webUrl}/sys`)
+                props.history.push(`/index/group/${webUrl}/sys/set`)
         }
     }
 
@@ -121,11 +121,11 @@ const Aside = props => {
                     }
                 </div>
 
-                <div className={`${normalOrScrum}-aside-sys`} onClick={()=>goSys()}>
+                <div className={`${normalOrScrum}-aside-item`} onClick={()=>goSys()}>
                     <div className={`${normalOrScrum}-aside-item-icon`}><SettingOutlined/></div>
                     <div className={`${normalOrScrum}-aside-item-title`}>{t('Setting')}</div>
                 </div>
-                <div className={`${normalOrScrum}-aside-sys`} onClick={()=>setMenuFold()}>
+                <div className={`${normalOrScrum}-aside-item`} onClick={()=>setMenuFold()}>
                     <div className={`${normalOrScrum}-aside-item-icon`}><MenuUnfoldOutlined/></div>
                     <div className={`${normalOrScrum}-aside-item-title`}>{t(normalOrScrum==='scrum'?'Collapse':'Expand')}</div>
                 </div>

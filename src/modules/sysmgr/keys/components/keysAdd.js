@@ -1,8 +1,8 @@
-import React,{useState,useEffect} from 'react'
-import {Form,Input,Modal} from 'antd'
-import {CloseOutlined} from '@ant-design/icons'
-import {autoHeight,Validation} from '../../../common/client/client'
-import Btn from '../../../common/btn/btn'
+import React,{useState,useEffect} from 'react';
+import {Form,Input,Modal} from 'antd';
+import {CloseOutlined} from '@ant-design/icons';
+import {autoHeight,Validation} from '../../../common/client/client';
+import Btn from '../../../common/btn/btn';
 
 const KeysAdd = props =>{
 
@@ -23,32 +23,20 @@ const KeysAdd = props =>{
     }
 
     // 添加密钥
-    const onOk = values => {
-        createAuth(values)
-        setAddVisible(false)
+    const onOk = () => {
+        form.validateFields().then((values) => {
+            createAuth(values)
+            setAddVisible(false)
+        })
     }
 
     const modalFooter = (
         <>
-            <Btn
-                onClick={()=>setAddVisible(false)}
-                title={'取消'}
-                isMar={true}
-            />
-            <Btn
-                onClick={() => {
-                    form
-                        .validateFields()
-                        .then((values) => {
-                            form.resetFields()
-                            onOk(values)
-                        })
-                }}
-                title={'确定'}
-                type={'primary'}
-            />
+            <Btn onClick={()=>setAddVisible(false)} title={'取消'} isMar={true}/>
+            <Btn onClick={onOk} title={'确定'} type={'primary'}/>
         </>
     )
+
 
     return (
         <Modal

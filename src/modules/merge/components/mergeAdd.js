@@ -1,8 +1,8 @@
-import React,{useState,useEffect} from 'react'
-import {Modal,Form,Input,Select} from 'antd'
-import {CloseOutlined,ArrowRightOutlined,PlusCircleOutlined} from '@ant-design/icons'
-import {autoHeight} from '../../common/client/client'
-import Btn from '../../common/btn/btn'
+import React,{useState,useEffect} from 'react';
+import {Modal,Form,Input,Select} from 'antd';
+import {CloseOutlined,ArrowRightOutlined,PlusCircleOutlined} from '@ant-design/icons';
+import {autoHeight} from '../../common/client/client';
+import Btn from '../../common/btn/btn';
 
 const MergeAdd = props =>{
 

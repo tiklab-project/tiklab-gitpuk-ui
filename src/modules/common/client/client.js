@@ -1,5 +1,5 @@
-import moment from 'moment'
-import {message} from 'antd'
+import moment from 'moment';
+import {message} from 'antd';
 
 export default {
     moment:moment().format('YYYY-MM-DD HH:mm:ss'), //当前时间
@@ -35,7 +35,7 @@ export const copy = data => {
 // 文件路径截取
 export const interceptUrl = (url,data) =>{
     if(data){
-        return url.split('/index/house/'+data)
+        return url.split('/index/repository/'+data)
     }
     else {
         return url.split('/')

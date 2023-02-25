@@ -1,13 +1,13 @@
-import React,{useEffect,useState} from 'react'
-import {Input,Space,Table} from 'antd'
-import {PlusOutlined,SearchOutlined,PullRequestOutlined} from '@ant-design/icons'
-import BreadcrumbContent from '../../common/breadcrumb/breadcrumb'
-import Btn from '../../common/btn/btn'
-import Tabs from '../../common/tabs/tabs'
-import EmptyText from '../../common/emptyText/emptyText'
-import MergeDetails from '../components/mergeDetails'
-import MergeAdd from '../components/mergeAdd'
-import '../components/merge.scss'
+import React,{useEffect,useState} from 'react';
+import {Input,Space,Table} from 'antd';
+import {PlusOutlined,SearchOutlined,PullRequestOutlined} from '@ant-design/icons';
+import BreadcrumbContent from '../../common/breadcrumb/breadcrumb';
+import Btn from '../../common/btn/btn';
+import Tabs from '../../common/tabs/tabs';
+import EmptyText from '../../common/emptyText/emptyText';
+import MergeDetails from '../components/mergeDetails';
+import MergeAdd from '../components/mergeAdd';
+import '../components/merge.scss';
 
 const Merge = props => {
 

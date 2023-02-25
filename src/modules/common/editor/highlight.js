@@ -1,6 +1,6 @@
-import React,{ useEffect } from 'react'
-import * as hljs from 'highlight.js/lib'
-import 'highlight.js/styles/github.css'
+import React,{ useEffect } from 'react';
+import * as hljs from 'highlight.js/lib';
+import 'highlight.js/styles/github.css';
 
 const languages = fileType => {
     switch (fileType) {

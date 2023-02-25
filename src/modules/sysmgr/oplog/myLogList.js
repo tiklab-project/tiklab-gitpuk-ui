@@ -1,5 +1,5 @@
-import React from 'react'
-import {MyLogList} from 'tiklab-oplog-ui'
+import React from 'react';
+import {MyLogList} from 'tiklab-oplog-ui';
 
 /**
  * 我的日志

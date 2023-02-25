@@ -1,9 +1,9 @@
-import React,{useState} from 'react'
+import React,{useState} from 'react';
 import {
     CaretDownOutlined,
     CaretRightOutlined,
     ExperimentOutlined
-} from '@ant-design/icons'
+} from '@ant-design/icons';
 
 
 const WebIdeTree = props =>{

@@ -1,5 +1,5 @@
-import React from 'react'
-import {Login} from 'tiklab-eam-ui'
+import React from 'react';
+import {Login} from 'tiklab-eam-ui';
 
 const LoginContent = props => {
 

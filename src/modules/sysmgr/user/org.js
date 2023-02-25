@@ -1,5 +1,5 @@
-import React from 'react'
-import {OrgaList} from 'tiklab-user-ui'
+import React from 'react';
+import {OrgaList} from 'tiklab-user-ui';
 
 /**
  * 部门

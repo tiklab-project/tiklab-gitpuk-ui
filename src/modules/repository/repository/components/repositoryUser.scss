@@ -1,0 +1,31 @@
+.repository-add-user{
+    padding-bottom: var(--tiklab-padding-item);
+    .repository-add-user-title{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 8px;
+    }
+    .repository-add-user-table{
+        background: #ffffff;
+        padding: 8px;
+        min-height: 240px;
+    }
+}
+
+.repository-add-user-drop{
+    box-shadow: 0 4px 8px -2px #091e4240, 0 0 1px #091e424f;
+    border-radius: 4px;
+    background: #ffffff;
+    padding: 15px;
+    .repository-user-add-table{
+        max-height: 220px;
+        overflow: auto;
+    }
+    .repository-user-add-btn{
+        padding-top: 10px;
+        text-align: right;
+    }
+}
+
+

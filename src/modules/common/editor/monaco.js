@@ -1,6 +1,6 @@
-import React,{useEffect,useRef,useState} from 'react'
-import * as monaco from 'monaco-editor/esm/vs/editor/editor.api'
-import 'monaco-editor/esm/vs/basic-languages/monaco.contribution'
+import React,{useEffect,useRef,useState} from 'react';
+import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
+import 'monaco-editor/esm/vs/basic-languages/monaco.contribution';
 
 const languages = blobFile => {
     if(blobFile){

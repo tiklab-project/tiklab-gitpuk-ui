@@ -1,5 +1,5 @@
-import React, {useEffect, useRef, useState} from 'react'
-import E from 'wangeditor'
+import React, {useEffect, useRef, useState} from 'react';
+import E from 'wangeditor';
 
 /**
  * 这里用函数式组件

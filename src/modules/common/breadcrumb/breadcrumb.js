@@ -1,9 +1,7 @@
-import React from 'react'
-import {Space} from 'antd'
-import {useTranslation} from 'react-i18next'
-import {LeftOutlined} from '@ant-design/icons'
-import './breadcrumb.scss'
-
+import React from 'react';
+import {useTranslation} from 'react-i18next';
+import {LeftOutlined} from '@ant-design/icons';
+import './breadcrumb.scss';
 
 // 面包屑
 const BreadcrumbContent = props =>{

@@ -1,5 +1,5 @@
-import React from 'react'
-import {SystemFeatureList} from 'tiklab-privilege-ui'
+import React from 'react';
+import {SystemFeatureList} from 'tiklab-privilege-ui';
 
 /**
  * 系统功能管理

@@ -23,12 +23,8 @@ const Guide = props =>{
     return(
         <div className='xcode-guide'>
             <div className='xcode-guide-title'>
-                <span className='xcode-guide-title-icon'>
-                    {icon && icon}
-                </span>
-                <span className='xcode-guide-title-name'>
-                    {title}
-                </span>
+                <span className='xcode-guide-title-icon'>{icon && icon}</span>
+                <span className='xcode-guide-title-name'>{title}</span>
             </div>
             {
                 type &&

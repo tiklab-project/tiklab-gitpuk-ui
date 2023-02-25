@@ -1,7 +1,7 @@
 {
     "Home": "Home",
-    "Storehouse": "Storehouse",
-    "Storehouse_group": "Storehouse_group",
+    "Repository": "Repository",
+    "Repository_group": "Repository_group",
     "Code":"Code",
     "Commits": "Commits",
     "Branch": "Branch",
