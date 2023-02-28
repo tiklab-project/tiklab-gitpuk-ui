@@ -12,11 +12,11 @@ import {observer,Provider} from 'mobx-react';
 import {renderRoutes} from 'react-router-config';
 import {store} from './store';
 import routers from './routes';
-import resources from './common/language/resources';
-import {Loading} from './modules/common/loading/loading';
+import resources from "./common/language/Resources";
+import {Loading} from './common/loading/Loading';
 import './index.scss';
 import './assets/font_icon/iconfont';
-import './common/language/i18n';
+import './common/language/I18n'
 
 enableAxiosCE()
 const Index = observer(() => {

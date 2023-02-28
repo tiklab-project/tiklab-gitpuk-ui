@@ -1,0 +1,88 @@
+import {observable,action} from 'mobx';
+import {
+    FindFileTree,
+    ReadFile,
+    WriteFile,
+    FindCloneAddress,
+    FindLatelyBranchCommit
+} from '../api/File';
+
+import {message} from 'antd';
+
+export class FileStore {
+
+    @observable codeTreeData = []
+    @observable blobFile = ''
+    @observable branch = ''
+    @observable cloneAddress = ''
+    @observable latelyBranchCommit = ''
+
+    @action
+    setBranch = value =>{
+        this.branch = value
+    }
+
+    @action
+    findFileTree = async value =>{
+        const data = await FindFileTree(value)
+        if(data.code===0){
+            this.codeTreeData = data.data && data.data
+        }
+        else {
+            this.codeTreeData = []
+        }
+        data.code===50001 && message.info(data.msg,0.5)
+        return data
+    }
+
+    @action
+    readFile = async value =>{
+        const data = await ReadFile(value)
+        if(data.code===0){
+            this.blobFile = data.data && data.data
+        }
+        else {
+            this.blobFile = ''
+        }
+        return data
+    }
+
+    @action
+    writeFile = async value =>{
+        const data = await WriteFile(value)
+        if(data.code===0){
+            message.info('修改成功',0.5)
+        }
+        return data
+    }
+
+
+    @action
+    findCloneAddress = async value =>{
+        const param = new FormData()
+        param.append('rpyId',value)
+        const data = await FindCloneAddress(param)
+        if(data.code===0){
+            this.cloneAddress = data.data && data.data
+        }
+        else {
+            this.cloneAddress = ''
+        }
+        return data
+    }
+
+    @action
+    findLatelyBranchCommit = async value =>{
+        const data = await FindLatelyBranchCommit(value)
+        if(data.code===0){
+            this.latelyBranchCommit = data.data && data.data
+        }
+        return data
+    }
+
+
+
+}
+
+export const FILE_STORE='fileStore'
+
