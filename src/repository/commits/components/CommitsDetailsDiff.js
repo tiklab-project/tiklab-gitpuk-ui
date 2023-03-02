@@ -3,6 +3,12 @@ import {UpOutlined,DownOutlined} from '@ant-design/icons';
 import Highlighter from '../../../common/editor/Highlight';
 import EmptyText from '../../../common/emptyText/EmptyText';
 
+/**
+ * diff行内容
+ * @param props
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const CommitsDetailsDiff = props => {
 
     const {content,expand} = props

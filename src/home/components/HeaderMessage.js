@@ -8,9 +8,15 @@ import {
     DeleteOutlined
 } from '@ant-design/icons';
 import EmptyText from '../../common/emptyText/EmptyText';
-import './MessageDrawer.scss';
+import './HeaderMessage.scss';
 
-const MessageDrawer = props =>{
+/**
+ * 消息通知
+ * @param props
+ * @returns {JSX.Element}
+ * @constructor
+ */
+const HeaderMessage = props =>{
 
     const {visible,setVisible} = props
 
@@ -18,6 +24,9 @@ const MessageDrawer = props =>{
     const [isLoading,setIsLoading] = useState(false)
     const [selected,setSelected] = useState(2)
 
+    /**
+     * 加载更多消息
+     */
     const moreMessage = () =>{
         setIsLoading(true)
     }
@@ -41,16 +50,51 @@ const MessageDrawer = props =>{
 
     }
 
-    // 判断是否还存在
-    const isPipeline = id =>{
+    /**
+     * 判断仓库组||仓库是否还存在
+     * @param id
+     */
+    const isRepository = id =>{
     }
 
+    /**
+     * 删除消息通知
+     * @param e
+     * @param item
+     */
     const delMessage = (e,item) =>{
         //屏蔽父层点击事件
         e.stopPropagation()
 
     }
 
+    /**
+     * 切换消息类型
+     * @param item
+     */
+    const changMessage = item => {
+        setSelected(item.id)
+    }
+
+    const renderTabs = item => {
+        return   <div key={item.id} className={`title-item ${item.id===selected?'title-select':null}`} onClick={()=>changMessage(item)}>
+            {item.title}
+            {
+                item.id === 0 &&
+                <span className={`messageModal-screen-tab ${0< 100 ?null:'messageModal-screen-much'}`}>
+                    {/*{*/}
+                    {/*    unread < 100 ?*/}
+                    {/*        unread*/}
+                    {/*        :*/}
+                    {/*        99*/}
+                    {/*}*/}
+                    0
+                </span>
+            }
+        </div>
+    }
+
+    // 渲染消息列表
     const renderMessageList = messageList =>{
         return messageList && messageList.map((item,index)=>{
             const data = JSON.parse(item.data)
@@ -80,28 +124,6 @@ const MessageDrawer = props =>{
                 </div>
             )
         })
-    }
-
-    const changSelet = item => {
-        setSelected(item.id)
-    }
-
-    const renderTabs = item => {
-        return   <div key={item.id} className={`title-item ${item.id===selected?'title-select':null}`} onClick={()=>changSelet(item)}>
-            {item.title}
-            {
-                item.id === 0 &&
-                <span className={`messageModal-screen-tab ${0< 100 ?null:'messageModal-screen-much'}`}>
-                    {/*{*/}
-                    {/*    unread < 100 ?*/}
-                    {/*        unread*/}
-                    {/*        :*/}
-                    {/*        99*/}
-                    {/*}*/}
-                    0
-                </span>
-            }
-        </div>
     }
 
     const emptyTitle = (
@@ -177,4 +199,4 @@ const MessageDrawer = props =>{
     )
 }
 
-export default MessageDrawer
+export default HeaderMessage

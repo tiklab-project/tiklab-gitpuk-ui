@@ -6,6 +6,12 @@ import Guide from '../../common/guide/Guide';
 import EmptyText from "../../common/emptyText/EmptyText";
 import './HomePage.scss';
 
+/**
+ * 首页
+ * @param props
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const HomePage = props =>{
 
     const {repositoryStore,groupStore} = props
@@ -103,11 +109,7 @@ const HomePage = props =>{
                     <EmptyText title={'暂无访问的仓库'}/>
                 </div>
                 <div className='home-dyna'>
-                    <Guide
-                        title={'近期动态'}
-                        icon={<AimOutlined/>}
-                        type={'dynamic'}
-                    />
+                    <Guide title={'近期动态'} icon={<AimOutlined/>} type={'dynamic'}/>
                     <EmptyText title={'暂无近期动态'}/>
                 </div>
             </div>

@@ -4,6 +4,12 @@ import {Modal,Form,Input} from 'antd';
 import Btn from '../../../common/btn/Btn';
 import {autoHeight} from '../../../common/client/Client';
 
+/**
+ * 删除单个文件
+ * @param props
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const BlobDelModal = props =>{
 
     const {delVisible,setDelVisible,blobFile} = props

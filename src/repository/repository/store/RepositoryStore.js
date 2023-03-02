@@ -11,27 +11,58 @@ import {getUser} from 'tiklab-core-ui';
 
 export class RepositoryStore {
 
-    @observable repositoryList = []
-    @observable repositoryType = 1
-    @observable repositoryInfo = ''
-    @observable webUrl = ''
-    @observable isLoading = false
+    // 仓库列表
+    @observable
+    repositoryList = []
 
+    // 1:所有仓库；2：我收藏的仓库
+    @observable
+    repositoryType = 1
+
+    // 仓库信息
+    @observable
+    repositoryInfo = ''
+
+    // （仓库组||用户）+仓库名称的路径
+    @observable
+    webUrl = ''
+
+    // 加载
+    @observable
+    isLoading = false
+
+    /**
+     * 设置仓库信息
+     * @param value
+     */
     @action
     setRepositoryInfo = value =>{
         this.repositoryInfo = value
     }
 
+    /**
+     * 设置（仓库组||用户）+仓库名称的路径
+     * @param value
+     */
     @action
     setWebUrl = value =>{
         this.webUrl = value
     }
 
+    /**
+     * 设置仓库类型
+     * @param value
+     */
     @action
     setRepositoryType = value =>{
         this.repositoryType = value
     }
 
+    /**
+     * 添加仓库
+     * @param values
+     * @returns {Promise<unknown>}
+     */
     @action
     createRpy = values =>{
         this.isLoading = true
@@ -52,6 +83,11 @@ export class RepositoryStore {
         }))
     }
 
+    /**
+     * 删除仓库
+     * @param value
+     * @returns {Promise<unknown>}
+     */
     @action
     deleteRpy = value =>{
         this.isLoading = true
@@ -71,6 +107,11 @@ export class RepositoryStore {
         })
     }
 
+    /**
+     * 更新仓库
+     * @param values
+     * @returns {Promise<*>}
+     */
     @action
     updateRpy = async values =>{
         const data = await UpdateRpy(values)
@@ -80,6 +121,11 @@ export class RepositoryStore {
         return data
     }
 
+    /**
+     * 获取所有仓库
+     * @param values
+     * @returns {Promise<*>}
+     */
     @action
     findUserRpy = async values =>{
         const param = new FormData()
@@ -91,6 +137,11 @@ export class RepositoryStore {
         return data
     }
 
+    /**
+     * 获取某个仓库信息
+     * @param values
+     * @returns {Promise<*>}
+     */
     @action
     findNameRpy = async values =>{
         const param = new FormData()

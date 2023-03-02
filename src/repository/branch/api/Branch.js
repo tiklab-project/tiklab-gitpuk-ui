@@ -1,6 +1,11 @@
 import {serviceLoc} from '../../../common/utils/Requset';
 
-
+/**
+ * 获取所有分支
+ * @param data
+ * @returns {Promise<unknown>}
+ * @constructor
+ */
 export function  FindAllBranch (data) {
     return serviceLoc.request({
         url: '/branch/findAllBranch',
@@ -9,6 +14,12 @@ export function  FindAllBranch (data) {
     })
 }
 
+/**
+ * 添加分支
+ * @param data
+ * @returns {Promise<unknown>}
+ * @constructor
+ */
 export function  CreateBranch (data) {
     return serviceLoc.request({
         url: '/branch/createBranch',
@@ -17,6 +28,13 @@ export function  CreateBranch (data) {
     })
 }
 
+
+/**
+ * 删除分支
+ * @param data
+ * @returns {Promise<unknown>}
+ * @constructor
+ */
 export function  DeleteBranch (data) {
     return serviceLoc.request({
         url: '/branch/deleteBranch',

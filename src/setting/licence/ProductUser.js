@@ -3,6 +3,9 @@ import {ProductUser} from 'tiklab-licence-ui';
 
 /**
  * 产品授权页面
+ * @param props
+ * @returns {JSX.Element}
+ * @constructor
  */
 const ProductUserContent = props => {
 

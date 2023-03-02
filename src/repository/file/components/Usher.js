@@ -9,6 +9,9 @@ import './Usher.scss';
 
 /**
  * 空仓库
+ * @param props
+ * @returns {JSX.Element}
+ * @constructor
  */
 const Usher = props =>{
 
@@ -16,8 +19,12 @@ const Usher = props =>{
 
     const {cloneAddress} = fileStore
 
+    //地址类型
     const [urlPrefix,setUrlPrefix] = useState('http')
 
+    /**
+     * 初始化readme文件
+     */
     const readme = () => {
 
     }

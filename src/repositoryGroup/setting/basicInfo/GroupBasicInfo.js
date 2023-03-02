@@ -29,17 +29,24 @@ const GroupBasicInfo = props =>{
             title: '删除',
             icon: <ExclamationCircleOutlined />,
             content: '删除后数据无法恢复',
-            onOk:()=>del(),
+            onOk:()=>delGroup(),
             okText: '确认',
             cancelText: '取消',
         });
     }
 
+    /**
+     * 确定更新仓库组信息
+     * @param value
+     */
     const onOk = value => {
 
     }
 
-    const del = () =>{
+    /**
+     * 删除仓库组
+     */
+    const delGroup = () =>{
 
     }
 

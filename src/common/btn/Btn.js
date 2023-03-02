@@ -2,6 +2,12 @@ import React from 'react';
 import {Space} from 'antd';
 import './Btn.scss';
 
+/**
+ * 操作按钮
+ * @param props
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const Btn = props =>{
 
     const {icon,type,title,onClick,isMar} = props

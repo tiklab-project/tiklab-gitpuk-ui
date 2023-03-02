@@ -2,6 +2,9 @@ import {serviceLoc} from '../../../common/utils/Requset';
 
 /**
  * 提交信息
+ * @param data
+ * @returns {Promise<unknown>}
+ * @constructor
  */
 export function  FindBranchCommit (data) {
     return serviceLoc.request({
@@ -12,7 +15,10 @@ export function  FindBranchCommit (data) {
 }
 
 /**
- * 提交信息所有文件
+ * 提交信息diff文件
+ * @param data
+ * @returns {Promise<unknown>}
+ * @constructor
  */
 export function  FindCommitFileDiffList (data) {
     return serviceLoc.request({
@@ -23,7 +29,10 @@ export function  FindCommitFileDiffList (data) {
 }
 
 /**
- * 单个提交（改变）内容
+ * 单个diff文件内容（改变）内容
+ * @param data
+ * @returns {Promise<unknown>}
+ * @constructor
  */
 export function  FindCommitFileDiff (data) {
     return serviceLoc.request({
@@ -34,7 +43,10 @@ export function  FindCommitFileDiff (data) {
 }
 
 /**
- * 单个提交（未改变）内容
+ * 单个diff文件内容（未改变）内容
+ * @param data
+ * @returns {Promise<unknown>}
+ * @constructor
  */
 export function  FindCommitLineFile (data) {
     return serviceLoc.request({
@@ -45,7 +57,10 @@ export function  FindCommitLineFile (data) {
 }
 
 /**
- * 单个提交（未改变）内容
+ * 模糊搜索diff文件
+ * @param data
+ * @returns {Promise<unknown>}
+ * @constructor
  */
 export function  FindLikeCommitDiffFileList (data) {
     return serviceLoc.request({

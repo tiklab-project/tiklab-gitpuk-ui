@@ -2,6 +2,12 @@ import React from 'react';
 import {Spin} from 'antd';
 import './Loading.scss';
 
+/**
+ * 全屏加载
+ * @param props
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const Loading = props =>{
     return (
         <div className='xcode-container'>
@@ -12,6 +18,13 @@ const Loading = props =>{
     )
 }
 
+/**
+ * 局部加载
+ * @param size：大小
+ * @param type：类型
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const SpinLoading = ({size,type}) => {
 
     if(type==='list'){

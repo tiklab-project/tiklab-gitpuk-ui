@@ -30,7 +30,7 @@ const RepositoryBasicInfo = props =>{
             title: '删除',
             icon: <ExclamationCircleOutlined />,
             content: '删除后数据无法恢复',
-            onOk:()=>del(),
+            onOk:()=>delRepository(),
             okText: '确认',
             cancelText: '取消',
         });
@@ -40,7 +40,10 @@ const RepositoryBasicInfo = props =>{
 
     }
 
-    const del = () =>{
+    /**
+     * 删除仓库
+     */
+    const delRepository = () =>{
         deleteRpy(repositoryInfo.rpyId).then(res=>{
             res.code===0 && props.history.push('/index/house')
         })
@@ -109,12 +112,19 @@ const RepositoryBasicInfo = props =>{
         }
     ]
 
-    // 是否存在key -- ture || false
+    /**
+     * 是否存在key
+     * @param key
+     * @returns {boolean}
+     */
     const isExpandedTree = key => {
         return expandedTree.some(item => item ===key)
     }
 
-    // 展开和闭合
+    /**
+     * 展开和闭合
+     * @param key
+     */
     const setOpenOrClose = key => {
         if (isExpandedTree(key)) {
             // false--闭合
@@ -131,9 +141,7 @@ const RepositoryBasicInfo = props =>{
                 className={`houseReDel-li-top ${isExpandedTree(item.key) ?'houseReDel-li-select':''}`}
                 onClick={()=>setOpenOrClose(item.key)}
             >
-                <div className='houseReDel-li-icon'>
-                    {item.icon}
-                </div>
+                <div className='houseReDel-li-icon'>{item.icon}</div>
                 <div className='houseReDel-li-center'>
                     <div className='houseReDel-li-title'>{item.title}</div>
                     {
@@ -149,8 +157,7 @@ const RepositoryBasicInfo = props =>{
             </div>
             <div className={`${isExpandedTree(item.key)? 'houseReDel-li-bottom':'houseReDel-li-none'}`}>
                 {
-                    isExpandedTree(item.key) &&
-                    item.content
+                    isExpandedTree(item.key) && item.content
                 }
             </div>
         </div>

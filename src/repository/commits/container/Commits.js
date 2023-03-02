@@ -21,18 +21,27 @@ const Commits = props =>{
 
     const urlInfo = match.params.branch
     const branch = setBranch(urlInfo,repositoryInfo)
-    const [isLoading,setIsLoading] = useState(true) // 初始化加载状态
-    const [hasData,setHasData] = useState(true) // 第二次加载状态
-    const [findNumber,setFindNumber] = useState(false) // 第二次获取提交文件加载状态
+
+    // 初始化加载状态
+    const [isLoading,setIsLoading] = useState(true)
+
+    // 没有更多提交信息
+    const [hasData,setHasData] = useState(true)
+
+    // 第二次获取提交文件加载状态
+    const [findNumber,setFindNumber] = useState(false)
 
     useEffect(()=>{
         if(repositoryInfo.name){
+            // 获取提交信息
             findCommitsList()
         }
         return ()=>setCommitsList()
     },[repositoryInfo.name,location.pathname])
 
-    // 页面滚动到底部重新获取数据
+    /**
+     * 页面滚动到底部重新获取数据
+     */
     const handleScroll = () =>{
         const dom = document.getElementById('xcode-commits')
         if (dom) {
@@ -47,6 +56,10 @@ const Commits = props =>{
         }
     }
 
+    /**
+     * 获取提交信息
+     * @param number
+     */
     const findCommitsList = number => {
         findBranchCommit({
             rpyId:repositoryInfo.rpyId,
@@ -63,16 +76,26 @@ const Commits = props =>{
         })
     }
 
+    /**
+     * 切换提交用户
+     * @param value
+     */
     const changCommitsUser = value => {
 
     }
 
-    // 提交详情
+    /**
+     * 跳转到提交详情
+     * @param item
+     */
     const goDetails = item =>{
         props.history.push(`/index/repository/${webUrl}/commit/${item.commitId}`)
     }
 
-    // 查看源文件
+    /**
+     * 跳转到源文件
+     * @param item
+     */
     const findFile = item => {
         props.history.push(`/index/repository/${webUrl}/tree/${item.commitId+commitU4}`)
     }
@@ -143,7 +166,6 @@ const Commits = props =>{
                             webUrl={webUrl}
                             type={'commit'}
                         />
-
                     </div>
                     <div className='commits-head-right'>
                         <div className='commits-user'>

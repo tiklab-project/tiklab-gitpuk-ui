@@ -7,6 +7,9 @@ import './BranchSelect.scss';
 
 /**
  * 切换分支
+ * @param props
+ * @returns {JSX.Element}
+ * @constructor
  */
 const BranchSelect = props => {
 
@@ -18,9 +21,14 @@ const BranchSelect = props => {
     const branch = setBranch(urlInfo,repositoryInfo && repositoryInfo)
 
     useEffect(()=>{
+        // 获取全部分支
         repositoryInfo.name && findAllBranch(repositoryInfo.rpyId)
     },[repositoryInfo.name])
 
+    /**
+     * 路由跳转
+     * @param value
+     */
     const changBranch = value => {
         switch (type) {
             case 'commit':

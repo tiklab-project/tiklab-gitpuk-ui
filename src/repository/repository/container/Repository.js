@@ -35,6 +35,10 @@ const Repository = props => {
         }
     ]
 
+    /**
+     * 切换仓库类型
+     * @param item
+     */
     const clickType = item => {
         setRepositoryType(item.id)
     }

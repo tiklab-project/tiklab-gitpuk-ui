@@ -4,6 +4,12 @@ import {useTranslation} from 'react-i18next';
 import {PrivilegeProjectButton} from 'tiklab-privilege-ui';
 import './Setting.scss';
 
+/**
+ * 左侧菜单（三级标题）
+ * @param props
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const Setting = props =>{
 
     const {location,route,secondRouter} = props

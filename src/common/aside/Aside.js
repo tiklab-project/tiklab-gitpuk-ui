@@ -6,9 +6,15 @@ import {useTranslation} from 'react-i18next';
 import {Loading} from '../loading/Loading';
 import {interceptUrl} from '../client/Client';
 import AsideMenu from './AsideMenu';
-import Listname from '../list/Listname';
+import Listicon from '../list/Listicon';
 import './Aside.scss';
 
+/**
+ * 左侧路由（二级标题）
+ * @param props
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const Aside = props => {
 
     const {location,route,firstRouters,list,info,webUrl,asideType} = props
@@ -21,12 +27,13 @@ const Aside = props => {
     const [isLoading,setIsLoading] = useState(false)
     const [triggerVisible,setTriggerVisible] = useState(false)
 
-    // 侧边栏 -- 展开/收起
     useEffect(()=>{
+        // 侧边栏 -- 展开/收起
         setNormalOrScrum(isSide?isSide:'normal')
     },[normalOrScrum])
 
     useEffect(()=>{
+        // 激活菜单
         let indexPath
         switch (asideType) {
             case 'repository':
@@ -56,7 +63,9 @@ const Aside = props => {
         }
     }
 
-    // 侧边栏 -- 展开/收起(事件event)
+    /**
+     * 侧边栏收起||展开
+     */
     const setMenuFold = () =>{
         if(normalOrScrum==='scrum') {
             setNormalOrScrum('normal')
@@ -67,7 +76,9 @@ const Aside = props => {
         localStorage.setItem('isSide','scrum')
     }
 
-    // 项目设置
+    /**
+     * 跳转设置页面
+     */
     const goSys = () =>{
         switch (asideType) {
             case 'repository':
@@ -108,7 +119,7 @@ const Aside = props => {
                         overlayClassName={`aside-dropdown-${normalOrScrum} aside-dropdown`}
                     >
                         <div className={`${normalOrScrum}-aside_chang`} onClick={(e)=>e.preventDefault()}>
-                            <Listname text={info.name}/>
+                            <Listicon text={info.name}/>
                             {
                                 normalOrScrum === 'scrum' &&
                                 <span className='dropdowns_name'>{info.name}</span>

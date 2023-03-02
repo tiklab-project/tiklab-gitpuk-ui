@@ -3,6 +3,12 @@ import {CopyOutlined} from '@ant-design/icons';
 import {copy} from '../../../common/client/Client';
 import './RecentSubmitMsg.scss';
 
+/**
+ * 最近提交信息
+ * @param props
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const RecentSubmitMsg = props =>{
 
     const {latelyBranchCommit,webUrl} = props

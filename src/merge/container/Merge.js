@@ -9,6 +9,12 @@ import MergeDetails from '../components/MergeDetails';
 import MergeAdd from '../components/MergeAdd';
 import '../components/Merge.scss';
 
+/**
+ * 合并请求
+ * @param props
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const Merge = props => {
 
     const [mergeType,setMergeType] = useState(1)

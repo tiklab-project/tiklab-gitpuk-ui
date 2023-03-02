@@ -3,7 +3,12 @@ import {useTranslation} from 'react-i18next';
 import {LeftOutlined} from '@ant-design/icons';
 import './Breadcrumb.scss';
 
-// 面包屑
+/**
+ * 面包屑
+ * @param props
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const BreadcrumbContent = props =>{
 
     const {firstItem,secondItem,goBack} = props

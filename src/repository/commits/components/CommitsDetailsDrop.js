@@ -8,10 +8,21 @@ import {
 } from '@ant-design/icons';
 import EmptyText from '../../../common/emptyText/EmptyText';
 
+/**
+ * 提交内容下拉框文件
+ * @param props
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const CommitsDetailsDrop = props => {
 
     const {diffDropList,changDropList,changFile,setDropDownVisible} = props
 
+    /**
+     * 类型图标
+     * @param type
+     * @returns {JSX.Element}
+     */
     const renderIcon = type => {
         switch (type) {
             case 'ADD':
@@ -23,6 +34,10 @@ const CommitsDetailsDrop = props => {
         }
     }
 
+    /**
+     * 锚点跳转到指定文件 && 查询指定文件内容
+     * @param item
+     */
     const changDiffDrop = item => {
         setDropDownVisible(false)
         changFile(item)

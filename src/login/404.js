@@ -1,6 +1,12 @@
 import React from 'react';
 import {Result} from 'antd';
 
+/**
+ * 404
+ * @param props
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const NotFound = props =>{
 
     const subTitle = (

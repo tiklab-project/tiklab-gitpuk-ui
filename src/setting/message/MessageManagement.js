@@ -3,6 +3,9 @@ import {MessageManagement} from 'tiklab-message-ui';
 
 /**
  * 消息管理
+ * @param props
+ * @returns {JSX.Element}
+ * @constructor
  */
 const MessageManagementContent = props => {
 

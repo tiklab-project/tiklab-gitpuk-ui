@@ -2,6 +2,12 @@ import React from 'react';
 import {Input} from 'antd';
 import BreadcrumbContent from '../../../common/breadcrumb/Breadcrumb';
 
+/**
+ * 密钥详情
+ * @param props
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const AuthDetail = props =>{
 
     const {formValue,setDetailsVisible} = props

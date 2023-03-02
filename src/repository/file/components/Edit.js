@@ -7,6 +7,13 @@ import Btn from '../../../common/btn/Btn';
 import {findCommitId, setBranch, setFileAddress} from './Common';
 import './Edit.scss'
 
+
+/**
+ * 编辑文件页面
+ * @param props
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const Edit = props =>{
 
     const {repositoryStore,fileStore,location,match} = props
@@ -18,16 +25,25 @@ const Edit = props =>{
     const urlInfo = match.params.branch
     const branch = setBranch(urlInfo,repositoryInfo)
     const fileAddress = setFileAddress(location,webUrl+'/edit/'+urlInfo)
+
+    // 编写 || 预览
     const [editType,setEditType] = useState('compile')
+
+    // 修改的内容
     const [previewValue,setPreviewValue] = useState('')
+
+    // 文件名称
     const [fileName,setFileName] = useState('')
-    const [editPosition,setEditPosition] = useState('')  // 获取修改内容的行数
+
+    // 获取修改内容的行数
+    const [editPosition,setEditPosition] = useState('')
 
     if(findCommitId(urlInfo)){
         props.history.go(-1)
     }
 
     useEffect(()=>{
+        // 获取文本内容
         repositoryInfo.name && readFile({
             rpyId:repositoryInfo.rpyId,
             fileAddress:fileAddress[1],
@@ -42,17 +58,21 @@ const Edit = props =>{
         })
     },[repositoryInfo.name])
 
-    const onOk = value => {
-        writeFile({
-            rpyId:repositoryInfo.rpyId,
-            newFileName:fileName?fileName:blobFile.fileName,
-            oldFileName:blobFile.fileName,
-            fileAddress:fileAddress[1],
-            fileContent:previewValue,
-            ...value
-        }).then(res=>{
-            // res.code===0 && props.history.push(`/index/${webUrl}/tree/${urlInfo}`)
-        })
+    /**
+     * 提交信息
+     * @param value
+     */
+    const commitChanges = value => {
+        // writeFile({
+        //     rpyId:repositoryInfo.rpyId,
+        //     newFileName:fileName?fileName:blobFile.fileName,
+        //     oldFileName:blobFile.fileName,
+        //     fileAddress:fileAddress[1],
+        //     fileContent:previewValue,
+        //     ...value
+        // }).then(res=>{
+        //     res.code===0 && props.history.push(`/index/${webUrl}/tree/${urlInfo}`)
+        // })
     }
 
     return(
@@ -129,9 +149,8 @@ const Edit = props =>{
                             form
                                 .validateFields()
                                 .then((values) => {
-                                    onOk(values)
+                                    commitChanges(values)
                                     form.resetFields()
-
                                 })
                         }}
                     />

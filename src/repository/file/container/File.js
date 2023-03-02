@@ -28,12 +28,16 @@ const File = props =>{
     const urlInfo = match.params.branch
     const branch = setBranch(urlInfo,repositoryInfo)
     const fileAddress = setFileAddress(location,webUrl+"/tree/"+urlInfo)
+
+    //文本框搜索
     const [searInput,setSearInput] = useState(false)
+
+    //加载
     const [isLoading,setIsLoading] = useState(true)
 
     useEffect(()=>{
         if(repositoryInfo.name){
-            // 树文件dd
+            // 获取文件，同时监听路由变化
             findFileTree({
                 rpyId:repositoryInfo.rpyId,
                 path:fileAddress[1],
@@ -48,9 +52,9 @@ const File = props =>{
 
     useEffect(()=>{
         if(repositoryInfo.name){
-            // 文件地址
+            // 获取文件地址
             findCloneAddress(repositoryInfo.rpyId)
-            // 最近提交信息
+            // 获取最近提交信息
             repositoryInfo.notNull && findLatelyBranchCommit({
                 rpyId:repositoryInfo.rpyId,
                 branch:branch,
@@ -66,15 +70,28 @@ const File = props =>{
         }
     },[searInput])
 
-    const goFileName = record => {
+    /**
+     * 跳转到下一个文件路由
+     * @param record
+     */
+    const goFileChild = record => {
         props.history.push(`/index/repository/${webUrl}${record.path}`)
     }
 
+    /**
+     * 跳转到上一个文件路由
+     * @param fileParent
+     */
     const goFileParent = fileParent => {
         props.history.push(`/index/repository/${webUrl}/tree/${urlInfo}${fileParent}`)
     }
 
-    const renderFileType = fileType => {
+    /**
+     * 文件图标
+     * @param fileType
+     * @returns {string|*}
+     */
+    const renderFileIcon = fileType => {
         switch (fileType) {
             case "txt":
             case "yaml":
@@ -120,14 +137,14 @@ const File = props =>{
     const renderCode = item => {
         return (
             <div key={item.fileName} className="code-data-item">
-                <div className="code-item-fileName" onClick={()=>goFileName(item)}>
+                <div className="code-item-fileName" onClick={()=>goFileChild(item)}>
                     <span style={{paddingRight:5}}>
                         {
                             item.type==="tree" ?
                                 <FolderOutlined/>
                                 :
                                 <svg className="icon" aria-hidden="true">
-                                    <use xlinkHref={`#icon-${renderFileType(item.fileType)}`}/>
+                                    <use xlinkHref={`#icon-${renderFileIcon(item.fileType)}`}/>
                                 </svg>
                         }
                     </span>

@@ -33,6 +33,9 @@ const RepositoryAdd = props =>{
         findUserGroup()
     },[])
 
+    /**
+     * 确定添加仓库
+     */
     const onOk = () => {
         form.validateFields().then((values) => {
             createRpy({
@@ -46,6 +49,10 @@ const RepositoryAdd = props =>{
         })
     }
 
+    /**
+     * 监听仓库名称变化
+     * @param value
+     */
     const onValuesChange = value => {
         if(value.name){
             form.setFieldsValue({
@@ -152,6 +159,9 @@ const RepositoryAdd = props =>{
         </Form>
     )
 
+    /**
+     * 跳转到上一级路由
+     */
     const goBack = () => {
         props.history.go(-1)
     }

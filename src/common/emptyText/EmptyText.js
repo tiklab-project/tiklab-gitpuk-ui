@@ -1,5 +1,11 @@
 import React from 'react';
 
+/**
+ * 无数据渲染
+ * @param props
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const EmptyText = props =>{
 
     const {title} = props

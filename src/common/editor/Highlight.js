@@ -2,6 +2,7 @@ import React,{ useEffect } from 'react';
 import * as hljs from 'highlight.js/lib';
 import 'highlight.js/styles/github.css';
 
+// highlight 语言
 const languages = fileType => {
     switch (fileType) {
         case 'md':

@@ -11,6 +11,12 @@ import CommitsDetailsDiff from './CommitsDetailsDiff';
 import {commitU4} from "../../file/components/Common";
 import './CommitsDetails.scss';
 
+/**
+ * 提交详情
+ * @param props
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const CommitsDetails = props =>{
 
     const {commitsStore,repositoryStore,match} = props
@@ -19,14 +25,24 @@ const CommitsDetails = props =>{
     const {findCommitFileDiffList,findCommitFileDiff,findCommitLineFile,commitDiff,setCommitDiff,findLikeCommitDiffFileList,diffDropList} = commitsStore
 
     const commitId = match.params.commitsId
+
+    //加载
     const [isLoading,setIsLoading] = useState(true)
+
+    //下拉框状态
     const [dropDownVisible,setDropDownVisible] = useState(false)
+
+    // diff文件展开加载状态
     const [expandVisible,setExpandVisible] = useState('')
+
+    // 展开的树
     const [expandedTree,setExpandedTree] = useState([])
+
+    // diff文件列表
     const [commitDiffList,setCommitDiffList] = useState([])
 
     useEffect(()=>{
-        // 所有提交文件
+        // 获取所有提交文件
         repositoryInfo.name && findCommitFileDiffList({
             rpyId:repositoryInfo.rpyId,
             branch:commitId,
@@ -40,13 +56,20 @@ const CommitsDetails = props =>{
         return ()=>setCommitDiff()
     },[repositoryInfo.name])
 
-    // 当前列表是否展开 展开/true 闭合/false
+
     const isExpandedTree = key => expandedTree.some(item => item === key)
 
-    // 列表标题显示
+    /**
+     * 文件标题显示
+     * @param item
+     * @returns {*}
+     */
     const filePath = item => item.type==='ADD'?item.newFilePath:item.oldFilePath
 
-    // 单个文件查询
+    /**
+     * 文件模糊查询
+     * @param e
+     */
     const changDropList = e => {
         findLikeCommitDiffFileList({
             rpyId:repositoryInfo.rpyId,
@@ -56,9 +79,11 @@ const CommitsDetails = props =>{
         })
     }
 
-    // 锚点，跳转
+    /**
+     * 锚点，跳转
+     * @param item
+     */
     const changFile = item => {
-        setOpenOrClose(item)
         const scrollTop=document.getElementById("commits_contrast")
         const anchorName = filePath(item)
         if (anchorName) {
@@ -67,9 +92,13 @@ const CommitsDetails = props =>{
                 scrollTop.scrollTop = anchorElement.offsetTop - 50
             }
         }
+        setOpenOrClose(item)
     }
 
-    //展开闭合 分类
+    /**
+     * 文件展开和闭合
+     * @param item
+     */
     const setOpenOrClose = item => {
         const path = filePath(item)
         if (isExpandedTree(path)) {
@@ -79,6 +108,7 @@ const CommitsDetails = props =>{
         }
         if(!item.content){
             setExpandVisible(path)
+            // 获取文件内容
             findCommitFileDiff({
                 rpyId:repositoryInfo.rpyId,
                 branch:commitId,
@@ -94,6 +124,11 @@ const CommitsDetails = props =>{
         }
     }
 
+    /**
+     * 获取符合要求的值
+     * @param path
+     * @returns {*}
+     */
     const setFileContent = path => {
         let a
         commitDiffList && commitDiffList.map(list=>{
@@ -104,7 +139,12 @@ const CommitsDetails = props =>{
         return a
     }
 
-    // 单个文件内容，查看全部操作
+    /**
+     * 文件内容，查看全部操作
+     * @param content
+     * @param item
+     * @param index
+     */
     const expand = (content,item,index) => {
         const path = filePath(content)
         const last = content && content.content[index-1]
@@ -119,6 +159,7 @@ const CommitsDetails = props =>{
             oldStn = next.left
             newStn = next.right
         }
+        // 文件内容
         findCommitLineFile({
             rpyId:repositoryInfo.rpyId,
             commitId:commitId,
@@ -139,8 +180,11 @@ const CommitsDetails = props =>{
         })
     }
 
-
-    // 查看文件
+    /**
+     * 查看文件路由跳转
+     * @param type
+     * @param item
+     */
     const findFile = (type,item) => {
         if(type==='tree'){
             props.history.push(`/index/repository/${webUrl}/tree/${commitId+commitU4}`)
@@ -149,6 +193,12 @@ const CommitsDetails = props =>{
         props.history.push(`/index/repository/${webUrl}/blob/${commitId+commitU4}/${item.newFilePath}`)
     }
 
+    /**
+     * 渲染diff数据
+     * @param item
+     * @param index
+     * @returns {JSX.Element|null}
+     */
     const renderDiffData = (item,index) => {
         if(item.type==='COPY'){
             return null
@@ -224,7 +274,7 @@ const CommitsDetails = props =>{
                                     trigger={['click']}
                                     placement={'bottomLeft'}
                                     visible={dropDownVisible}
-                                    onVisibleChange={visible => setDropDownVisible(visible)}
+                                    onVisibleChange={visible=>setDropDownVisible(visible)}
                                 >
                                     <span>文件变更 <CaretDownOutlined/></span>
                                 </Dropdown>

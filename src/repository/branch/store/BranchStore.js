@@ -8,9 +8,19 @@ import {message} from 'antd';
 
 export class BranchStore{
 
-    @observable branchList = []
-    @observable fresh = false
+    // 分支
+    @observable
+    branchList = []
 
+    // 刷新
+    @observable
+    fresh = false
+
+    /**
+     * 获取所有分支
+     * @param value
+     * @returns {Promise<void>}
+     */
     @action
     findAllBranch = async value =>{
         const params = new FormData()
@@ -21,6 +31,12 @@ export class BranchStore{
         }
     }
 
+
+    /**
+     * 添加分支
+     * @param value
+     * @returns {Promise<void>}
+     */
     @action
     createBranch = async value =>{
         const data = await CreateBranch(value)
@@ -30,6 +46,11 @@ export class BranchStore{
         }
     }
 
+    /**
+     * 删除分支
+     * @param value
+     * @returns {Promise<void>}
+     */
     @action
     deleteBranch = async value =>{
         const data = await DeleteBranch(value)

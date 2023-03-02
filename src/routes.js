@@ -55,7 +55,7 @@ const GroupBasic=AsyncComponent(()=>import('./repositoryGroup/setting/basicInfo/
 /**
  * 系统设置
  */
-const Setting=AsyncComponent(()=>import('./setting/setting/Setting'))
+const Setting=AsyncComponent(()=>import('./setting/navigator/Setting'))
 
 const Auth=AsyncComponent(()=>import('./setting/auth/container/Auth'))
 

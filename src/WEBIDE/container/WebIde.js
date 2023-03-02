@@ -3,6 +3,12 @@ import WebIdeTree from '../components/WebIdeTree'
 import WebIdeNav from '../components/WebIdeNav'
 import '../components/WebIde.scss'
 
+/**
+ * WEBIDE
+ * @param props
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const WebIde = props =>{
 
     const tree = [
@@ -40,6 +46,9 @@ const WebIde = props =>{
     const [leftBoxWidth,setLeftBoxWidth] = useState()
     const [isMove,setIsMove] = useState(false)
 
+    /**
+     * 拖拽改变宽度
+     */
     const changeBox = () =>{
         const middleBox = boxRef.current
         middleBox.onmousedown=(e)=>{
@@ -77,10 +86,7 @@ const WebIde = props =>{
     return (
         <div className='web-ide'>
             <div className='web-ide-sidebar'>
-                <div
-                    style={{width:` ${leftBoxWidth?leftBoxWidth:240}px`}}
-                    className='web-ide-file'
-                >
+                <div style={{width:` ${leftBoxWidth?leftBoxWidth:240}px`}} className='web-ide-file'>
                     <WebIdeTree/>
                     <div
                         ref={boxRef}

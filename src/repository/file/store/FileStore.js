@@ -11,17 +11,27 @@ import {message} from 'antd';
 
 export class FileStore {
 
-    @observable codeTreeData = []
-    @observable blobFile = ''
-    @observable branch = ''
-    @observable cloneAddress = ''
-    @observable latelyBranchCommit = ''
+    // 代码文件数据
+    @observable
+    codeTreeData = []
 
-    @action
-    setBranch = value =>{
-        this.branch = value
-    }
+    // 文件内容
+    @observable
+    blobFile = ''
 
+    // 克隆文件
+    @observable
+    cloneAddress = ''
+
+    // 最近提交信息
+    @observable
+    latelyBranchCommit = ''
+
+    /**
+     * 获取文件
+     * @param value
+     * @returns {Promise<*>}
+     */
     @action
     findFileTree = async value =>{
         const data = await FindFileTree(value)
@@ -35,6 +45,11 @@ export class FileStore {
         return data
     }
 
+    /**
+     * 获取文件内容
+     * @param value
+     * @returns {Promise<*>}
+     */
     @action
     readFile = async value =>{
         const data = await ReadFile(value)
@@ -47,6 +62,11 @@ export class FileStore {
         return data
     }
 
+    /**
+     * 修改文件内容
+     * @param value
+     * @returns {Promise<*>}
+     */
     @action
     writeFile = async value =>{
         const data = await WriteFile(value)
@@ -56,7 +76,11 @@ export class FileStore {
         return data
     }
 
-
+    /**
+     * 获取克隆地址
+     * @param value
+     * @returns {Promise<*>}
+     */
     @action
     findCloneAddress = async value =>{
         const param = new FormData()
@@ -71,6 +95,11 @@ export class FileStore {
         return data
     }
 
+    /**
+     * 获取最近提交信息
+     * @param value
+     * @returns {Promise<*>}
+     */
     @action
     findLatelyBranchCommit = async value =>{
         const data = await FindLatelyBranchCommit(value)

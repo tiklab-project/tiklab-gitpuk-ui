@@ -6,7 +6,12 @@ import Btn from '../../../common/btn/Btn';
 import {copy} from '../../../common/client/Client';
 import './Clone.scss';
 
-
+/**
+ * 克隆
+ * @param props
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const Clone = props =>{
 
     const {cloneAddress} = props

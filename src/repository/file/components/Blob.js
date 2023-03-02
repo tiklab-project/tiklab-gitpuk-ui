@@ -12,7 +12,12 @@ import BlobDelModal from './BlobDelModal';
 import {findCommitId,setBranch,setFileAddress} from './Common';
 import './Blob.scss';
 
-
+/**
+ * Blob文件内容页面
+ * @param props
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const Blob = props =>{
 
     const {repositoryStore,fileStore,location,match} = props
@@ -29,20 +34,20 @@ const Blob = props =>{
 
     useEffect(()=>{
         if(repositoryInfo.name){
-            // 文本内容
+            // 获取文本内容
             readFile({
                 rpyId:repositoryInfo.rpyId,
                 fileAddress:fileAddress[1],
                 commitBranch:branch,
                 findCommitId:findCommitId(urlInfo)
             }).then(()=>setIsLoading(false))
-            // 最近提交信息
+            // 获取最近提交信息
             findLatelyBranchCommit({
                 rpyId:repositoryInfo.rpyId,
                 branch:branch,
                 findCommitId:findCommitId(urlInfo)
             })
-            // 文本地址
+            // 获取文本地址
             findCloneAddress(repositoryInfo.rpyId)
         }
     },[repositoryInfo.name])

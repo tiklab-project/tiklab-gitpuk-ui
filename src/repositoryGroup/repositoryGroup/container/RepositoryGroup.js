@@ -11,7 +11,7 @@ import BreadcrumbContent from '../../../common/breadcrumb/Breadcrumb';
 import Btn from '../../../common/btn/Btn';
 import Tabs from '../../../common/tabs/Tabs';
 import EmptyText from '../../../common/emptyText/EmptyText';
-import Listname from '../../../common/list/Listname';
+import Listicon from '../../../common/list/Listicon';
 import '../components/RepositoryGroup.scss';
 
 
@@ -41,6 +41,10 @@ const RepositoryGroup = props => {
         }
     ]
 
+    /**
+     * 切换仓库组类型
+     * @param item
+     */
     const clickType = item => {
         setGroupType(item.id)
     }
@@ -60,7 +64,7 @@ const RepositoryGroup = props => {
                 return (
                     <div className='repository-group-tables-name' onClick={()=>goDetails(text,record)}>
                         <div className='name-icon'>
-                            <Listname text={text}/>
+                            <Listicon text={text}/>
                         </div>
                         <div className='name-text'>
                             <span className='name-text-name'>{text}</span>

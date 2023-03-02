@@ -26,6 +26,9 @@ const RepositoryUserAdd = props =>{
         setHeight(autoHeight())
     }
 
+    /**
+     * 确定选中用户
+     */
     const onOk = () => {
         // 所有id组成数组
         const newArr = addUser.map(item=>item.id)
@@ -38,7 +41,10 @@ const RepositoryUserAdd = props =>{
         setVisible(false)
     }
 
-
+    /**
+     * 行选中
+     * @param record
+     */
     const onSelectRow = record => {
         // 如果已经选中 -- 取消选中
         if (selectedRowKeys.indexOf(record.id) >= 0) {
@@ -54,6 +60,10 @@ const RepositoryUserAdd = props =>{
         setAddUser([...addUser])
     }
 
+    /**
+     * 行选择配置
+     * @type {{onChange: rowSelection.onChange, selectedRowKeys: *[]}}
+     */
     const rowSelection = {
         onChange: (selectedRowKeys, selectedRows) => {
             setAddUser(selectedRows)

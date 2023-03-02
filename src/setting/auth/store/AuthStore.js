@@ -10,9 +10,19 @@ import {getUser} from 'tiklab-core-ui';
 
 export class AuthStore {
 
-    @observable fresh = false
-    @observable keysList = []
+    // 刷新
+    @observable
+    fresh = false
 
+    // 密钥列表
+    @observable
+    keysList = []
+
+    /**
+     * 添加密钥
+     * @param value
+     * @returns {Promise<*>}
+     */
     @action
     createAuth = async value =>{
         const data = await CreateAuth({
@@ -26,6 +36,11 @@ export class AuthStore {
         return data
     }
 
+    /**
+     * 删除密钥
+     * @param value
+     * @returns {Promise<*>}
+     */
     @action
     deleteAuth = async value =>{
         const param = new FormData()
@@ -38,6 +53,11 @@ export class AuthStore {
         return data
     }
 
+    /**
+     * 获取密钥
+     * @param value
+     * @returns {Promise<*>}
+     */
     @action
     findUserAuth = async value =>{
         const data = await FindUserAuth()
@@ -50,6 +70,11 @@ export class AuthStore {
         return data
     }
 
+    /**
+     * 获取单个密钥信息
+     * @param value
+     * @returns {Promise<*>}
+     */
     @action
     findOneAuth = async value =>{
         const data = await FindOneAuth(value)

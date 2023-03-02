@@ -2,6 +2,7 @@ import React,{useEffect,useRef,useState} from 'react';
 import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
 import 'monaco-editor/esm/vs/basic-languages/monaco.contribution';
 
+// highlight 语言
 const languages = blobFile => {
     if(blobFile){
         switch (blobFile.fileType) {
@@ -20,6 +21,12 @@ const languages = blobFile => {
     }
 }
 
+/**
+ * file文件查看（blob）
+ * @param props
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const MonacoBlob = props =>{
 
     const {blobFile} = props
@@ -61,6 +68,12 @@ const MonacoBlob = props =>{
     )
 }
 
+/**
+ * file文件编辑（edit）
+ * @param props
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const MonacoEdit = props =>{
 
     const {setEditPosition,blobFile,previewValue,setPreviewValue} = props
@@ -114,6 +127,12 @@ const MonacoEdit = props =>{
     )
 }
 
+/**
+ * file文件对比（edit--preview）
+ * @param props
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const MonacoPreview = props => {
 
     const {newValue,blobFile,renderOverviewRuler,editPosition} = props

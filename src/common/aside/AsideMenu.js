@@ -1,17 +1,27 @@
 import React,{useEffect} from 'react';
 
+/**
+ * 左侧菜单切换仓库或仓库组目录
+ * @param props
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const AsideMenu = props =>{
 
     const {list,setIsLoading,asideType,info,setTriggerVisible} = props
 
     let timeout = null
     useEffect(()=>{
+        // 销毁定时器
         return ()=>{
             clearTimeout(timeout)
         }
     },[timeout])
 
-    // 切换路由跳转
+    /**
+     * 切换仓库或仓库组
+     * @param item
+     */
     const changeHouseDetails = item => {
         if(item.name!==info.name){
             setTriggerVisible(false)

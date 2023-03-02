@@ -2,6 +2,12 @@ import React from 'react';
 import {LeftOutlined,RightOutlined} from '@ant-design/icons';
 import './Page.scss';
 
+/**
+ * 分页
+ * @param props
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const Page = props =>{
 
     const {pageCurrent,changPage,page} = props

@@ -9,6 +9,12 @@ import EmptyText from '../../../common/emptyText/EmptyText';
 import BranchAdd from '../components/BranchAdd';
 import '../components/Branch.scss';
 
+/**
+ * 分支页面
+ * @param props
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const Branch = props =>{
 
     const {repositoryStore,branchStore} = props
@@ -20,13 +26,22 @@ const Branch = props =>{
     const [addVisible,setAddVisible] = useState(false)
 
     useEffect(()=>{
+        // 初始化分支
         repositoryInfo.name && findAllBranch(repositoryInfo.rpyId)
     },[repositoryInfo.name,fresh])
 
-    const clickType = item => {
+    /**
+     * 切换分支类型
+     * @param item
+     */
+    const clickBranchType = item => {
         setBranchType(item.id)
     }
 
+    /**
+     * 删除分支
+     * @param item
+     */
    const delBranch = item =>{
        deleteBranch({
            rpyId:repositoryInfo.rpyId,
@@ -34,10 +49,15 @@ const Branch = props =>{
        })
    }
 
+    /**
+     * 跳转到文件页面，查看分支文件
+     * @param item
+     */
    const goCode = item =>{
        props.history.push(`/index/repository/${webUrl}/tree/${item.branchName}`)
    }
 
+   // 渲染分支列表
     const renderData = item => {
         return(
             <div className='branch-tables-item' key={item.branchName}>
@@ -136,7 +156,7 @@ const Branch = props =>{
                             {id:2, title:'活跃分支'},
                             {id:3, title:'非活跃分支'}
                         ]}
-                        onClick={clickType}
+                        onClick={clickBranchType}
                     />
                     <div className='branch-type-input'>
                         <Input

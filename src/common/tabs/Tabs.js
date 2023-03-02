@@ -1,21 +1,25 @@
 import React from 'react';
 import './Tabs.scss';
 
+/**
+ * 标签
+ * @param props
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const Tabs = props =>{
 
     const {tabLis,type,onClick} = props
 
-    const renderTabItem = item =>(
-        <div key={item.id}
-             className={`xcode-tab ${type===item.id?'xcode-active-tab':null}`}
-             onClick={()=>onClick(item)}
-        >{item.title}</div>
-    )
-
     return (
         <div className='xcode-tabs'>
             {
-                tabLis.map(item=>renderTabItem(item))
+                tabLis.map(item=>(
+                    <div key={item.id}
+                         className={`xcode-tab ${type===item.id?'xcode-active-tab':null}`}
+                         onClick={()=>onClick(item)}
+                    >{item.title}</div>
+                ))
             }
         </div>
     )

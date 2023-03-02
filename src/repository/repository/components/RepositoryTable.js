@@ -2,13 +2,18 @@ import React from 'react';
 import {LockOutlined,SettingOutlined} from '@ant-design/icons';
 import {Space,Table,Tooltip} from 'antd';
 import EmptyText from '../../../common/emptyText/EmptyText';
-import Listname from '../../../common/list/Listname';
+import Listicon from '../../../common/list/Listicon';
 import './RepositoryTable.scss';
 
 const RepositoryTable = props => {
 
     const {repositoryList} = props
 
+    /**
+     * 跳转代码文件
+     * @param text
+     * @param record
+     */
     const goDetails = (text,record) => {
         if(record.codeGroup){
             props.history.push(`/index/repository/${record.address}/tree`)
@@ -18,6 +23,11 @@ const RepositoryTable = props => {
         }
     }
 
+    /**
+     * 跳转到项目设置
+     * @param text
+     * @param record
+     */
     const goSet = (text,record) => {
         if(record.codeGroup){
             props.history.push(`/index/repository/${record.address}/sys/set`)
@@ -37,7 +47,7 @@ const RepositoryTable = props => {
             render:(text,record)=>{
                 return (
                     <div className='repository-tables-name' onClick={()=>goDetails(text,record)}>
-                        <Listname text={text}/>
+                        <Listicon text={text}/>
                         <div className='name-text'>
                             <div className='name-text-title'>
                                 <span className='name-text-name'>

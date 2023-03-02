@@ -9,6 +9,12 @@ import AuthAdd from '../components/AuthAdd';
 import AuthDetail from '../components/AuthDetail';
 import '../components/Auth.scss';
 
+/**
+ * 密钥
+ * @param props
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const Auth = props => {
 
     const {authStore} = props
@@ -20,16 +26,24 @@ const Auth = props => {
     const [formValue,setFormValue] = useState(null)
 
     useEffect(()=>{
+        // 初始化密钥
         findUserAuth()
     },[fresh])
 
-    // 添加密钥或查看密钥
-    const see = record => {
+    /**
+     * 查看密钥
+     * @param record
+     */
+    const seeAuth = record => {
         setFormValue(record)
         setDetailsVisible(true)
     }
 
-    const del = record => {
+    /**
+     * 删除密钥
+     * @param record
+     */
+    const delAuth = record => {
         deleteAuth(record.authId)
     }
 
@@ -41,7 +55,7 @@ const Auth = props => {
             width:'15%',
             ellipsis:true,
             render:(text,record) => (
-                <span className='sys-keys-table-title' onClick={()=>see(record)}>{text}</span>
+                <span className='sys-keys-table-title' onClick={()=>seeAuth(record)}>{text}</span>
             )
         },
         {
@@ -68,7 +82,7 @@ const Auth = props => {
                     <Popconfirm
                         placement="topRight"
                         title="你确定删除吗"
-                        onConfirm={()=>del(record)}
+                        onConfirm={()=>delAuth(record)}
                         okText="确定"
                         cancelText="取消"
                     >

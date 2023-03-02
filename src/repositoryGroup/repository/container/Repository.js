@@ -4,7 +4,7 @@ import {inject,observer} from 'mobx-react';
 import Btn from '../../../common/btn/Btn';
 import BreadcrumbContent from '../../../common/breadcrumb/Breadcrumb';
 import RepositoryTable from '../../../repository/repository/components/RepositoryTable';
-import Listname from '../../../common/list/Listname';
+import Listicon from '../../../common/list/Listicon';
 import '../components/Repository.scss';
 
 
@@ -17,7 +17,7 @@ const Repository = props =>{
                 <div className='group-repository-head'>
                     <div className='head-left'>
                         <div className='head-left-icon'>
-                            <Listname text={'X'}/>
+                            <Listicon text={'X'}/>
                         </div>
                         <div className='head-left-desc'>
                             <span className='desc-name'>tiklab-boss</span>

@@ -12,7 +12,11 @@ const RepositoryUser = props =>{
 
     const [visible,setVisible] = useState(false)
 
-    // 用户权限
+    /**
+     * 改变用户权限
+     * @param record
+     * @param value：权限数据
+     */
     const changePower = (record,value) => {
         // if(value==='1'){
         //     value=true
@@ -28,7 +32,11 @@ const RepositoryUser = props =>{
         setMember([...member])
     }
 
-    // 移出用户
+    /**
+     * 移出用户
+     * @param text
+     * @param record
+     */
     const del = (text,record) =>{
         // yUserList（已选择） 减少
         setYUserList(yUserList.filter(item=>item.id!==record.id))

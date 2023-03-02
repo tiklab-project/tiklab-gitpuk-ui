@@ -16,8 +16,14 @@ import {
 } from '@ant-design/icons'
 import {inject,observer} from 'mobx-react';
 import logo from '../../assets/images/img/matflow3.png';
-import MessageDrawer from './MessageDrawer';
+import HeaderMessage from './HeaderMessage';
 
+/**
+ * header 头部
+ * @param props
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const Head = props =>{
 
     let path = props.location.pathname
@@ -53,23 +59,25 @@ const Head = props =>{
         // },
     ]
 
+    /**
+     * 路由跳转
+     * @param item
+     */
     const changeCurrentLink = item => {
         props.history.push(item.to)
     }
 
-    const renderRouter = routers => {
-        return routers.map(routers=>{
-            return  <div key={routers.key}
-                         onClick={()=>changeCurrentLink(routers)}
-                         className={currentLink===routers.to ? 'headers-active' : null}
-                    >{routers.title}</div>
-        })
-    }
-
+    /**
+     * 切换语言
+     * @param type
+     */
     const changeLan = type =>{
         i18n.changeLanguage(type)
     }
 
+    /**
+     * 退出登录
+     */
     const goOut = () => {
         props.history.push({
             pathname: '/logout',
@@ -79,6 +87,24 @@ const Head = props =>{
         })
     }
 
+    /**
+     * 跳转系统设置
+     */
+    const goSystem = () =>{
+        props.history.push('/index/sys')
+    }
+
+    // 渲染一级标题
+    const renderRouter = routers => {
+        return routers.map(routers=>{
+            return  <div key={routers.key}
+                         onClick={()=>changeCurrentLink(routers)}
+                         className={currentLink===routers.to ? 'headers-active' : null}
+            >{routers.title}</div>
+        })
+    }
+
+    // 切换语言目录
     const languageMenu = (
         <div className='outMenu-lan-menu'>
             <div className='lan-menu' onClick={()=>changeLan('zh')}>中文</div>
@@ -86,7 +112,7 @@ const Head = props =>{
         </div>
     )
 
-    // 个人信息
+    // 退出登录页面
     const outMenu = (
         <div className='header-outMenu'>
             <div className='header-outMenu-top'>
@@ -115,6 +141,7 @@ const Head = props =>{
         </div>
     )
 
+    // 帮助目录
     const helpMenu = (
         <div className='header-helpMenu'>
             <div className='header-helpMenu-item'>
@@ -135,10 +162,6 @@ const Head = props =>{
             </div>
         </div>
     )
-
-    const goSystem = () =>{
-        props.history.push('/index/sys')
-    }
 
     return(
         <div className='frame-header'>
@@ -174,7 +197,7 @@ const Head = props =>{
                 </div>
             </div>
 
-            <MessageDrawer
+            <HeaderMessage
                 {...props}
                 visible={visible}
                 setVisible={setVisible}

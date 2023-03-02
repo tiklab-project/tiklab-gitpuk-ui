@@ -1,5 +1,11 @@
 import {serviceLoc} from '../../../common/utils/Requset';
 
+/**
+ * 创建仓库组
+ * @param data
+ * @returns {Promise<unknown>}
+ * @constructor
+ */
 export function CreateGroup(data) {
     return serviceLoc.request({
         url: '/rpyGroup/createGroup',
@@ -8,6 +14,12 @@ export function CreateGroup(data) {
     })
 }
 
+/**
+ * 删除仓库组
+ * @param data
+ * @returns {Promise<unknown>}
+ * @constructor
+ */
 export function DeleteGroup(data) {
     return serviceLoc.request({
         url: '/rpyGroup/deleteGroup',
@@ -16,6 +28,12 @@ export function DeleteGroup(data) {
     })
 }
 
+/**
+ * 更新仓库组
+ * @param data
+ * @returns {Promise<unknown>}
+ * @constructor
+ */
 export function UpdateGroup(data) {
     return serviceLoc.request({
         url: '/rpyGroup/updateGroup',
@@ -24,6 +42,12 @@ export function UpdateGroup(data) {
     })
 }
 
+/**
+ * 获取仓库组
+ * @param data
+ * @returns {Promise<unknown>}
+ * @constructor
+ */
 export function FindUserGroup(data) {
     return serviceLoc.request({
         url: '/rpyGroup/findUserGroup',

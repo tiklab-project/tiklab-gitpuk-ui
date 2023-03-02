@@ -5,6 +5,9 @@ import {CloseOutlined,CheckOutlined} from '@ant-design/icons';
 
 /**
  * 版本与许可证
+ * @param props
+ * @returns {JSX.Element}
+ * @constructor
  */
 const VersionContent = props =>{
 

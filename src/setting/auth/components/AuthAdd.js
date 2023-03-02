@@ -22,7 +22,9 @@ const AuthAdd = props =>{
         setHeight(autoHeight())
     }
 
-    // 添加密钥
+    /**
+     * 添加密钥
+     */
     const onOk = () => {
         form.validateFields().then((values) => {
             createAuth(values)

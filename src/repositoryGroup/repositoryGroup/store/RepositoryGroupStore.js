@@ -10,20 +10,41 @@ import {message} from 'antd';
 
 export class GroupStore {
 
-    @observable groupType = 1
-    @observable groupList = []
-    @observable groupInfo = ''
+    // 仓库组类型
+    @observable
+    groupType = 1
 
+    // 仓库组列表
+    @observable
+    groupList = []
+
+    // 单个仓库组信息
+    @observable
+    groupInfo = ''
+
+    /**
+     * 设置单个仓库组信息
+     * @param value
+     */
     @action
     setGroupInfo = value =>{
         this.groupInfo = value
     }
 
+    /**
+     * 设置仓库组类型
+     * @param value
+     */
     @action
     setGroupType = value =>{
         this.groupType = value
     }
 
+    /**
+     * 添加仓库组
+     * @param values
+     * @returns {Promise<*>}
+     */
     @action
     createGroup = async values =>{
         const data = await CreateGroup({
@@ -39,6 +60,11 @@ export class GroupStore {
         return data
     }
 
+    /**
+     * 删除仓库组
+     * @param values
+     * @returns {Promise<*>}
+     */
     @action
     deleteGroup = async values =>{
         const data = await DeleteGroup(values)
@@ -48,6 +74,11 @@ export class GroupStore {
         return data
     }
 
+    /**
+     * 更新仓库组
+     * @param values
+     * @returns {Promise<*>}
+     */
     @action
     updateGroup = async values =>{
         const data = await UpdateGroup(values)
@@ -57,6 +88,11 @@ export class GroupStore {
         return data
     }
 
+    /**
+     * 获取仓库组
+     * @param values
+     * @returns {Promise<*>}
+     */
     @action
     findUserGroup = async values =>{
         const param = new FormData()

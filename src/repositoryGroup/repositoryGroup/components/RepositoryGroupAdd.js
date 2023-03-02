@@ -20,6 +20,10 @@ const RepositoryGroupAdd = props =>{
     const [nUserList,setNUserList] = useState([])
     const [member,setMember] = useState([])
 
+    /**
+     * 仓库组添加确定
+     * @param value
+     */
     const onOk = value => {
         form.validateFields().then((values) => {
             createGroup(value).then(res=>{
