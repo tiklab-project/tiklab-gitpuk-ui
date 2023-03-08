@@ -1,10 +1,6 @@
 import {observable,action} from 'mobx';
-import {
-    FindAllBranch,
-    CreateBranch,
-    DeleteBranch,
-} from '../api/Branch';
 import {message} from 'antd';
+import {Axios} from 'tiklab-core-ui';
 
 export class BranchStore{
 
@@ -25,7 +21,7 @@ export class BranchStore{
     findAllBranch = async value =>{
         const params = new FormData()
         params.append('rpyId',value)
-        const data = await FindAllBranch(params)
+        const data = await Axios.post('/branch/findAllBranch',params)
         if(data.code===0){
             this.branchList = data.data && data.data
         }
@@ -39,7 +35,7 @@ export class BranchStore{
      */
     @action
     createBranch = async value =>{
-        const data = await CreateBranch(value)
+        const data = await Axios.post('/branch/createBranch',value)
         if(data.code===0){
             message.info('创建成功',0.5)
             this.fresh = !this.fresh
@@ -53,7 +49,7 @@ export class BranchStore{
      */
     @action
     deleteBranch = async value =>{
-        const data = await DeleteBranch(value)
+        const data = await Axios.post('/branch/deleteBranch',value)
         if(data.code===0){
             message.info('删除成功',0.5)
             this.fresh = !this.fresh

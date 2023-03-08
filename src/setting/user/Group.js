@@ -1,5 +1,5 @@
-import React from 'react';
-import {UserGroup} from 'tiklab-user-ui';
+import React from "react";
+import {UserGroup} from "tiklab-user-ui";
 
 /**
  * 用户组
@@ -9,7 +9,7 @@ import {UserGroup} from 'tiklab-user-ui';
  */
 const Group = props => {
 
-    return <UserGroup {...props} bgroup={'xcode'}/>
+    return <UserGroup {...props} bgroup={"matflow"}/>
 
 }
 

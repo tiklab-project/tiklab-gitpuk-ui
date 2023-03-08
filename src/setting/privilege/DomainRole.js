@@ -1,5 +1,6 @@
-import React from 'react'
-import {DomainRoleList} from 'tiklab-privilege-ui'
+import React from "react";
+import {DomainRole} from "tiklab-privilege-ui";
+import {inject,observer} from "mobx-react";
 
 /**
  * 项目权限
@@ -7,8 +8,10 @@ import {DomainRoleList} from 'tiklab-privilege-ui'
  * @returns {JSX.Element}
  * @constructor
  */
-const DomainRole = props =>{
-    return <DomainRoleList {...props} domainId={''}  bgroup={'xcode'}/>
+const DomainRoleContent = props =>{
+
+    return <DomainRole {...props} domainId={""}  bgroup={"matflow"}/>
+
 }
 
-export default DomainRole
+export default DomainRoleContent

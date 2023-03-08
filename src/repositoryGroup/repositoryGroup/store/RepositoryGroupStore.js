@@ -1,11 +1,5 @@
 import {observable,action} from 'mobx';
-import {
-    CreateGroup,
-    DeleteGroup,
-    UpdateGroup,
-    FindUserGroup
-} from '../api/RepositoryGroup';
-import {getUser} from 'tiklab-core-ui';
+import {getUser,Axios} from 'tiklab-core-ui';
 import {message} from 'antd';
 
 export class GroupStore {
@@ -47,7 +41,7 @@ export class GroupStore {
      */
     @action
     createGroup = async values =>{
-        const data = await CreateGroup({
+        const data = await Axios.post('/rpyGroup/createGroup',{
             ...values,
             user:{id:getUser().userId}
         })
@@ -67,7 +61,7 @@ export class GroupStore {
      */
     @action
     deleteGroup = async values =>{
-        const data = await DeleteGroup(values)
+        const data = await Axios.post('/rpyGroup/deleteGroup',values)
         if(data){
 
         }
@@ -81,7 +75,7 @@ export class GroupStore {
      */
     @action
     updateGroup = async values =>{
-        const data = await UpdateGroup(values)
+        const data = await Axios.post('/rpyGroup/updateGroup',values)
         if(data){
 
         }
@@ -97,7 +91,7 @@ export class GroupStore {
     findUserGroup = async values =>{
         const param = new FormData()
         param.append('userId',getUser().userId)
-        const data = await FindUserGroup(param)
+        const data = await Axios.post('/rpyGroup/findUserGroup',param)
         if(data.code===0){
             this.groupList = data.data && data.data
         }

@@ -9,7 +9,7 @@ import {MessageNotice} from "tiklab-message-ui";
  */
 const MessageNoticeContentTrue = props =>{
 
-    return <MessageNotice {...props} bgroup={"xcode"} isBase={true}/>
+    return <MessageNotice {...props} bgroup={"matflow"} isBase={true}/>
 
 }
 

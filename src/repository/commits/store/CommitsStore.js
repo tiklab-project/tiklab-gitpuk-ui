@@ -1,11 +1,5 @@
 import {observable,action} from 'mobx';
-import {
-    FindBranchCommit,
-    FindCommitFileDiffList,
-    FindCommitFileDiff,
-    FindCommitLineFile,
-    FindLikeCommitDiffFileList
-} from '../api/Commits';
+import {Axios} from 'tiklab-core-ui';
 
 export class CommitsStore{
 
@@ -44,7 +38,7 @@ export class CommitsStore{
      */
     @action
     findBranchCommit = async value =>{
-        const data = await FindBranchCommit(value)
+        const data = await Axios.post('/commit/findBranchCommit',value)
         if(data.code===0){
             this.commitsList = this.commitsList.concat(data.data && data.data)
         }
@@ -61,7 +55,7 @@ export class CommitsStore{
      */
     @action
     findCommitFileDiffList = async value =>{
-        const data = await FindCommitFileDiffList(value)
+        const data = await Axios.post('/commit/findCommitFileDiffList',value)
         if(data.code===0){
             this.commitDiff = data.data && data.data
             this.diffDropList = data.data && data.data.diffList
@@ -76,7 +70,7 @@ export class CommitsStore{
      */
     @action
     findCommitFileDiff = async value =>{
-        return await FindCommitFileDiff(value)
+        return await Axios.post('/commit/findCommitFileDiff',value)
     }
 
     /**
@@ -86,7 +80,7 @@ export class CommitsStore{
      */
     @action
     findCommitLineFile = async value =>{
-        return await FindCommitLineFile(value)
+        return await  Axios.post('/commit/findCommitLineFile',value)
     }
 
     /**
@@ -96,7 +90,7 @@ export class CommitsStore{
      */
     @action
     findLikeCommitDiffFileList = async value =>{
-        const data = await FindLikeCommitDiffFileList(value)
+        const data = await Axios.post('/commit/findLikeCommitDiffFileList',value)
         if(data.code===0){
             this.diffDropList = data.data && data.data.diffList
         }

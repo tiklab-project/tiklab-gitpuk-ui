@@ -1,9 +1,10 @@
 import React,{useState,useEffect} from 'react';
-import {Dropdown,Badge} from 'antd';
+import {Dropdown,Badge,Avatar} from 'antd';
 import {useTranslation} from 'react-i18next';
-import {Profile,WorkAppConfig} from 'tiklab-eam-ui';
+import {AppLink} from "tiklab-integration-ui";
 import {getUser} from 'tiklab-core-ui';
 import {
+    UserOutlined,
     GlobalOutlined,
     BellOutlined,
     SettingOutlined,
@@ -117,7 +118,7 @@ const Head = props =>{
         <div className='header-outMenu'>
             <div className='header-outMenu-top'>
                 <div className='outMenu-out'>
-                    <Profile userInfo={getUser()}/>
+                    <Avatar icon={<UserOutlined />} />
                     <div className='outMenu-out-info'>
                         <div className='outMenu-out-name'>name</div>
                         <div className='outMenu-out-eamil'>tiklab@</div>
@@ -166,7 +167,7 @@ const Head = props =>{
     return(
         <div className='frame-header'>
             <div className='frame-header-right'>
-                <WorkAppConfig  isSSO={false}/>
+                <AppLink  isSSO={false}/>
                 <div className='frame-header-logo'>
                     <img src={logo} alt='logo' />
                 </div>
@@ -191,7 +192,7 @@ const Head = props =>{
                     </div>
                     <Dropdown overlay={outMenu}>
                         <div className='frame-header-user'>
-                            <Profile userInfo={getUser()}/>
+                            <Avatar icon={<UserOutlined />} />
                         </div>
                     </Dropdown>
                 </div>

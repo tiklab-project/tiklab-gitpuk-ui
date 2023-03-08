@@ -1,5 +1,5 @@
-import React from 'react';
-import {Directory} from 'tiklab-user-ui';
+import React from "react";
+import {Directory} from "tiklab-user-ui";
 
 /**
  * 用户目录
@@ -9,7 +9,7 @@ import {Directory} from 'tiklab-user-ui';
  */
 const UserDirectory = props =>{
 
-    return  <Directory {...props} bgroup={'xcode'}/>
+    return  <Directory {...props} bgroup={"matflow"}/>
 
 }
 

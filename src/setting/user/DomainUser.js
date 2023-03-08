@@ -1,5 +1,6 @@
-import React from 'react';
-import {DomainUserList} from 'tiklab-user-ui';
+import React from "react";
+import {DomainUser} from "tiklab-user-ui";
+import {inject,observer} from "mobx-react";
 
 /**
  * 项目成员
@@ -7,10 +8,11 @@ import {DomainUserList} from 'tiklab-user-ui';
  * @returns {JSX.Element}
  * @constructor
  */
-const DomainUser = props =>{
+const DomainUserContent = props =>{
 
-    return <DomainUserList {...props} domainId={''} bgroup={'xcode'}/>
+
+    return <DomainUser {...props} domainId={""} bgroup={"xcode"}/>
 
 }
 
-export default DomainUser
+export default DomainUserContent

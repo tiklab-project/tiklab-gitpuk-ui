@@ -1,13 +1,6 @@
 import {observable,action} from 'mobx';
-import {
-    CreateRpy,
-    DeleteRpy,
-    UpdateRpy,
-    FindUserRpy,
-    FindNameRpy,
-} from '../api/Repository';
 import {message} from 'antd';
-import {getUser} from 'tiklab-core-ui';
+import {getUser,Axios} from 'tiklab-core-ui';
 
 export class RepositoryStore {
 
@@ -67,7 +60,7 @@ export class RepositoryStore {
     createRpy = values =>{
         this.isLoading = true
         return new Promise(((resolve, reject) => {
-            CreateRpy({
+            Axios.post('/rpy/createRpy',{
                 ...values,
                 user:{id:getUser().userId}
             }).then(res=>{
@@ -94,7 +87,7 @@ export class RepositoryStore {
         const param = new FormData()
         param.append('rpyId',value)
         return new Promise((resolve, reject) => {
-            DeleteRpy(param).then(res=>{
+            Axios.post('/rpy/deleteRpy',param).then(res=>{
                 if(res.rpy===0){
                     message.info('删除成功')
                 }
@@ -114,7 +107,7 @@ export class RepositoryStore {
      */
     @action
     updateRpy = async values =>{
-        const data = await UpdateRpy(values)
+        const data = await Axios.post('/rpy/updateRpy',values)
         if(data){
 
         }
@@ -130,7 +123,7 @@ export class RepositoryStore {
     findUserRpy = async values =>{
         const param = new FormData()
         param.append('userId',getUser().userId)
-        const data = await FindUserRpy(param)
+        const data = await Axios.post('/rpy/findUserRpy',param)
         if(data.code===0){
             this.repositoryList = data.data && data.data
         }
@@ -146,7 +139,7 @@ export class RepositoryStore {
     findNameRpy = async values =>{
         const param = new FormData()
         param.append('rpyName',values)
-        const data = await FindNameRpy(param)
+        const data = await Axios.post('/rpy/findNameRpy',param)
         if(data.code===0){
             this.repositoryInfo = data.data && data.data
         }

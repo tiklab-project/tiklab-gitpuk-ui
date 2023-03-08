@@ -1,5 +1,5 @@
-import React from 'react';
-import {MyTodoTask} from 'tiklab-todotask-ui';
+import React from "react";
+import {MyTodoTask} from "tiklab-todotask-ui";
 
 /**
  * 待办
@@ -9,7 +9,7 @@ import {MyTodoTask} from 'tiklab-todotask-ui';
  */
 const MyTodoTaskContent = props =>{
 
-    return <MyTodoTask {...props} bgroup={'xcode'}/>
+    return <MyTodoTask {...props} bgroup={"matflow"}/>
 
 }
 

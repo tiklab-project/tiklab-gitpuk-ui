@@ -1,13 +1,6 @@
 import {observable,action} from 'mobx';
-import {
-    FindFileTree,
-    ReadFile,
-    WriteFile,
-    FindCloneAddress,
-    FindLatelyBranchCommit
-} from '../api/File';
-
 import {message} from 'antd';
+import {Axios} from 'tiklab-core-ui';
 
 export class FileStore {
 
@@ -34,7 +27,7 @@ export class FileStore {
      */
     @action
     findFileTree = async value =>{
-        const data = await FindFileTree(value)
+        const data = await Axios.post('/rpy/findFileTree',value)
         if(data.code===0){
             this.codeTreeData = data.data && data.data
         }
@@ -52,7 +45,7 @@ export class FileStore {
      */
     @action
     readFile = async value =>{
-        const data = await ReadFile(value)
+        const data = await Axios.post('/file/readFile',value)
         if(data.code===0){
             this.blobFile = data.data && data.data
         }
@@ -69,7 +62,7 @@ export class FileStore {
      */
     @action
     writeFile = async value =>{
-        const data = await WriteFile(value)
+        const data = await Axios.post('/file/writeFile',value)
         if(data.code===0){
             message.info('修改成功',0.5)
         }
@@ -85,7 +78,7 @@ export class FileStore {
     findCloneAddress = async value =>{
         const param = new FormData()
         param.append('rpyId',value)
-        const data = await FindCloneAddress(param)
+        const data = await Axios.post('/rpy/findCloneAddress',param)
         if(data.code===0){
             this.cloneAddress = data.data && data.data
         }
@@ -102,7 +95,7 @@ export class FileStore {
      */
     @action
     findLatelyBranchCommit = async value =>{
-        const data = await FindLatelyBranchCommit(value)
+        const data = await Axios.post('/commit/findLatelyBranchCommit',value)
         if(data.code===0){
             this.latelyBranchCommit = data.data && data.data
         }

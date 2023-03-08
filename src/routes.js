@@ -2,12 +2,12 @@ import React from 'react';
 import {Redirect} from 'react-router-dom';
 import AsyncComponent from './common/lazy/SyncComponent';
 
-const Home=AsyncComponent(()=>import('./home/container/Home'))
+const Home=AsyncComponent(()=>import('./home/components/Home'))
 
 const Login=AsyncComponent(()=>import('./login/login'))
 const Logout=AsyncComponent(()=>import('./login/Logout'))
 const Wechat=AsyncComponent(()=>import('./login/Wechat'))
-const NoProductAuthUser=AsyncComponent(()=>import('./login/NoProductAuthUser'))
+const ExcludeProductUser=AsyncComponent(()=>import('./login/ExcludeProductUser'))
 const NotFound=AsyncComponent(()=>import('./login/404'))
 
 /**
@@ -15,40 +15,40 @@ const NotFound=AsyncComponent(()=>import('./login/404'))
  */
 const Homepage=AsyncComponent(()=>import('./home/components/HomePage'))
 
-const WEBIDE=AsyncComponent(()=>import('./WEBIDE/container/WebIde'))
+const WEBIDE=AsyncComponent(()=>import('./WEBIDE/components/WebIde'))
 
 /**
  * 仓库
  */
-const Repository=AsyncComponent(()=>import('./repository/repository/container/Repository'))
+const Repository=AsyncComponent(()=>import('./repository/repository/components/Repository'))
 const RepositoryAdd=AsyncComponent(()=>import('./repository/repository/components/RepositoryAdd'))
 const RepositoryDetails=AsyncComponent(()=>import('./repository/navigator/RepositoryAside'))
-const File=AsyncComponent(()=>import('./repository/file/container/File'))
+const File=AsyncComponent(()=>import('./repository/file/components/File'))
 const Blob=AsyncComponent(()=>import('./repository/file/components/Blob'))
 const Edit=AsyncComponent(()=>import('./repository/file/components/Edit'))
-const Branch=AsyncComponent(()=>import('./repository/branch/container/Branch'))
-const Tag=AsyncComponent(()=>import('./repository/tag/container/Tag'))
+const Branch=AsyncComponent(()=>import('./repository/branch/components/Branch'))
+const Tag=AsyncComponent(()=>import('./repository/tag/components/Tag'))
 const RepositoryMerge=AsyncComponent(()=>import('./repository/merge/Merge'))
-const Commits=AsyncComponent(()=>import('./repository/commits/container/Commits'))
+const Commits=AsyncComponent(()=>import('./repository/commits/components/Commits'))
 const CommitsDetails=AsyncComponent(()=>import('./repository/commits/components/CommitsDetails'))
-const Issue=AsyncComponent(()=>import('./repository/issue/container/Issue'))
-const Pipeline=AsyncComponent(()=>import('./repository/pipeline/container/Pipeline'))
-const Statistics=AsyncComponent(()=>import('./repository/statistics/container/Statistics'))
+const Issue=AsyncComponent(()=>import('./repository/issue/components/Issue'))
+const Pipeline=AsyncComponent(()=>import('./repository/pipeline/components/Pipeline'))
+const Statistics=AsyncComponent(()=>import('./repository/statistics/components/Statistics'))
 const RepositoryDetailsSet=AsyncComponent(()=>import('./repository/setting/navigator/RepositorySetting'))
 const RepositoryBasicInfo=AsyncComponent(()=>import('./repository/setting/basicInfo/RepositoryBasicInfo'))
-const PushRule=AsyncComponent(()=>import('./repository/setting/pushRule/container/PushRule'))
-const AccessKeys=AsyncComponent(()=>import('./repository/setting/accessKeys/container/AccessKeys'))
-const WebHooks=AsyncComponent(()=>import('./repository/setting/webHooks/container/Hooks'))
+const PushRule=AsyncComponent(()=>import('./repository/setting/pushRule/components/PushRule'))
+const AccessKeys=AsyncComponent(()=>import('./repository/setting/accessKeys/components/AccessKeys'))
+const WebHooks=AsyncComponent(()=>import('./repository/setting/webHooks/components/Hooks'))
 
 /**
  * 仓库组
  */
-const RepositoryGroup=AsyncComponent(()=>import('./repositoryGroup/repositoryGroup/container/RepositoryGroup'))
+const RepositoryGroup=AsyncComponent(()=>import('./repositoryGroup/repositoryGroup/components/RepositoryGroup'))
 const RepositoryGroupAdd=AsyncComponent(()=>import('./repositoryGroup/repositoryGroup/components/RepositoryGroupAdd'))
 const RepositoryGroupDetails=AsyncComponent(()=>import('./repositoryGroup/navigator/RepositoryGroupAside'))
-const Overview=AsyncComponent(()=>import('./repositoryGroup/overview/container/Overview'))
+const Overview=AsyncComponent(()=>import('./repositoryGroup/overview/components/Overview'))
 const GroupMerge=AsyncComponent(()=>import('./repositoryGroup/merge/Merge'))
-const GroupRepository=AsyncComponent(()=>import('./repositoryGroup/repository/container/Repository'))
+const GroupRepository=AsyncComponent(()=>import('./repositoryGroup/repository/components/Repository'))
 const GroupDetailsSet=AsyncComponent(()=>import('./repositoryGroup/setting/navigator/repositoryGroupSetting'))
 const GroupBasic=AsyncComponent(()=>import('./repositoryGroup/setting/basicInfo/GroupBasicInfo'))
 
@@ -57,10 +57,10 @@ const GroupBasic=AsyncComponent(()=>import('./repositoryGroup/setting/basicInfo/
  */
 const Setting=AsyncComponent(()=>import('./setting/navigator/Setting'))
 
-const Auth=AsyncComponent(()=>import('./setting/auth/container/Auth'))
+const Auth=AsyncComponent(()=>import('./setting/auth/components/Auth'))
 
 // plugin
-const Plugin=AsyncComponent(()=>import('./setting/plugins/PluginList'))
+const Plugin=AsyncComponent(()=>import('./setting/plugins/Plugin'))
 
 // privilege
 const sysFeature=AsyncComponent(()=>import('./setting/privilege/SystemFeature'))
@@ -79,27 +79,27 @@ const MessageSendTypeTrue=AsyncComponent(()=>import('./setting/message/MessageSe
 const MessageNotice=AsyncComponent(()=>import('./setting/message/MessageNotice'))
 const MessageNoticeTrue=AsyncComponent(()=>import('./setting/message/MessageNoticeTrue'))
 
-// oplog
-const MyLogList=AsyncComponent(()=>import('./setting/oplog/MyLogList'))
-const LogTemplateList=AsyncComponent(()=>import('./setting/oplog/LogTemplateList'))
-const LogType=AsyncComponent(()=>import('./setting/oplog/logType'))
+// security
+const MyLog=AsyncComponent(()=>import("./setting/security/MyLog"))
+const LogTemplate=AsyncComponent(()=>import("./setting/security/LogTemplate"))
+const LogType=AsyncComponent(()=>import("./setting/security/LogType"))
 
 // todotask
-const MyTodoTask=AsyncComponent(()=>import('./setting/todotask/MyTodoTask'))
-const TaskList=AsyncComponent(()=>import('./setting/todotask/TaskList'))
-const TodoTemp=AsyncComponent(()=>import('./setting/todotask/TodoTemp'))
-const TodoType=AsyncComponent(()=>import('./setting/todotask/TodoType'))
+const MyTodoTask=AsyncComponent(()=>import("./setting/todotask/MyTodoTask"))
+const Task=AsyncComponent(()=>import("./setting/todotask/Task"))
+const TodoTemp=AsyncComponent(()=>import("./setting/todotask/TodoTemp"))
+const TodoType=AsyncComponent(()=>import("./setting/todotask/TodoType"))
 
 // licence
 const Version=AsyncComponent(()=>import('./setting/licence/Version'))
 
 // user
-const UserList=AsyncComponent(()=>import('./setting/user/List'))
-const UserDirectory=AsyncComponent(()=>import('./setting/user/Directory'))
-const Org=AsyncComponent(()=>import('./setting/user/Orga'))
-const UserGroup=AsyncComponent(()=>import('./setting/user/Group'))
-const UserGroupTrue=AsyncComponent(()=>import('./setting/user/Groupture'))
-const DomainUser=AsyncComponent(()=>import('./setting/user/DomainUser'))
+const User=AsyncComponent(()=>import("./setting/user/User"))
+const Directory=AsyncComponent(()=>import("./setting/user/Directory"))
+const Orga=AsyncComponent(()=>import("./setting/user/Orga"))
+const UserGroup=AsyncComponent(()=>import("./setting/user/Group"))
+const UserGroupTrue=AsyncComponent(()=>import("./setting/user/Groupture"))
+const DomainUser=AsyncComponent(()=>import("./setting/user/DomainUser"))
 
 const routers = [
     {
@@ -113,7 +113,7 @@ const routers = [
     {
         path:'/no-auth',
         exact:true,
-        component:NoProductAuthUser,
+        component:ExcludeProductUser,
     },
     {
         path: '/project',
@@ -341,7 +341,7 @@ const routers = [
                     },
                     {
                         path: '/index/sys/task',
-                        component: TaskList,
+                        component: Task,
                     },
                     {
                         path: '/index/sys/todoTask',
@@ -357,11 +357,11 @@ const routers = [
                     },
                     {
                         path:'/index/sys/myLog',
-                        component: MyLogList,
+                        component: MyLog,
                     },
                     {
                         path:'/index/sys/logTemplate',
-                        component: LogTemplateList,
+                        component: LogTemplate,
                     },{
 
                         path:'/index/sys/logType',
@@ -369,7 +369,7 @@ const routers = [
                     },
                     {
                         path: '/index/sys/user/org',
-                        component: Org,
+                        component: Orga,
                     },
                     {
                         path: '/index/sys/user/userGroup',
@@ -377,11 +377,11 @@ const routers = [
                     },
                     {
                         path: '/index/sys/user/directory',
-                        component: UserDirectory,
+                        component: Directory,
                     },
                     {
                         path: '/index/sys/user/list',
-                        component: UserList,
+                        component: User,
                     },
                     {
                         path:'/index/sys/mes/management',

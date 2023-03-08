@@ -1,5 +1,5 @@
-import React from 'react';
-import {UserGroup} from 'tiklab-user-ui';
+import React from "react";
+import {UserGroup} from "tiklab-user-ui";
 
 /**
  * 用户组
@@ -8,9 +8,7 @@ import {UserGroup} from 'tiklab-user-ui';
  * @constructor
  */
 const GroupTrue = props => {
-
-    return <UserGroup {...props} bgroup={'xcode'} isBase={true}/>
-
+    return <UserGroup {...props} bgroup={"matflow"} isBase={true}/>
 }
 
 export default GroupTrue

@@ -1,7 +1,6 @@
 import React,{useState,useRef,useEffect} from 'react';
 import {Input} from 'antd';
 import {FolderOutlined} from '@ant-design/icons';
-import {Profile} from 'tiklab-eam-ui';
 import {getUser} from 'tiklab-core-ui';
 import BreadcrumbContent from '../../common/breadcrumb/Breadcrumb';
 import Btn from '../../common/btn/Btn';
@@ -104,7 +103,7 @@ const MergeDetails = props =>{
                 <div className='node-item-left'>
                     <div className='node-left-line'/>
                     <div className='left-avatar'>
-                        <Profile userInfo={getUser()}/>
+                        {/*<Profile userInfo={getUser()}/>*/}
                     </div>
                 </div>
                 <div className='node-item-right'>
@@ -131,7 +130,7 @@ const MergeDetails = props =>{
                     </div>
                     <div className='log-right-comment'>
                         <div className='reply-input-user'>
-                            <Profile userInfo={getUser()}/>
+                            {/*<Profile userInfo={getUser()}/>*/}
                         </div>
                         <div className='reply-input'>
                             {
@@ -176,7 +175,7 @@ const MergeDetails = props =>{
                 <div className='log-right'>
                     <div className='log-right-desc'>
                         <div className='desc-user-title'>
-                            <Profile userInfo={getUser()}/>
+                            {/*<Profile userInfo={getUser()}/>*/}
                             <span className='desc-user'>莫凶凶</span>
                             <span className='desc-title'>{item.title}</span>
                         </div>
@@ -229,7 +228,7 @@ const MergeDetails = props =>{
                         <div className='log-title-right'>
                             <div className='right-title-time'>
                                 <div className='right-title'>
-                                    <Profile userInfo={getUser()}/>
+                                    {/*<Profile userInfo={getUser()}/>*/}
                                     <span className='title-user'>莫凶凶</span>
                                     <span className='title-title'>创建了合并请求，描述如下：</span>
                                 </div>
@@ -276,7 +275,7 @@ const MergeDetails = props =>{
                         }
                         <div className='log-content-view'>
                             <div className='view-user'>
-                                <Profile userInfo={getUser()}/>
+                                {/*<Profile userInfo={getUser()}/>*/}
                             </div>
                             <div className='view-input'>
                                 {

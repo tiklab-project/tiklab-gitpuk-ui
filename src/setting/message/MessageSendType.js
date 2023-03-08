@@ -1,5 +1,5 @@
-import React from 'react';
-import {MessageSendType} from 'tiklab-message-ui';
+import React from "react";
+import {MessageSendType} from "tiklab-message-ui";
 
 /**
  * 消息通知类型
@@ -9,7 +9,7 @@ import {MessageSendType} from 'tiklab-message-ui';
  */
 const MessageSendTypeContent = props => {
 
-    return <MessageSendType {...props} bgroup={'xcode'}/>
+    return <MessageSendType {...props} bgroup={"matflow"}/>
 
 }
 

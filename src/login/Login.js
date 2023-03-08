@@ -1,5 +1,5 @@
-import React from 'react';
-import {Login} from 'tiklab-eam-ui';
+import React from "react";
+import {Login} from "tiklab-eam-ui";
 
 /**
  * 登录
@@ -8,10 +8,10 @@ import {Login} from 'tiklab-eam-ui';
  * @constructor
  */
 const LoginContent = props => {
-
-    return  <Login
+    return   <Login
                 {...props}
-                loginGoRouter='/'
+                loginGoRouter="/"
+                // vaildUserAuthRouter={"/no-auth"}
             />
 }
 
