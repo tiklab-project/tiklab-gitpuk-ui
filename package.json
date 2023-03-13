@@ -108,7 +108,6 @@
         "monaco-editor-webpack-plugin": "^5.0.0",
         "ncp": "^2.0.0",
         "node-forge": "*",
-        "node-sass": "^5.0.0",
         "nodemon": "^2.0.6",
         "optimize-css-assets-webpack-plugin": "^5.0.4",
         "package-check-version": "^1.0.1",
@@ -184,9 +183,7 @@
         "tiklab-message-ui": "^1.0.1",
         "tiklab-plugin-core-ui": "^1.0.1",
         "tiklab-plugin-manager-ui": "^1.0.1",
-        "tiklab-privilege-ui": "^1.0.1",
         "tiklab-security-ui": "^1.0.1",
-        "tiklab-slate-ui": "^1.0.0",
         "tiklab-todotask-ui": "^1.0.1",
         "tiklab-user-ui": "^1.0.1",
         "wangeditor": "^4.7.15"

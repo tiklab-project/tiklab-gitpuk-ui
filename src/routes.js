@@ -63,13 +63,13 @@ const Auth=AsyncComponent(()=>import('./setting/auth/components/Auth'))
 const Plugin=AsyncComponent(()=>import('./setting/plugins/Plugin'))
 
 // privilege
-const sysFeature=AsyncComponent(()=>import('./setting/privilege/SystemFeature'))
-const sysRole=AsyncComponent(()=>import('./setting/privilege/SystemRole'))
-const sysRoleTrue=AsyncComponent(()=>import('./setting/privilege/SystemRoleTrue'))
-const ProjectRole=AsyncComponent(()=>import('./setting/privilege/ProjectRole'))
-const ProjectFeature=AsyncComponent(()=>import('./setting/privilege/ProjectFeature'))
-const DomainRole=AsyncComponent(()=>import('./setting/privilege/DomainRole'))
-const ProductAuth=AsyncComponent(()=>import('./setting/privilege/ProductAuth'))
+const sysFeature=AsyncComponent(()=>import('./setting/user/SystemFeature'))
+const sysRole=AsyncComponent(()=>import('./setting/user/SystemRole'))
+const sysRoleTrue=AsyncComponent(()=>import('./setting/user/SystemRoleTrue'))
+const ProjectRole=AsyncComponent(()=>import('./setting/user/ProjectRole'))
+const ProjectFeature=AsyncComponent(()=>import('./setting/user/ProjectFeature'))
+const DomainRole=AsyncComponent(()=>import('./setting/user/DomainRole'))
+const ProductAuth=AsyncComponent(()=>import('./setting/licence/ProductAuth'))
 
 // message
 const MessageManagement=AsyncComponent(()=>import('./setting/message/MessageManagement'))
