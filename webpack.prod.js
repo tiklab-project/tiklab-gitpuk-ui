@@ -121,9 +121,9 @@ module.exports = merge(baseWebpackConfig, {
                     reuseExistingChunk: true
                 },
                 tiklabPrivilegeUI: {
-                    name: 'chunk-tiklab-privilege-ui',
+                    name: 'chunk-tiklab-licence-ui',
                     chunks: 'all',
-                    test: /tiklab-privilege-ui/,
+                    test: /tiklab-licence-ui/,
                     priority: 70,
                     reuseExistingChunk: true
                 },

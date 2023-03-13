@@ -1,7 +1,7 @@
 import React,{useEffect,useState} from 'react';
 import {renderRoutes} from 'react-router-config';
 import {useTranslation} from 'react-i18next';
-import {PrivilegeProjectButton} from 'tiklab-privilege-ui';
+import {PrivilegeProjectButton} from 'tiklab-user-ui';
 import './Setting.scss';
 
 /**

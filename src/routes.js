@@ -62,15 +62,6 @@ const Auth=AsyncComponent(()=>import('./setting/auth/components/Auth'))
 // plugin
 const Plugin=AsyncComponent(()=>import('./setting/plugins/Plugin'))
 
-// privilege
-const sysFeature=AsyncComponent(()=>import('./setting/user/SystemFeature'))
-const sysRole=AsyncComponent(()=>import('./setting/user/SystemRole'))
-const sysRoleTrue=AsyncComponent(()=>import('./setting/user/SystemRoleTrue'))
-const ProjectRole=AsyncComponent(()=>import('./setting/user/ProjectRole'))
-const ProjectFeature=AsyncComponent(()=>import('./setting/user/ProjectFeature'))
-const DomainRole=AsyncComponent(()=>import('./setting/user/DomainRole'))
-const ProductAuth=AsyncComponent(()=>import('./setting/licence/ProductAuth'))
-
 // message
 const MessageManagement=AsyncComponent(()=>import('./setting/message/MessageManagement'))
 const MessageType=AsyncComponent(()=>import('./setting/message/MessageType'))
@@ -92,6 +83,7 @@ const TodoType=AsyncComponent(()=>import("./setting/todotask/TodoType"))
 
 // licence
 const Version=AsyncComponent(()=>import('./setting/licence/Version'))
+const ProductAuth=AsyncComponent(()=>import('./setting/licence/ProductAuth'))
 
 // user
 const User=AsyncComponent(()=>import("./setting/user/User"))
@@ -100,6 +92,12 @@ const Orga=AsyncComponent(()=>import("./setting/user/Orga"))
 const UserGroup=AsyncComponent(()=>import("./setting/user/Group"))
 const UserGroupTrue=AsyncComponent(()=>import("./setting/user/Groupture"))
 const DomainUser=AsyncComponent(()=>import("./setting/user/DomainUser"))
+const sysFeature=AsyncComponent(()=>import('./setting/user/SystemFeature'))
+const sysRole=AsyncComponent(()=>import('./setting/user/SystemRole'))
+const sysRoleTrue=AsyncComponent(()=>import('./setting/user/SystemRoleTrue'))
+const ProjectRole=AsyncComponent(()=>import('./setting/user/ProjectRole'))
+const ProjectFeature=AsyncComponent(()=>import('./setting/user/ProjectFeature'))
+const DomainRole=AsyncComponent(()=>import('./setting/user/DomainRole'))
 
 const routers = [
     {
