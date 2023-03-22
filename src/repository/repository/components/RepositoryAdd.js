@@ -43,7 +43,8 @@ const RepositoryAdd = props =>{
                 codeGroup:{groupId:codeGroup}
             }).then(res=>{
                 if(res.code===0){
-                    props.history.push(`/index/house/${codeGroup?codeGroup:userName}/${values.name}/tree`)
+                    props.history.push('/index/repository')
+                  /* props.history.push(`/index/house/${codeGroup?codeGroup:userName}/${values.name}/tree`)*/
                 }
             })
         })

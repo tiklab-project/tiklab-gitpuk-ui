@@ -31,7 +31,6 @@ const Blob = props =>{
     const fileAddress = setFileAddress(location, webUrl+'/blob/'+urlInfo)
     const [delVisible,setDelVisible] = useState(false)
     const [isLoading,setIsLoading] = useState(true)
-
     useEffect(()=>{
         if(repositoryInfo.name){
             // 获取文本内容

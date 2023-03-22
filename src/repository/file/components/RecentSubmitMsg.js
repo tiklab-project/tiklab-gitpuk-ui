@@ -12,7 +12,6 @@ import './RecentSubmitMsg.scss';
 const RecentSubmitMsg = props =>{
 
     const {latelyBranchCommit,webUrl} = props
-
     return (
         <div className='recent-submit-msg'>
             <div className='code-commit-icon'/>

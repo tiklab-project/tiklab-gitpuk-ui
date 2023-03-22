@@ -13,7 +13,9 @@ const Repository = props => {
 
     const {repositoryStore} = props
 
-    const {repositoryType,setRepositoryType,findUserRpy,repositoryList} = repositoryStore
+    const {repositoryType,setRepositoryType,findUserRpy,repositoryList,findNameRpy} = repositoryStore
+    //查询仓库的名称
+    const {repositoryName,setRepositoryName}=useState()
 
     useEffect(()=>{
         // 初始化仓库
@@ -43,6 +45,21 @@ const Repository = props => {
         setRepositoryType(item.id)
     }
 
+    /**
+     * 输入搜索的仓库名称
+     * @param item
+     */
+    const onChangeSearch = (e) => {
+        setRepositoryName(e.track.valueOf())
+    }
+    /**
+     * 搜索仓库
+     * @param item
+     */
+    const onSearch =async () => {
+        findNameRpy(repositoryName)
+    }
+
     return(
         <div className='repository'>
             <div className='repository-content xcode-home-limited xcode'>
@@ -65,7 +82,8 @@ const Repository = props => {
                         <Input
                             allowClear
                             placeholder='仓库名称'
-                            // onChange={onChangeSearch}
+                            onChange={onChangeSearch}
+                            onPressEnter={onSearch}
                             prefix={<SearchOutlined />}
                             style={{ width: 200 }}
                         />

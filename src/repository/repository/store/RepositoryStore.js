@@ -109,7 +109,6 @@ export class RepositoryStore {
     updateRpy = async values =>{
         const data = await Axios.post('/rpy/updateRpy',values)
         if(data){
-
         }
         return data
     }
@@ -141,6 +140,7 @@ export class RepositoryStore {
         param.append('rpyName',values)
         const data = await Axios.post('/rpy/findNameRpy',param)
         if(data.code===0){
+            debugger
             this.repositoryInfo = data.data && data.data
         }
         return data

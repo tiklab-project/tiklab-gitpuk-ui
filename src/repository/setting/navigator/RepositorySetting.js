@@ -10,7 +10,7 @@ const RepositorySetting = props =>{
     // 设置
     const secondRouter = [
         {
-            to:`/index/repository/${webUrl}/sys/set`,
+            to:`/index/repository/${webUrl}/sys/info`,
             title:`仓库信息`,
         },
         {

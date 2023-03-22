@@ -19,7 +19,7 @@ const RepositoryBasicInfo = props =>{
 
     const {repositoryStore} = props
 
-    const {repositoryInfo,deleteRpy,isLoading} = repositoryStore
+    const {repositoryInfo,deleteRpy,isLoading,updateRpy,findNameRpy} = repositoryStore
 
     const [form] = Form.useForm()
     const [expandedTree,setExpandedTree] = useState([])  // 树的展开与闭合
@@ -37,7 +37,8 @@ const RepositoryBasicInfo = props =>{
     }
 
     const onOk = value => {
-
+        updateRpy({...value,rpyId:repositoryInfo.rpyId})
+        findNameRpy(value.name)
     }
 
     /**
@@ -61,11 +62,11 @@ const RepositoryBasicInfo = props =>{
                             form={form}
                             autoComplete='off'
                             layout='vertical'
-                            initialValues={{name:repositoryInfo.name}}
+                            initialValues={{name:repositoryInfo.name,remarks:repositoryInfo.remarks}}
                         >
-                            <Form.Item label='仓库名称' name='name'
-                                       rules={[{max:30,message:'请输入1~31位以内的名称'}]}
-                            ><Input/></Form.Item>
+                            <Form.Item label='仓库名称' name='name' rules={[{max:30,message:'请输入1~31位以内的名称'}]}>
+                                <Input/>
+                            </Form.Item>
                             <RepositoryPower
                                 powerType={powerType}
                                 setPowerType={setPowerType}
@@ -85,8 +86,7 @@ const RepositoryBasicInfo = props =>{
                                 type={'primary'}
                                 title={'确定'}
                                 onClick={() => {
-                                    form
-                                        .validateFields()
+                                    form.validateFields()
                                         .then((values) => {
                                             onOk(values)
                                             form.resetFields()

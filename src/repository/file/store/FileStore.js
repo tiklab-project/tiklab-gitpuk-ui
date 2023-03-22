@@ -29,9 +29,8 @@ export class FileStore {
     findFileTree = async value =>{
         const data = await Axios.post('/rpy/findFileTree',value)
         if(data.code===0){
-            this.codeTreeData = data.data && data.data
-        }
-        else {
+            this.codeTreeData = data.data
+        } else {
             this.codeTreeData = []
         }
         data.code===50001 && message.info(data.msg,0.5)

@@ -9,7 +9,7 @@ import {ProjectFeature} from "tiklab-user-ui";
  */
 const ProjectFeatureContent = props =>{
 
-    return <ProjectFeature {...props} bgroup={"matflow"}/>
+    return <ProjectFeature {...props} bgroup={"xcode"}/>
 
 }
 

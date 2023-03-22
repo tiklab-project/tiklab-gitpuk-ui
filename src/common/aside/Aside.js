@@ -26,7 +26,6 @@ const Aside = props => {
     const [normalOrScrum,setNormalOrScrum] = useState('normal')
     const [isLoading,setIsLoading] = useState(false)
     const [triggerVisible,setTriggerVisible] = useState(false)
-
     useEffect(()=>{
         // 侧边栏 -- 展开/收起
         setNormalOrScrum(isSide?isSide:'normal')

@@ -9,7 +9,7 @@ import {MessageSendType} from "tiklab-message-ui";
  */
 const MessageSendTypeContentTrue = props => {
 
-    return <MessageSendType {...props} bgroup={"matflow"} isBase={true}/>
+    return <MessageSendType {...props} bgroup={"xcode"} isBase={true}/>
 
 }
 

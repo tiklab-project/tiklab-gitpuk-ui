@@ -38,7 +38,7 @@ const BreadChang = props => {
                 <Fragment key={index}>
                     <div className='bread-item' onClick={()=>breadJump(bread,index)}>{item}</div>
                     {
-                        type==='blob' && index+1!==zz.length &&
+                        type==='blob' && index+1!==bread.length &&
                         <div className='bread-item'> / </div>
                     }
                     {

@@ -30,10 +30,10 @@ const RepositoryTable = props => {
      */
     const goSet = (text,record) => {
         if(record.codeGroup){
-            props.history.push(`/index/repository/${record.address}/sys/set`)
+            props.history.push(`/index/repository/${record.address}/sys/info`)
         }
         else {
-            props.history.push(`/index/repository/${record.user.name}/${record.name}/sys/set`)
+            props.history.push(`/index/repository/${record.user.name}/${record.name}/sys/info`)
         }
     }
 

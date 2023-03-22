@@ -9,7 +9,7 @@ import {MessageManagement} from "tiklab-message-ui";
  */
 const MessageManagementContent = props => {
 
-    return <MessageManagement {...props} bgroup={"matflow"}/>
+    return <MessageManagement {...props} bgroup={"xcode"}/>
 
 }
 

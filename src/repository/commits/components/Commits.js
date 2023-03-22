@@ -1,3 +1,10 @@
+/**
+ * @name: Commits
+ * @author: menyuan
+ * @date: 2023-01-09 14:30
+ * @description：仓库代码提交
+ * @update: 2023-01-09 14:30
+ */
 import React,{useState,useEffect} from 'react';
 import {inject,observer} from 'mobx-react';
 import {Input,Select,Tooltip} from 'antd';
@@ -103,7 +110,7 @@ const Commits = props =>{
         return (
             <div className='msg-item' key={item.commitId}>
                 <div className='msg-item-icon'>
-                    <Profile userInfo={getUser()}/>
+                 {/*   <Profile userInfo={getUser()}/>*/}
                 </div>
                 <div className='msg-item-msg'>
                     <div className='msg-item-title'>

@@ -1,4 +1,4 @@
-const api =  "http://192.168.10.14:8090";
+const api =  "http://192.168.10.19:8090";
 const base_url = JSON.stringify(api);
 
 
@@ -18,8 +18,8 @@ const devProduction = true; // 存在基础数据
 
 const appKey = JSON.stringify("");
 const appSecret = JSON.stringify("");
-const version = JSON.stringify("");
-const client = JSON.stringify("");
+const version = JSON.stringify("ce");
+const client = JSON.stringify("web");
 
 const webpackGlobal = {
     base_url,

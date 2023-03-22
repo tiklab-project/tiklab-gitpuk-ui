@@ -9,7 +9,7 @@ import {LogType} from "tiklab-security-ui";
  */
 const LogTypeContent = props =>{
 
-    return <LogType {...props} bgroup={"matflow"}/>
+    return <LogType {...props} bgroup={"xcode"}/>
 
 }
 

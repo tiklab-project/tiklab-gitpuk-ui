@@ -8,8 +8,8 @@
 
 import {store as xcodeStore} from "./module/store";
 import routesSaas  from "./module/routes";
-import Portal from "././module/home/container/Portal";
-import SettingContent from "././module/setting/setting/SettingContent";
+import Portal from "./module/home/components/Portal";
+import SettingContent from "./module/setting/navigator/SettingContent";
 
 export {
     routesSaas ,

@@ -6,11 +6,13 @@ import {GROUP_STORE,GroupStore} from './repositoryGroup/repositoryGroup/store/Re
 import {BRANCH_STORE,BranchStore} from './repository/branch/store/BranchStore';
 import {COMMITS_STORE,CommitsStore} from './repository/commits/store/CommitsStore';
 import {AUTH_STORE,AuthStore} from './setting/auth/store/AuthStore';
-
+import {orgStores,privilegeStores} from "tiklab-user-ui/es/store"
 import {createContext} from 'react'
 
 function createStores() {
     return{
+        ...orgStores,
+        ...privilegeStores,
         [REPOSITORY_STORE]:new RepositoryStore(),
         [FILE_STORE]:new FileStore(),
         [GROUP_STORE]:new GroupStore(),

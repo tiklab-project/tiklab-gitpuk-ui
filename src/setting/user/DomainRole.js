@@ -10,7 +10,7 @@ import {inject,observer} from "mobx-react";
  */
 const DomainRoleContent = props =>{
 
-    return <DomainRole {...props} domainId={""}  bgroup={"matflow"}/>
+    return <DomainRole {...props} domainId={""}  bgroup={"xcode"}/>
 
 }
 

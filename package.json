@@ -185,6 +185,7 @@
         "tiklab-plugin-core-ui": "^1.0.1",
         "tiklab-plugin-manager-ui": "^1.0.1",
         "tiklab-security-ui": "^1.0.1",
+        "tiklab-slate-ui": "^1.0.0",
         "tiklab-todotask-ui": "^1.0.1",
         "tiklab-user-ui": "^1.0.1",
         "wangeditor": "^4.7.15"

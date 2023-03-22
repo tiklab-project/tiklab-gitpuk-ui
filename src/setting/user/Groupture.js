@@ -8,7 +8,7 @@ import {UserGroup} from "tiklab-user-ui";
  * @constructor
  */
 const GroupTrue = props => {
-    return <UserGroup {...props} bgroup={"matflow"} isBase={true}/>
+    return <UserGroup {...props} bgroup={"xcode"} isBase={true}/>
 }
 
 export default GroupTrue

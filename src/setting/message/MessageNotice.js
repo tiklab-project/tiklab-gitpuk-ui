@@ -6,7 +6,7 @@ import {MessageNotice} from "tiklab-message-ui";
  */
 const MessageNoticeContent = props =>{
 
-    return <MessageNotice {...props} bgroup={"matflow"}/>
+    return <MessageNotice {...props} bgroup={"xcode"}/>
 
 }
 

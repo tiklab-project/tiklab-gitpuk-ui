@@ -55,13 +55,15 @@ const File = props =>{
             // 获取文件地址
             findCloneAddress(repositoryInfo.rpyId)
             // 获取最近提交信息
-            repositoryInfo.notNull && findLatelyBranchCommit({
+             findLatelyBranchCommit({
                 rpyId:repositoryInfo.rpyId,
                 branch:branch,
                 findCommitId:findCommitId(urlInfo)
             })
         }
     },[repositoryInfo.name])
+
+
 
     useEffect(()=>{
         // 监听文本框聚焦
@@ -127,7 +129,7 @@ const File = props =>{
         </div>
     )
 
-    if(!repositoryInfo.notNull){
+    if(!codeTreeData){
         return  <Usher
                     repositoryInfo={repositoryInfo}
                     fileStore={fileStore}
@@ -212,12 +214,12 @@ const File = props =>{
                         <div className="code-data-item" onClick={()=>goFileParent(codeTreeData[0].fileParent)}>
                             <svg className="icon" aria-hidden="true">
                                 <use xlinkHref={`#icon-fanhui`}/>
-                            </svg>...
+                            </svg>
                         </div>
                     }
                     {
                         isLoading ? <SpinLoading type="table"/> :
-                        codeTreeData && codeTreeData.length > 0 ?
+                            (codeTreeData && codeTreeData.length > 0) ?
                             codeTreeData.map(item=>renderCode(item))
                             :
                             <EmptyText title={"暂无文件"}/>
