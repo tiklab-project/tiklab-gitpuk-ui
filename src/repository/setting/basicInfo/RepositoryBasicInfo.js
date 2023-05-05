@@ -46,7 +46,7 @@ const RepositoryBasicInfo = props =>{
      */
     const delRepository = () =>{
         deleteRpy(repositoryInfo.rpyId).then(res=>{
-            res.code===0 && props.history.push('/index/house')
+            res.code===0 && props.history.push('/index/repository')
         })
     }
 

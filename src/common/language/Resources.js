@@ -3,6 +3,7 @@ import {user_cn} from "tiklab-user-ui/es/utils";
 import {message_cn} from 'tiklab-message-ui/es/utils'
 import todoTask_cn from 'tiklab-todotask-ui/es/utils/language'
 import oplog_cn from 'tiklab-security-ui/es/utils/language'
+import {privilege_cn} from "tiklab-privilege-ui/es/utils"
 import zhCnTrans from './zh.json'
 import enCnTrans from './en.json'
 
@@ -15,6 +16,7 @@ const resources= {
             ...todoTask_cn,
             ...oplog_cn,
             ...zhCnTrans,
+            ...privilege_cn,
         },
     },
     en:{
@@ -22,7 +24,7 @@ const resources= {
             ...enCnTrans
         }
     },
-
 }
 
 export default resources
+

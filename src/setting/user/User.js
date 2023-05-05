@@ -9,7 +9,7 @@ import {User} from "tiklab-user-ui";
  */
 const UserContent = props =>{
 
-    return <User {...props} bgroup={"matflow"}/>
+    return <User {...props} bgroup={"xcode"}/>
 
 }
 

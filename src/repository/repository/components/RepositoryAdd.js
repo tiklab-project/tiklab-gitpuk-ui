@@ -40,7 +40,8 @@ const RepositoryAdd = props =>{
         form.validateFields().then((values) => {
             createRpy({
                 ...values,
-                codeGroup:{groupId:codeGroup}
+                codeGroup:{groupId:codeGroup},
+                address:getUser().tenant?getUser().tenant+"/"+values.address:values.address
             }).then(res=>{
                 if(res.code===0){
                     props.history.push('/index/repository')
@@ -154,7 +155,7 @@ const RepositoryAdd = props =>{
                     userTitle={'仓库'}
                 />
             }
-            <Form.Item name='remark' label='仓库描述'>
+            <Form.Item name='remarks' label='仓库描述'>
                 <Input.TextArea style={{background:'#fff'}} />
             </Form.Item>
         </Form>

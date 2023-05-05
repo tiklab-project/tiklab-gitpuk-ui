@@ -2,7 +2,6 @@ import React,{useState,useEffect} from 'react';
 import {Dropdown,Badge,Avatar} from 'antd';
 import {useTranslation} from 'react-i18next';
 import {AppLink} from "tiklab-integration-ui";
-import {getUser} from 'tiklab-core-ui';
 import {
     UserOutlined,
     GlobalOutlined,
@@ -15,8 +14,6 @@ import {
     ScheduleOutlined,
     WhatsAppOutlined,
 } from '@ant-design/icons'
-import {inject,observer} from 'mobx-react';
-import logo from '../../assets/images/img/matflow3.png';
 import HeaderMessage from './HeaderMessage';
 
 /**
@@ -31,7 +28,6 @@ const Head = props =>{
     const {i18n,t} = useTranslation()
     const [currentLink,setCurrentLink] = useState(path)
     const [visible,setVisible] = useState(false)
-
     useEffect(()=>{
         if(path.indexOf('/index/repository')===0){
             path='/index/repository'
@@ -169,7 +165,8 @@ const Head = props =>{
             <div className='frame-header-right'>
                 <AppLink  isSSO={false}/>
                 <div className='frame-header-logo'>
-                    <img src={logo} alt='logo' />
+                   {/* <img src={logo} alt='logo' />*/}
+                    <div className='frame-header-logo-text'>Xcode</div>
                 </div>
                 <div className='headers-link'>
                     {renderRouter(routers)}

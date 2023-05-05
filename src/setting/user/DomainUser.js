@@ -1,18 +1,34 @@
-import React from "react";
-import {DomainUser} from "tiklab-user-ui";
-import {inject,observer} from "mobx-react";
-
-/**
- * 项目成员
- * @param props
- * @returns {JSX.Element}
- * @constructor
+/*
+ * @Descripttion:
+ * @version: 1.0.0
+ * @Author: 李明亮
+ * @Date: 2023-01-03 19:56:02
+ * @LastEditors: 李明亮
+ * @LastEditTime: 2023-01-03 19:56:02
  */
-const DomainUserContent = props =>{
+import React ,{useEffect}from "react";
+import {DomainUser} from "tiklab-user-ui";
+import { inject, observer } from "mobx-react";
+
+const ProgramUser =(props)  => {
+    const{repositoryStore}=props
+    const {findNameRpy,repositoryInfo}=repositoryStore
 
 
-    return <DomainUser {...props} domainId={""} bgroup={"xcode"}/>
+    useEffect(async () => {
+        findNameRpy(props.match.params.name)
+    }, [props.match.params.name]);
 
+    const projectId = repositoryInfo.rpyId;
+    return (
+        <div >
+            <DomainUser
+                {...props}
+                domainId={projectId}
+                bgroup = {"xcode"}
+            />
+        </div>
+    )
 }
 
-export default DomainUserContent
+export default inject("domainUserStore","repositoryStore")(observer(ProgramUser));
