@@ -8,6 +8,10 @@
         &:not(:last-child){
             margin-bottom: var(--tiklab-padding-item);
         }
+        .border-top{
+            border-top: 1px solid #ececec;
+            border-radius: 4px;
+        }
         .houseReDel-li-top{
             display: flex;
             align-items: flex-start;

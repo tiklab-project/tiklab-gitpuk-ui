@@ -15,6 +15,7 @@ import {
     WhatsAppOutlined,
 } from '@ant-design/icons'
 import HeaderMessage from './HeaderMessage';
+import {getUser} from "tiklab-core-ui";
 
 /**
  * header 头部
@@ -49,11 +50,11 @@ const Head = props =>{
             to:'/index/repository',
             title: `${t('Repository')}`,
         },
-        // {
-        //     key:'group',
-        //     to:'/index/group',
-        //     title: `${t('Repository_group')}`,
-        // },
+        {
+            key:'group',
+            to:'/index/group',
+            title: `${t('Repository_group')}`,
+        },
     ]
 
     /**
@@ -116,8 +117,8 @@ const Head = props =>{
                 <div className='outMenu-out'>
                     <Avatar icon={<UserOutlined />} />
                     <div className='outMenu-out-info'>
-                        <div className='outMenu-out-name'>name</div>
-                        <div className='outMenu-out-eamil'>tiklab@</div>
+                        <div className='outMenu-out-name'>{getUser()?.nickname}</div>
+                        <div className='outMenu-out-eamil'>{getUser()?.phone}</div>
                     </div>
                 </div>
             </div>

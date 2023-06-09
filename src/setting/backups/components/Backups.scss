@@ -1,0 +1,48 @@
+.backups{
+  .backups-up{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .backups-nave{
+    padding-top: 20px;
+
+    .backups-title{
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .backups-desc{
+      color: #999999;
+    }
+    .backups-desc-read{
+      color: #bd2c00;
+    }
+    backups-desc-left{
+      margin-left: 100px;
+    }
+    .backups-desc-top{
+      margin-top: 15px;
+    }
+    .backups-button{
+      margin-top: 10px;
+    }
+  }
+  .backups-nave-top{
+    margin-top: 20px;
+  }
+  .backups-data{
+    padding-top: 10px;
+    display: flex;
+    .backups-nav-title{
+      width: 100px;
+    }
+  }
+
+  .backups-exec{
+    color: #1890ff;
+    cursor: pointer;
+    padding-left: 40px;
+  }
+
+}

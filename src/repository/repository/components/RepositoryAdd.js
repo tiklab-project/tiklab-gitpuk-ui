@@ -14,13 +14,13 @@ const RepositoryAdd = props =>{
 
     const {repositoryStore,groupStore} = props
 
-    const {createRpy,isLoading,findUserRpy,repositoryList} = repositoryStore
+    const {createRpy,isLoading,findUserRpy,repositoryList,createOpenRecord} = repositoryStore
     const {findUserGroup,groupList} = groupStore
 
     const userName = getUser().name
     const [form] = Form.useForm()
     const [addType,setAddType] = useState(1)
-    const [powerType,setPowerType] = useState(1)
+    const [powerType,setPowerType] = useState("public")
     const [yUserList,setYUserList] = useState([])
     const [nUserList,setNUserList] = useState([])
     const [member,setMember] = useState([])
@@ -40,13 +40,15 @@ const RepositoryAdd = props =>{
         form.validateFields().then((values) => {
             createRpy({
                 ...values,
-                codeGroup:{groupId:codeGroup},
-                address:getUser().tenant?getUser().tenant+"/"+values.address:values.address
+                group:{groupId:codeGroup},
+                address:getUser().tenant?getUser().tenant+"/"+values.address:values.address,
+                rules:powerType,
             }).then(res=>{
                 if(res.code===0){
                     props.history.push('/index/repository')
                   /* props.history.push(`/index/house/${codeGroup?codeGroup:userName}/${values.name}/tree`)*/
                 }
+                createOpenRecord(res.data)
             })
         })
     }
@@ -142,8 +144,8 @@ const RepositoryAdd = props =>{
                 setPowerType={setPowerType}
                 powerTitle={'仓库'}
             />
-            {
-                powerType===2 &&
+            {/*{
+                powerType==="private" &&
                 <RepositoryUser
                     yUserList={[yUserList]}
                     setYUserList={setYUserList}
@@ -154,7 +156,7 @@ const RepositoryAdd = props =>{
                     setMember={setMember}
                     userTitle={'仓库'}
                 />
-            }
+            }*/}
             <Form.Item name='remarks' label='仓库描述'>
                 <Input.TextArea style={{background:'#fff'}} />
             </Form.Item>

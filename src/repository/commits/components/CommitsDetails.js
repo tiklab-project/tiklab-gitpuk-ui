@@ -21,7 +21,7 @@ const CommitsDetails = props =>{
 
     const {commitsStore,repositoryStore,match} = props
 
-    const {repositoryInfo,webUrl} = repositoryStore
+    const {repositoryInfo} = repositoryStore
     const {findCommitFileDiffList,findCommitFileDiff,findCommitLineFile,commitDiff,setCommitDiff,findLikeCommitDiffFileList,diffDropList} = commitsStore
 
     const commitId = match.params.commitsId
@@ -187,10 +187,10 @@ const CommitsDetails = props =>{
      */
     const findFile = (type,item) => {
         if(type==='tree'){
-            props.history.push(`/index/repository/${webUrl}/tree/${commitId+commitU4}`)
+            props.history.push(`/index/repository/${repositoryInfo.rpyId}/tree/${commitId+commitU4}`)
             return
         }
-        props.history.push(`/index/repository/${webUrl}/blob/${commitId+commitU4}/${item.newFilePath}`)
+        props.history.push(`/index/repository/${repositoryInfo.rpyId}/blob/${commitId+commitU4}/${item.newFilePath}`)
     }
 
     /**

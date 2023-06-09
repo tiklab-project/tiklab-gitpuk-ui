@@ -9,6 +9,8 @@ import './Repository.scss';
 
 
 const Repository = props =>{
+    const {match}=props
+    const groupName = match.params.name
 
     return (
         <div className='group-repository'>
@@ -17,12 +19,12 @@ const Repository = props =>{
                 <div className='group-repository-head'>
                     <div className='head-left'>
                         <div className='head-left-icon'>
-                            <Listicon text={'X'}/>
+                            <Listicon text={groupName}/>
                         </div>
                         <div className='head-left-desc'>
-                            <span className='desc-name'>tiklab-boss</span>
+                            <span className='desc-name'>{groupName}</span>
                             <span className='desc-lock'><LockOutlined/></span>
-                            <span className='desc-type'>管理员</span>
+                        {/*    <span className='desc-type'>管理员</span>*/}
                         </div>
                     </div>
                     <div className='head-right'>

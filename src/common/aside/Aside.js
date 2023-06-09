@@ -17,7 +17,7 @@ import './Aside.scss';
  */
 const Aside = props => {
 
-    const {location,route,firstRouters,list,info,webUrl,asideType} = props
+    const {location,route,firstRouters,list,info,asideType} = props
 
     let path = location.pathname
     const {t} = useTranslation()
@@ -36,7 +36,7 @@ const Aside = props => {
         let indexPath
         switch (asideType) {
             case 'repository':
-                indexPath = renderType(interceptUrl(path)[5])
+                indexPath = renderType(interceptUrl(path)[4])
                 break
             case 'group':
                 indexPath = path
@@ -45,7 +45,7 @@ const Aside = props => {
     },[path,info])
 
     const renderType = pathType =>{
-        let path = `/index/repository/${webUrl}`
+        let path = `/index/repository/${info.rpyId}`
         if(!pathType){
             return path
         }
@@ -81,10 +81,10 @@ const Aside = props => {
     const goSys = () =>{
         switch (asideType) {
             case 'repository':
-                props.history.push(`/index/repository/${webUrl}/sys/set`)
+                props.history.push(`/index/repository/${info.rpyId}/sys/info`)
                 break
             case 'group':
-                props.history.push(`/index/group/${webUrl}/sys/set`)
+                props.history.push(`/index/group/${info.rpyId}/sys/info`)
         }
     }
 
@@ -98,7 +98,7 @@ const Aside = props => {
                     <div className={`${normalOrScrum}-aside-item-title`}>{t(item.title)}</div>
                 </div>
     }
-
+    console.info("查询",info)
     return (
         <div className='xcode-layout'>
             <div className={`${normalOrScrum}-aside`}>

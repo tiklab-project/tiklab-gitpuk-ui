@@ -15,7 +15,7 @@ const RepositoryGroupAdd = props =>{
     const {createGroup} = groupStore
 
     const [form] = Form.useForm()
-    const [powerType,setPowerType] = useState(1)
+    const [powerType,setPowerType] = useState("public")
     const [yUserList,setYUserList] = useState([])
     const [nUserList,setNUserList] = useState([])
     const [member,setMember] = useState([])
@@ -24,10 +24,11 @@ const RepositoryGroupAdd = props =>{
      * 仓库组添加确定
      * @param value
      */
-    const onOk = value => {
+    const onOk =()  => {
         form.validateFields().then((values) => {
-            createGroup(value).then(res=>{
-                res.code===0 && props.history.push(`/index/group/${value.name}/survey`)
+            createGroup({...values,rules:powerType}).then(res=>{
+                props.history.push(`/index/group/${values.name}/repository`)
+             /*   res.code===0 && props.history.push(`/index/group/${value.name}/survey`)*/
             })
         })
     }
@@ -64,7 +65,7 @@ const RepositoryGroupAdd = props =>{
                             setPowerType={setPowerType}
                             powerTitle={'仓库组'}
                         />
-                        {
+                        {/*{
                             powerType===2 &&
                             <RepositoryUser
                                 yUserList={[yUserList]}
@@ -76,7 +77,7 @@ const RepositoryGroupAdd = props =>{
                                 setMember={setMember}
                                 userTitle={'仓库组'}
                             />
-                        }
+                        }*/}
                         <Form.Item name='remarks' label='仓库组描述'>
                             <Input.TextArea style={{background:'#fff'}} />
                         </Form.Item>

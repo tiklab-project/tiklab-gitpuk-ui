@@ -18,13 +18,13 @@ const Edit = props =>{
 
     const {repositoryStore,fileStore,location,match} = props
 
-    const {repositoryInfo,webUrl} = repositoryStore
+    const {repositoryInfo} = repositoryStore
     const {readFile,blobFile,writeFile} = fileStore
 
     const [form] = Form.useForm()
     const urlInfo = match.params.branch
     const branch = setBranch(urlInfo,repositoryInfo)
-    const fileAddress = setFileAddress(location,webUrl+'/edit/'+urlInfo)
+    const fileAddress = setFileAddress(location,repositoryInfo.rpyId+'/edit/'+urlInfo)
 
     // 编写 || 预览
     const [editType,setEditType] = useState('compile')
@@ -82,7 +82,7 @@ const Edit = props =>{
                 <div className='edit-content-head'>编辑文件</div>
                 <div className='edit-content-title'>
                     <span className='edit-title'
-                          onClick={()=>props.history.push(`/index/repository/${webUrl}/tree/${branch}`)}
+                          onClick={()=>props.history.push(`/index/repository/${repositoryInfo.rpyId}/tree/${branch}`)}
                     >{repositoryInfo.name}</span>
                     <span className='edit-title'>/</span>
                     <span className='edit-title'>

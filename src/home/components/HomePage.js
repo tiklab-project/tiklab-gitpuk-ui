@@ -1,10 +1,12 @@
 import React,{useEffect,useState} from 'react';
-import {Space} from 'antd';
+import {Space, Spin, Tooltip} from 'antd';
 import {AimOutlined,HistoryOutlined} from '@ant-design/icons';
 import {inject,observer} from 'mobx-react';
 import Guide from '../../common/guide/Guide';
 import EmptyText from "../../common/emptyText/EmptyText";
 import './HomePage.scss';
+import {getUser} from "tiklab-core-ui";
+import Listicon from "../../common/list/Listicon";
 
 /**
  * 首页
@@ -14,67 +16,29 @@ import './HomePage.scss';
  */
 const HomePage = props =>{
 
-    const {repositoryStore,groupStore} = props
+    const {repositoryStore,groupStore,branchStore} = props
 
-    const {findUserRpy,repositoryList} = repositoryStore
+    const {findRecordOpenList,recordOpenList,createOpenRecord,findRecordCommitList,recordCommitList} = repositoryStore
     const {findUserGroup,groupList} = groupStore
 
-    useEffect(()=>{
-        // 仓库
-        findUserRpy()
+    const [openState,setOpenState]=useState(false)
+    useEffect(async ()=>{
+
         // 仓库组
         findUserGroup()
+
+       await findRepository()
     },[])
 
-    // 最近访问的仓库
-    const renderList = item => {
-        return (
-            <div className='houseRecent-item' key={item.openId}
-                 onClick={()=> props.history.push(`/index/task/${item.house && item.house.id}/survey`)}
-            >
-                <div className='houseRecent-item-title'>
-                    {
-                        item && item.house &&
-                        <Space>
-                            <span className={`mf-icon-${item.house.color?item.house.color:0} houseRecent-icon`}>
-                                {item.house.name && item.house.name.substring(0,1).toUpperCase()}
-                            </span>
-                                <span className='houseRecent-name'>
-                                {item.house.name && item.house.name}
-                            </span>
-                        </Space>
-                    }
-                </div>
-                <div className='houseRecent-item-details'>
-                    <div className='houseRecent-item-detail'>
-                        <span className='details-desc'>成功</span>
-                        <span>{item.houseExecState.successNumber}</span>
-                    </div>
-                    <div className='houseRecent-item-detail'>
-                        <span className='details-desc'>失败</span>
-                        <span>{item.houseExecState.errorNumber}</span>
-                    </div>
-                </div>
-            </div>
-        )
-    }
+    const findRepository =async () => {
+        setOpenState(true)
+        await findRecordOpenList()
 
-    const stableList = [
-        {
-            id:1,
-            title: '我的仓库',
-            icon:'#icon-renwu',
-            listLength:repositoryList && repositoryList.length,
-            to:'/index/repository'
-        },
-        {
-            id:2,
-            title:'我的仓库组',
-            icon:'#icon-icon-test',
-            listLength: groupList && groupList.length,
-            to:'/index/group'
-        }
-    ]
+        await findRecordCommitList()
+
+        setOpenState(false)
+    }
+    debugger
 
     const renderStableList = item => {
         return(
@@ -96,23 +60,133 @@ const HomePage = props =>{
         )
     }
 
+    /**
+     * 跳转仓库all
+     */
+    const goRepository =async () => {
+        props.history.push("/index/repository")
+    }
+
+    /**
+     * 跳转代码文件
+     * @param text
+     * @param record
+     */
+    const goDetails = (repository) => {
+        createOpenRecord(repository.rpyId)
+        if(repository.codeGroup){
+            props.history.push(`/index/repository/${repository.address}/tree`)
+        }
+        else {
+            props.history.push(`/index/repository/${repository.user.name}/${repository.name}/tree`)
+        }
+    }
+    /**
+     * 跳转commit
+     * @param repository
+     */
+    const goCommit = (recordCommit) => {
+        props.history.push(`/index/repository/${recordCommit?.repository?.user.name}/${recordCommit?.repository.name}/commits/master`)
+    }
+
+    /**
+     * 字段过长省略
+     * @param value  当前字段参数
+     */
+    const filedState = (value) => {
+        return(
+            value?.length>20?
+                <Tooltip placement="right" title={value}>
+                    <div style={{
+                        width: 110,
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap"
+                    }}>
+                        {value}
+                    </div>
+                </Tooltip>
+                :
+                <div>{value}</div>
+        )
+    }
+
     return(
         <div className='homePage'>
-            <div className='homePage-content xcode-home-limited'>
-                <div className='quickIn'>
-                    {
-                        stableList && stableList.map(item=>renderStableList(item))
-                    }
+            <Spin  spinning={openState}>
+                <div className='homePage-content xcode-home-limited'>
+
+                    <div className='houseRecent'>
+                        <div className='houseRecent-title'>
+                            <Guide title={'最近访问的仓库'} icon={<HistoryOutlined />}/>
+                            <div className='houseRecent-more-text' onClick={goRepository}>更多</div>
+                        </div>
+                        {
+                            !openState&&recordOpenList?
+                                <div className="houseRecent-repository">
+                                    {
+                                        recordOpenList?.map((item,key)=>{
+                                            return(
+                                                key<6?
+                                                    <div key={key} className='houseRecent-border' onClick={()=>goDetails(item.repository)}>
+                                                        <div className='houseRecent-border-flex'>
+                                                            <Listicon text={item?.repository?.name}/>
+                                                            <div className='houseRecent-border-text' >{filedState(item?.repository?.name)}</div>
+                                                        </div>
+                                                        <div className='houseRecent-border-flex houseRecent-border-text-top'>
+                                                            <div className='houseRecent-border-desc'>
+                                                                <span className='title-color'>分支</span>
+                                                                <span className='desc-text'>2</span>
+                                                            </div>
+                                                            <div className='houseRecent-border-desc'>
+                                                                <span className='title-color'>成员</span>
+                                                                <span className='desc-text'>5</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>:null
+                                            )
+                                        })
+                                    }
+                                </div>:
+
+                                <EmptyText title={'暂无访问的仓库'}/>
+                        }
+
+                    </div>
+                    <div className='newCommit'>
+                        <Guide title={'最近提交的仓库'} icon={<HistoryOutlined />}/>
+                        {
+                           recordCommitList?
+                               <div className=''>
+                                   {
+                                       recordCommitList?.map((item,key)=>{
+                                           return(
+                                               <div key={key} className='newCommit-lab newCommit-cursor' onClick={()=>goCommit(item)}>
+                                                   <div className='newCommit-lab-style'>
+                                                       <Listicon text={item?.repository.name}/>
+                                                       <div>
+                                                           <div className='newCommit-text-name'>{item?.repository.name}</div>
+                                                           <div className='newCommit-desc'>{item?.repository.remarks}</div>
+                                                       </div>
+                                                   </div>
+                                                   <div className='newCommit-time'>{item?.commitTimeBad}</div>
+                                               </div>
+                                           )
+                                       })
+                                   }
+                               </div>
+                                :
+                                <EmptyText title={'暂无访问的仓库'}/>
+                        }
+
+                    </div>
+                    <div className='home-dyna'>
+                        <Guide title={'Pull requests'} icon={<AimOutlined/>} />
+                        <EmptyText title={'暂无pull请求'}/>
+                    </div>
                 </div>
-                <div className='houseRecent'>
-                    <Guide title={'最近访问的仓库'} icon={<HistoryOutlined />}/>
-                    <EmptyText title={'暂无访问的仓库'}/>
-                </div>
-                <div className='home-dyna'>
-                    <Guide title={'近期动态'} icon={<AimOutlined/>} type={'dynamic'}/>
-                    <EmptyText title={'暂无近期动态'}/>
-                </div>
-            </div>
+            </Spin>
+
         </div>
     )
 }

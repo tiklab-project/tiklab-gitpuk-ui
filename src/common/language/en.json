@@ -18,6 +18,8 @@
     "Survey": "Survey",
     "Expand": "Expand",
     "Collapse": "Collapse",
+    "serverDeploy": "server_deploy",
+    "envDeploy": "env_deploy",
     "Plugin": "Plugin",
     "Message": "Message",
     "Keys": "keys",
@@ -30,5 +32,7 @@
     "Departments": "Departments",
     "Users": "Users",
     "Users Group": "Users Group",
-    "Users Directory" : "Users Directory"
+    "Users Directory" : "Users Directory",
+    "Backups": "Backups",
+    "Recover": "Recover"
 }

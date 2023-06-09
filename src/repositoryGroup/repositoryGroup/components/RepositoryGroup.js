@@ -3,7 +3,7 @@ import {
     PlusOutlined,
     SettingOutlined,
     LockOutlined,
-    SearchOutlined
+    SearchOutlined, UnlockOutlined
 } from '@ant-design/icons';
 import {inject,observer} from 'mobx-react';
 import {Table, Tooltip, Space, Input} from 'antd';
@@ -35,10 +35,10 @@ const RepositoryGroup = props => {
             id:2,
             title:'我的仓库组',
         },
-        {
+   /*     {
             id:3,
             title:'我收藏的',
-        }
+        }*/
     ]
 
     /**
@@ -50,7 +50,7 @@ const RepositoryGroup = props => {
     }
 
     const goDetails = (text,record) => {
-        // props.history.push(`/index/group/${text}/survey`)
+         props.history.push(`/index/group/${text}/repository`)
     }
 
     const columns = [
@@ -68,7 +68,7 @@ const RepositoryGroup = props => {
                         </div>
                         <div className='name-text'>
                             <span className='name-text-name'>{text}</span>
-                            <span className='name-text-lock'><LockOutlined/></span>
+                            <span className='name-text-lock'>{record.rules==='private'?<LockOutlined/>:<UnlockOutlined />}</span>
                         </div>
                     </div>
                 )
@@ -76,19 +76,19 @@ const RepositoryGroup = props => {
         },
         {
             title: '仓库',
-            dataIndex: 'repository-group',
-            key: 'repository-group',
+            dataIndex: 'repositoryNum',
+            key: 'repositoryNum',
             width:'30%',
             ellipsis:true,
         },
-        {
+  /*      {
             title: '更新',
             dataIndex: 'update',
             key: 'update',
             width:'30%',
             ellipsis:true,
             render:text => text?text:'暂无更新'
-        },
+        },*/
         {
             title: '操作',
             dataIndex: 'action',
@@ -103,7 +103,7 @@ const RepositoryGroup = props => {
                                 <SettingOutlined className='actions-se'/>
                             </span>
                         </Tooltip>
-                        <Tooltip title='收藏'>
+                       {/* <Tooltip title='收藏'>
                             <span className='repository-group-tables-collect'>
                             {
                                 record.collect === 1 ?
@@ -116,7 +116,7 @@ const RepositoryGroup = props => {
                                     </svg>
                             }
                             </span>
-                        </Tooltip>
+                        </Tooltip>*/}
                     </Space>
                 )
             }

@@ -21,6 +21,8 @@
     "Plugin": "插件",
     "Message": "消息",
     "Keys": "密钥",
+    "server_deploy":"服务配置",
+    "env_deploy":"环境配置",
     "Security": "安全",
     "Version And Licence": "版本与许可证",
     "Operation Log": "操作日志",
@@ -30,6 +32,8 @@
     "Departments": "部门",
     "Users": "用户",
     "Users Group": "用户组",
-    "Users Directory" : "用户目录"
+    "Users Directory" : "用户目录",
+    "Backups": "备份",
+    "Recover": "数据恢复"
 
 }

@@ -1,12 +1,12 @@
 import React from 'react';
 import {
     BarsOutlined,
-    GroupOutlined,
-    MenuOutlined,
-    ProjectOutlined,
-    TeamOutlined,
+    GroupOutlined, KeyOutlined, LayoutOutlined,
+    MenuOutlined, MergeCellsOutlined,
+    ProjectOutlined, SafetyCertificateOutlined, SoundOutlined,
+    TeamOutlined, VerifiedOutlined,
 } from '@ant-design/icons';
-
+import SettingContent from "./SettingContent";
 // 用户与部门路由
 export const departmentRouters = a =>{
     return [
@@ -146,3 +146,6 @@ export const templateRouter = [
         ]
     }
 ]
+
+
+

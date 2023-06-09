@@ -20,14 +20,13 @@ import "./File.scss";
 const File = props =>{
 
     const {repositoryStore,fileStore,location,match} = props
-
-    const {repositoryInfo,webUrl} = repositoryStore
+    const {repositoryInfo} = repositoryStore
     const {findFileTree,codeTreeData,findCloneAddress,cloneAddress,findLatelyBranchCommit,latelyBranchCommit} = fileStore
 
     const searValue = useRef(null)
     const urlInfo = match.params.branch
     const branch = setBranch(urlInfo,repositoryInfo)
-    const fileAddress = setFileAddress(location,webUrl+"/tree/"+urlInfo)
+    const fileAddress = setFileAddress(location,repositoryInfo.rpyId+"/tree/"+urlInfo)
 
     //文本框搜索
     const [searInput,setSearInput] = useState(false)
@@ -77,7 +76,7 @@ const File = props =>{
      * @param record
      */
     const goFileChild = record => {
-        props.history.push(`/index/repository/${webUrl}${record.path}`)
+        props.history.push(`/index/repository/${repositoryInfo.rpyId}${record.path}`)
     }
 
     /**
@@ -85,7 +84,7 @@ const File = props =>{
      * @param fileParent
      */
     const goFileParent = fileParent => {
-        props.history.push(`/index/repository/${webUrl}/tree/${urlInfo}${fileParent}`)
+        props.history.push(`/index/repository/${repositoryInfo.rpyId}/tree/${urlInfo}${fileParent}`)
     }
 
     /**
@@ -166,7 +165,6 @@ const File = props =>{
                     <BreadChang
                         {...props}
                         repositoryInfo={repositoryInfo}
-                        webUrl={webUrl}
                         branch={urlInfo}
                         fileAddress={fileAddress}
                         type={"tree"}
@@ -202,7 +200,7 @@ const File = props =>{
                         </div>
                     </div>
                 </div>
-                <RecentSubmitMsg {...props} latelyBranchCommit={latelyBranchCommit} webUrl={webUrl}/>
+                <RecentSubmitMsg {...props} latelyBranchCommit={latelyBranchCommit} repositoryInfo={repositoryInfo}/>
                 <div className="code-content-tables">
                     <div className="code-data-item">
                         <div className="code-item-fileName">名称</div>

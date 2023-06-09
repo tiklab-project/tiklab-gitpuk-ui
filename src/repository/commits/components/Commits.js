@@ -22,7 +22,7 @@ const Commits = props =>{
 
     const {commitsStore,repositoryStore,match,location} = props
 
-    const {repositoryInfo,webUrl} = repositoryStore
+    const {repositoryInfo} = repositoryStore
     const {findBranchCommit,commitsList,setCommitsList} = commitsStore
 
     const urlInfo = match.params.branch
@@ -95,7 +95,7 @@ const Commits = props =>{
      * @param item
      */
     const goDetails = item =>{
-        props.history.push(`/index/repository/${webUrl}/commit/${item.commitId}`)
+        props.history.push(`/index/repository/${repositoryInfo.rpyId}/commit/${item.commitId}`)
     }
 
     /**
@@ -103,7 +103,7 @@ const Commits = props =>{
      * @param item
      */
     const findFile = item => {
-        props.history.push(`/index/repository/${webUrl}/tree/${item.commitId+commitU4}`)
+        props.history.push(`/index/repository/${repositoryInfo.rpyId}/tree/${item.commitId+commitU4}`)
     }
 
     const renderCommits = item => {
@@ -169,7 +169,6 @@ const Commits = props =>{
                         <BranchSelect
                             {...props}
                             repositoryInfo={repositoryInfo}
-                            webUrl={webUrl}
                             type={'commit'}
                         />
                     </div>

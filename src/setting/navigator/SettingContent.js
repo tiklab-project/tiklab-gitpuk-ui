@@ -1,14 +1,16 @@
 import React,{useEffect,useState} from 'react';
 import {DownOutlined,UpOutlined} from '@ant-design/icons';
-import {PrivilegeButton} from 'tiklab-user-ui';
+import {PrivilegeButton,SystemNav} from 'tiklab-privilege-ui';
+import {SYSTEM_ROLE_STORE} from "tiklab-privilege-ui/es/store"
 import {renderRoutes} from 'react-router-config';
 import {useTranslation} from 'react-i18next';
-import {departmentRouters,templateRouter} from './SettingRouters';
 import './Setting.scss';
-
+import {inject, observer} from "mobx-react";
+import {getUser} from "tiklab-core-ui";
 const SettingContent= props =>  {
 
-    const {route,isDepartment,applicationRouters} = props
+    const {route,isDepartment,applicationRouters,systemRoleStore} = props
+    const {getSystemPermissions}=systemRoleStore
 
     const {t} = useTranslation()
 
@@ -20,7 +22,13 @@ const SettingContent= props =>  {
 
     useEffect(()=>{
         setSelectKey(path)
+
     },[path])
+
+    useEffect(()=>{
+       getSystemPermissions(getUser().userId)
+
+    },[])
 
     const select = data =>{
         props.history.push(data.id)
@@ -130,37 +138,33 @@ const SettingContent= props =>  {
     }
 
     return (
-       <div className='system'>
-           <div className='system-aside'>
-               <ul className='system-aside-top' style={{padding:0}}>
-                   {
-                       isDepartment && departmentRouters(department && department).map(firstItem => {
-                           return firstItem.children && firstItem.children.length > 0 ?
-                               subMenu(firstItem,0) : menu(firstItem,0)
-                       })
-                   }
+        <SystemNav
+            {...props}
+            expandedTree={expandedTree} // 树的展开和闭合(非必传)
+            setExpandedTree={setExpandedTree} // 树的展开和闭合(非必传)
+            applicationRouters={applicationRouters} // 菜单
+            outerPath={"/index/sys"} // 系统设置Layout路径
+            notFoundPath={""}  //找不到页面路径
+        >
+            <div className='system'>
+                <div className='system-aside'>
+                    <ul className='system-aside-top' style={{padding:0}}>
+                        {
+                            applicationRouters.map(firstItem => {
+                                return firstItem.children && firstItem.children.length > 0 ?
+                                    subMenu(firstItem,0) : menu(firstItem,0)
+                            })
+                        }
+                    </ul>
+                </div>
+                <div className='system-content'>
+                    {renderRoutes(route.routes)}
+                </div>
+            </div>
+        </SystemNav>
 
-                   {
-                       applicationRouters(department && department).map(firstItem => {
-                           return firstItem.children && firstItem.children.length > 0 ?
-                               subMenu(firstItem,0) : menu(firstItem,0)
-                       })
-                   }
-
-                   {
-                       devProduction && templateRouter.map(firstItem=>{
-                           return firstItem.children && firstItem.children.length > 0 ?
-                               subMenu(firstItem,0) : menu(firstItem,0)
-                       })
-                   }
-               </ul>
-           </div>
-           <div className='system-content'>
-               {renderRoutes(route.routes)}
-           </div>
-       </div>
     )
 
 }
 
-export default SettingContent
+export default inject(SYSTEM_ROLE_STORE)(observer(SettingContent))

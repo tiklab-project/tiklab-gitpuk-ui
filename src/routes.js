@@ -39,6 +39,7 @@ const RepositoryBasicInfo=AsyncComponent(()=>import('./repository/setting/basicI
 const PushRule=AsyncComponent(()=>import('./repository/setting/pushRule/components/PushRule'))
 const AccessKeys=AsyncComponent(()=>import('./repository/setting/accessKeys/components/AccessKeys'))
 const WebHooks=AsyncComponent(()=>import('./repository/setting/webHooks/components/Hooks'))
+const SonarQube=AsyncComponent(()=>import('./repository/detection/components/SonarQube'))
 
 /**
  * 仓库组
@@ -69,6 +70,13 @@ const MessageSendType=AsyncComponent(()=>import('./setting/message/MessageSendTy
 const MessageSendTypeTrue=AsyncComponent(()=>import('./setting/message/MessageSendTypeTrue'))
 const MessageNotice=AsyncComponent(()=>import('./setting/message/MessageNotice'))
 const MessageNoticeTrue=AsyncComponent(()=>import('./setting/message/MessageNoticeTrue'))
+
+//deploy
+const EnvDeploy=AsyncComponent(()=>import('./setting/deploy/components/EnvDeploy'))
+const ServerDeploy=AsyncComponent(()=>import('./setting/deploy/components/ServerDeploy'))
+
+//备份
+const Backups=AsyncComponent(()=>import('./setting/backups/components/Backups'))
 
 // security
 const MyLog=AsyncComponent(()=>import("./setting/security/MyLog"))
@@ -157,6 +165,111 @@ const routers = [
                 component:RepositoryGroupAdd,
             },
             {
+                path:'/index/repository/:rpyId',
+                component:RepositoryDetails,
+                routes:[
+                    {
+                        path:'/index/repository/:rpyId',
+                        exact: true,
+                        component:File,
+                    },
+                    {
+                        path:'/index/repository/:rpyId/tree',
+                        exact: true,
+                        component:File,
+                    },
+                    {
+                        path:'/index/repository/:rpyId/tree/:branch',
+                        component:File,
+                    },
+                    {
+                        path:'/index/repository/:rpyId/blob/:branch/*',
+                        exact:false,
+                        component:Blob,
+                    },
+                    {
+                        path:'/index/repository/:rpyId/edit/:branch/*',
+                        exact:false,
+                        component:Edit,
+                    },
+                    {
+                        path:'/index/repository/:rpyId/branch',
+                        exact:true,
+                        component:Branch,
+                    },
+                    {
+                        path:'/index/repository/:rpyId/tag',
+                        exact:true,
+                        component:Tag,
+                    },
+                    {
+                        path:'/index/repository/:rpyId/merge_requests',
+                        exact:true,
+                        component:RepositoryMerge,
+                    },
+                    {
+                        path:'/index/repository/:rpyId/commits/:branch',
+                        component:Commits,
+                    },
+                    {
+                        path:'/index/repository/:rpyId/commit/:commitsId',
+                        component:CommitsDetails,
+                    },
+                    {
+                        path:'/index/repository/:rpyId/statistics',
+                        component: Statistics
+                    },
+                    {
+                        path:'/index/repository/:rpyId/sonarQube',
+                        component:SonarQube
+                    },
+                    {
+                        path:'/index/repository/:rpyId/issue',
+                        component: Issue
+                    },
+                    {
+                        path:'/index/repository/:rpyId/pipeline',
+                        component: Pipeline
+                    },
+                    {
+                        path:'/index/repository/:rpyId/sys',
+                        component: RepositoryDetailsSet,
+                        routes:[
+                            {
+                                path:'/index/repository/:rpyId/sys/info',
+                                component:RepositoryBasicInfo
+                            },
+                            {
+                                path:'/index/repository/:rpyId/sys/pushRule',
+                                component:PushRule
+                            },
+                            {
+                                path:'/index/repository/:rpyId/sys/keys',
+                                component:AccessKeys
+                            },
+                            {
+                                path:'/index/repository/:rpyId/sys/hooks',
+                                component:WebHooks
+                            },
+
+                            {
+                                path:'/index/repository/:rpyId/sys/member',
+                                component: DomainUser
+                            },
+                            {
+                                path:'/index/repository/:rpyId/sys/role',
+                                component: DomainRole
+                            }
+                        ]
+                    },
+                    {
+                        path:'/index/repository/:rpyId/!*',
+                        render:()=><Redirect to={'/index/404'}/>,
+                    }
+
+                ]
+            },
+          /*  {
                 path:'/index/repository/:namespace/:name',
                 component:RepositoryDetails,
                 routes:[
@@ -175,12 +288,12 @@ const routers = [
                         component:File,
                     },
                     {
-                        path:'/index/repository/:namespace/:name/blob/:branch/*',
+                        path:'/index/repository/:namespace/:name/blob/:branch/!*',
                         exact:false,
                         component:Blob,
                     },
                     {
-                        path:'/index/repository/:namespace/:name/edit/:branch/*',
+                        path:'/index/repository/:namespace/:name/edit/:branch/!*',
                         exact:false,
                         component:Edit,
                     },
@@ -212,6 +325,10 @@ const routers = [
                         component: Statistics
                     },
                     {
+                        path:'/index/repository/:namespace/:name/sonarQube',
+                        component:SonarQube
+                    },
+                    {
                         path:'/index/repository/:namespace/:name/issue',
                         component: Issue
                     },
@@ -239,6 +356,7 @@ const routers = [
                                 path:'/index/repository/:namespace/:name/sys/hooks',
                                 component:WebHooks
                             },
+
                             {
                                 path:'/index/repository/:namespace/:name/sys/member',
                                 component: DomainUser
@@ -250,11 +368,11 @@ const routers = [
                         ]
                     },
                     {
-                        path:'/index/repository/:namespace/:name/*',
+                        path:'/index/repository/:namespace/:name/!*',
                         render:()=><Redirect to={'/index/404'}/>,
                     }
                 ]
-            },
+            },*/
             {
                 path:'/index/group/:name',
                 component: RepositoryGroupDetails,
@@ -404,6 +522,18 @@ const routers = [
                     {
                         path:'/index/sys/mes/noticetrue',
                         component: MessageNoticeTrue,
+                    },
+                    {
+                        path:'/index/sys/deploy/env',
+                        component: EnvDeploy,
+                    },
+                    {
+                        path:'/index/sys/deploy/backups',
+                        component: Backups,
+                    },
+                    {
+                        path:'/index/sys/deploy/server',
+                        component:ServerDeploy ,
                     },
                     {
                         path: '/index/sys/user/userGrouptrue',

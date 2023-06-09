@@ -12,19 +12,14 @@ import { inject, observer } from "mobx-react";
 
 const ProgramUser =(props)  => {
     const{repositoryStore}=props
-    const {findNameRpy,repositoryInfo}=repositoryStore
+    const {findRepository,repositoryInfo}=repositoryStore
 
-
-    useEffect(async () => {
-        findNameRpy(props.match.params.name)
-    }, [props.match.params.name]);
-
-    const projectId = repositoryInfo.rpyId;
+   const rpyId= props.match.params.rpyId
     return (
         <div >
             <DomainUser
                 {...props}
-                domainId={projectId}
+                domainId={rpyId}
                 bgroup = {"xcode"}
             />
         </div>

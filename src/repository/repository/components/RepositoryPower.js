@@ -8,13 +8,13 @@ const RepositoryPower = props =>{
 
     const powerLis = [
         {
-            id:1,
+            id:"public",
             title:'全局',
             icon:<UnlockOutlined />,
             desc:'公共项目，全部成员可见。不支持TFVC等某些功能。'
         },
         {
-            id:2,
+            id:"private",
             title:'私有',
             icon:<LockOutlined />,
             desc: '只有您授予访问权限的人才能查看此项目。'

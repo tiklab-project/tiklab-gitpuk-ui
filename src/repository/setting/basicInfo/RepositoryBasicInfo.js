@@ -1,3 +1,10 @@
+/**
+ * @name: BasicInfo
+ * @author: limingliang
+ * @date: 2023-05-22 14:30
+ * @description：仓库信息
+ * @update: 2023-05-22 14:30
+ */
 import React,{useState,useEffect} from 'react';
 import {Modal,Form, Input} from 'antd';
 import {
@@ -7,7 +14,7 @@ import {
     RightOutlined,
     EditOutlined
 } from '@ant-design/icons';
-import {PrivilegeProjectButton} from 'tiklab-user-ui';
+import {PrivilegeProjectButton} from 'tiklab-privilege-ui';
 import {inject,observer} from 'mobx-react';
 import Btn from '../../../common/btn/Btn';
 import BreadcrumbContent from '../../../common/breadcrumb/Breadcrumb';
@@ -135,26 +142,22 @@ const RepositoryBasicInfo = props =>{
         }
     }
 
-    const lisItem = item =>{
-        return <div key={item.key} className='houseReDel-li'>
-            <div
-                className={`houseReDel-li-top ${isExpandedTree(item.key) ?'houseReDel-li-select':''}`}
-                onClick={()=>setOpenOrClose(item.key)}
-            >
-                <div className='houseReDel-li-icon'>{item.icon}</div>
-                <div className='houseReDel-li-center'>
-                    <div className='houseReDel-li-title'>{item.title}</div>
-                    {
-                        !isExpandedTree(item.key) &&
-                        <div className='houseReDel-li-desc'>{item.desc}</div>
-                    }
+    const lisItem = (item,index) =>{
+        return <div key={item.key} className={`${index>0?' border-top':''}`}>
+                <div className={`houseReDel-li-top ${isExpandedTree(item.key) ?'houseReDel-li-select':''}`}
+                     onClick={()=>setOpenOrClose(item.key)}>
+                    <div className='houseReDel-li-icon'>{item.icon}</div>
+                    <div className='houseReDel-li-center'>
+                        <div className='houseReDel-li-title'>{item.title}</div>
+                        {
+                            !isExpandedTree(item.key) &&
+                            <div className='houseReDel-li-desc'>{item.desc}</div>
+                        }
+                    </div>
+                    <div className='houseReDel-li-down'>
+                        {isExpandedTree(item.key)? <DownOutlined />:<RightOutlined />}
+                    </div>
                 </div>
-                <div className='houseReDel-li-down'>
-                    {
-                        isExpandedTree(item.key)? <DownOutlined />:<RightOutlined />
-                    }
-                </div>
-            </div>
             <div className={`${isExpandedTree(item.key)? 'houseReDel-li-bottom':'houseReDel-li-none'}`}>
                 {
                     isExpandedTree(item.key) && item.content
@@ -174,12 +177,10 @@ const RepositoryBasicInfo = props =>{
             <div className='houseReDel-up'>
                 <BreadcrumbContent firstItem={'仓库信息'}/>
             </div>
-            <div className='houseReDel-content'>
-                <div className='houseReDel-ul'>
-                    {
-                        lis.map(item=> lisItem(item) )
-                    }
-                </div>
+            <div className='houseReDel-li'>
+                {
+                    lis.map((item,index)=> lisItem(item,index) )
+                }
             </div>
             {
                 isLoading && <Loading/>

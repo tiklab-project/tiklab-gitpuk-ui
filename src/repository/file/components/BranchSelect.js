@@ -13,7 +13,7 @@ import './BranchSelect.scss';
  */
 const BranchSelect = props => {
 
-    const {branchStore,repositoryInfo,webUrl,type,match} = props
+    const {branchStore,repositoryInfo,type,match} = props
 
     const {findAllBranch,branchList} = branchStore
 
@@ -32,10 +32,10 @@ const BranchSelect = props => {
     const changBranch = value => {
         switch (type) {
             case 'commit':
-                props.history.push(`/index/repository/${webUrl}/commits/${value}`)
+                props.history.push(`/index/repository/${repositoryInfo.rpyId}/commits/${value}`)
                 break
             case 'code':
-                props.history.push(`/index/repository/${webUrl}/tree/${value}`)
+                props.history.push(`/index/repository/${repositoryInfo.rpyId}/tree/${value}`)
         }
     }
 

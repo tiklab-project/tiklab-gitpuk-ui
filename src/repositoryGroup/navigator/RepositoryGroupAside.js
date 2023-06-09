@@ -32,11 +32,11 @@ const RepositoryGroupAside= props =>{
 
     // 侧边第一栏导航
     const firstRouters=[
-        {
+       /* {
             to:`/index/group/${groupName}/survey`,
             title:`${t('Survey')}`,
             icon:<CreditCardOutlined />,
-        },
+        },*/
         {
             to:`/index/group/${groupName}/repository`,
             title:`${t('Repository')}`,

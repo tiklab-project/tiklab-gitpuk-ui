@@ -6,37 +6,72 @@ import {
     SoundOutlined,
     VerifiedOutlined,
     KeyOutlined,
-    FileDoneOutlined
+    TeamOutlined,
+    GroupOutlined,
+    BarsOutlined,
+    ProjectOutlined,
+    MenuOutlined,
+    FileDoneOutlined,
+    BuildOutlined,
 } from '@ant-design/icons';
 import SettingContent from './SettingContent';
 
 const Setting = props =>{
 
-    const applicationRouters = a =>{
-        return [
+    const applicationRouters = [
+            {
+                id: '1',
+                title: 'Users And Departments',
+                icon: <TeamOutlined/>,
+                children: [
+                    {
+                        id: '/index/sys/user/org',
+                        title: 'Departments',
+                        icon: <GroupOutlined/>,
+                        purviewCode: 'orga',
+                    },
+                    {
+                        id: '/index/sys/user/list',
+                        title: 'Users',
+                        icon: <TeamOutlined/>,
+                        purviewCode: 'user',
+                    },
+                    {
+                        id: '/index/sys/user/userGroup',
+                        title: 'Users Group',
+                        icon: <TeamOutlined/>,
+                        purviewCode: 'user_group',
+                    },
+                    {
+                        id: '/index/sys/user/directory',
+                        title: 'Users Directory',
+                        icon: <BarsOutlined/>,
+                        purviewCode: 'user_dir',
+                    },
+                ]
+            },
             {
                 id:'/index/sys/role',
                 title:'Privilege',
                 icon: <SafetyCertificateOutlined />,
-                purviewCode:'pipeline_permission',
+                purviewCode:'xcode_permission',
             },
             {
                 id:'2',
                 title: 'Message',
                 icon:<SoundOutlined/>,
-                purviewCode: a[2],
                 children: [
                     {
                         id:'/index/sys/mes/notice',
                         title:'Message Notification Scheme',
                         icon:<SoundOutlined />,
-                        purviewCode:'message_setting',
+                        purviewCode:'message_type',
                     },
                     {
                         id:'/index/sys/mes/send',
                         title: 'Message Send Type',
                         icon:<SoundOutlined />,
-                        purviewCode: 'message_type',
+                        purviewCode: 'message_setting',
                     },
                 ]
             },
@@ -46,27 +81,46 @@ const Setting = props =>{
                 icon:<KeyOutlined />,
             },
             {
-                id:'/index/sys/hooks',
-                title: 'WebHooks',
-                icon:<FileDoneOutlined />,
-            },
-            {
                 id:'/index/sys/plugin',
                 title:'Plugin',
                 icon:<MergeCellsOutlined />,
-                purviewCode:'pipeline_plugin',
+                purviewCode:'xcode_plugin',
             },
+         /*   {
+                id:'/index/sys/hooks',
+                title: 'WebHooks',
+                icon:<FileDoneOutlined />,
+            },*/
+            {
+                id:'/index/sys/deploy/server',
+                title:'server_deploy',
+                icon:<FileDoneOutlined />,
+            },
+            {
+                id:'/index/sys/deploy/env',
+                title:'env_deploy',
+                icon:<BuildOutlined />,
+            },
+            {
+                id:'/index/sys/deploy/backups',
+                title:'Backups',
+                icon:<BuildOutlined />,
+            },
+            /*{
+                id:'/index/sys/deploy/recover',
+                title:'Recover',
+                icon:<BuildOutlined />,
+            },*/
             {
                 id:'5',
                 title:'Security',
                 icon:<LayoutOutlined />,
-                purviewCode:a[3],
                 children: [
                     {
                         id:'/index/sys/myLog',
                         title:'Operation Log',
                         icon:<LayoutOutlined />,
-                        purviewCode:'pipeline_log',
+                        purviewCode:'xcode_log',
                     }
                 ]
             },
@@ -74,10 +128,9 @@ const Setting = props =>{
                 id:'/index/sys/version',
                 title:'Version And Licence',
                 icon:<VerifiedOutlined />,
-                purviewCode:'pipeline_version',
+                purviewCode:'xcode_version',
             },
         ]
-    }
 
     return  <SettingContent
                 {...props}

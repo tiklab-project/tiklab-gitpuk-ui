@@ -1,5 +1,13 @@
+/**
+ * @name: RepositoryTable
+ * @author:
+ * @date: 2023-05-22 14:30
+ * @description：代码仓库table
+ * @update: 2023-05-22 14:30
+ */
+
 import React from 'react';
-import {LockOutlined,SettingOutlined} from '@ant-design/icons';
+import {LockOutlined, SettingOutlined, UnlockOutlined} from '@ant-design/icons';
 import {Space,Table,Tooltip} from 'antd';
 import EmptyText from '../../../common/emptyText/EmptyText';
 import Listicon from '../../../common/list/Listicon';
@@ -7,7 +15,7 @@ import './RepositoryTable.scss';
 
 const RepositoryTable = props => {
 
-    const {repositoryList} = props
+    const {repositoryList,createOpenRecord} = props
 
     /**
      * 跳转代码文件
@@ -15,12 +23,8 @@ const RepositoryTable = props => {
      * @param record
      */
     const goDetails = (text,record) => {
-        if(record.codeGroup){
-            props.history.push(`/index/repository/${record.address}/tree`)
-        }
-        else {
-            props.history.push(`/index/repository/${record.user.name}/${record.name}/tree`)
-        }
+        createOpenRecord(record.rpyId)
+        props.history.push(`/index/repository/${record.rpyId}/tree`)
     }
 
     /**
@@ -29,12 +33,7 @@ const RepositoryTable = props => {
      * @param record
      */
     const goSet = (text,record) => {
-        if(record.codeGroup){
-            props.history.push(`/index/repository/${record.address}/sys/info`)
-        }
-        else {
-            props.history.push(`/index/repository/${record.user.name}/${record.name}/sys/info`)
-        }
+        props.history.push(`/index/repository/${record.rpyId}/sys/info`)
     }
 
     const columns = [
@@ -52,10 +51,10 @@ const RepositoryTable = props => {
                             <div className='name-text-title'>
                                 <span className='name-text-name'>
                                     {
-                                        record.codeGroup ? record.codeGroup.name : record.user.name
+                                        record.group ? record.group.name : record?.user.name
                                     } / {text}
                                 </span>
-                                <span className='name-text-lock'><LockOutlined/></span>
+                                <span className='name-text-lock'>{record.rules==='private'?<LockOutlined/>:<UnlockOutlined />}</span>
                                 <span className='name-text-type'>{record.userType === '3' ? '管理员':'开发者'}</span>
                             </div>
                             {
@@ -69,8 +68,8 @@ const RepositoryTable = props => {
         },
         {
             title: '更新',
-            dataIndex: 'update',
-            key: 'update',
+            dataIndex: 'updateTime',
+            key: 'updateTime',
             width:'30%',
             ellipsis:true,
             render:text => text?text:'暂无更新'

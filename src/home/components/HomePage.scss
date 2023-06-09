@@ -60,6 +60,62 @@
             background: #fff;
             flex: 1;
             margin-bottom: 15px;
+            .houseRecent-title{
+                display: flex;
+                justify-content: space-between;
+                .houseRecent-more-text{
+                    color: #3967FF;
+                    cursor: pointer;
+                }
+            }
+            .houseRecent-repository{
+                /*flex-wrap: wrap;*/
+                grid-column: span 6 / span 6;
+                display: flex;
+                gap: 1rem;
+                margin-top: 5px;
+                .houseRecent-border{
+                    display: block;
+                    position: relative;
+                    box-sizing: border-box;
+                    width: 100%;
+                    max-width: 208px;
+                    background-image: linear-gradient(rgb(244, 245, 247), transparent 33%);
+                    box-shadow: var(--ds-shadow-raised,0 1px 1px rgba(9,30,66,0.25),0 0 1px 1px rgba(9,30,66,0.13));
+                    border-radius: 3px;
+                    padding: 16px;
+                    cursor: pointer;
+                    .houseRecent-border-flex{
+                        display: flex;
+                    }
+                    .houseRecent-border-text-top{
+                        padding-top: 30px;
+                        justify-content: space-between;
+                        margin:0 10px;
+                    }
+                    .houseRecent-border-text{
+                        display: flex;
+                        height: 32px;
+                        -webkit-box-align: center;
+                        align-items: center;
+                        -webkit-box-pack: justify;
+                        justify-content: space-between;
+                        font-weight: 600;
+                    }
+                    .houseRecent-border-desc {
+                        font-style: inherit;
+                        margin-top: 7px;
+                        line-height: 1.45455;
+                        .title-color{
+                            color: #6b778c;
+                        }
+                        .desc-text{
+                            margin-left: 5px;
+                        }
+                    }
+
+                }
+            }
             .houseRecent-content{
                 display: flex;
                 justify-content: flex-start;
@@ -122,6 +178,42 @@
                 }
             }
         }
+        .newCommit{
+            border-radius: 4px;
+            padding: 10px;
+            height: 300px;
+            background: #fff;
+            flex: 1;
+            margin-bottom: 15px;
+            .newCommit-cursor:hover{
+                background-color: #f6f6f6;
+            }
+            .newCommit-lab{
+                margin-top: 12px;
+                cursor: pointer;
+                display: flex;
+                place-content: space-between;
+                align-items: center;
+                height: 50px;
+                padding: 0 10px;
+                .newCommit-lab-style{
+                    display: flex;
+                    align-items: center;
+                }
+                .newCommit-text-name{
+                    color: #1890ff;
+                }
+                .newCommit-time{
+                   color:#9b9b9b;
+                }
+                .newCommit-desc{
+                    size: 2px;
+                    font-size: 4px;
+                }
+            }
+        }
+
+
         .home-dyna{
             background: #fff;
             padding: 10px;

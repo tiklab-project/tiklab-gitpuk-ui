@@ -11,10 +11,12 @@ import routesSaas  from "./module/routes";
 import Portal from "./module/home/components/Portal";
 import SettingContent from "./module/setting/navigator/SettingContent";
 import xcodeZh from "./module/common/language/zh.json"
+import Breadcrumb from "./module/common/breadcrumb/Breadcrumb"
 export {
     routesSaas ,
     xcodeStore,
     Portal,
     SettingContent,
-    xcodeZh
+    xcodeZh,
+    Breadcrumb
 }

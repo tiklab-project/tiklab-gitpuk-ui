@@ -1,0 +1,14 @@
+.dev-deploy-add-modal{
+  .dev-deploy-add-up{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: var(--tiklab-font-weight-bold);
+    padding: var(--tiklab-padding) var(--tiklab-padding) var(--tiklab-padding-item);
+  }
+  .dev-deploy-add-content{
+    padding: 0 var(--tiklab-padding);
+    overflow:auto;
+  }
+}

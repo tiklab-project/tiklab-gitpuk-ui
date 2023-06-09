@@ -10,7 +10,7 @@ import './BreadChang.scss';
  */
 const BreadChang = props => {
 
-    const {repositoryInfo,type,branch,webUrl,fileAddress} = props
+    const {repositoryInfo,type,branch,fileAddress} = props
 
     /**
      * 目录跳转
@@ -18,7 +18,7 @@ const BreadChang = props => {
      * @param index
      */
     const breadJump = (name,index) =>{
-        let path = `/index/repository/${webUrl}/tree/${branch}`
+        let path = `/index/repository/${repositoryInfo.rpyId}/tree/${branch}`
         for (let i = 1;i <= index;i++){
             path = path + '/' + name[i]
         }
@@ -53,12 +53,11 @@ const BreadChang = props => {
             <BranchSelect
                 {...props}
                 repositoryInfo={repositoryInfo}
-                webUrl={webUrl}
                 type={'code'}
             />
             <div className='code-bread'>
                 <div className='bread-item'
-                     onClick={()=>branch && props.history.push(`/index/repository/${webUrl}/tree/${branch}`)}
+                     onClick={()=>branch && props.history.push(`/index/repository/${repositoryInfo.rpyId}/tree/${branch}`)}
                 >{repositoryInfo.name}</div>
                 <div className='bread-item'> / </div>
                 { renderCodeBread(fileAddress) }

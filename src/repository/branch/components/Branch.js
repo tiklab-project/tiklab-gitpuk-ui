@@ -19,7 +19,7 @@ const Branch = props =>{
 
     const {repositoryStore,branchStore} = props
 
-    const {repositoryInfo,webUrl} = repositoryStore
+    const {repositoryInfo} = repositoryStore
     const {createBranch,findAllBranch,branchList,fresh,deleteBranch} = branchStore
 
     const [branchType,setBranchType] = useState(1)
@@ -54,7 +54,7 @@ const Branch = props =>{
      * @param item
      */
    const goCode = item =>{
-       props.history.push(`/index/repository/${webUrl}/tree/${item.branchName}`)
+       props.history.push(`/index/repository/${repositoryInfo.rpyId}/tree/${item.branchName}`)
    }
 
    // 渲染分支列表

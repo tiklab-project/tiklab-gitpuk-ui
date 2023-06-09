@@ -10,21 +10,15 @@ import { Row, Col } from "antd";
  * @constructor
  */
 const DomainRoleContent = props =>{
-    const{repositoryStore}=props
-    const {findNameRpy,repositoryInfo}=repositoryStore
 
 
-    useEffect(async () => {
-       findNameRpy(props.match.params.name)
-    }, [props.match.params.name]);
-
-    const projectId = repositoryInfo.rpyId;
+    const rpyId= props.match.params.rpyId
     return (
         <Row>
             <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
                 <DomainRole
                     {...props}
-                    domainId={projectId}
+                    domainId={rpyId}
                     bgroup = {"xcode"}
                 />
             </Col>
