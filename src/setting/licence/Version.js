@@ -103,7 +103,7 @@ const VersionContent = props =>{
         }
     ]
 
-    return <Version {...props} bgroup={"matflow"}>
+    return <Version {...props} bgroup={"xpack"}>
         <Table
             bordered
             columns={columns}

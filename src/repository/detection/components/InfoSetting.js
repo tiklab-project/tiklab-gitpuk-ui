@@ -30,7 +30,6 @@ const InfoSetting = (props) => {
                     id:values.deployServerId
                 }
             }
-            debugger
             createCodeScan(param)
         })
       setAddVisible(false)

@@ -14,21 +14,20 @@ const RepositoryAdd = props =>{
 
     const {repositoryStore,groupStore} = props
 
-    const {createRpy,isLoading,findUserRpy,repositoryList,createOpenRecord} = repositoryStore
+    const {createRpy,isLoading,repositoryList,findRepositoryByName,createOpenRecord,findRepositoryList} = repositoryStore
     const {findUserGroup,groupList} = groupStore
 
     const userName = getUser().name
     const [form] = Form.useForm()
     const [addType,setAddType] = useState(1)
     const [powerType,setPowerType] = useState("public")
-    const [yUserList,setYUserList] = useState([])
-    const [nUserList,setNUserList] = useState([])
-    const [member,setMember] = useState([])
+    //输入的仓库名称
+    const [rpyName,setRpyName]=useState('')
     const [codeGroup,setCodeGroup] = useState(null)
 
     useEffect(()=>{
         // 初始化仓库
-        findUserRpy()
+        findRepositoryByName({})
         // 仓库组
         findUserGroup()
     },[])
@@ -38,6 +37,7 @@ const RepositoryAdd = props =>{
      */
     const onOk = () => {
         form.validateFields().then((values) => {
+
             createRpy({
                 ...values,
                 group:{groupId:codeGroup},
@@ -63,6 +63,20 @@ const RepositoryAdd = props =>{
                 address:value.name
             })
         }
+    }
+
+    //设置仓库组
+    const installCodeGroup = (value) => {
+        const param={
+            groupId:value,
+            name:rpyName
+        }
+        findRepositoryList(param)
+        setCodeGroup(value)
+    }
+
+    const inputRpyName =async (e) => {
+        setRpyName(e.target.value)
     }
 
     const newRepository = (
@@ -94,7 +108,7 @@ const RepositoryAdd = props =>{
                    }),
                ]}
             >
-                <Input style={{background:'#fff'}}/>
+                <Input style={{background:'#fff'}} onChange={inputRpyName}  />
             </Form.Item>
             <div className='repository-add-path'>
                 <Form.Item label={<span style={{opacity:0}}>归属</span>}>
@@ -104,7 +118,7 @@ const RepositoryAdd = props =>{
                     <Select
                         style={{background:'#fff',width:150,height:30,margin:'0 3px'}}
                         defaultValue={null}
-                        onChange={value=>setCodeGroup(value)}
+                        onChange={value=>installCodeGroup(value)}
                     >
                         <Select.Option value={null}>不选择分组</Select.Option>
                         {

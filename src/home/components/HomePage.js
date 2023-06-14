@@ -38,7 +38,6 @@ const HomePage = props =>{
 
         setOpenState(false)
     }
-    debugger
 
     const renderStableList = item => {
         return(
@@ -74,19 +73,14 @@ const HomePage = props =>{
      */
     const goDetails = (repository) => {
         createOpenRecord(repository.rpyId)
-        if(repository.codeGroup){
-            props.history.push(`/index/repository/${repository.address}/tree`)
-        }
-        else {
-            props.history.push(`/index/repository/${repository.user.name}/${repository.name}/tree`)
-        }
+        props.history.push(`/index/repository/${repository.rpyId}/tree`)
     }
     /**
      * 跳转commit
      * @param repository
      */
-    const goCommit = (recordCommit) => {
-        props.history.push(`/index/repository/${recordCommit?.repository?.user.name}/${recordCommit?.repository.name}/commits/master`)
+    const goCommit = (repository) => {
+        props.history.push(`/index/repository/${repository.rpyId}/commits/master`)
     }
 
     /**
@@ -161,7 +155,7 @@ const HomePage = props =>{
                                    {
                                        recordCommitList?.map((item,key)=>{
                                            return(
-                                               <div key={key} className='newCommit-lab newCommit-cursor' onClick={()=>goCommit(item)}>
+                                               <div key={key} className='newCommit-lab newCommit-cursor' onClick={()=>goCommit(item?.repository)}>
                                                    <div className='newCommit-lab-style'>
                                                        <Listicon text={item?.repository.name}/>
                                                        <div>

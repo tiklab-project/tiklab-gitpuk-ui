@@ -9,7 +9,7 @@ import {Plugin} from "tiklab-plugin-manager-ui";
  */
 const PluginContent = props =>{
 
-    return <Plugin {...props}/>
+    return <Plugin {...props}  bgroup={"xcode"}/>
 
 }
 

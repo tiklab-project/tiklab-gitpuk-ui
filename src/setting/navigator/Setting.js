@@ -9,8 +9,6 @@ import {
     TeamOutlined,
     GroupOutlined,
     BarsOutlined,
-    ProjectOutlined,
-    MenuOutlined,
     FileDoneOutlined,
     BuildOutlined,
 } from '@ant-design/icons';

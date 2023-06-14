@@ -69,7 +69,6 @@ const EnvDeploy = (props) => {
     ]
     //删除环境配置
     const delAuth = (record) => {
-        debugger
         deleteDeployEnv(record.id)
     }
     return(

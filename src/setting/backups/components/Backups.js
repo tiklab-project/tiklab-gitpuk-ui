@@ -7,14 +7,14 @@
  */
 import React, {useState,useEffect} from "react";
 import BreadcrumbContent from "../../../common/breadcrumb/Breadcrumb";
-import {Button, message, Radio, Spin,Upload} from 'antd';
+import {Button, message, Progress, Radio, Spin, Upload} from 'antd';
 import './Backups.scss'
 import {inject, observer} from "mobx-react";
 import {UploadOutlined} from "@ant-design/icons";
 import {getUser} from "tiklab-core-ui";
 const Backups = (props) => {
     const {backupsStore} = props
-    const {backupsExec,recoveryData,gainBackupsRes,findBackups,backupsData,updateBackups}=backupsStore
+    const {backupsExec,recoveryData,gainBackupsRes,findBackups,backupsData,updateBackups,backupsRes}=backupsStore
 
     const [value, setValue] = useState("false");
     const [loading,setLoading]=useState(false)
@@ -22,6 +22,7 @@ const Backups = (props) => {
     const[fileName,setFileName]=useState(null)
     const [fileList, setFileList] = useState([]);
 
+    const [barState,setBarState]=useState("")
     useEffect(async ()=>{
         await findBackup()
     },[loading])
@@ -49,6 +50,7 @@ const Backups = (props) => {
 
     //数据恢复
     const recovery = () => {
+        setBarState("success")
         setLoading(true)
         recoveryData(fileName)
         timeTask("recovery")
@@ -61,15 +63,21 @@ const Backups = (props) => {
             gainBackupsRes(type).then(res=>{
                 if (res.code===0){
                     switch (res.data){
+                        case "100":
+                            clearInterval(timer)
+                            setLoading(false)
+                            message.info(type="backups"?'备份成功':'数据恢复成功',0.5)
+                            break
                         case "ok":
                             clearInterval(timer)
                             setLoading(false)
                             message.info(type="backups"?'备份成功':'数据恢复成功',0.5)
                             break
                         case "error":
+                            setBarState("error")
                             clearInterval(timer)
                             setLoading(false)
-                            message.error(type="backups"?'备份失败':'数据恢复失败',0.5)
+                            message.error(type="backups"?'备份失败:':'数据恢复失败',0.5)
                             break
                     }
                 }else {
@@ -125,7 +133,6 @@ const Backups = (props) => {
                 if (file.response) {
 
                     setFileName(file.name)
-                    debugger
                 }
                 return file;
             });
@@ -145,7 +152,7 @@ const Backups = (props) => {
                         <div className='backups-data'>
                             <div className='backups-nav-title'>备份路径：</div>
                             <div id='myDiv' >{backupsData?.backupsAddress}</div>
-                            <div className='backups-exec' onClick={edit}>修改</div>
+                          {/*  <div className='backups-exec' onClick={edit}>修改</div>*/}
                         </div>
                         <div className=''>
                             <div className='backups-data'>
@@ -156,12 +163,17 @@ const Backups = (props) => {
                                 </Radio.Group>
                                 <div className='backups-desc backups-desc-left'>(开启定时任务后每天晚上14:00定时备份)</div>
                             </div>
-
                         </div>
                         <div className='backups-data'>
                             <div className='backups-nav-title'>最近备份记录：</div>
                             <div>{backupsData?.newBackupsTime}</div>
                         </div>
+                        {
+                            barState==="success"&&
+                            <Progress percent={backupsRes} />||
+                            barState==='error'&&
+                            <Progress percent={0} size="small" status="exception" />
+                        }
                         <Button type="primary" className='backups-button' onClick={backups}>手动备份</Button>
                     </div>
 
@@ -181,6 +193,12 @@ const Backups = (props) => {
                             }
                         </div>
                         <div className='backups-nave-top'>
+                            {
+                                barState==="success"&&
+                                <Progress percent={backupsRes} />||
+                                barState==='error'&&
+                                <Progress percent={0} size="small" status="exception" />
+                            }
                             <Button type="primary" className='backups-button' onClick={recovery}>恢复</Button>
                         </div>
                     </div>

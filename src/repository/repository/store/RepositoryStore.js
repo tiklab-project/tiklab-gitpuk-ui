@@ -169,6 +169,21 @@ export class RepositoryStore {
         return data
     }
 
+    /**
+     * 通过仓库名字或仓库组查询仓库是否存在
+     * @param values
+     * @returns {Promise<*>}
+     */
+    @action
+    findRepositoryByName = async (param) =>{
+        const data = await Axios.post('/rpy/findRepositoryByName',param)
+        if(data.code===0){
+
+            this.repositoryList = data.data && data.data
+        }
+        return data
+    }
+
 
     /**
      * 查询最近打开的仓库

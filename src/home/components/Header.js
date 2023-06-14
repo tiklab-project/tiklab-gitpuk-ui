@@ -89,7 +89,7 @@ const Head = props =>{
      * 跳转系统设置
      */
     const goSystem = () =>{
-        props.history.push('/index/sys')
+        props.history.push('/index/sys/auth')
     }
 
     // 渲染一级标题

@@ -6,6 +6,9 @@ export class BackupsStore {
 
     @observable
     backupsData=''
+
+    @observable
+    backupsRes=''
     /**
      * 修改备份数据
      * @param values
@@ -56,7 +59,9 @@ export class BackupsStore {
         const param=new FormData()
         param.append('type',value)
         const data = await Axios.post('/backups/gainBackupsRes',param)
-
+        if (data.code===0){
+            this.backupsRes=data.data
+        }
         return data
     }
 

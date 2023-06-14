@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import {Form,Input} from 'antd';
 import {inject,observer} from 'mobx-react';
 import Btn from '../../../common/btn/Btn';
@@ -12,13 +12,18 @@ const RepositoryGroupAdd = props =>{
 
     const {groupStore} = props
 
-    const {createGroup} = groupStore
+    const {createGroup,findUserGroup,groupList} = groupStore
 
     const [form] = Form.useForm()
     const [powerType,setPowerType] = useState("public")
     const [yUserList,setYUserList] = useState([])
     const [nUserList,setNUserList] = useState([])
     const [member,setMember] = useState([])
+
+    useEffect(()=>{
+        // 仓库组
+        findUserGroup()
+    },[])
 
     /**
      * 仓库组添加确定
@@ -56,6 +61,18 @@ const RepositoryGroupAdd = props =>{
                                 {required:true,message:'仓库组名称不能为空'},
                                 {max:30,message:'请输入1~31位以内的名称'},
                                 Validation('名称','appoint'),
+                                ({getFieldValue}) => ({
+                                    validator(rule,value) {
+                                        let nameArray = []
+                                        if(groupList){
+                                            nameArray = groupList && groupList.map(item=>item.name)
+                                        }
+                                        if (nameArray.includes(value)) {
+                                            return Promise.reject('名称已经存在')
+                                        }
+                                        return Promise.resolve()
+                                    }
+                                }),
                             ]}
                         >
                             <Input style={{background:'#fff'}}/>
