@@ -16,7 +16,7 @@ const Repository = props => {
 
     const {findRepositoryPage,repositoryType,setRepositoryType,findRepositoryList,findNameRpy,createOpenRecord} = repositoryStore
     //查询仓库的名称
-    const {repositoryName,setRepositoryName}=useState()
+    const [repositoryName,setRepositoryName]=useState()
     const [repositoryList,setRepositoryList]=useState([])
 
     const [currentPage,setCurrentPage]=useState(1)
@@ -56,9 +56,12 @@ const Repository = props => {
                 currentPage:currentPage,
                 pageSize:10
             },
-            userId:getUser().userId
+            userId:getUser().userId,
+            name:repositoryName
         }
+        
         setOpenState(true)
+        
        const res=await findRepositoryPage(param)
         setOpenState(false)
         if (res.code===0){
@@ -71,8 +74,9 @@ const Repository = props => {
      * 切换仓库类型
      * @param item
      */
-    const clickType = item => {
+    const clickType =async item => {
         setRepositoryType(item.id)
+
     }
 
     /**
@@ -80,7 +84,8 @@ const Repository = props => {
      * @param item
      */
     const onChangeSearch = (e) => {
-        setRepositoryName(e.track.valueOf())
+        const value=e.target.value
+        setRepositoryName(value)
     }
     /**
      * 搜索仓库
@@ -88,6 +93,7 @@ const Repository = props => {
      */
     const onSearch =async () => {
         findNameRpy(repositoryName)
+        await findRpyPage(currentPage)
     }
 
     return(

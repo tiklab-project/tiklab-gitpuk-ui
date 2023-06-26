@@ -9,10 +9,10 @@ import BreadcrumbContent from '../../../common/breadcrumb/Breadcrumb';
 import RepositoryUser from './RepositoryUser';
 import RepositoryPower from './RepositoryPower';
 import './RepositoryAdd.scss';
-
+import groupStore from "../../../repositoryGroup/repositoryGroup/store/RepositoryGroupStore"
 const RepositoryAdd = props =>{
 
-    const {repositoryStore,groupStore} = props
+    const {repositoryStore} = props
 
     const {createRpy,isLoading,repositoryList,findRepositoryByName,createOpenRecord,findRepositoryList} = repositoryStore
     const {findUserGroup,groupList} = groupStore
@@ -45,7 +45,7 @@ const RepositoryAdd = props =>{
                 rules:powerType,
             }).then(res=>{
                 if(res.code===0){
-                    props.history.push('/index/repository')
+                    props.history.push(`/index/repository/${res.data}/tree`)
                   /* props.history.push(`/index/house/${codeGroup?codeGroup:userName}/${values.name}/tree`)*/
                 }
                 createOpenRecord(res.data)
@@ -76,6 +76,7 @@ const RepositoryAdd = props =>{
     }
 
     const inputRpyName =async (e) => {
+
         setRpyName(e.target.value)
     }
 
@@ -219,4 +220,4 @@ const RepositoryAdd = props =>{
     )
 }
 
-export default inject('repositoryStore','groupStore')(observer(RepositoryAdd))
+export default inject('repositoryStore')(observer(RepositoryAdd))

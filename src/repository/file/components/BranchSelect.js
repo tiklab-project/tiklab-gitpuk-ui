@@ -4,7 +4,7 @@ import {inject,observer} from 'mobx-react';
 import EmptyText from '../../../common/emptyText/EmptyText';
 import {findCommitId, setBranch} from './Common';
 import './BranchSelect.scss';
-
+import branchStore from "../../branch/store/BranchStore"
 /**
  * 切换分支
  * @param props
@@ -13,7 +13,7 @@ import './BranchSelect.scss';
  */
 const BranchSelect = props => {
 
-    const {branchStore,repositoryInfo,type,match} = props
+    const {repositoryInfo,type,match} = props
 
     const {findAllBranch,branchList} = branchStore
 
@@ -75,4 +75,4 @@ const BranchSelect = props => {
     )
 }
 
-export default inject('branchStore')(observer(BranchSelect))
+export default BranchSelect

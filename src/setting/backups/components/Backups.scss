@@ -45,4 +45,22 @@
     padding-left: 40px;
   }
 
+
+  .log{
+    margin-top: 30px;
+    margin-bottom: 10px;
+    font-weight: 20;
+
+  }
+  .progress-content-log{
+    flex: 1;
+    overflow: auto;
+    border-radius: 4px;
+    padding: 10px;
+    background: #000000;
+    color: #ffffff;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+
+  }
 }

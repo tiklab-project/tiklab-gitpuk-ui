@@ -10,9 +10,9 @@ import {Form, Input, Modal, Select} from 'antd';
 import {CloseOutlined} from "@ant-design/icons";
 import "./EnvDeployAdd.scss"
 import Btn from "../../../common/btn/Btn";
-import {inject, observer} from "mobx-react";
+import deployStore from "../../../setting/deploy/store/DeployStore"
 const EnvDeployAdd = (props) => {
-    const {addVisible,setAddVisible,deployStore} = props
+    const {addVisible,setAddVisible} = props
     const {createDeployEnv}=deployStore
 
 
@@ -94,4 +94,4 @@ const EnvDeployAdd = (props) => {
         </Modal>
     )
 }
-export default inject('deployStore')(observer(EnvDeployAdd))
+export default EnvDeployAdd

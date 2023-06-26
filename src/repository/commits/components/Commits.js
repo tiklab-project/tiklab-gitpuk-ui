@@ -17,10 +17,10 @@ import {SpinLoading} from '../../../common/loading/Loading';
 import {commitU4,setBranch,findCommitId} from '../../file/components/Common';
 import BranchSelect from '../../file/components/BranchSelect';
 import './Commits.scss';
-
+import commitsStore from "../store/CommitsStore"
 const Commits = props =>{
 
-    const {commitsStore,repositoryStore,match,location} = props
+    const {repositoryStore,match,location} = props
 
     const {repositoryInfo} = repositoryStore
     const {findBranchCommit,commitsList,setCommitsList} = commitsStore
@@ -210,4 +210,4 @@ const Commits = props =>{
     )
 }
 
-export default inject('repositoryStore','commitsStore')(observer(Commits))
+export default inject('repositoryStore')(observer(Commits))

@@ -13,11 +13,9 @@ import Tabs from '../../../common/tabs/Tabs';
 import EmptyText from '../../../common/emptyText/EmptyText';
 import Listicon from '../../../common/list/Listicon';
 import './RepositoryGroup.scss';
-
+import groupStore from "../store/RepositoryGroupStore"
 
 const RepositoryGroup = props => {
-
-    const {groupStore} = props
 
     const {groupType,setGroupType,findUserGroup,groupList} = groupStore
 
@@ -166,4 +164,4 @@ const RepositoryGroup = props => {
     )
 }
 
-export default inject('groupStore')(observer(RepositoryGroup))
+export default RepositoryGroup

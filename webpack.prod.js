@@ -78,10 +78,10 @@ module.exports = merge(baseWebpackConfig, {
         nodeEnv: process.env.NODE_ENV,
         splitChunks: {
             chunks: 'all',
-            minSize: 30000, ////默认值，超过30K才独立分包
+            minSize: 1000, ////默认值，超过30K才独立分包
             minChunks: 1,
-            maxAsyncRequests: 7,
-            maxInitialRequests: 5,
+            maxAsyncRequests: 10,
+            maxInitialRequests: 10,
             automaticNameDelimiter: '--', // 分包打包生成文件的名称的连接符
             name:false,
             cacheGroups: { //  cacheGroups 缓存组，如：将某个特定的库打包
@@ -210,7 +210,7 @@ module.exports = merge(baseWebpackConfig, {
                 parallel: true,
                 terserOptions: {
                     compress: {
-                        // 去除console.log ,debugger
+                        // 去除console.log ,
                         drop_console: false,
                         drop_debugger: false,
                     },

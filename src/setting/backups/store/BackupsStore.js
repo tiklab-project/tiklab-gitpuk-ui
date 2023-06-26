@@ -62,6 +62,7 @@ export class BackupsStore {
         if (data.code===0){
             this.backupsRes=data.data
         }
+
         return data
     }
 
@@ -74,11 +75,11 @@ export class BackupsStore {
     @action
     recoveryData = async(value)  =>{
         const param=new FormData()
-        param.append("userId",getUser().userId)
         param.append("fileName",value)
         const data = await Axios.post('/backups/recoveryData',param)
 
         return data
     }
 }
-export const BACKUPS_STORE='backupsStore'
+const backupsStore =new BackupsStore()
+export default  backupsStore

@@ -80,4 +80,5 @@ export class AuthStore {
 
 }
 
-export const AUTH_STORE = 'authStore'
+const authStore=new AuthStore()
+export default authStore

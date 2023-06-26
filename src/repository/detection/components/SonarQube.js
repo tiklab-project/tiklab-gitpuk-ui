@@ -13,8 +13,11 @@ import Btn from "../../../common/btn/Btn";
 import InfoSetting from "./InfoSetting";
 import {Button, Spin} from "antd";
 import {findCommitId, setBranch, setFileAddress} from "../../file/components/Common";
+import fileStore from "../../file/store/FileStore"
+import deployStore from "../../../setting/deploy/store/DeployStore"
+import codeScanStore from "../store/CodeScanStore"
 const SonarQube = (props) => {
-    const {deployStore,match,fileStore,repositoryStore,codeScanStore} = props
+    const {match,repositoryStore} = props
     const {repositoryInfo,webUrl} = repositoryStore
     const {findFileTree,codeTreeData}=fileStore
     const {codeScanExec,findScanState,createCodeScan,findScanResult,scanResult,findCodeScanByRpyId,codeScan}=codeScanStore
@@ -179,4 +182,4 @@ const SonarQube = (props) => {
 
 
 }
-export default inject('repositoryStore','deployStore','fileStore','codeScanStore')(observer(SonarQube))
+export default inject('repositoryStore')(observer(SonarQube))

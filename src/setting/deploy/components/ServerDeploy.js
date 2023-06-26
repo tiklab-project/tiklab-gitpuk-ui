@@ -16,8 +16,8 @@ import {Popconfirm, Table, Tooltip} from "antd";
 import EmptyText from "../../../common/emptyText/EmptyText";
 import "./ServerDeploy.scss"
 import ServerDeployAddOrUpdate from "./ServerDeployAddOrUpdate";
+import deployStore from "../store/DeployStore"
 const ServerDeploy = (props) => {
-    const {deployStore} = props
     const {createDeployServer,findDeployServerList,deployServerList,fresh,deleteDeployServer} = deployStore
 
     const [addVisible,setAddVisible] = useState(false)
@@ -120,4 +120,4 @@ const ServerDeploy = (props) => {
     )
 }
 
-export default inject('deployStore')(observer(ServerDeploy))
+export default ServerDeploy

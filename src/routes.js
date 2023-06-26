@@ -75,8 +75,9 @@ const MessageNoticeTrue=AsyncComponent(()=>import('./setting/message/MessageNoti
 const EnvDeploy=AsyncComponent(()=>import('./setting/deploy/components/EnvDeploy'))
 const ServerDeploy=AsyncComponent(()=>import('./setting/deploy/components/ServerDeploy'))
 
-//备份
+//备份 恢复
 const Backups=AsyncComponent(()=>import('./setting/backups/components/Backups'))
+const Recover=AsyncComponent(()=>import('./setting/backups/components/Recover'))
 
 // security
 const MyLog=AsyncComponent(()=>import("./setting/security/MyLog"))
@@ -89,8 +90,7 @@ const Task=AsyncComponent(()=>import("./setting/todotask/Task"))
 const TodoTemp=AsyncComponent(()=>import("./setting/todotask/TodoTemp"))
 const TodoType=AsyncComponent(()=>import("./setting/todotask/TodoType"))
 
-// licence
-const Version=AsyncComponent(()=>import('./setting/licence/Version'))
+
 const ProductAuth=AsyncComponent(()=>import('./setting/licence/ProductAuth'))
 
 // user
@@ -532,16 +532,16 @@ const routers = [
                         component: Backups,
                     },
                     {
+                        path:'/index/sys/deploy/recover',
+                        component: Recover,
+                    },
+                    {
                         path:'/index/sys/deploy/server',
                         component:ServerDeploy ,
                     },
                     {
                         path: '/index/sys/user/userGrouptrue',
                         component: UserGroupTrue,
-                    },
-                    {
-                        path:'/index/sys/version',
-                        component: Version,
                     },
                     {
                         path:'/index/system/*',

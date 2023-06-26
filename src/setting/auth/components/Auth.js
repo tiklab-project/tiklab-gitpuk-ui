@@ -8,7 +8,7 @@ import EmptyText from '../../../common/emptyText/EmptyText';
 import AuthAdd from './AuthAdd';
 import AuthDetail from './AuthDetail';
 import './Auth.scss';
-
+import authStore from "../store/AuthStore"
 /**
  * 密钥
  * @param props
@@ -16,8 +16,6 @@ import './Auth.scss';
  * @constructor
  */
 const Auth = props => {
-
-    const {authStore} = props
 
     const {createAuth,deleteAuth,findUserAuth,keysList,fresh} = authStore
 
@@ -136,4 +134,4 @@ const Auth = props => {
     )
 }
 
-export default inject('authStore')(observer(Auth))
+export default Auth

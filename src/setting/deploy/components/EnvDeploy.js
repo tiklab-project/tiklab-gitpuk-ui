@@ -14,8 +14,8 @@ import EnvDeployAddOrUpdate from "./EnvDeployAddOrUpdate";
 import {inject, observer} from "mobx-react";
 import {Popconfirm, Table, Tooltip} from "antd";
 import EmptyText from "../../../common/emptyText/EmptyText";
+import deployStore from "../store/DeployStore"
 const EnvDeploy = (props) => {
-    const {deployStore} = props
     const {createDeployEnv,deployEnvList,findDeployEnvList,fresh,deleteDeployEnv} = deployStore
 
     const [addVisible,setAddVisible] = useState(false)
@@ -102,4 +102,4 @@ const EnvDeploy = (props) => {
         </div>
     )
 }
-export default inject('deployStore')(observer(EnvDeploy))
+export default EnvDeploy

@@ -100,9 +100,22 @@ const Setting = props =>{
                 icon:<BuildOutlined />,
             },
             {
-                id:'/index/sys/deploy/backups',
-                title:'Backups',
+                id:'5',
+                title:'Backups And Rec',
+                purviewCode:'backups',
                 icon:<BuildOutlined />,
+                children: [
+                    {
+                        id: '/index/sys/deploy/backups',
+                        title: 'Backups',
+                        icon: <BarsOutlined/>,
+                    },
+                    {
+                        id: '/index/sys/deploy/recover',
+                        title: 'Recover',
+                        icon: <BarsOutlined/>,
+                    },
+                ]
             },
             /*{
                 id:'/index/sys/deploy/recover',
@@ -122,12 +135,7 @@ const Setting = props =>{
                     }
                 ]
             },
-            {
-                id:'/index/sys/version',
-                title:'Version And Licence',
-                icon:<VerifiedOutlined />,
-                purviewCode:'xcode_version',
-            },
+
         ]
 
     return  <SettingContent

@@ -10,11 +10,11 @@ import {Modal,Form,Input,Select} from 'antd';
 import {CloseOutlined} from '@ant-design/icons';
 import {autoHeight} from '../../../common/client/Client';
 import Btn from '../../../common/btn/Btn';
-import {inject, observer} from "mobx-react";
 const { TextArea } = Input;
+import deployStore from "../../../setting/deploy/store/DeployStore"
 const ServerAddressAdd = (props) =>{
 
-    const {addVisible,setAddVisible,deployStore} = props
+    const {addVisible,setAddVisible} = props
     const {createDeployServer}=deployStore
 
     const [form] = Form.useForm()
@@ -158,4 +158,4 @@ const ServerAddressAdd = (props) =>{
 }
 
 
-export default inject('deployStore')(observer(ServerAddressAdd))
+export default ServerAddressAdd

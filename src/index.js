@@ -3,7 +3,6 @@ import ReactDOM from "react-dom";
 import {HashRouter} from "react-router-dom";
 import {enableAxiosCE} from "tiklab-core-ui";
 import {orgStores} from "tiklab-user-ui/es/store";
-import {messageModuleStores} from "tiklab-message-ui/es/store";
 import {privilegeStores} from "tiklab-privilege-ui/es/store";
 import {PluginProvider,pluginLoader} from 'tiklab-plugin-core-ui';
 import {observer,Provider} from "mobx-react";
@@ -31,13 +30,12 @@ const Index = observer(() => {
 
     const allStore = {
         ...privilegeStores,
-        ...messageModuleStores,
         ...orgStores,
         ...store
     }
-
     useEffect(() => {
         pluginLoader(routes,resources,i18n).then(res => {
+
             setPluginData(res)
             setVisible(false)
         })

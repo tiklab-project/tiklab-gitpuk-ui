@@ -7,10 +7,8 @@ import BreadcrumbContent from '../../../common/breadcrumb/Breadcrumb';
 import RepositoryUser from '../../../repository/repository/components/RepositoryUser';
 import RepositoryPower from '../../../repository/repository/components/RepositoryPower';
 import './RepositoryGroupAdd.scss';
-
+import groupStore from '../store/RepositoryGroupStore'
 const RepositoryGroupAdd = props =>{
-
-    const {groupStore} = props
 
     const {createGroup,findUserGroup,groupList} = groupStore
 
@@ -107,4 +105,4 @@ const RepositoryGroupAdd = props =>{
     )
 }
 
-export default inject('groupStore')(observer(RepositoryGroupAdd))
+export default RepositoryGroupAdd

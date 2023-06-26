@@ -1,5 +1,6 @@
 const api =  "http://192.168.10.6:8090";
 const base_url = JSON.stringify(api);
+const node_env =  JSON.stringify('dev')
 
 const url = "http://127.0.0.1:3010";
 const plugin_base_url = JSON.stringify(url);
@@ -33,5 +34,6 @@ const webpackGlobal = {
     version,
     client,
     devProduction,
+    node_env,
 }
 module.exports = {webpackGlobal}

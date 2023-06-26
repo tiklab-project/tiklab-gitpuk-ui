@@ -7,7 +7,7 @@ import EmptyText from "../../common/emptyText/EmptyText";
 import './HomePage.scss';
 import {getUser} from "tiklab-core-ui";
 import Listicon from "../../common/list/Listicon";
-
+import groupStore from "../../repositoryGroup/repositoryGroup/store/RepositoryGroupStore"
 /**
  * 首页
  * @param props
@@ -16,7 +16,7 @@ import Listicon from "../../common/list/Listicon";
  */
 const HomePage = props =>{
 
-    const {repositoryStore,groupStore,branchStore} = props
+    const {repositoryStore} = props
 
     const {findRecordOpenList,recordOpenList,createOpenRecord,findRecordCommitList,recordCommitList} = repositoryStore
     const {findUserGroup,groupList} = groupStore
@@ -185,4 +185,4 @@ const HomePage = props =>{
     )
 }
 
-export default inject('repositoryStore','groupStore')(observer(HomePage))
+export default inject('repositoryStore')(observer(HomePage))

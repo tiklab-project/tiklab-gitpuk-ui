@@ -100,5 +100,5 @@ export class GroupStore {
 
 }
 
-
-export const GROUP_STORE='groupStore'
+const groupStore=new GroupStore()
+export default groupStore

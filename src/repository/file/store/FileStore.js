@@ -104,6 +104,6 @@ export class FileStore {
 
 
 }
-
-export const FILE_STORE='fileStore'
+const fileStore=new FileStore()
+export default fileStore
 

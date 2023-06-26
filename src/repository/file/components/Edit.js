@@ -7,7 +7,7 @@ import Btn from '../../../common/btn/Btn';
 import {findCommitId, setBranch, setFileAddress} from './Common';
 import './Edit.scss'
 
-
+import fileStore from '../store/FileStore'
 /**
  * 编辑文件页面
  * @param props
@@ -16,10 +16,10 @@ import './Edit.scss'
  */
 const Edit = props =>{
 
-    const {repositoryStore,fileStore,location,match} = props
+    const {repositoryStore,location,match} = props
 
     const {repositoryInfo} = repositoryStore
-    const {readFile,blobFile,writeFile} = fileStore
+    const {readFile,blobFile} = fileStore
 
     const [form] = Form.useForm()
     const urlInfo = match.params.branch
@@ -160,4 +160,4 @@ const Edit = props =>{
     )
 }
 
-export default inject('repositoryStore','fileStore')(observer(Edit))
+export default inject('repositoryStore')(observer(Edit))

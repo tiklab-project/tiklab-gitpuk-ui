@@ -89,4 +89,5 @@ export class CodeScanStore {
         }
     }
 }
-export const CODE_SCAN_STORE='codeScanStore'
+const codeScanStore=new CodeScanStore()
+export default  codeScanStore

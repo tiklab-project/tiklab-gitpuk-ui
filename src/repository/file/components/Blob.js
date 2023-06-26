@@ -11,7 +11,7 @@ import Clone from './Clone';
 import BlobDelModal from './BlobDelModal';
 import {findCommitId,setBranch,setFileAddress} from './Common';
 import './Blob.scss';
-
+import fileStore from '../store/FileStore'
 /**
  * Blob文件内容页面
  * @param props
@@ -19,7 +19,7 @@ import './Blob.scss';
  * @constructor
  */
 const Blob = props =>{
-    const {repositoryStore,fileStore,location,match} = props
+    const {repositoryStore,location,match} = props
 
     const {repositoryInfo,webUrl} = repositoryStore
     const {readFile,blobFile,findCloneAddress,cloneAddress,findLatelyBranchCommit,latelyBranchCommit} = fileStore
@@ -111,4 +111,4 @@ const Blob = props =>{
     )
 }
 
-export default inject('repositoryStore','fileStore')(observer(Blob))
+export default inject('repositoryStore')(observer(Blob))

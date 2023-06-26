@@ -16,10 +16,10 @@ import Clone from "./Clone";
 import {setBranch,setFileAddress,findCommitId} from "./Common";
 import {SpinLoading} from "../../../common/loading/Loading";
 import "./File.scss";
-
+import fileStore from '../store/FileStore'
 const File = props =>{
 
-    const {repositoryStore,fileStore,location,match} = props
+    const {repositoryStore,location,match} = props
     const {repositoryInfo} = repositoryStore
     const {findFileTree,codeTreeData,findCloneAddress,cloneAddress,findLatelyBranchCommit,latelyBranchCommit} = fileStore
 
@@ -228,4 +228,4 @@ const File = props =>{
     )
 }
 
-export default inject("repositoryStore","fileStore")(observer(File))
+export default inject("repositoryStore")(observer(File))

@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react';
 import {PlusOutlined,SearchOutlined,DownOutlined,BranchesOutlined} from '@ant-design/icons';
-import {Input,Space,Tooltip,Popconfirm} from 'antd';
+import {Input,Tooltip,Popconfirm} from 'antd';
 import {inject,observer} from 'mobx-react';
 import BreadcrumbContent from '../../../common/breadcrumb/Breadcrumb';
 import Btn from '../../../common/btn/Btn';
@@ -8,7 +8,7 @@ import Tabs from '../../../common/tabs/Tabs';
 import EmptyText from '../../../common/emptyText/EmptyText';
 import BranchAdd from './BranchAdd';
 import './Branch.scss';
-
+import branchStore from "../store/BranchStore"
 /**
  * 分支页面
  * @param props
@@ -17,7 +17,7 @@ import './Branch.scss';
  */
 const Branch = props =>{
 
-    const {repositoryStore,branchStore} = props
+    const {repositoryStore} = props
 
     const {repositoryInfo} = repositoryStore
     const {createBranch,findAllBranch,branchList,fresh,deleteBranch} = branchStore
@@ -181,4 +181,4 @@ const Branch = props =>{
     )
 }
 
-export default inject('repositoryStore','branchStore')(observer(Branch))
+export default inject('repositoryStore')(observer(Branch))

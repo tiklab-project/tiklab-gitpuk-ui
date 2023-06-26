@@ -7,26 +7,27 @@
  */
 import React, {useState,useEffect} from "react";
 import BreadcrumbContent from "../../../common/breadcrumb/Breadcrumb";
-import {Button, message, Progress, Radio, Spin, Upload} from 'antd';
+import {Button, message, Radio} from 'antd';
 import './Backups.scss'
-import {inject, observer} from "mobx-react";
-import {UploadOutlined} from "@ant-design/icons";
-import {getUser} from "tiklab-core-ui";
+import backupsStore from "../store/BackupsStore"
 const Backups = (props) => {
-    const {backupsStore} = props
-    const {backupsExec,recoveryData,gainBackupsRes,findBackups,backupsData,updateBackups,backupsRes}=backupsStore
+    const {backupsExec,gainBackupsRes,findBackups,backupsData,updateBackups}=backupsStore
 
     const [value, setValue] = useState("false");
-    const [loading,setLoading]=useState(false)
 
-    const[fileName,setFileName]=useState(null)
-    const [fileList, setFileList] = useState([]);
+    // 日志滚动条
+    const [isActiveSlide,setIsActiveSlide] = useState(true)
 
-    const [barState,setBarState]=useState("")
+    // 进度条内容
+    const [press,setPress] = useState(null)
+
     useEffect(async ()=>{
-        await findBackup()
-    },[loading])
 
+        await timeTask("backups")
+        await findBackup()
+
+        setPress(null)
+    },[])
 
     //查询备份数据
     const findBackup = async () => {
@@ -42,43 +43,31 @@ const Backups = (props) => {
     }
 
     //执行备份
-    const backups = () => {
-        setLoading(true)
-        backupsExec()
-        timeTask("backups")
-    }
-
-    //数据恢复
-    const recovery = () => {
-        setBarState("success")
-        setLoading(true)
-        recoveryData(fileName)
-        timeTask("recovery")
+    const backups =async () => {
+        const res=await backupsExec()
+        if (res.code===0&&res.data==="ok"){
+            timeTask("backups")
+        }
     }
 
 
     //定时任务
-    const timeTask = (type) => {
+    const timeTask =async (type) => {
         let timer=setInterval(()=>{
             gainBackupsRes(type).then(res=>{
                 if (res.code===0){
-                    switch (res.data){
-                        case "100":
-                            clearInterval(timer)
-                            setLoading(false)
-                            message.info(type="backups"?'备份成功':'数据恢复成功',0.5)
-                            break
-                        case "ok":
-                            clearInterval(timer)
-                            setLoading(false)
-                            message.info(type="backups"?'备份成功':'数据恢复成功',0.5)
-                            break
-                        case "error":
-                            setBarState("error")
-                            clearInterval(timer)
-                            setLoading(false)
-                            message.error(type="backups"?'备份失败:':'数据恢复失败',0.5)
-                            break
+                    setPress(res.data)
+                    if (!res.data){
+                        clearInterval(timer)
+                        return
+                    }
+                    if (res.data.includes("Backups file success end")){
+                        clearInterval(timer)
+                        findBackup()
+                    }
+                    if (res.data.includes("Backups file fail end")){
+                        clearInterval(timer)
+                        findBackup()
                     }
                 }else {
                     clearInterval(timer)
@@ -115,44 +104,27 @@ const Backups = (props) => {
         updateBackups(param)
     }
 
-    const fileUpload =  {
-        name: 'uploadFile',
-        data:{userId:getUser().userId},
-        action: 'http://192.168.10.14:8090/backups/uploadBackups',
-        headers:{
-            ticket:getUser().ticket
-        },
 
-        onChange(info) {
-            setFileList([])
-            setFileName(null)
-            let fileList = [...info.fileList];
-            fileList = fileList.slice(-1);
-            fileList = fileList.map(file => {
-                const size=file.originFileObj.size
-                if (file.response) {
-
-                    setFileName(file.name)
-                }
-                return file;
-            });
-            setFileList(fileList)
-        },
+    //日志
+    const renderPressLog = () => {
+        const dataImport=document.getElementById("data-import")
+        if(dataImport && isActiveSlide){
+            dataImport.scrollTop = dataImport.scrollHeight
+        }
+        return press || '暂无日志'
     }
 
     return(
         <div className='backups'>
-            <Spin spinning={loading}>
-                <div className='xcode-home-limited xcode'>
-                    <div className='backups-up'>
-                        <BreadcrumbContent firstItem={'Backups'}/>
-                    </div>
-                    <div className='backups-nave'>
-                        <div className='backups-title'>备份服务</div>
+            <div className='xcode-home-limited xcode'>
+                <div className='backups-up'>
+                    <BreadcrumbContent firstItem={'Backups'}/>
+                </div>
+                <div className='backups-nave'>
                         <div className='backups-data'>
                             <div className='backups-nav-title'>备份路径：</div>
                             <div id='myDiv' >{backupsData?.backupsAddress}</div>
-                          {/*  <div className='backups-exec' onClick={edit}>修改</div>*/}
+                            {/*  <div className='backups-exec' onClick={edit}>修改</div>*/}
                         </div>
                         <div className=''>
                             <div className='backups-data'>
@@ -168,44 +140,21 @@ const Backups = (props) => {
                             <div className='backups-nav-title'>最近备份记录：</div>
                             <div>{backupsData?.newBackupsTime}</div>
                         </div>
-                        {
-                            barState==="success"&&
-                            <Progress percent={backupsRes} />||
-                            barState==='error'&&
-                            <Progress percent={0} size="small" status="exception" />
-                        }
+                        <div className='backups-data'>
+                            <div className='backups-nav-title'>最近备份结果：</div>
+                            <div>{backupsData?.newResult==='success'&&<div style={{color:" #55a532"}}>{'成功'}</div>
+                                ||backupsData?.newResult==='non'&&<div style={{color:" #999999"}}>{'未执行'}</div>
+                                ||backupsData?.newResult==='fail'&&<div style={{color:" #ff5500"}}>{'失败'}</div>
+                            }</div>
+                        </div>
                         <Button type="primary" className='backups-button' onClick={backups}>手动备份</Button>
                     </div>
-
-
-                    <div className='backups-nave backups-nave-top'>
-                        <div className='backups-title'>数据恢复</div>
-                        <div className='backups-desc backups-nave-top'>请注意：数据恢复，如果有数据，会将你现在的所有数据恢复到备份的版本</div>
-                        <div className='backups-desc backups-data'>为防止误操作，导入需要恢复的压缩包,还需点击按钮才执行恢复操作</div>
-                        <div className='backups-nave-top'>
-                            {
-                                fileName
-                                    ?<Upload {...fileUpload} >
-                                    </Upload>
-                                    :  <Upload {...fileUpload} >
-                                        <Button icon={<UploadOutlined />}>提交备份压缩文件</Button>
-                                    </Upload>
-                            }
-                        </div>
-                        <div className='backups-nave-top'>
-                            {
-                                barState==="success"&&
-                                <Progress percent={backupsRes} />||
-                                barState==='error'&&
-                                <Progress percent={0} size="small" status="exception" />
-                            }
-                            <Button type="primary" className='backups-button' onClick={recovery}>恢复</Button>
-                        </div>
+                    <div className='log'>日志</div>
+                    <div className='progress-content-log' id='data-import' onWheel={()=>setIsActiveSlide(false)}>
+                        {renderPressLog()}
                     </div>
                 </div>
-            </Spin>
-
         </div>
     )
 }
-export default  inject('backupsStore')(observer(Backups))
+export default  Backups

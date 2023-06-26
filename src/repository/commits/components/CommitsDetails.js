@@ -10,7 +10,7 @@ import CommitsDetailsDrop from './CommitsDetailsDrop';
 import CommitsDetailsDiff from './CommitsDetailsDiff';
 import {commitU4} from "../../file/components/Common";
 import './CommitsDetails.scss';
-
+import commitsStore from "../store/CommitsStore"
 /**
  * 提交详情
  * @param props
@@ -19,7 +19,7 @@ import './CommitsDetails.scss';
  */
 const CommitsDetails = props =>{
 
-    const {commitsStore,repositoryStore,match} = props
+    const {repositoryStore,match} = props
 
     const {repositoryInfo} = repositoryStore
     const {findCommitFileDiffList,findCommitFileDiff,findCommitLineFile,commitDiff,setCommitDiff,findLikeCommitDiffFileList,diffDropList} = commitsStore
@@ -298,4 +298,4 @@ const CommitsDetails = props =>{
     )
 }
 
-export default inject('commitsStore','repositoryStore')(observer(CommitsDetails))
+export default inject('repositoryStore')(observer(CommitsDetails))

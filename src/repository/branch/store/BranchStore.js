@@ -58,5 +58,5 @@ export class BranchStore{
 
 }
 
-
-export const BRANCH_STORE='branchStore'
+const branchStore= new BranchStore()
+export default branchStore

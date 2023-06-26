@@ -1,16 +1,14 @@
 import React,{useState,useEffect} from 'react';
 import {useTranslation} from 'react-i18next';
 import {
-    CreditCardOutlined,
     PullRequestOutlined,
     BankOutlined,
 } from '@ant-design/icons';
 import Aside from '../../common/aside/Aside';
-import {inject, observer} from "mobx-react";
-
+import groupStore from "../repositoryGroup/store/RepositoryGroupStore"
 const RepositoryGroupAside= props =>{
 
-    const {match,groupStore}=props
+    const {match}=props
 
     const {findUserGroup,groupList,groupInfo,setGroupInfo} = groupStore
 
@@ -60,6 +58,6 @@ const RepositoryGroupAside= props =>{
 
 }
 
-export default inject('groupStore')(observer(RepositoryGroupAside))
+export default RepositoryGroupAside
 
 

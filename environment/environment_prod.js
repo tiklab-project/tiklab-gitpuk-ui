@@ -1,5 +1,6 @@
 const api =  "/";
 const base_url = JSON.stringify(api);
+const node_env =  JSON.stringify('prd')
 
 const url = "/";
 const plugin_base_url = JSON.stringify(url);
@@ -31,5 +32,6 @@ const webpackGlobal = {
     version,
     client,
     devProduction,
+    node_env,
 }
 module.exports = {webpackGlobal}

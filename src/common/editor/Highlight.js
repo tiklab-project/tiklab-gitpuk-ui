@@ -1,5 +1,5 @@
 import React,{ useEffect } from 'react';
-import * as hljs from 'highlight.js/lib';
+import  hljs from 'highlight.js/lib/core';
 import 'highlight.js/styles/github.css';
 
 // highlight 语言

@@ -99,4 +99,5 @@ export class CommitsStore{
 
 }
 
-export const COMMITS_STORE='commitsStore'
+const commitsStore=new CommitsStore()
+export default commitsStore
