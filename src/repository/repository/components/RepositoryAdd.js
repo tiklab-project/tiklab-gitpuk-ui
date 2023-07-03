@@ -6,7 +6,6 @@ import Btn from '../../../common/btn/Btn';
 import {Loading} from '../../../common/loading/Loading';
 import {Validation} from "../../../common/client/Client";
 import BreadcrumbContent from '../../../common/breadcrumb/Breadcrumb';
-import RepositoryUser from './RepositoryUser';
 import RepositoryPower from './RepositoryPower';
 import './RepositoryAdd.scss';
 import groupStore from "../../../repositoryGroup/repositoryGroup/store/RepositoryGroupStore"

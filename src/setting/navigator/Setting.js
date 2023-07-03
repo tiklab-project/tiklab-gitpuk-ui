@@ -135,7 +135,12 @@ const Setting = props =>{
                     }
                 ]
             },
-
+            {
+                id:'/index/sys/version',
+                title:'Version And Licence',
+                icon:<VerifiedOutlined />,
+                purviewCode:'xcode_version',
+            },
         ]
 
     return  <SettingContent

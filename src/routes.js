@@ -90,7 +90,8 @@ const Task=AsyncComponent(()=>import("./setting/todotask/Task"))
 const TodoTemp=AsyncComponent(()=>import("./setting/todotask/TodoTemp"))
 const TodoType=AsyncComponent(()=>import("./setting/todotask/TodoType"))
 
-
+// licence
+const Version=AsyncComponent(()=>import('./setting/licence/Version'))
 const ProductAuth=AsyncComponent(()=>import('./setting/licence/ProductAuth'))
 
 // user
@@ -542,6 +543,10 @@ const routers = [
                     {
                         path: '/index/sys/user/userGrouptrue',
                         component: UserGroupTrue,
+                    },
+                    {
+                        path:'/index/sys/version',
+                        component: Version,
                     },
                     {
                         path:'/index/system/*',

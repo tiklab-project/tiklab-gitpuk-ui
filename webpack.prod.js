@@ -54,7 +54,9 @@ module.exports = merge(baseWebpackConfig, {
         }),
         new CssMinimizerPlugin(),
         new ProgressBarPlugin(),
-        new BundleAnalyzerPlugin(),
+        new BundleAnalyzerPlugin({
+            analyzerPort: 8881,
+        }),
         new MonacoWebpackPlugin({
             languages:['json']
         }),

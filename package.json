@@ -10,10 +10,10 @@
     "scripts": {
         "startLoc": "cross-env NODE_ENV=local CUSTOM_ENV=local webpack-dev-server --progress --config webpack.dev.js ",
         "start": "cross-env NODE_ENV=dev CUSTOM_ENV=dev webpack-dev-server --progress --config webpack.dev.js ",
-        "prod": "cross-env NODE_ENV=production CUSTOM_ENV=prod webpack --config webpack.prod.js",
+        "build:webpack": "cross-env NODE_ENV=production CUSTOM_ENV=prod webpack --config webpack.prod.js",
         "dev": "cross-env NODE_ENV=dev CUSTOM_ENV=dev webpack-dev-server --progress  --config webpack.dev.js --open",
         "build": "rimraf es/* && ./node_modules/.bin/babel src --copy-files  --extensions .js --out-dir es && ncp ./src/ui.js es/dist.js && ncp README.md es/README.md && ncp package.publish.json es/package.json",
-        "build:prod": "npm run build:esm && npm run build:css",
+        "build:rollup": "npm run build:esm && npm run build:css",
         "build:dev": "npm run build:dev:esm && npm run build:dev:cjs && npm run build:umd && npm run build:css",
         "build:css": "cd scripts && gulp compile",
         "build:dev:esm": "rimraf es && cross-env NODE_ENV=development BABEL_ENV=esm rollup -c",
@@ -162,7 +162,6 @@
         "tiklab-privilege-ui": "^1.0.1",
         "tiklab-security-ui": "^1.0.1",
         "tiklab-slate-ui": "^1.0.0",
-        "tiklab-teamwire-ui": "^1.0.0",
         "tiklab-todotask-ui": "^1.0.1",
         "tiklab-user-ui": "^1.0.1",
         "wangeditor": "^4.7.15"
