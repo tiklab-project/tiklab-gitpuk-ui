@@ -88,6 +88,7 @@ const EnvDeploy = (props) => {
                         bordered={false}
                         columns={columns}
                         dataSource={deployEnvList}
+                        rowKey={record=>record.id}
                         pagination={false}
                         locale={{emptyText: <EmptyText title={'暂无配置'}/>}}
                     />

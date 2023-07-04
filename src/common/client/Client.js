@@ -29,13 +29,20 @@ export const autoHeight = () =>{
  * @param data
  */
 export const copy = data => {
-    let url = data;//拿到想要复制的值
-    let copyInput = document.createElement('input');//创建input元素
-    document.body.appendChild(copyInput);//向页面底部追加输入框
-    copyInput.setAttribute('value', url);//添加属性，将url赋值给input元素的value属性
-    copyInput.select();//选择input元素
-    document.execCommand('Copy');//执行复制命令
-    message.success('复制成功');//弹出提示信息，不同组件可能存在写法不同
+    //拿到想要复制的值
+    let url = data;
+    //创建input元素
+    let copyInput = document.createElement('input');
+    //向页面底部追加输入框
+    document.body.appendChild(copyInput);
+    //添加属性，将url赋值给input元素的value属性
+    copyInput.setAttribute('value', url);
+    //选择input元素
+    copyInput.select();
+    //执行复制命令
+    document.execCommand('Copy');
+    //弹出提示信息，不同组件可能存在写法不同
+    message.success('复制成功');
     //复制之后再删除元素，否则无法成功赋值
     copyInput.remove();//删除动态创建的节点
 }

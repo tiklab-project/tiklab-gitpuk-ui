@@ -11,10 +11,6 @@ export class RepositoryStore {
     @observable
     newOpenRepository=[]
 
-    // 1:所有仓库；2：我收藏的仓库
-    @observable
-    repositoryType = 1
-
     // 仓库信息
     @observable
     repositoryInfo = ''
@@ -26,14 +22,6 @@ export class RepositoryStore {
     // 加载
     @observable
     isLoading = false
-
-    //最近提交仓库的记录
-    @observable
-    recordCommitList=[]
-
-    //最近打开的记录
-    @observable
-    recordOpenList=[]
 
     //所有项目成员
     @observable
@@ -55,15 +43,6 @@ export class RepositoryStore {
     @action
     setWebUrl = value =>{
         this.webUrl = value
-    }
-
-    /**
-     * 设置仓库类型
-     * @param value
-     */
-    @action
-    setRepositoryType = value =>{
-        this.repositoryType = value
     }
 
     /**
@@ -156,7 +135,7 @@ export class RepositoryStore {
 
     /**
      * 条件查询仓库
-     * @param values
+     * @param param
      * @returns {Promise<*>}
      */
     @action
@@ -171,8 +150,8 @@ export class RepositoryStore {
 
     /**
      * 通过仓库名字或仓库组查询仓库是否存在
-     * @param values
-     * @returns {Promise<*>}
+     * @param param
+     * @returns {Promise<unknown>}
      */
     @action
     findRepositoryByName = async (param) =>{
@@ -187,13 +166,12 @@ export class RepositoryStore {
 
     /**
      * 查询最近打开的仓库
-     * @param values
-     * @returns {Promise<*>}
+     * @param param
+     * @returns {Promise<unknown>}
      */
     @action
     findRepositoryPage = async (param) =>{
         const data = await Axios.post('/rpy/findRepositoryPage',param)
-
         return data
     }
 
@@ -212,10 +190,11 @@ export class RepositoryStore {
         }
         return data
     }
+
     /**
      * 添加打开仓库的记录管理
-     * @param values
-     * @returns {Promise<*>}
+     * @param repositoryId
+     * @returns {Promise<unknown>}
      */
     @action
     createOpenRecord = async (repositoryId) =>{
@@ -229,39 +208,6 @@ export class RepositoryStore {
         return data
     }
 
-    /**
-     * 查询最近上传的记录
-     * @param values
-     * @returns {Promise<*>}
-     */
-    @action
-    findRecordCommitList = async () =>{
-        const param={
-            userId:getUser().userId,
-        }
-        const data = await Axios.post('/recordCommit/findRecordCommitList',param)
-        if (data.code===0){
-            this.recordCommitList=data.data
-        }
-        return data
-    }
-
-    /**
-     * 查询最近打开的记录
-     * @param values
-     * @returns {Promise<*>}
-     */
-    @action
-    findRecordOpenList = async () =>{
-        const param={
-            userId:getUser().userId,
-        }
-        const data = await Axios.post('/recordOpen/findRecordOpenList',param)
-        if (data.code===0){
-            this.recordOpenList=data.data
-        }
-        return data
-    }
 }
 
 

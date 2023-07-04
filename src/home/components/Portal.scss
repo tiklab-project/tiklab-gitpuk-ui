@@ -7,16 +7,12 @@
         justify-content: space-between;
         width: 100%;
         min-width: 600px;
-        color: #ffffff;
         height: var(--xcode-head-height);
         background: var(--tiklab-blue);
         &-logo{
             height: var(--xcode-head-height);
             width: 100px;
             margin: 0 20px;
-            &-text{
-                font-size: 30px;
-            }
             img{
                 width: 100%;
                 height: 100%;
@@ -44,8 +40,8 @@
                 width: 100%;
             }
         }
-        &-user,&-message,&-set,&-help{
-            margin: 0 10px;
+        &-user,&-message{
+            cursor: pointer;
             &:hover{
                 background: rgba(255, 255, 255, 0.4);
                 border-radius: 4px;
@@ -53,14 +49,19 @@
         }
         &-icon{
             font-size: var(--tiklab-icon-size-22);
-            cursor: pointer;
             color: #ffffff;
+        }
+        &-icon-ban{
+            color: #94979a;
+            font-size: var(--tiklab-icon-size-22);
         }
         &-user{
             cursor: pointer;
         }
-        &-message{
+        &-message {
+            margin-left: 15px;
             .ant-badge{
+                margin-left: 15px;
                 color: #fff !important;
             }
         }
@@ -69,6 +70,7 @@
                 display: flex;
                 flex-direction: row;
                 flex-shrink: 0;
+                color: #ffffff;
                 & > div{
                     cursor: pointer;
                     margin-right: 10px;
@@ -76,7 +78,7 @@
                     line-height: 48px;
                     padding: 0 10px;
                     &:not(:last-child){
-                        margin-right: 10px;
+                        margin-right: var(--tiklab-padding-item);
                     }
                 }
             }
@@ -93,6 +95,7 @@
 .header-outMenu,.header-helpMenu,.outMenu-lan-menu{
     box-shadow: 0 4px 8px -2px #091e4240, 0 0 1px #091e424f;
     border-radius: 4px;
+    background: #ffffff;
     .header-dropdown-icon{
         font-size: var(--tiklab-icon-size-16);
         padding-right: 10px;
@@ -100,8 +103,7 @@
 }
 
 .header-outMenu{
-    background: #fff;
-    width: 200px;
+    width: 240px;
     .header-outMenu-top{
         padding: 10px;
         .outMenu-out{
@@ -109,9 +111,20 @@
             align-items: center;
             &-info{
                 padding-left: 15px;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
             }
             &-name{
                 font-size: 15px;
+                width: 100%;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+            &-eamil{
+                font-size: 13px;
+                color: #999999;
             }
         }
     }
@@ -139,7 +152,6 @@
 }
 
 .outMenu-lan-menu{
-    background: #ffffff;
     position: absolute;
     top: -46px;
     left: -86px;
@@ -154,20 +166,16 @@
     }
 }
 
-.header-helpMenu{
-    background: #ffffff;
-    width: 180px;
-    .header-helpMenu-item{
-        cursor: pointer;
-        padding: 10px;
-        &:hover{
-            background: #f4f4f4;
-        }
-        &:first-child{
-            border-radius: 4px 4px 0 0;
-        }
-        &:last-child{
-            border-radius: 0 0 4px 4px;
-        }
+.header-helpMenu .header-helpMenu-item{
+    cursor: pointer;
+    padding: 10px;
+    &:hover{
+        background: #f4f4f4;
+    }
+    &:first-child{
+        border-radius: 4px 4px 0 0;
+    }
+    &:last-child{
+        border-radius: 0 0 4px 4px;
     }
 }

@@ -33,9 +33,10 @@ export class CodeScanStore {
         }
         return data
     }
+
     /**
      * 查询检测结果
-     * @param value
+     * @param repositoryId
      * @returns {Promise<void>}
      */
     @action

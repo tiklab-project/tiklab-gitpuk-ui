@@ -1,16 +1,12 @@
-
 import {store as xcodeStore} from "./store";
-import routesSaas  from "./routes";
-
+import App from "./app";
+import Portal from "./home/components/Portal";
 import SettingContent from "./setting/navigator/SettingContent";
-import xcodeZh from "./common/language/zh.json"
-import Breadcrumb from "./common/breadcrumb/Breadcrumb"
-
 
 import AsyncComponent from "./common/lazy/SyncComponent";
 
 const ExcludeProductUser=AsyncComponent(()=>import('./login/ExcludeProductUser'))
-const Portal=AsyncComponent(()=>import('./home/components/Portal'))
+
 /**
  * 首页
  */
@@ -112,6 +108,8 @@ const DomainRole=AsyncComponent(()=>import('./setting/user/DomainRole'))
 const Login=AsyncComponent(()=>import('./login/login'))
 const Logout=AsyncComponent(()=>import('./login/Logout'))
 export {
+
+    App,
      Homepage,
      WEBIDE,
      Repository,
@@ -179,11 +177,8 @@ export {
     Login,
     Logout,
 
-    xcodeZh,
-    Breadcrumb,
     SettingContent,
     Portal,
-    routesSaas,
     xcodeStore,
     ExcludeProductUser,
 }

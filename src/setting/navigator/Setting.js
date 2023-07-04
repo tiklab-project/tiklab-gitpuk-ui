@@ -18,37 +18,6 @@ const Setting = props =>{
 
     const applicationRouters = [
             {
-                id: '1',
-                title: 'Users And Departments',
-                icon: <TeamOutlined/>,
-                children: [
-                    {
-                        id: '/index/sys/user/org',
-                        title: 'Departments',
-                        icon: <GroupOutlined/>,
-                        purviewCode: 'orga',
-                    },
-                    {
-                        id: '/index/sys/user/list',
-                        title: 'Users',
-                        icon: <TeamOutlined/>,
-                        purviewCode: 'user',
-                    },
-                    {
-                        id: '/index/sys/user/userGroup',
-                        title: 'Users Group',
-                        icon: <TeamOutlined/>,
-                        purviewCode: 'user_group',
-                    },
-                    {
-                        id: '/index/sys/user/directory',
-                        title: 'Users Directory',
-                        icon: <BarsOutlined/>,
-                        purviewCode: 'user_dir',
-                    },
-                ]
-            },
-            {
                 id:'/index/sys/role',
                 title:'Privilege',
                 icon: <SafetyCertificateOutlined />,
@@ -100,7 +69,7 @@ const Setting = props =>{
                 icon:<BuildOutlined />,
             },
             {
-                id:'5',
+                id:'3',
                 title:'Backups And Rec',
                 purviewCode:'backups',
                 icon:<BuildOutlined />,
@@ -123,7 +92,7 @@ const Setting = props =>{
                 icon:<BuildOutlined />,
             },*/
             {
-                id:'5',
+                id:'4',
                 title:'Security',
                 icon:<LayoutOutlined />,
                 children: [

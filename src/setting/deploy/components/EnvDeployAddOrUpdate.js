@@ -6,14 +6,15 @@
  * @update: 2023-05-22 14:30
  */
 import React,{useState,useEffect} from 'react';
-import {Form, Input, Modal, Select} from 'antd';
+import {Form, Input, Select} from 'antd';
 import Btn from "../../../common/btn/Btn";
-import {CloseOutlined} from "@ant-design/icons";
-import "./EnvDeploy.scss"
+import Modals from "../../../common/modal/Modal";
+import "./EnvDeploy.scss";
+
 const EnvDeployAddOrUpdate = (props) => {
+
     const {addVisible,setAddVisible,createDeployEnv} = props
     const [form] = Form.useForm()
-    const [height,setHeight] = useState(0)
 
     /**
      * 添加
@@ -41,23 +42,15 @@ const EnvDeployAddOrUpdate = (props) => {
 
     }
     return(
-        <Modal
+        <Modals
             visible={addVisible}
             onCancel={cancel}
             closable={false}
             footer={modalFooter}
-            style={{height:height,top:60}}
-            bodyStyle={{padding:0}}
-            className='xcode dev-deploy-add-modal'
             destroyOnClose={true}
+            title={"添加环境配置"}
         >
-            <div className='dev-deploy-add-up'>
-                <div>添加环境配置</div>
-                <div style={{cursor:'pointer'}} onClick={()=>setAddVisible(false)}>
-                    <CloseOutlined />
-                </div>
-            </div>
-            <div className='dev-deploy-add-content'>
+            <div className='dev-deploy-add-modal'>
                 <Form form={form} layout='vertical' autoComplete='off'
                       initialValues={{envType:'maven'}}
                 >
@@ -92,7 +85,7 @@ const EnvDeployAddOrUpdate = (props) => {
                     </Form.Item>
                 </Form>
             </div>
-        </Modal>
+        </Modals>
     )
 }
 export default EnvDeployAddOrUpdate

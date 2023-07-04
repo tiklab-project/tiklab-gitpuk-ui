@@ -6,16 +6,16 @@
  * @update: 2023-05-22 14:30
  */
 import React,{useState,useEffect} from 'react';
-import {Form, Input, Modal, Select} from 'antd';
+import {Form, Input, Select} from 'antd';
 import Btn from "../../../common/btn/Btn";
-import {CloseOutlined} from "@ant-design/icons";
-import "./EnvDeploy.scss"
+import Modals from "../../../common/modal/Modal";
 import TextArea from "antd/es/input/TextArea";
+import "./EnvDeploy.scss"
+
 const ServerDeployAddOrUpdate = (props) => {
     const {addVisible,setAddVisible,createDeployServer} = props
 
     const [form] = Form.useForm()
-    const [height,setHeight] = useState(0)
     const [authType,setAuthType]=useState('account')
     const [serverType,setServerType]=useState('')
     /**
@@ -50,23 +50,15 @@ const ServerDeployAddOrUpdate = (props) => {
       setServerType(value)
     }
     return(
-        <Modal
+        <Modals
             visible={addVisible}
             onCancel={cancel}
             closable={false}
             footer={modalFooter}
-            style={{height:height,top:60}}
-            bodyStyle={{padding:0}}
-            className='xcode server-deploy-add-modal'
             destroyOnClose={true}
+            title={"添加服务配置"}
         >
-            <div className='server-deploy-add-up'>
-                <div>添加服务配置</div>
-                <div style={{cursor:'pointer'}} onClick={()=>setAddVisible(false)}>
-                    <CloseOutlined />
-                </div>
-            </div>
-            <div className='server-deploy-add-content'>
+            <div className='server-deploy-add-modal'>
                 <Form form={form} layout='vertical' autoComplete='off'
                       initialValues={{serverName:'sonar',authType:'account'}}
                 >
@@ -141,7 +133,7 @@ const ServerDeployAddOrUpdate = (props) => {
                     }
                 </Form>
             </div>
-        </Modal>
+        </Modals>
     )
 }
 export default ServerDeployAddOrUpdate

@@ -15,8 +15,9 @@ import BreadChang from "./BreadChang";
 import Clone from "./Clone";
 import {setBranch,setFileAddress,findCommitId} from "./Common";
 import {SpinLoading} from "../../../common/loading/Loading";
+import fileStore from '../store/FileStore';
 import "./File.scss";
-import fileStore from '../store/FileStore'
+
 const File = props =>{
 
     const {repositoryStore,location,match} = props

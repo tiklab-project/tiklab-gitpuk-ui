@@ -146,12 +146,6 @@ module.exports = {
         }, "tiklab-user-ui"],
 
         ["import", {
-            "libraryName": "tiklab-widget-ui",
-            "libraryDirectory": "es",
-            "style": true,
-        }, "tiklab-widget-ui"],
-
-        ["import", {
             "libraryName": "tiklab-licence-ui",
             "libraryDirectory": "es",
             "style": true,
