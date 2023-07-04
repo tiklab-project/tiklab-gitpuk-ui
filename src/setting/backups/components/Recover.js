@@ -27,7 +27,7 @@ const Recover = (props) => {
         accept:'.gz',
         name: 'uploadFile',
         data:{userId:getUser().userId},
-        action: `${node_env==='test'?base_url:window.location.origin}/backups/uploadBackups`,
+        action: `${node_env? base_url:window.location.origin}/backups/uploadBackups`,
         headers:{
             ticket:getUser().ticket
         },

@@ -1,34 +1,47 @@
 import React,{useEffect,useState} from 'react';
 import {DownOutlined,UpOutlined} from '@ant-design/icons';
 import {PrivilegeButton,SystemNav} from 'tiklab-privilege-ui';
-import {SYSTEM_ROLE_STORE} from "tiklab-privilege-ui/es/store"
+import {departmentRouters,templateRouter} from "./SettingRouters";
 import {renderRoutes} from 'react-router-config';
 import {useTranslation} from 'react-i18next';
-import './Setting.scss';
 import {inject, observer} from "mobx-react";
-import {getUser} from "tiklab-core-ui";
+import './SettingContent.scss';
+
 const SettingContent= props =>  {
 
     const {route,isDepartment,applicationRouters,systemRoleStore} = props
-    const {getSystemPermissions,systemPermissions}=systemRoleStore
+    const {systemPermissions}=systemRoleStore
 
     const {t} = useTranslation()
 
     const path = props.location.pathname
     const [selectKey,setSelectKey] = useState(path)
     const [expandedTree,setExpandedTree] = useState([''])  // 树的展开与闭合
-    const [department,setDepartment] = useState(['','','',''])
 
 
     useEffect(()=>{
         setSelectKey(path)
-
     },[path])
 
-    useEffect(()=>{
-       getSystemPermissions(getUser().userId)
-
-    },[])
+    // 菜单
+    let menus = () => {
+        try{
+            if(isDepartment && devProduction){
+                return [...departmentRouters,...applicationRouters,...templateRouter]
+            }
+            if(!isDepartment && devProduction){
+                return [...applicationRouters,...templateRouter]
+            }
+            if(isDepartment && !devProduction){
+                return [...departmentRouters,...applicationRouters]
+            }
+            else {
+                return [...applicationRouters]
+            }
+        }catch {
+            return [...applicationRouters]
+        }
+    }
 
     const select = data =>{
         props.history.push(data.id)
@@ -46,23 +59,17 @@ const SettingContent= props =>  {
         }
     }
 
-    const menu = (data,deep) =>{
-        return(
-            <li style={{cursor:'pointer',paddingLeft:`${deep*20+20}`}}
-              className={`system-aside-li system-aside-second ${data.id=== selectKey ? 'system-aside-select' :null}`}
-              onClick={()=>select(data)}
-              key={data.id}
-            >
-                <span className='sys-content-icon'>{data.icon}</span>
-                <span>{t(data.title)}</span>
-            </li>
-        )
-    }
-
     const renderMenu = (data,deep)=> {
         return (
             <PrivilegeButton key={data.id} code={data.purviewCode} {...props}>
-                {menu(data,deep)}
+                <li style={{cursor:'pointer',paddingLeft:`${deep*20+20}`}}
+                    className={`system-aside-li system-aside-second ${data.id=== selectKey ? 'system-aside-select' :null}`}
+                    onClick={()=>select(data)}
+                    key={data.id}
+                >
+                    <span className='sys-content-icon'>{data.icon}</span>
+                    <span>{t(data.title)}</span>
+                </li>
             </PrivilegeButton>
         )
     }
@@ -121,7 +128,7 @@ const SettingContent= props =>  {
                 <div className='system-aside'>
                     <ul className='system-aside-top' style={{padding:0}}>
                         {
-                            applicationRouters.map(firstItem => {
+                            menus().map(firstItem => {
                                 return firstItem.children && firstItem.children.length > 0 ?
                                     renderSubMenu(firstItem,0) : renderMenu(firstItem,0)
                             })
@@ -138,4 +145,4 @@ const SettingContent= props =>  {
 
 }
 
-export default inject(SYSTEM_ROLE_STORE)(observer(SettingContent))
+export default inject("systemRoleStore")(observer(SettingContent))

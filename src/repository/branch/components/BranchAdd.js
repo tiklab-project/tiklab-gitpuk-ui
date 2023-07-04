@@ -3,6 +3,7 @@ import {Modal,Form,Input,Select} from 'antd';
 import {CloseOutlined} from '@ant-design/icons';
 import {autoHeight} from '../../../common/client/Client';
 import Btn from '../../../common/btn/Btn';
+import Modals from '../../../common/modal/Modal';
 
 const BranchAdd = props =>{
 
@@ -57,23 +58,15 @@ const BranchAdd = props =>{
     )
 
     return (
-        <Modal
+        <Modals
             visible={addVisible}
             onCancel={()=>setAddVisible(false)}
             closable={false}
             footer={modalFooter}
-            style={{height:height,top:60}}
-            bodyStyle={{padding:0}}
-            className='xcode branch-add-modal'
             destroyOnClose={true}
+            title={"新建分支"}
         >
-            <div className='branch-add-up'>
-                <div>新建分支</div>
-                <div style={{cursor:'pointer'}} onClick={()=>setAddVisible(false)}>
-                    <CloseOutlined />
-                </div>
-            </div>
-            <div className='branch-add-content'>
+            <div className='branch-add-modal'>
                 <Form
                     form={form}
                     layout='vertical'
@@ -118,7 +111,7 @@ const BranchAdd = props =>{
                     </Form.Item>
                 </Form>
             </div>
-        </Modal>
+        </Modals>
     )
 }
 

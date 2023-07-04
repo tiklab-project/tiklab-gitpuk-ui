@@ -161,7 +161,7 @@ const SonarQube = (props) => {
                             <BreadcrumbContent firstItem={`代码检测`}/>
                             <div className='not-data-desc'>
                                 <div className='desc-title'>sonar代码检测</div>
-                                <div>该代码仓库为提交文件,请先提交文件在使用该功能</div>
+                                <div className='desc-info'>该代码仓库为提交文件,请先提交文件在使用该功能</div>
                             </div>
                         </div>
                     }

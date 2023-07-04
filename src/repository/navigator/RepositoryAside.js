@@ -8,9 +8,9 @@ const RepositoryAside= props=>{
 
     const {match,repositoryStore}=props
 
-    const {findNameRpy,findUserRpy,repositoryInfo,setRepositoryInfo,repositoryList,findRepository} = repositoryStore
+    const {createOpenRecord,findUserRpy,repositoryInfo,setRepositoryInfo,repositoryList,findRepository} = repositoryStore
 
-    const rpyId=match.params.rpyId
+    const rpyId = match.params.rpyId
 
     // 页面初始加载状态
     const [isLoading,setIsLoading] = useState(true)
@@ -32,7 +32,8 @@ const RepositoryAside= props=>{
                 setIsLoading(false)
             }
         })
-    },[])
+        createOpenRecord(rpyId)
+    },[rpyId])
 
     // 侧边第一栏导航
     const firstRouters=[

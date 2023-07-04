@@ -7,15 +7,17 @@
  */
 
 import React from 'react';
+import {observer} from "mobx-react";
 import {LockOutlined, SettingOutlined, UnlockOutlined} from '@ant-design/icons';
 import {Space,Table,Tooltip} from 'antd';
 import EmptyText from '../../../common/emptyText/EmptyText';
 import Listicon from '../../../common/list/Listicon';
+import {SpinLoading} from "../../../common/loading/Loading";
 import './RepositoryTable.scss';
 
 const RepositoryTable = props => {
 
-    const {repositoryList,createOpenRecord} = props
+    const {repositoryType,isLoading,repositoryList} = props
 
     /**
      * 跳转代码文件
@@ -23,7 +25,6 @@ const RepositoryTable = props => {
      * @param record
      */
     const goDetails = (text,record) => {
-        createOpenRecord(record.rpyId)
         props.history.push(`/index/repository/${record.rpyId}/tree`)
     }
 
@@ -116,10 +117,11 @@ const RepositoryTable = props => {
                 dataSource={repositoryList}
                 rowKey={record=>record.rpyId}
                 pagination={false}
-                locale={{emptyText: <EmptyText title={'暂无仓库'}/>}}
+                locale={{emptyText: isLoading ?
+                        <SpinLoading type="table"/>: <EmptyText title={repositoryType===1?"暂无流水线":"暂无收藏"}/>}}
             />
         </div>
     )
 }
 
-export default RepositoryTable
+export default observer(RepositoryTable)

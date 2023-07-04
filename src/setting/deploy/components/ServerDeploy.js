@@ -105,6 +105,7 @@ const ServerDeploy = (props) => {
                         bordered={false}
                         columns={columns}
                         dataSource={deployServerList}
+                        rowKey={record=>record.id}
                         pagination={false}
                         locale={{emptyText: <EmptyText title={'暂无配置'}/>}}
                     />

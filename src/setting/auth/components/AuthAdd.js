@@ -3,6 +3,7 @@ import {Form,Input,Modal} from 'antd';
 import {CloseOutlined} from '@ant-design/icons';
 import {autoHeight,Validation} from '../../../common/client/Client';
 import Btn from '../../../common/btn/Btn';
+import Modals from '../../../common/modal/Modal';
 
 const AuthAdd = props =>{
 
@@ -41,23 +42,15 @@ const AuthAdd = props =>{
 
 
     return (
-        <Modal
+        <Modals
             visible={addVisible}
             onCancel={()=>setAddVisible(false)}
             closable={false}
             footer={modalFooter}
-            style={{height:height,top:60}}
-            bodyStyle={{padding:0}}
-            className='xcode sys-keys-add-modal'
             destroyOnClose={true}
+            title={"新建密钥"}
         >
-            <div className='sys-keys-add-up'>
-                <div>新建密钥</div>
-                <div style={{cursor:'pointer'}} onClick={()=>setAddVisible(false)}>
-                    <CloseOutlined />
-                </div>
-            </div>
-            <div className='sys-keys-add-content'>
+            <div className='sys-keys-add-modal'>
                 <Form form={form} layout='vertical' autoComplete='off'>
                     <Form.Item
                         label={'标题'}
@@ -102,7 +95,7 @@ const AuthAdd = props =>{
                     </Form.Item>
                 </Form>
             </div>
-        </Modal>
+        </Modals>
     )
 }
 

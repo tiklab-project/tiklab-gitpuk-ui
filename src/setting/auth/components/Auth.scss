@@ -29,19 +29,3 @@
     }
 }
 
-
-.sys-keys-add-modal{
-    .sys-keys-add-up{
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        font-weight: var(--tiklab-font-weight-bold);
-        padding: var(--tiklab-padding) var(--tiklab-padding) var(--tiklab-padding-item);
-    }
-    .sys-keys-add-content{
-        padding: 0 var(--tiklab-padding);
-        max-height:calc(100% - 120px);
-        overflow:auto;
-    }
-}

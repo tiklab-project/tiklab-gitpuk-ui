@@ -8,7 +8,7 @@ import {
     DeleteOutlined
 } from '@ant-design/icons';
 import EmptyText from '../../common/emptyText/EmptyText';
-import './HeaderMessage.scss';
+import './PortalMessage.scss';
 
 /**
  * 消息通知
@@ -16,7 +16,7 @@ import './HeaderMessage.scss';
  * @returns {JSX.Element}
  * @constructor
  */
-const HeaderMessage = props =>{
+const PortalMessage = props =>{
 
     const {visible,setVisible} = props
 
@@ -199,4 +199,4 @@ const HeaderMessage = props =>{
     )
 }
 
-export default HeaderMessage
+export default PortalMessage

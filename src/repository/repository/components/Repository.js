@@ -9,12 +9,15 @@ import RepositoryTable from "./RepositoryTable";
 import './Repository.scss';
 import {getUser} from "tiklab-core-ui";
 
-
 const Repository = props => {
 
     const {repositoryStore} = props
 
-    const {findRepositoryPage,repositoryType,setRepositoryType,findRepositoryList,findNameRpy,createOpenRecord} = repositoryStore
+    const {findRepositoryPage,findRepositoryList,findNameRpy} = repositoryStore
+
+    // 流水线分类
+    const [repositoryType,setRepositoryType] = useState(1)
+
     //查询仓库的名称
     const [repositoryName,setRepositoryName]=useState()
     const [repositoryList,setRepositoryList]=useState([])
@@ -22,8 +25,7 @@ const Repository = props => {
     const [currentPage,setCurrentPage]=useState(1)
     const [totalPage,setTotalPage]=useState()
 
-    const [openState,setOpenState]=useState(false)
-
+    const [isLoading,setIsLoading]=useState(false)
 
     useEffect(async ()=>{
         // 初始化仓库
@@ -35,21 +37,6 @@ const Repository = props => {
        await findRpyPage(1)
     },[])
 
-    const lis = [
-        {
-            id:1,
-            title:'所有仓库',
-        },
-        {
-            id:2,
-            title:'我的仓库',
-        },
-        {
-            id:3,
-            title:'我收藏的',
-        }
-    ]
-
     const findRpyPage =async (currentPage) => {
         const param={
             pageParam:{
@@ -59,11 +46,11 @@ const Repository = props => {
             userId:getUser().userId,
             name:repositoryName
         }
-        
-        setOpenState(true)
-        
+
+        setIsLoading(true)
+
        const res=await findRepositoryPage(param)
-        setOpenState(false)
+        setIsLoading(false)
         if (res.code===0){
             setRepositoryList(res.data.dataList)
             setTotalPage(res.data.totalPage)
@@ -76,20 +63,20 @@ const Repository = props => {
      */
     const clickType =async item => {
         setRepositoryType(item.id)
-
     }
 
     /**
      * 输入搜索的仓库名称
-     * @param item
+     * @param e
      */
     const onChangeSearch = (e) => {
         const value=e.target.value
         setRepositoryName(value)
     }
+
     /**
      * 搜索仓库
-     * @param item
+     * @returns {Promise<void>}
      */
     const onSearch =async () => {
         findNameRpy(repositoryName)
@@ -99,40 +86,42 @@ const Repository = props => {
     return(
         <div className='repository'>
             <div className='repository-content xcode-home-limited xcode'>
-                <Spin  spinning={openState}>
-                    <div className='repository-top'>
-                        <BreadcrumbContent firstItem={'Repository'}/>
-                        <Btn
-                            type={'primary'}
-                            title={'新建仓库'}
-                            icon={<PlusOutlined/>}
-                            onClick={()=>props.history.push('/index/repository/new')}
-                        />
-                    </div>
-                    <div className='repository-type'>
-                        <Tabs
-                            type={repositoryType}
-                            tabLis={lis}
-                            onClick={clickType}
-                        />
-                        <div className='repository-type-input'>
-                            <Input
-                                allowClear
-                                placeholder='仓库名称'
-                                onChange={onChangeSearch}
-                                onPressEnter={onSearch}
-                                prefix={<SearchOutlined />}
-                                style={{ width: 200 }}
-                            />
-                        </div>
-                    </div>
-                    <RepositoryTable
-                        {...props}
-                        repositoryList={repositoryList}
-                        createOpenRecord={createOpenRecord}
+                <div className='repository-top'>
+                    <BreadcrumbContent firstItem={'Repository'}/>
+                    <Btn
+                        type={'primary'}
+                        title={'新建仓库'}
+                        icon={<PlusOutlined/>}
+                        onClick={()=>props.history.push('/index/repository/new')}
                     />
-                </Spin>
-
+                </div>
+                <div className='repository-type'>
+                    <Tabs
+                        type={repositoryType}
+                        tabLis={[
+                            {id:1, title:'所有仓库'},
+                            {id:2, title:'我的仓库'},
+                            {id:3, title:'我收藏的'}
+                        ]}
+                        onClick={clickType}
+                    />
+                    <div className='repository-type-input'>
+                        <Input
+                            allowClear
+                            placeholder='仓库名称'
+                            onChange={onChangeSearch}
+                            onPressEnter={onSearch}
+                            prefix={<SearchOutlined />}
+                            style={{ width: 200 }}
+                        />
+                    </div>
+                </div>
+                <RepositoryTable
+                    {...props}
+                    isLoading={isLoading}
+                    repositoryType={repositoryType}
+                    repositoryList={repositoryList}
+                />
             </div>
         </div>
     )

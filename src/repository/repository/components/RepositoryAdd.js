@@ -16,10 +16,10 @@ const RepositoryAdd = props =>{
     const {createRpy,isLoading,repositoryList,findRepositoryByName,createOpenRecord,findRepositoryList} = repositoryStore
     const {findUserGroup,groupList} = groupStore
 
-    const userName = getUser().name
     const [form] = Form.useForm()
     const [addType,setAddType] = useState(1)
     const [powerType,setPowerType] = useState("public")
+
     //输入的仓库名称
     const [rpyName,setRpyName]=useState('')
     const [codeGroup,setCodeGroup] = useState(null)
@@ -52,18 +52,6 @@ const RepositoryAdd = props =>{
         })
     }
 
-    /**
-     * 监听仓库名称变化
-     * @param value
-     */
-    const onValuesChange = value => {
-        if(value.name){
-            form.setFieldsValue({
-                address:value.name
-            })
-        }
-    }
-
     //设置仓库组
     const installCodeGroup = (value) => {
         const param={
@@ -74,9 +62,12 @@ const RepositoryAdd = props =>{
         setCodeGroup(value)
     }
 
-    const inputRpyName =async (e) => {
-
+    const inputRpyName = e => {
         setRpyName(e.target.value)
+        form.setFieldsValue({
+            address: e.target.value
+        })
+        form.validateFields(['address'])
     }
 
     const newRepository = (
@@ -85,7 +76,6 @@ const RepositoryAdd = props =>{
             autoComplete='off'
             layout='vertical'
             initialValues={{group:1}}
-            onValuesChange={onValuesChange}
         >
             <Form.Item
                 label='仓库名称'
