@@ -9,7 +9,7 @@ import {renderRoutes} from "react-router-config";
 import resources from "./common/language/Resources";
 import "./common/language/I18n";
 import "./index.scss";
-
+import "./assets/font_icon/iconfont";
 const App = ({allStore,routes}) => {
 
     const {i18n} = useTranslation();

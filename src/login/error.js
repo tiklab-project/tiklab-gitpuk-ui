@@ -7,11 +7,11 @@ import {Result} from 'antd';
  * @returns {JSX.Element}
  * @constructor
  */
-const NotFound = props =>{
+const ErrorFound = props =>{
 
     const subTitle = (
         <>
-            资源不存在或者没有访问权限，
+           没有访问权限或未知错误，
             <span style={{color:'var(--tiklab-blue)',cursor:'pointer'}}
                   onClick={()=>props.history.push('/index/home')}>点击这里</span>
             返回首页
@@ -20,11 +20,11 @@ const NotFound = props =>{
 
     return(
         <Result
-            status='404'
-            title='404'
+            status='error'
+            title='error'
             subTitle={subTitle}
         />
     )
 }
 
-export default NotFound
+export default ErrorFound

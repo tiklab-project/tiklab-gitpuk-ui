@@ -17,13 +17,15 @@ import branchStore from "../store/BranchStore"
  */
 const Branch = props =>{
 
-    const {repositoryStore} = props
+    const {repositoryStore,match} = props
 
     const {repositoryInfo} = repositoryStore
     const {createBranch,findAllBranch,branchList,fresh,deleteBranch} = branchStore
 
     const [branchType,setBranchType] = useState(1)
     const [addVisible,setAddVisible] = useState(false)
+
+    const webUrl = `${match.params.namespace}/${match.params.name}`
 
     useEffect(()=>{
         // 初始化分支
@@ -54,7 +56,7 @@ const Branch = props =>{
      * @param item
      */
    const goCode = item =>{
-       props.history.push(`/index/repository/${repositoryInfo.rpyId}/tree/${item.branchName}`)
+       props.history.push(`/index/repository/${webUrl}/tree/${item.branchName}`)
    }
 
    // 渲染分支列表

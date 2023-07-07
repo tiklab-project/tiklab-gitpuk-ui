@@ -105,4 +105,4 @@ const RepositoryGroupAdd = props =>{
     )
 }
 
-export default RepositoryGroupAdd
+export default observer(RepositoryGroupAdd)

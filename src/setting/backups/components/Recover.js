@@ -13,6 +13,7 @@ import {getUser} from "tiklab-core-ui";
 import './Backups.scss'
 import BreadcrumbContent from "../../../common/breadcrumb/Breadcrumb";
 import backupsStore from "../store/BackupsStore"
+import {observer} from "mobx-react";
 const Recover = (props) => {
 
     const {recoveryData,gainBackupsRes}=backupsStore
@@ -116,4 +117,4 @@ const Recover = (props) => {
         </div>
     )
 }
-export default  Recover
+export default  observer(Recover)

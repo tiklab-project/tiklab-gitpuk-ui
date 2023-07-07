@@ -12,6 +12,18 @@ const Repository = props =>{
     const {match}=props
     const groupName = match.params.name
 
+    const {repositoryStore}=props
+    const {findRepositoryByGroupName,repositoryList,createOpenRecord}=repositoryStore
+
+    const [isLoading,setIsLoading]=useState(false)
+
+    useEffect( ()=>{
+        findRepositoryByGroupName(groupName)
+    },[])
+
+    const changPage =async () => {
+
+    }
     return (
         <div className='group-repository'>
             <div className='group-repository-content xcode-home-limited xcode'>
@@ -38,6 +50,11 @@ const Repository = props =>{
                 </div>
                 <RepositoryTable
                     {...props}
+                    isLoading={isLoading}
+                    repositoryList={repositoryList}
+                    createOpenRecord={createOpenRecord}
+                    changPage={changPage}
+                    type={"group"}
                 />
             </div>
         </div>

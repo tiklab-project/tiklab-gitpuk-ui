@@ -11,12 +11,12 @@ import './RecentSubmitMsg.scss';
  */
 const RecentSubmitMsg = props =>{
 
-    const {latelyBranchCommit,repositoryInfo} = props
+    const {latelyBranchCommit,webUrl} = props
     return (
         <div className='recent-submit-msg'>
             <div className='code-commit-icon'/>
             <div className='code-commit-msg'>
-                <div className='msg-title' onClick={()=>props.history.push(`/index/repository/${repositoryInfo.rpyId}/commit/${latelyBranchCommit.commitId}`)}>
+                <div className='msg-title' onClick={()=>props.history.push(`/index/repository/${webUrl}/commit/${latelyBranchCommit.commitId}`)}>
                     { latelyBranchCommit && latelyBranchCommit.commitMessage }
                 </div>
                 <div className='msg-desc'>

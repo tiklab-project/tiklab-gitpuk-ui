@@ -43,14 +43,15 @@ const HomePage = props =>{
      * @param repository
      */
     const goDetails = repository => {
-        props.history.push(`/index/repository/${repository.rpyId}/tree`)
+        
+        props.history.push(`/index/repository/${repository.group?repository.group.name:repository?.user.name}/${repository.name}/tree`)
     }
     /**
      * 跳转commit
      * @param repository
      */
     const goCommit = (repository) => {
-        props.history.push(`/index/repository/${repository.rpyId}/commits/master`)
+        props.history.push(`/index/repository/${repository.group?repository.group.name:repository?.user.name}/${repository.name}/commits/master`)
     }
 
     /**
@@ -131,9 +132,10 @@ const HomePage = props =>{
                                        <div key={key} className='newCommit-lab newCommit-cursor' onClick={()=>goCommit(item?.repository)}>
                                            <div className='newCommit-lab-style'>
                                                <Listicon text={item?.repository.name}/>
-                                               <div>
-                                                   <div className='newCommit-text-name'>{item?.repository.name}</div>
-                                                   <div className='newCommit-desc'>{item?.repository.remarks}</div>
+                                               <div className=''>
+                                                   <span>{`${item.groupName}`}</span>
+                                                   <span className='newCommit-text-sym'>{"/"}</span>
+                                                   <span className='newCommit-text-name'>{`${item?.repository.name}`}</span>
                                                </div>
                                            </div>
                                            <div className='newCommit-time'>{item?.commitTimeBad}</div>

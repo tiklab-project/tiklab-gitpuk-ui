@@ -8,7 +8,7 @@ const Login=AsyncComponent(()=>import('./login/login'))
 const Logout=AsyncComponent(()=>import('./login/Logout'))
 const Wechat=AsyncComponent(()=>import('./login/Wechat'))
 const ExcludeProductUser=AsyncComponent(()=>import('./login/ExcludeProductUser'))
-const NotFound=AsyncComponent(()=>import('./login/404'))
+const NotFound=AsyncComponent(()=>import('./login/error'))
 
 /**
  * 首页
@@ -40,6 +40,7 @@ const PushRule=AsyncComponent(()=>import('./repository/setting/pushRule/componen
 const AccessKeys=AsyncComponent(()=>import('./repository/setting/accessKeys/components/AccessKeys'))
 const WebHooks=AsyncComponent(()=>import('./repository/setting/webHooks/components/Hooks'))
 const SonarQube=AsyncComponent(()=>import('./repository/detection/components/SonarQube'))
+const notRepository=AsyncComponent(()=>import('./repository/repository/components/404'))
 
 /**
  * 仓库组
@@ -165,7 +166,7 @@ const routers = [
                 exact:true,
                 component:RepositoryGroupAdd,
             },
-            {
+           /* {
                 path:'/index/repository/:rpyId',
                 component:RepositoryDetails,
                 routes:[
@@ -184,12 +185,12 @@ const routers = [
                         component:File,
                     },
                     {
-                        path:'/index/repository/:rpyId/blob/:branch/*',
+                        path:'/index/repository/:rpyId/blob/:branch/!*',
                         exact:false,
                         component:Blob,
                     },
                     {
-                        path:'/index/repository/:rpyId/edit/:branch/*',
+                        path:'/index/repository/:rpyId/edit/:branch/!*',
                         exact:false,
                         component:Edit,
                     },
@@ -265,12 +266,12 @@ const routers = [
                     },
                     {
                         path:'/index/repository/:rpyId/!*',
-                        render:()=><Redirect to={'/index/404'}/>,
+                        render:()=><Redirect to={'/index/error'}/>,
                     }
 
                 ]
-            },
-          /*  {
+            },*/
+            {
                 path:'/index/repository/:namespace/:name',
                 component:RepositoryDetails,
                 routes:[
@@ -289,12 +290,12 @@ const routers = [
                         component:File,
                     },
                     {
-                        path:'/index/repository/:namespace/:name/blob/:branch/!*',
+                        path:'/index/repository/:namespace/:name/blob/:branch/*',
                         exact:false,
                         component:Blob,
                     },
                     {
-                        path:'/index/repository/:namespace/:name/edit/:branch/!*',
+                        path:'/index/repository/:namespace/:name/edit/:branch/*',
                         exact:false,
                         component:Edit,
                     },
@@ -370,10 +371,10 @@ const routers = [
                     },
                     {
                         path:'/index/repository/:namespace/:name/!*',
-                        render:()=><Redirect to={'/index/404'}/>,
+                        render:()=><Redirect to={'/index/error'}/>,
                     }
                 ]
-            },*/
+            },
             {
                 path:'/index/group/:name',
                 component: RepositoryGroupDetails,
@@ -398,7 +399,7 @@ const routers = [
                         component: GroupDetailsSet,
                         routes:[
                             {
-                                path:'/index/group/:name/sys/set',
+                                path:'/index/group/:name/sys/info',
                                 component:GroupBasic,
                                 exact:true
                             },
@@ -416,7 +417,7 @@ const routers = [
                     },
                     {
                         path:'/index/group/:name/*',
-                        render:()=><Redirect to={'/index/404'}/>,
+                        render:()=><Redirect to={'/index/error'}/>,
                     }
                 ]
             },
@@ -424,6 +425,7 @@ const routers = [
                 path:'/index/sys',
                 component: Setting,
                 routes: [
+
                     {
                         path: '/index/sys/auth',
                         component: Auth,
@@ -485,19 +487,19 @@ const routers = [
                         component: LogType,
                     },
                     {
-                        path: '/index/sys/user/org',
+                        path: '/index/sys/org',
                         component: Orga,
                     },
                     {
-                        path: '/index/sys/user/userGroup',
+                        path: '/index/sys/userGroup',
                         component: UserGroup,
                     },
                     {
-                        path: '/index/sys/user/directory',
+                        path: '/index/sys/directory',
                         component: Directory,
                     },
                     {
-                        path: '/index/sys/user/list',
+                        path: '/index/sys/user',
                         component: User,
                     },
                     {
@@ -550,18 +552,22 @@ const routers = [
                     },
                     {
                         path:'/index/system/*',
-                        render:()=><Redirect to={'/index/404'}/>,
+                        render:()=><Redirect to={'/index/error'}/>,
                     }
                 ]
             },
             {
-                path:'/index/404',
+                path:'/index/error',
                 component:NotFound,
             },
             {
-                path:'/index/*',
-                render:()=><Redirect to={'/index/404'}/>,
-            }
+                path:'/index/:namespace/:name/404',
+                component:notRepository
+            },
+          /*  {
+                path:'/index/!*',
+                render:()=><Redirect to={'/index/error'}/>,
+            }*/
         ]
     },
     {
@@ -572,7 +578,7 @@ const routers = [
     },
     {
         path: '*',
-        render:()=><Redirect to='/index/404'/>,
+        render:()=><Redirect to='/index/error'/>,
     },
 ]
 

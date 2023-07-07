@@ -21,7 +21,7 @@ import commitsStore from "../store/CommitsStore"
 const Commits = props =>{
 
     const {repositoryStore,match,location} = props
-
+    const webUrl = `${match.params.namespace}/${match.params.name}`
     const {repositoryInfo} = repositoryStore
     const {findBranchCommit,commitsList,setCommitsList} = commitsStore
 
@@ -95,7 +95,7 @@ const Commits = props =>{
      * @param item
      */
     const goDetails = item =>{
-        props.history.push(`/index/repository/${repositoryInfo.rpyId}/commit/${item.commitId}`)
+        props.history.push(`/index/repository/${webUrl}/commit/${item.commitId}`)
     }
 
     /**
@@ -103,7 +103,7 @@ const Commits = props =>{
      * @param item
      */
     const findFile = item => {
-        props.history.push(`/index/repository/${repositoryInfo.rpyId}/tree/${item.commitId+commitU4}`)
+        props.history.push(`/index/repository/${webUrl}/tree/${item.commitId+commitU4}`)
     }
 
     const renderCommits = item => {

@@ -13,12 +13,11 @@ import Btn from '../../../common/btn/Btn';
 import BreadcrumbContent from '../../../common/breadcrumb/Breadcrumb';
 import RepositoryPower from '../../../repository/repository/components/RepositoryPower';
 import './GroupBasicInfo.scss';
-
+import groupStore from "../../repositoryGroup/store/RepositoryGroupStore"
 const GroupBasicInfo = props =>{
 
-    const {houseGroupStore} = props
 
-    const {groupInfo} = houseGroupStore
+    const {groupInfo,deleteGroup,updateGroup} = groupStore
 
     const [form] = Form.useForm()
     const [expandedTree,setExpandedTree] = useState([])  // 树的展开与闭合
@@ -40,13 +39,16 @@ const GroupBasicInfo = props =>{
      * @param value
      */
     const onOk = value => {
-
+        updateGroup({...value,groupId:groupInfo.groupId})
     }
 
     /**
      * 删除仓库组
      */
     const delGroup = () =>{
+        deleteGroup(groupInfo.groupId).then(res=>{
+            res.code===0 && props.history.push('/index/repository')
+        })
 
     }
 
@@ -185,4 +187,4 @@ const GroupBasicInfo = props =>{
     )
 }
 
-export default inject('houseGroupStore')(observer(GroupBasicInfo))
+export default observer(GroupBasicInfo)

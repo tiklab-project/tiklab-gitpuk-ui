@@ -17,6 +17,7 @@ import SettingContent from './SettingContent';
 const Setting = props =>{
 
     const applicationRouters = [
+
             {
                 id:'/index/sys/role',
                 title:'Privilege',

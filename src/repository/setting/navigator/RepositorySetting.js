@@ -5,33 +5,33 @@ const RepositorySetting = props =>{
 
     const {match} = props
 
-    const rpyId=match.params.rpyId
+
     const webUrl = `${match.params.namespace}/${match.params.name}`
 
     // 设置
     const secondRouter = [
         {
-            to:`/index/repository/${rpyId}/sys/info`,
+            to:`/index/repository/${webUrl}/sys/info`,
             title:`仓库信息`,
         },
         {
-            to:`/index/repository/${rpyId}/sys/member`,
+            to:`/index/repository/${webUrl}/sys/member`,
             title:`Member`,
         },
         {
-            to:`/index/repository/${rpyId}/sys/role`,
+            to:`/index/repository/${webUrl}/sys/role`,
             title:`Privilege`,
         },
         {
-            to:`/index/repository/${rpyId}/sys/pushRule`,
+            to:`/index/repository/${webUrl}/sys/pushRule`,
             title:`Push_rules`,
         },
         {
-            to:`/index/repository/${rpyId}/sys/keys`,
+            to:`/index/repository/${webUrl}/sys/keys`,
             title:`Access_keys`,
         },
         {
-            to:`/index/repository/${rpyId}/sys/hooks`,
+            to:`/index/repository/${webUrl}/sys/hooks`,
             title:'WebHooks',
         },
     ]

@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react';
 import {PlusOutlined,SearchOutlined} from '@ant-design/icons';
 import {inject,observer} from 'mobx-react';
-import {Input, Spin} from 'antd';
+import {Input} from 'antd';
 import BreadcrumbContent from '../../../common/breadcrumb/Breadcrumb';
 import Btn from '../../../common/btn/Btn';
 import Tabs from '../../../common/tabs/Tabs';
@@ -13,10 +13,10 @@ const Repository = props => {
 
     const {repositoryStore} = props
 
-    const {findRepositoryPage,findRepositoryList,findNameRpy} = repositoryStore
+    const {findRepositoryPage,createOpenRecord} = repositoryStore
 
-    // 流水线分类
-    const [repositoryType,setRepositoryType] = useState(1)
+    // 仓库分类
+    const [repositoryType,setRepositoryType] = useState("viewable")
 
     //查询仓库的名称
     const [repositoryName,setRepositoryName]=useState()
@@ -28,23 +28,18 @@ const Repository = props => {
     const [isLoading,setIsLoading]=useState(false)
 
     useEffect(async ()=>{
-        // 初始化仓库
-        const parma={
-            userId:getUser().userId,
-        }
-        findRepositoryList(parma)
-
-       await findRpyPage(1)
+       await findRpyPage(1,repositoryType)
     },[])
 
-    const findRpyPage =async (currentPage) => {
+    const findRpyPage =async (currentPage,repositoryType) => {
         const param={
             pageParam:{
                 currentPage:currentPage,
                 pageSize:10
             },
             userId:getUser().userId,
-            name:repositoryName
+            name:repositoryName,
+            findType:repositoryType
         }
 
         setIsLoading(true)
@@ -52,8 +47,9 @@ const Repository = props => {
        const res=await findRepositoryPage(param)
         setIsLoading(false)
         if (res.code===0){
-            setRepositoryList(res.data.dataList)
+            setRepositoryList(res.data?.dataList)
             setTotalPage(res.data.totalPage)
+            setCurrentPage(res.data.currentPage)
         }
     }
 
@@ -63,6 +59,7 @@ const Repository = props => {
      */
     const clickType =async item => {
         setRepositoryType(item.id)
+        await  findRpyPage(currentPage,item.id)
     }
 
     /**
@@ -71,7 +68,7 @@ const Repository = props => {
      */
     const onChangeSearch = (e) => {
         const value=e.target.value
-        setRepositoryName(value)
+         setRepositoryName(value)
     }
 
     /**
@@ -79,8 +76,15 @@ const Repository = props => {
      * @returns {Promise<void>}
      */
     const onSearch =async () => {
-        findNameRpy(repositoryName)
-        await findRpyPage(currentPage)
+
+        await findRpyPage(1,repositoryType)
+    }
+
+    /**
+     * 分页
+     */
+    const changPage =async (value) => {
+        await findRpyPage(value,repositoryType)
     }
 
     return(
@@ -99,9 +103,9 @@ const Repository = props => {
                     <Tabs
                         type={repositoryType}
                         tabLis={[
-                            {id:1, title:'所有仓库'},
-                            {id:2, title:'我的仓库'},
-                            {id:3, title:'我收藏的'}
+                            {id:"viewable", title:'所有仓库'},
+                            {id:"oneself", title:'我的仓库'},
+                         /*   {id:3, title:'我收藏的'}*/
                         ]}
                         onClick={clickType}
                     />
@@ -119,8 +123,11 @@ const Repository = props => {
                 <RepositoryTable
                     {...props}
                     isLoading={isLoading}
-                    repositoryType={repositoryType}
                     repositoryList={repositoryList}
+                    createOpenRecord={createOpenRecord}
+                    changPage={changPage}
+                    totalPage={totalPage}
+                    currentPage={currentPage}
                 />
             </div>
         </div>

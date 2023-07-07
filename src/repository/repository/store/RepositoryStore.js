@@ -27,6 +27,10 @@ export class RepositoryStore {
     @observable
     allUserList=[]
 
+    //错误信息
+    @observable
+    errorMsg=""
+
     /**
      * 设置仓库信息
      * @param value
@@ -94,6 +98,22 @@ export class RepositoryStore {
     }
 
     /**
+     * 根据仓库路径删除仓库
+     * @param value
+     * @returns {Promise<unknown>}
+     */
+    @action
+    deleteRpyByAddress=async  value=>{
+        this.isLoading = true
+        const param = new FormData()
+        param.append('address',value)
+        const data = await Axios.post('/rpy/deleteRpyByAddress',param)
+        return data;
+
+    }
+
+
+    /**
      * 更新仓库
      * @param values
      * @returns {Promise<*>}
@@ -101,7 +121,11 @@ export class RepositoryStore {
     @action
     updateRpy = async values =>{
         const data = await Axios.post('/rpy/updateRpy',values)
-        if(data){
+        if(data.code===0){
+            message.success('更新成功')
+        }
+        if (data.code===9000){
+            this.errorMsg=data.msg
         }
         return data
     }
@@ -143,13 +167,13 @@ export class RepositoryStore {
         const data = await Axios.post('/rpy/findRepositoryList',param)
         if(data.code===0){
 
-            this.repositoryList = data.data && data.data
+            this.repositoryList = data.data
         }
         return data
     }
 
     /**
-     * 通过仓库名字或仓库组查询仓库是否存在
+     * 通过仓库名字或仓库组查询仓库
      * @param param
      * @returns {Promise<unknown>}
      */
@@ -157,8 +181,23 @@ export class RepositoryStore {
     findRepositoryByName = async (param) =>{
         const data = await Axios.post('/rpy/findRepositoryByName',param)
         if(data.code===0){
+            this.repositoryList = data.data
+        }
+        return data
+    }
 
-            this.repositoryList = data.data && data.data
+    /**
+     * 通过仓库组的名字查询仓库列表
+     * @param value  仓库组名字
+     * @returns {Promise<unknown>}
+     */
+    @action
+    findRepositoryByGroupName = async (value) =>{
+        const param = new FormData();
+        param.append("groupName",value)
+        const data = await Axios.post('/rpy/findRepositoryByGroupName',param)
+        if(data.code===0){
+            this.repositoryList = data.data
         }
         return data
     }
@@ -175,16 +214,18 @@ export class RepositoryStore {
         return data
     }
 
+
+
     /**
-     * 获取某个仓库信息
-     * @param values
+     *通过address 查询仓库
+     * @param address 仓库地址
      * @returns {Promise<*>}
      */
     @action
-    findNameRpy = async values =>{
+    findRepositoryByAddress = async (address)=>{
         const param = new FormData()
-        param.append('rpyName',values)
-        const data = await Axios.post('/rpy/findNameRpy',param)
+        param.append('address',address)
+        const data = await Axios.post('/rpy/findRepositoryByAddress',param)
         if(data.code===0){
             this.repositoryInfo = data.data && data.data
         }

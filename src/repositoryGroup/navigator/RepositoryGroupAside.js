@@ -52,8 +52,9 @@ const RepositoryGroupAside= props =>{
                 firstRouters={firstRouters}
                 list={groupList}
                 info={groupInfo}
-                webUrl={groupName}
+                repositoryAddress={groupName}
                 asideType={'group'}
+
             />
 
 }

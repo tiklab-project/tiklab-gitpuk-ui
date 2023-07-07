@@ -26,11 +26,12 @@ const RepositoryBasicInfo = props =>{
 
     const {repositoryStore} = props
 
-    const {repositoryInfo,deleteRpy,isLoading,updateRpy,findNameRpy} = repositoryStore
+    const {repositoryInfo,deleteRpy,isLoading,updateRpy,errorMsg} = repositoryStore
 
     const [form] = Form.useForm()
-    const [expandedTree,setExpandedTree] = useState([])  // 树的展开与闭合
+    const [expandedTree,setExpandedTree] = useState([1])  // 树的展开与闭合
     const [powerType,setPowerType] = useState(1)  // 树的展开与闭合
+    const [repositoryName,setRepositoryName]=useState('')
 
     const onConfirm = () =>{
         Modal.confirm({
@@ -44,8 +45,8 @@ const RepositoryBasicInfo = props =>{
     }
 
     const onOk = value => {
-        updateRpy({...value,rpyId:repositoryInfo.rpyId})
-        findNameRpy(value.name)
+        updateRpy({...value,group:repositoryInfo.group,user:repositoryInfo.user,rpyId:repositoryInfo.rpyId})
+        form.validateFields(['name'])
     }
 
     /**
@@ -53,8 +54,12 @@ const RepositoryBasicInfo = props =>{
      */
     const delRepository = () =>{
         deleteRpy(repositoryInfo.rpyId).then(res=>{
-            res.code===0 && props.history.push('/index/repository')
+            res.code===0 && props.history.push('/index/group')
         })
+    }
+
+    const inputName = (value) => {
+      setRepositoryName(value)
     }
 
     const lis = [
@@ -69,10 +74,21 @@ const RepositoryBasicInfo = props =>{
                             form={form}
                             autoComplete='off'
                             layout='vertical'
+                            name='name'
                             initialValues={{name:repositoryInfo.name,remarks:repositoryInfo.remarks}}
                         >
-                            <Form.Item label='仓库名称' name='name' rules={[{max:30,message:'请输入1~31位以内的名称'}]}>
-                                <Input/>
+                            <Form.Item label='仓库名称' name='name' rules={[
+                                {max:30,message:'请输入1~31位以内的名称'},
+                                ({getFieldValue}) => ({
+                                validator(rule,value) {
+                                    if (errorMsg) {
+                                        return Promise.reject(errorMsg)
+                                    }
+                                return Promise.resolve()
+                                 }
+                                }),
+                            ]}>
+                                <Input key={repositoryName} onChange={inputName}/>
                             </Form.Item>
                             <RepositoryPower
                                 powerType={powerType}
@@ -96,7 +112,7 @@ const RepositoryBasicInfo = props =>{
                                     form.validateFields()
                                         .then((values) => {
                                             onOk(values)
-                                            form.resetFields()
+
                                         })
                                 }}
                             />

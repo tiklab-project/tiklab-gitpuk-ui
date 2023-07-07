@@ -23,11 +23,14 @@ const File = props =>{
     const {repositoryStore,location,match} = props
     const {repositoryInfo} = repositoryStore
     const {findFileTree,codeTreeData,findCloneAddress,cloneAddress,findLatelyBranchCommit,latelyBranchCommit} = fileStore
+    const webUrl = `${match.params.namespace}/${match.params.name}`
 
     const searValue = useRef(null)
     const urlInfo = match.params.branch
     const branch = setBranch(urlInfo,repositoryInfo)
-    const fileAddress = setFileAddress(location,repositoryInfo.rpyId+"/tree/"+urlInfo)
+    const fileAddress = setFileAddress(location,webUrl+"/tree/"+urlInfo)
+
+
 
     //文本框搜索
     const [searInput,setSearInput] = useState(false)
@@ -77,7 +80,7 @@ const File = props =>{
      * @param record
      */
     const goFileChild = record => {
-        props.history.push(`/index/repository/${repositoryInfo.rpyId}${record.path}`)
+        props.history.push(`/index/repository/${webUrl}${record.path}`)
     }
 
     /**
@@ -85,7 +88,7 @@ const File = props =>{
      * @param fileParent
      */
     const goFileParent = fileParent => {
-        props.history.push(`/index/repository/${repositoryInfo.rpyId}/tree/${urlInfo}${fileParent}`)
+        props.history.push(`/index/repository/${webUrl}/tree/${urlInfo}${fileParent}`)
     }
 
     /**

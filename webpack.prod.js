@@ -226,7 +226,7 @@ module.exports = merge(baseWebpackConfig, {
                     compress: {
                         // 去除console.log ,
                         drop_console: false,
-                        drop_debugger: false,
+                        drop_: false,
                     },
                 }
             })

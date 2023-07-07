@@ -14,6 +14,7 @@ import branchStore from "../../branch/store/BranchStore"
 const BranchSelect = props => {
 
     const {repositoryInfo,type,match} = props
+    const webUrl = `${match.params.namespace}/${match.params.name}`
 
     const {findAllBranch,branchList} = branchStore
 
@@ -32,10 +33,10 @@ const BranchSelect = props => {
     const changBranch = value => {
         switch (type) {
             case 'commit':
-                props.history.push(`/index/repository/${repositoryInfo.rpyId}/commits/${value}`)
+                props.history.push(`/index/repository/${webUrl}/commits/${value}`)
                 break
             case 'code':
-                props.history.push(`/index/repository/${repositoryInfo.rpyId}/tree/${value}`)
+                props.history.push(`/index/repository/${webUrl}/tree/${value}`)
         }
     }
 

@@ -18,7 +18,7 @@ const WEBIDE=AsyncComponent(()=>import('./WEBIDE/components/WebIde'))
  * 仓库
  */
 const Repository=AsyncComponent(()=>import('./repository/repository/components/Repository'))
-const RepositoryAdd=AsyncComponent(()=>import('./repository/repository/components/RepositoryAdd'))
+const RepositoryAdd=AsyncComponent(()=>import('./repository/repository/components/RepositoryAddold'))
 const RepositoryDetails=AsyncComponent(()=>import('./repository/navigator/RepositoryAside'))
 const File=AsyncComponent(()=>import('./repository/file/components/File'))
 const Blob=AsyncComponent(()=>import('./repository/file/components/Blob'))

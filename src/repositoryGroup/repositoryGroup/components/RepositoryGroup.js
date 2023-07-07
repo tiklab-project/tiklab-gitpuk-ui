@@ -5,7 +5,6 @@ import {
     LockOutlined,
     SearchOutlined, UnlockOutlined
 } from '@ant-design/icons';
-import {inject,observer} from 'mobx-react';
 import {Table, Tooltip, Space, Input} from 'antd';
 import BreadcrumbContent from '../../../common/breadcrumb/Breadcrumb';
 import Btn from '../../../common/btn/Btn';
@@ -14,16 +13,18 @@ import EmptyText from '../../../common/emptyText/EmptyText';
 import Listicon from '../../../common/list/Listicon';
 import './RepositoryGroup.scss';
 import groupStore from "../store/RepositoryGroupStore"
+import {observer} from "mobx-react";
 
 const RepositoryGroup = props => {
 
     const {groupType,setGroupType,findUserGroup,groupList} = groupStore
 
-    useEffect(()=>{
+    useEffect( ()=>{
         // 初始化仓库组
         findUserGroup()
     },[])
 
+    
     const lis = [
         {
             id:1,
@@ -47,9 +48,18 @@ const RepositoryGroup = props => {
         setGroupType(item.id)
     }
 
-    const goDetails = (text,record) => {
+    const goDetails = (text) => {
          props.history.push(`/index/group/${text}/repository`)
     }
+
+    /**
+     * 跳转仓库组的设置界面
+     * @param value 仓库信息
+     */
+    const goSet = (value) => {
+        props.history.push(`/index/group/${value.name}/sys/info`)
+    }
+
 
     const columns = [
         {
@@ -97,7 +107,7 @@ const RepositoryGroup = props => {
                 return(
                     <Space>
                         <Tooltip title='设置'>
-                            <span className='repository-group-tables-set'>
+                            <span className='repository-group-tables-set' onClick={()=>goSet(record)}>
                                 <SettingOutlined className='actions-se'/>
                             </span>
                         </Tooltip>
@@ -164,4 +174,4 @@ const RepositoryGroup = props => {
     )
 }
 
-export default RepositoryGroup
+export default observer(RepositoryGroup)

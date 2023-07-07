@@ -56,15 +56,14 @@ export class GroupStore {
 
     /**
      * 删除仓库组
-     * @param values
+     * @param value 仓库id
      * @returns {Promise<*>}
      */
     @action
-    deleteGroup = async values =>{
-        const data = await Axios.post('/rpyGroup/deleteGroup',values)
-        if(data){
-
-        }
+    deleteGroup = async value =>{
+        const param=new FormData()
+        param.append("groupId",value)
+        const data = await Axios.post('/rpyGroup/deleteGroup',param)
         return data
     }
 
@@ -88,7 +87,7 @@ export class GroupStore {
      * @returns {Promise<*>}
      */
     @action
-    findUserGroup = async values =>{
+    findUserGroup = async () =>{
         const param = new FormData()
         param.append('userId',getUser().userId)
         const data = await Axios.post('/rpyGroup/findUserGroup',param)

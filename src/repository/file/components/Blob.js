@@ -21,13 +21,15 @@ import fileStore from '../store/FileStore'
 const Blob = props =>{
     const {repositoryStore,location,match} = props
 
-    const {repositoryInfo,webUrl} = repositoryStore
+
+    const {repositoryInfo} = repositoryStore
+    const webUrl = `${match.params.namespace}/${match.params.name}`
     const {readFile,blobFile,findCloneAddress,cloneAddress,findLatelyBranchCommit,latelyBranchCommit} = fileStore
 
     const urlInfo = match.params.branch
     const branch = setBranch(urlInfo,repositoryInfo)
-    const filePath = setFileAddress(location,repositoryInfo.rpyId+'/blob/')
-    const fileAddress = setFileAddress(location, repositoryInfo.rpyId+'/blob/'+urlInfo)
+    const filePath = setFileAddress(location,webUrl+'/blob/')
+    const fileAddress = setFileAddress(location, webUrl+'/blob/'+urlInfo)
     const [delVisible,setDelVisible] = useState(false)
     const [isLoading,setIsLoading] = useState(true)
     useEffect(()=>{
@@ -51,7 +53,8 @@ const Blob = props =>{
     },[repositoryInfo.name])
 
     const goEdit = () =>{
-        props.history.push(`/index/repository/${repositoryInfo.rpyId}/edit/${filePath[1]}`)
+        
+        props.history.push(`/index/repository/${webUrl}/edit/${filePath[1]}`)
     }
 
     return(

@@ -9,11 +9,11 @@ import BreadcrumbContent from '../../../common/breadcrumb/Breadcrumb';
 import RepositoryPower from './RepositoryPower';
 import './RepositoryAdd.scss';
 import groupStore from "../../../repositoryGroup/repositoryGroup/store/RepositoryGroupStore"
-const RepositoryAdd = props =>{
+const RepositoryAddold = props =>{
 
     const {repositoryStore} = props
 
-    const {createRpy,isLoading,repositoryList,findRepositoryByName,createOpenRecord,findRepositoryList} = repositoryStore
+    const {createRpy,isLoading,findRepositoryByName,createOpenRecord,findRepositoryList} = repositoryStore
     const {findUserGroup,groupList} = groupStore
 
     const [form] = Form.useForm()
@@ -22,11 +22,15 @@ const RepositoryAdd = props =>{
 
     //输入的仓库名称
     const [rpyName,setRpyName]=useState('')
-    const [codeGroup,setCodeGroup] = useState(null)
+    const [group,setGroup]=useState(null)     //仓库
+    const [repositoryList,setRepositoryList]=useState()
 
-    useEffect(()=>{
+    useEffect(async ()=>{
         // 初始化仓库
-        findRepositoryByName({})
+        const res=await findRepositoryByName({})
+        if (res.code===0){
+            setRepositoryList(res.data)
+        }
         // 仓库组
         findUserGroup()
     },[])
@@ -39,13 +43,14 @@ const RepositoryAdd = props =>{
 
             createRpy({
                 ...values,
-                group:{groupId:codeGroup},
-                address:getUser().tenant?getUser().tenant+"/"+values.address:values.address,
+                group:{groupId:group?.groupId},
+                address:getUser().tenant?getUser().tenant+"/"+(group?group.name:getUser().name)+"/"+values.address
+                    :(group?group.name:getUser().name)+"/"+values.address,
                 rules:powerType,
             }).then(res=>{
                 if(res.code===0){
-                    props.history.push(`/index/repository/${res.data}/tree`)
-                  /* props.history.push(`/index/house/${codeGroup?codeGroup:userName}/${values.name}/tree`)*/
+                    props.history.push(`/index/repository/${(group?group.name:getUser().name)+"/"+values.address}/tree`)
+                  /* props.history.push(`/index/house/${groupId?groupId:userName}/${values.name}/tree`)*/
                 }
                 createOpenRecord(res.data)
             })
@@ -53,13 +58,23 @@ const RepositoryAdd = props =>{
     }
 
     //设置仓库组
-    const installCodeGroup = (value) => {
+    const installCodeGroup =async  (value) => {
         const param={
             groupId:value,
             name:rpyName
         }
-        findRepositoryList(param)
-        setCodeGroup(value)
+        const res=await findRepositoryByName(param)
+        if (res.code===0){
+            setRepositoryList(res.data)
+            form.validateFields(['name'])
+            form.validateFields(['address'])
+        }
+
+        if (value){
+            const group=groupList.filter(a=>a.groupId===value)[0]
+            setGroup(group)
+        }
+
     }
 
     const inputRpyName = e => {
@@ -69,6 +84,9 @@ const RepositoryAdd = props =>{
         })
         form.validateFields(['address'])
     }
+
+
+
 
     const newRepository = (
         <Form
@@ -99,6 +117,8 @@ const RepositoryAdd = props =>{
                ]}
             >
                 <Input style={{background:'#fff'}} onChange={inputRpyName}  />
+              {/*  <input className='repository-add-input'/>*/}
+
             </Form.Item>
             <div className='repository-add-path'>
                 <Form.Item label={<span style={{opacity:0}}>归属</span>}>
@@ -128,11 +148,13 @@ const RepositoryAdd = props =>{
                         Validation('路径','appoint'),
                         ({ getFieldValue }) => ({
                             validator(rule,value) {
+                                const address=group?group.name:getUser().name+"/"+value
                                 let nameArray = []
                                 if(repositoryList){
                                     nameArray = repositoryList && repositoryList.map(item=>item.address)
                                 }
-                                if (nameArray.includes(value)) {
+                                
+                                if (nameArray.includes(address)) {
                                     return Promise.reject('路径已经存在')
                                 }
                                 return Promise.resolve()
@@ -209,4 +231,4 @@ const RepositoryAdd = props =>{
     )
 }
 
-export default inject('repositoryStore')(observer(RepositoryAdd))
+export default inject('repositoryStore')(observer(RepositoryAddold))

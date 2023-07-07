@@ -14,18 +14,19 @@ import EmptyText from '../../../common/emptyText/EmptyText';
 import Listicon from '../../../common/list/Listicon';
 import {SpinLoading} from "../../../common/loading/Loading";
 import './RepositoryTable.scss';
+import Page from "../../../common/page/Page";
 
 const RepositoryTable = props => {
 
-    const {repositoryType,isLoading,repositoryList} = props
-
+    const {isLoading,repositoryList,createOpenRecord,changPage,totalPage,currentPage,type} = props
     /**
      * 跳转代码文件
      * @param text
      * @param record
      */
     const goDetails = (text,record) => {
-        props.history.push(`/index/repository/${record.rpyId}/tree`)
+        createOpenRecord(record.rpyId)
+        props.history.push(`/index/repository/${record.address}/tree`)
     }
 
     /**
@@ -34,8 +35,10 @@ const RepositoryTable = props => {
      * @param record
      */
     const goSet = (text,record) => {
-        props.history.push(`/index/repository/${record.rpyId}/sys/info`)
+        createOpenRecord(record.rpyId)
+        props.history.push(`/index/repository/${record.address}/sys/info`)
     }
+
 
     const columns = [
         {
@@ -52,8 +55,9 @@ const RepositoryTable = props => {
                             <div className='name-text-title'>
                                 <span className='name-text-name'>
                                     {
-                                        record.group ? record.group.name : record?.user.name
-                                    } / {text}
+                                        type==="group"?text:
+                                            (record.group ? record.group.name: record?.user.name)+"/"+text
+                                    }
                                 </span>
                                 <span className='name-text-lock'>{record.rules==='private'?<LockOutlined/>:<UnlockOutlined />}</span>
                                 <span className='name-text-type'>{record.userType === '3' ? '管理员':'开发者'}</span>
@@ -118,8 +122,13 @@ const RepositoryTable = props => {
                 rowKey={record=>record.rpyId}
                 pagination={false}
                 locale={{emptyText: isLoading ?
-                        <SpinLoading type="table"/>: <EmptyText title={repositoryType===1?"暂无流水线":"暂无收藏"}/>}}
+                        <SpinLoading type="table"/>: <EmptyText title={"没有仓库"}/>}}
             />
+            {
+                (!isLoading &&totalPage>1)?
+                <Page pageCurrent={currentPage} changPage={changPage} totalPage={totalPage}/>:null
+            }
+
         </div>
     )
 }
