@@ -3,24 +3,35 @@ import {ApartmentOutlined, BarChartOutlined, BranchesOutlined, PushpinOutlined} 
 import {inject,observer} from 'mobx-react';
 import Aside from "../../common/aside/Aside";
 import {Loading} from '../../common/loading/Loading';
+import {getUser} from "tiklab-core-ui";
 
 const RepositoryAside= props=>{
 
-    const {match,repositoryStore}=props
+    const {match,repositoryStore,systemRoleStore}=props
 
-    const {findUserRpy,repositoryInfo,setRepositoryInfo,repositoryList,findRepositoryByAddress} = repositoryStore
+    const {findRepositoryPage,repositoryInfo,setRepositoryInfo,findRepositoryByAddress} = repositoryStore
+
+    const {getInitProjectPermissions} = systemRoleStore
 
     const namespace = match.params.namespace
     const name = match.params.name
 
     const webUrl = `${match.params.namespace}/${match.params.name}`
-
     // 页面初始加载状态
     const [isLoading,setIsLoading] = useState(true)
 
-    useEffect(()=>{
+    const [repositoryList,setRepositoryList]=useState([])
+    useEffect(async ()=>{
         // 所有仓库
-        findUserRpy()
+      const res=await  findRepositoryPage({   pageParam:{
+                currentPage:1,
+                pageSize:15
+            },
+            userId:getUser().userId})
+        if (res.code===0){
+            setRepositoryList(res.data.dataList)
+        }
+
         return ()=>{
             setRepositoryInfo('')
         }
@@ -30,9 +41,10 @@ const RepositoryAside= props=>{
         // 仓库信息
         findRepositoryByAddress(namespace+"/"+name).then(res=>{
             if(res.code===0){
+                // 获取流水线权限
+                getInitProjectPermissions(getUser().userId,res.data.rpyId,res.data?.rules==='public')
                 setIsLoading(false)
             }else {
-                debugger
                 //仓库不存
                 if (res.code===9000){
                     props.history.push(`/index/${namespace+"/"+name}/404`)
@@ -41,7 +53,8 @@ const RepositoryAside= props=>{
                 }
             }
         })
-    },[])
+    },[webUrl])
+
 
     // 侧边第一栏导航
     const firstRouters=[
@@ -82,6 +95,6 @@ const RepositoryAside= props=>{
             />
 }
 
-export default inject('repositoryStore')(observer(RepositoryAside))
+export default inject('systemRoleStore','repositoryStore')(observer(RepositoryAside))
 
 

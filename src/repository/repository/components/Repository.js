@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react';
 import {PlusOutlined,SearchOutlined} from '@ant-design/icons';
 import {inject,observer} from 'mobx-react';
-import {Input} from 'antd';
+import {Dropdown, Input} from 'antd';
 import BreadcrumbContent from '../../../common/breadcrumb/Breadcrumb';
 import Btn from '../../../common/btn/Btn';
 import Tabs from '../../../common/tabs/Tabs';
@@ -35,7 +35,7 @@ const Repository = props => {
         const param={
             pageParam:{
                 currentPage:currentPage,
-                pageSize:10
+                pageSize:15
             },
             userId:getUser().userId,
             name:repositoryName,
@@ -47,6 +47,7 @@ const Repository = props => {
        const res=await findRepositoryPage(param)
         setIsLoading(false)
         if (res.code===0){
+
             setRepositoryList(res.data?.dataList)
             setTotalPage(res.data.totalPage)
             setCurrentPage(res.data.currentPage)
@@ -87,17 +88,45 @@ const Repository = props => {
         await findRpyPage(value,repositoryType)
     }
 
+    const items=[
+        {
+            key: '1',
+            label: (
+                <div  onClick={()=>props.history.push('/index/repository/new')}>
+                   新建仓库
+                </div>
+            ),
+        },
+        {
+            key: '2',
+            label: (
+                <div  onClick={()=>props.history.push('/index/repository/lead')}>
+                    导入仓库
+                </div>
+            ),
+        },
+    ]
+
     return(
         <div className='repository'>
-            <div className='repository-content xcode-home-limited xcode'>
+            <div className=' xcode-home-limited xcode'>
                 <div className='repository-top'>
                     <BreadcrumbContent firstItem={'Repository'}/>
-                    <Btn
+                    <Dropdown  menu={{items}} >
+                        <div className='add-button' >
+                            <Btn
+                                type={'primary'}
+                                title={'创建仓库'}
+                                icon={<PlusOutlined/>}
+                            />
+                        </div>
+                    </Dropdown>
+                   {/* <Btn
                         type={'primary'}
                         title={'新建仓库'}
                         icon={<PlusOutlined/>}
                         onClick={()=>props.history.push('/index/repository/new')}
-                    />
+                    />*/}
                 </div>
                 <div className='repository-type'>
                     <Tabs

@@ -54,6 +54,21 @@
             display: none;
         }
     }
+    .repository-path{
+        display: flex;
+        .path-tips{
+            flex: 1;
+            .ant-form-item-label,.ant-form-item-explain{
+                margin-left: -335px;
+            }
+        }
+    }
+    .test{
+
+      width: auto;
+
+
+    }
 }
 
 

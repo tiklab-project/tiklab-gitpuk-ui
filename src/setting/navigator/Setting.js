@@ -54,38 +54,52 @@ const Setting = props =>{
                 icon:<MergeCellsOutlined />,
                 purviewCode:'xcode_plugin',
             },
-         /*   {
+        /*    {
                 id:'/index/sys/hooks',
                 title: 'WebHooks',
                 icon:<FileDoneOutlined />,
             },*/
             {
-                id:'/index/sys/deploy/server',
-                title:'server_deploy',
-                icon:<FileDoneOutlined />,
-            },
+              id:'3',
+              title: 'codeReview',
+              icon:<FileDoneOutlined />,
+                children: [
+                    {
+                        id:'/index/sys/deploy/server',
+                        title:'server_deploy',
+                        icon:<FileDoneOutlined />,
+                    },
+                    {
+                        id:'/index/sys/deploy/env',
+                        title:'env_deploy',
+                        icon:<BuildOutlined />,
+                    },
+                ]
+          },
             {
-                id:'/index/sys/deploy/env',
-                title:'env_deploy',
-                icon:<BuildOutlined />,
-            },
-            {
-                id:'3',
+                id:'4',
                 title:'Backups And Rec',
-                purviewCode:'backups',
+                purviewCode:'xcode_backupsVer',
                 icon:<BuildOutlined />,
                 children: [
                     {
                         id: '/index/sys/deploy/backups',
                         title: 'Backups',
+                        purviewCode:'xcode_backups',
                         icon: <BarsOutlined/>,
                     },
                     {
                         id: '/index/sys/deploy/recover',
                         title: 'Recover',
+                        purviewCode:'xcode_recover',
                         icon: <BarsOutlined/>,
                     },
                 ]
+            },
+            {
+                id:'/index/sys/commitRepository',
+                title:'操作仓库',
+                icon:<MergeCellsOutlined />,
             },
             /*{
                 id:'/index/sys/deploy/recover',
@@ -93,7 +107,7 @@ const Setting = props =>{
                 icon:<BuildOutlined />,
             },*/
             {
-                id:'4',
+                id:'5',
                 title:'Security',
                 icon:<LayoutOutlined />,
                 children: [

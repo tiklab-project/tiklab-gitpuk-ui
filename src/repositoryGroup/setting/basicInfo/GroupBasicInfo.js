@@ -18,10 +18,22 @@ const GroupBasicInfo = props =>{
 
 
     const {groupInfo,deleteGroup,updateGroup} = groupStore
-
     const [form] = Form.useForm()
-    const [expandedTree,setExpandedTree] = useState([])  // 树的展开与闭合
-    const [powerType,setPowerType] = useState(1)  // 树的展开与闭合
+    const [expandedTree,setExpandedTree] = useState([1])  // 树的展开与闭合
+    const [powerType,setPowerType] = useState("")  //  仓库权限类型
+
+
+    useEffect(()=>{
+        if (groupInfo){
+            setPowerType(groupInfo?.rules)
+            form.setFieldsValue({
+                name:groupInfo.name,
+                remarks:groupInfo.remarks
+            })
+        }
+
+
+    },[groupInfo])
 
     const onConfirm = () =>{
         Modal.confirm({
@@ -39,7 +51,8 @@ const GroupBasicInfo = props =>{
      * @param value
      */
     const onOk = value => {
-        updateGroup({...value,groupId:groupInfo.groupId})
+        updateGroup({...value,groupId:groupInfo.groupId,rules:powerType})
+        form.validateFields(['name'])
     }
 
     /**
@@ -47,7 +60,7 @@ const GroupBasicInfo = props =>{
      */
     const delGroup = () =>{
         deleteGroup(groupInfo.groupId).then(res=>{
-            res.code===0 && props.history.push('/index/repository')
+            res.code===0 && props.history.push('/index/group')
         })
 
     }
@@ -64,7 +77,7 @@ const GroupBasicInfo = props =>{
                     form={form}
                     autoComplete='off'
                     layout='vertical'
-                    initialValues={{name:groupInfo.name}}
+                    initialValues={{name:groupInfo?.name,remarks:groupInfo?.remarks}}
                 >
                     <Form.Item label='仓库组名称' name='name'
                                rules={[{max:30,message:'请输入1~31位以内的名称'}]}
@@ -92,7 +105,7 @@ const GroupBasicInfo = props =>{
                                 .validateFields()
                                 .then((values) => {
                                     onOk(values)
-                                    form.resetFields()
+
                                 })
                         }}
                     />
@@ -180,9 +193,6 @@ const GroupBasicInfo = props =>{
                     }
                 </div>
             </div>
-            {/*{*/}
-            {/*    isLoading && <Loading/>*/}
-            {/*}*/}
         </div>
     )
 }

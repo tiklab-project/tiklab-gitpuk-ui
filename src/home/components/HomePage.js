@@ -43,15 +43,15 @@ const HomePage = props =>{
      * @param repository
      */
     const goDetails = repository => {
-        
-        props.history.push(`/index/repository/${repository.group?repository.group.name:repository?.user.name}/${repository.name}/tree`)
+
+        props.history.push(`/index/repository/${repository.address}/tree`)
     }
     /**
      * 跳转commit
      * @param repository
      */
     const goCommit = (repository) => {
-        props.history.push(`/index/repository/${repository.group?repository.group.name:repository?.user.name}/${repository.name}/commits/master`)
+        props.history.push(`/index/repository/${repository.address}/commits/master`)
     }
 
     /**
@@ -103,11 +103,11 @@ const HomePage = props =>{
                                                     <div className='houseRecent-border-flex houseRecent-border-text-top'>
                                                         <div className='houseRecent-border-desc'>
                                                             <span className='title-color'>分支</span>
-                                                            <span className='desc-text'>2</span>
+                                                            <span className='desc-text'>{item?.branchNum}</span>
                                                         </div>
                                                         <div className='houseRecent-border-desc'>
                                                             <span className='title-color'>成员</span>
-                                                            <span className='desc-text'>5</span>
+                                                            <span className='desc-text'>{item?.memberNum}</span>
                                                         </div>
                                                     </div>
                                                 </div> : null

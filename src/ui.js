@@ -4,6 +4,8 @@ import Portal from "./home/components/Portal";
 import SettingContent from "./setting/navigator/SettingContent";
 
 import AsyncComponent from "./common/lazy/SyncComponent";
+import xcodeZh from "./common/language/zh.json"
+import Breadcrumb from "./common/breadcrumb/Breadcrumb"
 
 const ExcludeProductUser=AsyncComponent(()=>import('./login/ExcludeProductUser'))
 
@@ -14,11 +16,12 @@ const Homepage=AsyncComponent(()=>import('./home/components/HomePage'))
 
 const WEBIDE=AsyncComponent(()=>import('./WEBIDE/components/WebIde'))
 
+
 /**
  * 仓库
  */
 const Repository=AsyncComponent(()=>import('./repository/repository/components/Repository'))
-const RepositoryAdd=AsyncComponent(()=>import('./repository/repository/components/RepositoryAddold'))
+const RepositoryAdd=AsyncComponent(()=>import('./repository/repository/components/RepositoryAdd'))
 const RepositoryDetails=AsyncComponent(()=>import('./repository/navigator/RepositoryAside'))
 const File=AsyncComponent(()=>import('./repository/file/components/File'))
 const Blob=AsyncComponent(()=>import('./repository/file/components/Blob'))
@@ -36,8 +39,16 @@ const RepositoryBasicInfo=AsyncComponent(()=>import('./repository/setting/basicI
 const PushRule=AsyncComponent(()=>import('./repository/setting/pushRule/components/PushRule'))
 const AccessKeys=AsyncComponent(()=>import('./repository/setting/accessKeys/components/AccessKeys'))
 const WebHooks=AsyncComponent(()=>import('./repository/setting/webHooks/components/Hooks'))
+const RepositoryRole=AsyncComponent(()=>import('./repository/setting/user/RepositoryRole'))
+const RepositoryUser=AsyncComponent(()=>import('./repository/setting/user/RepositoryUser'))
+const BranchSetting=AsyncComponent(()=>import('./repository/setting/branch/BranchSetting'))
 const SonarQube=AsyncComponent(()=>import('./repository/detection/components/SonarQube'))
-
+const NotRepository=AsyncComponent(()=>import('./repository/repository/components/404'))
+const NotFound=AsyncComponent(()=>import('./login/error'))
+const RemoteList=AsyncComponent(()=>import('./repository/setting/remote/components/RemoteList'))
+const RepositoryToLead=AsyncComponent(()=>import('./repository/tolead/components/RepositoryToLead'))
+const RepositoryThirdList=AsyncComponent(()=>import('./repository/tolead/components/RepositoryThirdList'))
+const ThirdInfo=AsyncComponent(()=>import('./repository/tolead/components/ThirdInfo'))
 /**
  * 仓库组
  */
@@ -49,7 +60,8 @@ const GroupMerge=AsyncComponent(()=>import('./repositoryGroup/merge/Merge'))
 const GroupRepository=AsyncComponent(()=>import('./repositoryGroup/repository/components/Repository'))
 const GroupDetailsSet=AsyncComponent(()=>import('./repositoryGroup/setting/navigator/repositoryGroupSetting'))
 const GroupBasic=AsyncComponent(()=>import('./repositoryGroup/setting/basicInfo/GroupBasicInfo'))
-
+const RepositoryGroupUser=AsyncComponent(()=>import("./repositoryGroup/setting/user/RepositoryGroupUser"))
+const RepositoryGroupRole=AsyncComponent(()=>import("./repositoryGroup/setting/user/RepositoryGroupRole"))
 /**
  * 系统设置
  */
@@ -89,26 +101,25 @@ const TodoType=AsyncComponent(()=>import("./setting/todotask/TodoType"))
 
 // licence
 const Version=AsyncComponent(()=>import('./setting/licence/Version'))
-const ProductAuth=AsyncComponent(()=>import('./setting/licence/ProductAuth'))
 
+const CommitRepository=AsyncComponent(()=>import('./setting/operation/CommitRepository'))
 // user
 const User=AsyncComponent(()=>import("./setting/user/User"))
 const Directory=AsyncComponent(()=>import("./setting/user/Directory"))
 const Orga=AsyncComponent(()=>import("./setting/user/Orga"))
 const UserGroup=AsyncComponent(()=>import("./setting/user/Group"))
 const UserGroupTrue=AsyncComponent(()=>import("./setting/user/Groupture"))
-const DomainUser=AsyncComponent(()=>import("./setting/user/DomainUser"))
 const sysFeature=AsyncComponent(()=>import('./setting/user/SystemFeature'))
 const sysRole=AsyncComponent(()=>import('./setting/user/SystemRole'))
 const sysRoleTrue=AsyncComponent(()=>import('./setting/user/SystemRoleTrue'))
 const ProjectRole=AsyncComponent(()=>import('./setting/user/ProjectRole'))
 const ProjectFeature=AsyncComponent(()=>import('./setting/user/ProjectFeature'))
-const DomainRole=AsyncComponent(()=>import('./setting/user/DomainRole'))
 
 const Login=AsyncComponent(()=>import('./login/login'))
 const Logout=AsyncComponent(()=>import('./login/Logout'))
 export {
-
+    Breadcrumb,
+    xcodeZh,
     App,
      Homepage,
      WEBIDE,
@@ -131,7 +142,16 @@ export {
      PushRule,
      AccessKeys,
     WebHooks,
+    RepositoryRole,
+    RepositoryUser,
+    BranchSetting,
     SonarQube,
+    NotRepository,
+    NotFound,
+    RemoteList,
+    RepositoryToLead,
+    RepositoryThirdList,
+    ThirdInfo,
     RepositoryGroup,
     RepositoryGroupAdd,
     RepositoryGroupDetails,
@@ -140,6 +160,8 @@ export {
     GroupRepository,
     GroupDetailsSet,
     GroupBasic,
+    RepositoryGroupUser,
+    RepositoryGroupRole,
     Setting,
     Auth,
     Plugin,
@@ -161,19 +183,16 @@ export {
     TodoTemp,
     TodoType,
     Version,
-    ProductAuth ,
     User ,
     Directory,
     Orga,
     UserGroup,
     UserGroupTrue,
-    DomainUser,
     sysFeature ,
     sysRole,
     sysRoleTrue,
     ProjectRole,
     ProjectFeature,
-    DomainRole,
     Login,
     Logout,
 
@@ -181,4 +200,5 @@ export {
     Portal,
     xcodeStore,
     ExcludeProductUser,
+    CommitRepository,
 }

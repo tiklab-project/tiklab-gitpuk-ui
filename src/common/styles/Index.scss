@@ -58,6 +58,11 @@ ul li{
     padding: 8px;
 }
 
+.xcode .ant-table-thead > tr > th:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before {
+    position: static;
+
+}
+
 .xcode .ant-transfer-list{
     background: #ffffff;
     border: none;
@@ -155,6 +160,7 @@ ul li{
     --tiklab-white: #fff;   /* 主色调白*/
     --tiklab-black: #000;   /*主色调黑 */
     --tiklab-blue: #5D70EA;   /* 主色调蓝*/
+    --tiklab-gree: #4cbb17 ;   /* 主色调蓝*/
     --tiklab-gray-200: #ececec;  /*border 的边线 */
     --tiklab-gray-300: #EDF0F5;  /*hover颜色 */
     --tiklab-gray-400: #e3e8f0;  /*左侧导航 选中颜色 */
@@ -185,5 +191,7 @@ ul li{
     --xcode-hover-color: #edf0f5;
     --xcode-backdrop-color: #f7f7f7;
     --xcode-head-height: 48px;
-    --xcode-content-height: calc(100vh - 48px)
+    --xcode-content-height: calc(100vh - 48px);
+
+    ---xcode-table-top:10px
 }

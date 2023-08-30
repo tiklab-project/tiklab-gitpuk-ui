@@ -9,47 +9,71 @@ import BreadcrumbContent from '../../../common/breadcrumb/Breadcrumb';
 import RepositoryPower from './RepositoryPower';
 import './RepositoryAdd.scss';
 import groupStore from "../../../repositoryGroup/repositoryGroup/store/RepositoryGroupStore"
-const RepositoryAddold = props =>{
+const RepositoryAdd = props =>{
 
-    const {repositoryStore} = props
+    const {repositoryStore,location} = props
 
-    const {createRpy,isLoading,findRepositoryByName,createOpenRecord,findRepositoryList} = repositoryStore
-    const {findUserGroup,groupList} = groupStore
+    const {createRpy,isLoading,findRepositoryByName,createOpenRecord,getAddress,address} = repositoryStore
+    const {findCanCreateRpyGroup,groupList} = groupStore
 
     const [form] = Form.useForm()
-    const [addType,setAddType] = useState(1)
     const [powerType,setPowerType] = useState("public")
 
     //输入的仓库名称
     const [rpyName,setRpyName]=useState('')
-    const [group,setGroup]=useState(null)     //仓库
-    const [repositoryList,setRepositoryList]=useState()
+    const [group,setGroup]=useState(null)     //仓库组
+    const [groupOptions,setGroupOptions]=useState([])   //仓库组的opt
 
-    useEffect(async ()=>{
+    const [repositoryList,setRepositoryList]=useState()
+    useEffect( async ()=>{
         // 初始化仓库
-        const res=await findRepositoryByName({})
+        const res= await findRepositoryByName({userId:getUser().userId})
         if (res.code===0){
             setRepositoryList(res.data)
         }
         // 仓库组
-        findUserGroup()
+        const groups= await findCanCreateRpyGroup()
+        if (groups.code===0){
+            groupOption(groups.data)
+        }
+        if (location.search) {
+            initialize(groups.data,res.data)
+        }
+
+        getAddress()
     },[])
+
+    const initialize =  (groups,repositorys) => {
+        const groupName = location.search.substring(6)
+        const group = groups.filter(a => a.name === groupName)
+        if (group.length) {
+            setGroup(group[0])
+
+            if (repositorys){
+                const repList=repositorys.filter(b=>b.groupId===group[0].groupId)
+                setRepositoryList(repList)
+            }
+        }
+    }
+
 
     /**
      * 确定添加仓库
      */
     const onOk = () => {
         form.validateFields().then((values) => {
-
+            let address= getUser().name
+            if (!getUser().name){
+                address= getUser().phone?getUser().phone:getUser().email
+            }
             createRpy({
                 ...values,
                 group:{groupId:group?.groupId},
-                address:getUser().tenant?getUser().tenant+"/"+(group?group.name:getUser().name)+"/"+values.address
-                    :(group?group.name:getUser().name)+"/"+values.address,
+                address:address+"/"+values.address,
                 rules:powerType,
             }).then(res=>{
                 if(res.code===0){
-                    props.history.push(`/index/repository/${(group?group.name:getUser().name)+"/"+values.address}/tree`)
+                    props.history.push(`/index/repository/${(group?group.name:address)+"/"+values.address}/tree`)
                   /* props.history.push(`/index/house/${groupId?groupId:userName}/${values.name}/tree`)*/
                 }
                 createOpenRecord(res.data)
@@ -59,17 +83,17 @@ const RepositoryAddold = props =>{
 
     //设置仓库组
     const installCodeGroup =async  (value) => {
-        const param={
-            groupId:value,
-            name:rpyName
+        let res;
+        if(value===getUser().userId){
+             res=await findRepositoryByName({name:rpyName,userId:value})
+        }else {
+             res=await findRepositoryByName({name:rpyName,groupId:value,})
         }
-        const res=await findRepositoryByName(param)
         if (res.code===0){
             setRepositoryList(res.data)
             form.validateFields(['name'])
             form.validateFields(['address'])
         }
-
         if (value){
             const group=groupList.filter(a=>a.groupId===value)[0]
             setGroup(group)
@@ -85,7 +109,31 @@ const RepositoryAddold = props =>{
         form.validateFields(['address'])
     }
 
-
+    const groupOption = (groups) => {
+        const group=groups.length>0 && groups.map(item=>(
+            { label:item.name,
+                value: item.groupId
+            }
+        ))
+        if (group){
+            setGroupOptions(group)
+        }
+    }
+    const option=[
+        {
+            label: '用户',
+            options: [
+                {
+                    label: getUser().name?getUser().name:getUser().phone,
+                    value: getUser().userId
+                }
+            ],
+        },
+        {
+            label: '仓库组',
+            options:groupOptions
+        },
+    ]
 
 
     const newRepository = (
@@ -108,6 +156,7 @@ const RepositoryAddold = props =>{
                             if(repositoryList){
                                 nameArray = repositoryList && repositoryList.map(item=>item.name)
                             }
+
                             if (nameArray.includes(value)) {
                                 return Promise.reject('名称已经存在')
                             }
@@ -121,26 +170,20 @@ const RepositoryAddold = props =>{
 
             </Form.Item>
             <div className='repository-add-path'>
-                <Form.Item label={<span style={{opacity:0}}>归属</span>}>
-                    <Input style={{background:'#fff'}} disabled={true} value={'http://xcode.tiklab.net'}/>
+                <Form.Item  label={<span className={'must'}>仓库路径</span>} rules={[{required:true,message:'请输入路径'}]} >
+                    <Input style={{background:'#fff'}} disabled  value={address}/>
                 </Form.Item>
                 <Form.Item label={<span style={{opacity:0}}>仓库组</span>}>
                     <Select
                         style={{background:'#fff',width:150,height:30,margin:'0 3px'}}
-                        defaultValue={null}
+                        defaultValue={group?group.groupId :getUser().userId}
                         onChange={value=>installCodeGroup(value)}
-                    >
-                        <Select.Option value={null}>不选择分组</Select.Option>
-                        {
-                            groupList && groupList.map(item=>(
-                                <Select.Option value={item.groupId} key={item.groupId}>{item.name}</Select.Option>
-                            ))
-                        }
-                    </Select>
+                        options={option}
+                    />
                 </Form.Item>
                 <Form.Item
-                    className='path-tips'
-                    label='仓库路径'
+                    className='path-tips rpy-add'
+                    label={<span style={{opacity:0}}>归属</span>}
                     name='address'
                     rules={[
                         {required:true,message:'请输入路径'},
@@ -153,7 +196,7 @@ const RepositoryAddold = props =>{
                                 if(repositoryList){
                                     nameArray = repositoryList && repositoryList.map(item=>item.address)
                                 }
-                                
+
                                 if (nameArray.includes(address)) {
                                     return Promise.reject('路径已经存在')
                                 }
@@ -201,27 +244,14 @@ const RepositoryAddold = props =>{
             <div className='repository-add-content'>
                 <div className='repository-add-top'>
                     <BreadcrumbContent firstItem='新建仓库' goBack={goBack}/>
-                    {
-                        addType===1?
-                        <div className='repository-add-top-leadingIn'>
-                            <span>在其他网站已经有仓库了吗？</span>
-                            <span className='leadingIn'>点击导入</span>
-                        </div>
-                            :
-                        <div className='repository-add-top-leadingIn'>
-                            <span className='leadingIn' onClick={()=>setAddType(1)}>创建新存储库</span>
-                        </div>
-                    }
                 </div>
                 <div className='repository-add-bottom'>
-                    {
-                        addType===1 &&
-                        <div className='repository-add-new'>
-                            {newRepository}
-                            <Btn onClick={goBack} title={'取消'} isMar={true}/>
-                            <Btn onClick={onOk} type={'primary'} title={'确认'}/>
-                        </div>
-                    }
+                    <div className='repository-add-new'>
+                        {newRepository}
+                        <Btn onClick={goBack} title={'取消'} isMar={true}/>
+                        <Btn onClick={onOk} type={'primary'} title={'确认'}/>
+                    </div>
+
                 </div>
             </div>
             {
@@ -231,4 +261,4 @@ const RepositoryAddold = props =>{
     )
 }
 
-export default inject('repositoryStore')(observer(RepositoryAddold))
+export default inject('repositoryStore')(observer(RepositoryAdd))

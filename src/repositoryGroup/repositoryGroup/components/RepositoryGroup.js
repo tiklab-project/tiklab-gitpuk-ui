@@ -14,31 +14,52 @@ import Listicon from '../../../common/list/Listicon';
 import './RepositoryGroup.scss';
 import groupStore from "../store/RepositoryGroupStore"
 import {observer} from "mobx-react";
+import {getUser} from "tiklab-core-ui";
+import {SpinLoading} from "../../../common/loading/Loading";
+import Page from "../../../common/page/Page";
 
 const RepositoryGroup = props => {
 
-    const {groupType,setGroupType,findUserGroup,groupList} = groupStore
+    const {findRepositoryGroupPage} = groupStore
 
-    useEffect( ()=>{
+    // 仓库组分类
+    const [groupType,setGroupType] = useState("viewable")
+
+    const [groupList,setGroupList]=useState([])
+
+    const [currentPage,setCurrentPage]=useState(1)
+    const [totalPage,setTotalPage]=useState()
+
+    //查询仓库的名称
+    const [groupName,setGroupName]=useState()
+    const [isLoading,setIsLoading]=useState(false)
+
+    useEffect( async ()=>{
+
         // 初始化仓库组
-        findUserGroup()
+        await findGroupPage(1,groupType)
     },[])
 
-    
-    const lis = [
-        {
-            id:1,
-            title:'所有仓库组',
-        },
-        {
-            id:2,
-            title:'我的仓库组',
-        },
-   /*     {
-            id:3,
-            title:'我收藏的',
-        }*/
-    ]
+    const findGroupPage =async (currentPage,repositoryType) => {
+        const param={
+            pageParam:{
+                currentPage:currentPage,
+                pageSize:10
+            },
+            userId:getUser().userId,
+            name:groupName,
+            findType:repositoryType
+        }
+
+        setIsLoading(true)
+        const res=await findRepositoryGroupPage(param)
+        setIsLoading(false)
+        if (res.code===0){
+            setGroupList(res.data?.dataList)
+            setTotalPage(res.data.totalPage)
+            setCurrentPage(res.data.currentPage)
+        }
+    }
 
     /**
      * 切换仓库组类型
@@ -60,6 +81,21 @@ const RepositoryGroup = props => {
         props.history.push(`/index/group/${value.name}/sys/info`)
     }
 
+    /**
+     * 输入搜索的仓库组名称
+     * @param e
+     */
+    const onChangeSearch = (e) => {
+        const value=e.target.value
+        setGroupName(value)
+    }
+
+    /**
+     * 分页
+     */
+    const changPage =async (value) => {
+        await findGroupPage(value,groupType)
+    }
 
     const columns = [
         {
@@ -83,7 +119,14 @@ const RepositoryGroup = props => {
             }
         },
         {
-            title: '仓库',
+            title: '负责人',
+            dataIndex: ['user','name'],
+            key: 'user',
+            width:'20%',
+            ellipsis:true,
+        },
+        {
+            title: '仓库数',
             dataIndex: 'repositoryNum',
             key: 'repositoryNum',
             width:'30%',
@@ -146,14 +189,18 @@ const RepositoryGroup = props => {
                 <div className='repository-group-type'>
                     <Tabs
                         type={groupType}
-                        tabLis={lis}
+                        tabLis={[
+                            {id:"viewable", title:'所有仓库组'},
+                            {id:"oneself", title:'我的仓库组'},
+                            /*   {id:3, title:'我收藏的'}*/
+                        ]}
                         onClick={clickType}
                     />
                     <div className='repository-group-type-input'>
                         <Input
                             allowClear
                             placeholder='仓库组名称'
-                            // onChange={onChangeSearch}
+                             onChange={onChangeSearch}
                             prefix={<SearchOutlined />}
                             style={{ width: 200 }}
                         />
@@ -163,11 +210,17 @@ const RepositoryGroup = props => {
                     <Table
                         bordered={false}
                         columns={columns}
+                        isLoading={isLoading}
                         dataSource={groupList}
                         rowKey={record=>record.groupId}
                         pagination={false}
-                        locale={{emptyText: <EmptyText title={'暂无仓库组'}/>}}
+                        locale={{emptyText: isLoading ?
+                                <SpinLoading type="table"/>: <EmptyText title={"没有仓库"}/>}}
                     />
+                    {
+                        (!isLoading &&totalPage>1)?
+                            <Page pageCurrent={currentPage} changPage={changPage} totalPage={totalPage}/>:null
+                    }
                 </div>
             </div>
         </div>

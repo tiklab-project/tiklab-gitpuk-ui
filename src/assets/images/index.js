@@ -1,5 +1,5 @@
 
-const req = require.context('./svg', false, /\.svg$/)
+const req = require.context('./img', false, /\.svg$/)
 const requireAll = requireContext => requireContext.keys().map(requireContext)
 requireAll(req)
 

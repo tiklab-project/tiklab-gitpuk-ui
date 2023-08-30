@@ -27,7 +27,7 @@ const Repository = props =>{
     return (
         <div className='group-repository'>
             <div className='group-repository-content xcode-home-limited xcode'>
-                <BreadcrumbContent firstItem={'Repository'} />
+                <BreadcrumbContent firstItem={'Repository_group'} />
                 <div className='group-repository-head'>
                     <div className='head-left'>
                         <div className='head-left-icon'>
@@ -44,7 +44,7 @@ const Repository = props =>{
                             type={'primary'}
                             title={'新建仓库'}
                             icon={<PlusOutlined/>}
-                            onClick={()=>props.history.push('/index/repository/new')}
+                            onClick={()=>props.history.push(`/index/repository/new?type=${groupName}`)}
                         />
                     </div>
                 </div>

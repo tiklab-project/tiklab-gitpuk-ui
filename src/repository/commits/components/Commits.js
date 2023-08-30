@@ -9,7 +9,6 @@ import React,{useState,useEffect} from 'react';
 import {inject,observer} from 'mobx-react';
 import {Input,Select,Tooltip} from 'antd';
 import {CopyOutlined,FolderOpenOutlined,SearchOutlined} from '@ant-design/icons';
-import {getUser} from 'tiklab-core-ui';
 import {copy} from "../../../common/client/Client";
 import BreadcrumbContent from "../../../common/breadcrumb/Breadcrumb";
 import EmptyText from '../../../common/emptyText/EmptyText';
@@ -23,7 +22,7 @@ const Commits = props =>{
     const {repositoryStore,match,location} = props
     const webUrl = `${match.params.namespace}/${match.params.name}`
     const {repositoryInfo} = repositoryStore
-    const {findBranchCommit,commitsList,setCommitsList} = commitsStore
+    const {findBranchCommit,commitsList,setCommitsList,findDmUserList,userList,setCommitsQueryData,queryData} = commitsStore
 
     const urlInfo = match.params.branch
     const branch = setBranch(urlInfo,repositoryInfo)
@@ -37,13 +36,26 @@ const Commits = props =>{
     // 第二次获取提交文件加载状态
     const [findNumber,setFindNumber] = useState(false)
 
+    const [commitName,setCommitName]=useState('')  //提交名称
+    const [commitUser,setCommitUser]=useState('all')  //选择的提交用户
+
     useEffect(()=>{
         if(repositoryInfo.name){
-            // 获取提交信息
-            findCommitsList()
+            if (queryData){
+                setCommitName(queryData.commitName)
+                setCommitUser(queryData.commitUser)
+                findCommitsList({commitInfo:queryData.commitName})
+            }else {
+                setCommitName('')
+                // 获取提交信息
+                findCommitsList()
+            }
+            //查询用户信息
+            findDmUserList({domainId:repositoryInfo.rpyId})
         }
         return ()=>setCommitsList()
     },[repositoryInfo.name,location.pathname])
+
 
     /**
      * 页面滚动到底部重新获取数据
@@ -57,21 +69,31 @@ const Commits = props =>{
             if (contentScrollTop + clientHeight >= scrollHeight && hasData) {
                 setFindNumber(true)
                 // 滚动到底部获取数据的方法
-                findCommitsList({number:'all'})
+                findCommitsList({commitInfo:commitName},'all')
             }
         }
     }
 
+    //输入搜索的提交信息
+    const onChangeSearch =async (e) => {
+        setCommitName(e.target.value)
+    }
+    //输入搜索
+    const onSearch =async () => {
+        setCommitUser('all')
+        findCommitsList({commitInfo:commitName})
+    }
     /**
      * 获取提交信息
      * @param number
      */
-    const findCommitsList = number => {
+    const findCommitsList = (data,number) => {
         findBranchCommit({
+            ...data,
             rpyId:repositoryInfo.rpyId,
             branch:branch,
             findCommitId:findCommitId(urlInfo),
-            ...number
+            number:number
         }).then(()=>{
             if(number){
                 setHasData(false)
@@ -87,6 +109,13 @@ const Commits = props =>{
      * @param value
      */
     const changCommitsUser = value => {
+        setCommitName('')
+        setCommitUser(value)
+        if (value==="all"){
+            findCommitsList()
+        }else {
+            findCommitsList({commitUser:value})
+        }
 
     }
 
@@ -95,6 +124,9 @@ const Commits = props =>{
      * @param item
      */
     const goDetails = item =>{
+        //setPageType("details")
+        //setCommitId(item.commitId)
+        setCommitsQueryData({commitName:commitName,commitUser:commitUser})
         props.history.push(`/index/repository/${webUrl}/commit/${item.commitId}`)
     }
 
@@ -174,16 +206,26 @@ const Commits = props =>{
                     </div>
                     <div className='commits-head-right'>
                         <div className='commits-user'>
-                            <Select defaultValue={'admin'} onChange={value=>changCommitsUser(value)}>
-                                <Select.Option value={'admin'}>admin</Select.Option>
-                                <Select.Option value={'root'}>root</Select.Option>
+                            <Select  value={commitUser} onChange={value=>changCommitsUser(value)} style={{minWidth:100}}>
+                                <Select.Option value={"all"}>{"所有"}</Select.Option>
+                                {
+                                    userList.map(item=>{
+                                        return(
+                                            <Select.Option value={item.user.name}>{item.user.name}</Select.Option>
+                                        )
+                                    })
+                                }
+
+                                {/* <Select.Option value={'root'}>root</Select.Option>*/}
                             </Select>
                         </div>
                         <div className='commits-input'>
                             <Input
                                 allowClear
                                 placeholder='提交信息'
-                                // onChange={onChangeSearch}
+                                value={commitName}
+                                onChange={onChangeSearch}
+                                onPressEnter={onSearch}
                                 prefix={<SearchOutlined />}
                                 style={{ width: 200 }}
                             />
@@ -193,10 +235,10 @@ const Commits = props =>{
                 <div className='commits-msg'>
                     {
                         isLoading ? <SpinLoading type='table'/> :
-                        commitsList && commitsList.length > 0 ?
-                        commitsList.map((group,groupIndex)=>renderCommitsData(group,groupIndex))
-                        :
-                        <EmptyText title={'暂无提交信息'}/>
+                            commitsList && commitsList.length > 0 ?
+                                commitsList.map((group,groupIndex)=>renderCommitsData(group,groupIndex))
+                                :
+                                <EmptyText title={'暂无提交信息'}/>
                     }
                     {
                         findNumber && <SpinLoading type='table' size='large'/>
@@ -207,6 +249,7 @@ const Commits = props =>{
                 </div>
             </div>
         </div>
+
     )
 }
 

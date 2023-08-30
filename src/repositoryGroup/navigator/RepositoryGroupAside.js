@@ -6,11 +6,12 @@ import {
 } from '@ant-design/icons';
 import Aside from '../../common/aside/Aside';
 import groupStore from "../repositoryGroup/store/RepositoryGroupStore"
+import {observer} from "mobx-react";
 const RepositoryGroupAside= props =>{
 
     const {match}=props
 
-    const {findUserGroup,groupList,groupInfo,setGroupInfo} = groupStore
+    const {findGroupByName,groupList,groupInfo,setGroupInfo} = groupStore
 
     const groupName = match.params.name
 
@@ -18,13 +19,8 @@ const RepositoryGroupAside= props =>{
 
     useEffect(()=>{
         // 初始化仓库组
-        findUserGroup().then(res=>{
-            const data = res.data
-            data && data.map(item=>{
-                if(item.name === groupName){
-                    setGroupInfo(item)
-                }
-            })
+        findGroupByName(groupName).then(res=>{
+            setGroupInfo(res.data)
         })
     },[])
 
@@ -37,7 +33,7 @@ const RepositoryGroupAside= props =>{
         },*/
         {
             to:`/index/group/${groupName}/repository`,
-            title:`${t('Repository')}`,
+            title:`${t('Repository_group')}`,
             icon: <BankOutlined />,
         },
         {
@@ -59,6 +55,6 @@ const RepositoryGroupAside= props =>{
 
 }
 
-export default RepositoryGroupAside
+export default observer(RepositoryGroupAside)
 
 

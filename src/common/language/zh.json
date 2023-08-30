@@ -3,6 +3,7 @@
     "Repository": "仓库",
     "Repository_group": "仓库组",
     "Code":"代码",
+    "Code_data":"代码详情",
     "Commits": "提交",
     "Branch": "分支",
     "Tag": "标签",
@@ -35,6 +36,9 @@
     "Users Directory" : "用户目录",
     "Backups And Rec": "备份与恢复",
     "Backups": "备份",
-    "Recover": "恢复"
-
+    "Recover": "恢复",
+    "RepositoryInfo": "仓库信息",
+    "RemoteInfo": "仓库镜像",
+    "codeReview": "代码审核配置",
+    "BranchSetting": "分支设置"
 }

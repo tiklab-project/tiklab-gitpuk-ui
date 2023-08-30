@@ -50,22 +50,21 @@ const File = props =>{
                 setIsLoading(false)
                 res.code===500001 && props.history.push("/index/404")
             })
+
+            // 获取文件地址
+            findCloneAddress(repositoryInfo.rpyId)
         }
     },[repositoryInfo.name,location.pathname])
 
-    useEffect(()=>{
-        if(repositoryInfo.name){
-            // 获取文件地址
-            findCloneAddress(repositoryInfo.rpyId)
-            // 获取最近提交信息
-             findLatelyBranchCommit({
-                rpyId:repositoryInfo.rpyId,
-                branch:branch,
-                findCommitId:findCommitId(urlInfo)
-            })
-        }
-    },[repositoryInfo.name])
 
+    useEffect(()=>{
+        // 获取最近提交信息
+        findLatelyBranchCommit({
+            rpyId:repositoryInfo.rpyId,
+            branch:branch,
+            findCommitId:findCommitId(urlInfo)
+        })
+    },[urlInfo,location.pathname])
 
 
     useEffect(()=>{
@@ -97,6 +96,7 @@ const File = props =>{
      * @returns {string|*}
      */
     const renderFileIcon = fileType => {
+        debugger
         switch (fileType) {
             case "txt":
             case "yaml":
@@ -204,7 +204,7 @@ const File = props =>{
                         </div>
                     </div>
                 </div>
-                <RecentSubmitMsg {...props} latelyBranchCommit={latelyBranchCommit} repositoryInfo={repositoryInfo}/>
+                <RecentSubmitMsg {...props} latelyBranchCommit={latelyBranchCommit} repositoryInfo={repositoryInfo} webUrl={webUrl}/>
                 <div className="code-content-tables">
                     <div className="code-data-item">
                         <div className="code-item-fileName">名称</div>

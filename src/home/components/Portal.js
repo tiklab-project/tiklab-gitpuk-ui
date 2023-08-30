@@ -2,7 +2,6 @@ import React,{useState,useEffect} from "react";
 import {Dropdown,Badge} from "antd";
 import {useTranslation} from "react-i18next";
 import {getUser} from "tiklab-core-ui";
-import {AppLink} from "tiklab-integration-ui";
 import {renderRoutes} from "react-router-config";
 import {
     GlobalOutlined,
@@ -16,7 +15,6 @@ import {
     WhatsAppOutlined
 } from "@ant-design/icons";
 import {inject,observer} from "mobx-react";
-import logo from "../../assets/images/img/matflow3.png";
 import Profile from "../../common/profile/Profile";
 import { PortalDropdown } from "../../common/dropdown/DropdownMenu";
 import PortalMessage from "./PortalMessage";
@@ -30,7 +28,7 @@ import "./Portal.scss";
  */
 const  Portal = props =>{
 
-    const {route,systemRoleStore} = props
+    const {route,systemRoleStore,AppLink} = props
 
     const {getSystemPermissions} = systemRoleStore
 
@@ -46,7 +44,7 @@ const  Portal = props =>{
     },[])
 
     useEffect(()=>{
-        if(path.indexOf("/index/pipeline")===0) path = "/index/pipeline"
+
         setCurrentLink(path)
     },[path])
 
@@ -128,9 +126,13 @@ const  Portal = props =>{
         <div className="frame">
             <div className="frame-header">
                 <div className="frame-header-right">
-                    <AppLink isSSO={false}/>
+                    {AppLink}
                     <div className="frame-header-logo">
-                        <img src={logo} alt="logo" />
+                      {/*  <img src={logo} alt="logo" />*/}
+                        <div className={'text'}>
+                            {"Xcode"}
+                        </div>
+
                     </div>
                     <div className="headers-link">
                         {renderRouter(routers)}

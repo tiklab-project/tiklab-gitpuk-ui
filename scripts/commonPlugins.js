@@ -8,6 +8,8 @@ import replace from '@rollup/plugin-replace'
 import commonjs from '@rollup/plugin-commonjs';
 // 用于处理css
 import postcss from "rollup-plugin-postcss";
+
+import url from 'rollup-plugin-url';
 // 可以将.json文件转为es6模块供rollup处理
 import json from '@rollup/plugin-json';
 
@@ -34,10 +36,12 @@ const commonPlugins = [
         'process.env.NODE_ENV': JSON.stringify(NODE_ENV),
         preventAssignment:true,
     }),
-    image({
-        output: `dist/images`,
-        extensions: /\.(png|jpg|jpeg|gif|svg)$/,
-        limit: 8192
+    url({
+        include: ['**/*.svg', '**/*.png', '**/*.jpg'],
+        limit: 0,
+        fileName: '[name][extname]',
+        destDir: 'es/src/assets/images/svg',
+        publicPath: '/images/'
     })
 ];
 

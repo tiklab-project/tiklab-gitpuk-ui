@@ -12,6 +12,10 @@ import './RecentSubmitMsg.scss';
 const RecentSubmitMsg = props =>{
 
     const {latelyBranchCommit,webUrl} = props
+    const goDetails = () => {
+        props.history.push(`/index/repository/${webUrl}/commit`)
+    }
+
     return (
         <div className='recent-submit-msg'>
             <div className='code-commit-icon'/>

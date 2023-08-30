@@ -20,16 +20,19 @@ const Branch = props =>{
     const {repositoryStore,match} = props
 
     const {repositoryInfo} = repositoryStore
-    const {createBranch,findAllBranch,branchList,fresh,deleteBranch} = branchStore
+    const {createBranch,findAllBranch,branchList,fresh,deleteBranch,findBranchList} = branchStore
 
-    const [branchType,setBranchType] = useState(1)
+    const [branchType,setBranchType] = useState("all")
     const [addVisible,setAddVisible] = useState(false)
+    const [branchName,setBranchName]=useState('')   //搜索的分支名字
 
     const webUrl = `${match.params.namespace}/${match.params.name}`
 
     useEffect(()=>{
         // 初始化分支
-        repositoryInfo.name && findAllBranch(repositoryInfo.rpyId)
+      //  repositoryInfo.name && findAllBranch(repositoryInfo.rpyId)
+
+        repositoryInfo.name && findBranchList({rpyId:repositoryInfo.rpyId})
     },[repositoryInfo.name,fresh])
 
     /**
@@ -37,7 +40,12 @@ const Branch = props =>{
      * @param item
      */
     const clickBranchType = item => {
+        setBranchName(null)
         setBranchType(item.id)
+        if (item.id!=='all'){
+            findBranchList({rpyId:repositoryInfo.rpyId,state:item.id})
+        }
+
     }
 
     /**
@@ -59,6 +67,16 @@ const Branch = props =>{
        props.history.push(`/index/repository/${webUrl}/tree/${item.branchName}`)
    }
 
+   //输入搜索的分支名字
+   const onChangeSearch = (e) => {
+       setBranchName(e.target.value)
+   }
+    //名字搜索分支
+   const onSearch =async () => {
+       setBranchType('all')
+       findBranchList({rpyId:repositoryInfo.rpyId,name:branchName})
+   }
+
    // 渲染分支列表
     const renderData = item => {
         return(
@@ -77,8 +95,8 @@ const Branch = props =>{
                         }
                     </div>
                     <div className='name-text-desc'>
-                        <span className='desc-name'>admin</span>
-                        <span>2天前更新</span>
+                        <span className='desc-name'>{item.updateUser}</span>
+                        <span>{item.updateTime}</span>
                     </div>
                 </div>
                 <div className='branch-tables-commit'>
@@ -99,7 +117,7 @@ const Branch = props =>{
                             <svg className='icon' aria-hidden='true'>
                                 <use xlinkHref='#icon-xiazai'/>
                             </svg>
-                            <DownOutlined style={{fontSize:13,paddingLeft:5}}/>
+                          {/*  <DownOutlined style={{fontSize:13,paddingLeft:5}}/>*/}
                         </div>
                     </Tooltip>
                     {
@@ -154,17 +172,19 @@ const Branch = props =>{
                     <Tabs
                         type={branchType}
                         tabLis={ [
-                            {id:1, title:'所有分支'},
-                            {id:2, title:'活跃分支'},
-                            {id:3, title:'非活跃分支'}
+                            {id:'all', title:'所有分支'},
+                            {id:'active', title:'活跃分支'},
+                            {id:'noActive', title:'非活跃分支'}
                         ]}
                         onClick={clickBranchType}
                     />
                     <div className='branch-type-input'>
                         <Input
                             allowClear
+                            value={branchName}
                             placeholder='分支名称'
-                            // onChange={onChangeSearch}
+                            onChange={onChangeSearch}
+                            onPressEnter={onSearch}
                             prefix={<SearchOutlined />}
                             style={{ width: 200 }}
                         />

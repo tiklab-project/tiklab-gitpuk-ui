@@ -30,6 +30,7 @@
     &-contrast{
         .commitsDetails-contrast-content{
             .contrast-title{
+                display: flex;
                 border-bottom: 1px solid #d9d9d9;
                 margin-bottom: var(--tiklab-padding-item);
             }
@@ -46,50 +47,55 @@
                         padding-right: 5px;
                     }
                     .num-add{
-                        color: var(--tiklab-blue);
+                        color: var(--tiklab-gree);
                     }
                     .num-reduce{
                         color: #ff0000;
+
                     }
                 }
             }
-            .contrast-content .contrast-content-item{
-                .item-head{
-                    display: flex;
-                    flex-direction: row;
-                    align-items: center;
-                    padding: 8px;
-                    .item-head-icon{
-                        margin-right: 8px;
-                        cursor: pointer;
-                    }
-                    .item-head-file{
-                        flex: 1;
-                        .item-title-title{
-                            display: inline-block;
-                            vertical-align: middle;
-                            max-width: 570px;
-                            overflow: hidden;
-                            white-space: nowrap;
-                            text-overflow: ellipsis;
-                            -o-text-overflow: ellipsis;
-                            font-weight: 500;
-                            padding-right: 8px;
-                        }
-                        .item-title-type{
-                            font-size: var(--tiklab-font-13);
-                            color: var(--tiklab-gray-500);
-                            padding-right: 8px;
-                        }
-                        .item-title-icon{
+            .contrast-content {
+                padding-top: 10px;
+                .contrast-content-item{
+                    .item-head{
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+                        padding: 8px;
+                        .item-head-icon{
+                            margin-right: 8px;
                             cursor: pointer;
                         }
+                        .item-head-file{
+                            flex: 1;
+                            .item-title-title{
+                                display: inline-block;
+                                vertical-align: middle;
+                                max-width: 570px;
+                                overflow: hidden;
+                                white-space: nowrap;
+                                text-overflow: ellipsis;
+                                -o-text-overflow: ellipsis;
+                                font-weight: 500;
+                                padding-right: 8px;
+                            }
+                            .item-title-type{
+                                font-size: var(--tiklab-font-13);
+                                color: var(--tiklab-gray-500);
+                                padding-right: 8px;
+                            }
+                            .item-title-icon{
+                                cursor: pointer;
+                            }
+                        }
+                    }
+                    .item-content{
+                        padding: 8px;
                     }
                 }
-                .item-content{
-                    padding: 8px;
-                }
             }
+
         }
     }
 }
@@ -197,7 +203,7 @@
             padding-left: 8px;
         }
         .diff-drop-title-item-add{
-            color: var(--tiklab-blue);
+            color: var(--tiklab-gree);
         }
         .diff-drop-title-item-delete{
             color: #ff0000;

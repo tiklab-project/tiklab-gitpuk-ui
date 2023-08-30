@@ -6,7 +6,7 @@
     align-items: center;
   }
   .dev-deploy-table{
-    padding-top: 10px;
+    padding-top: var(---xcode-table-top);
   }
   .dev-deploy-ill{
     margin: var(--tiklab-padding-item) 0;

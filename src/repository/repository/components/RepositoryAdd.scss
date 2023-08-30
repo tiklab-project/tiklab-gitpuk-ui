@@ -24,11 +24,12 @@
                 display: flex;
                 .path-tips{
                     flex: 1;
-                    .ant-form-item-label,.ant-form-item-explain{
+                    .ant-form-item-label{
                         margin-left: -336px;
                     }
                 }
             }
+
         }
     }
 }
@@ -48,3 +49,16 @@
     }
 }
 
+.must:after{
+    display: inline-block;
+    margin-right: 4px;
+    color: #ff4d4f;
+    font-size: 14px;
+    font-family: SimSun, sans-serif;
+    line-height: 1;
+    content: "*";
+}
+
+ .rpy-add .ant-form-item-label > label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::after {
+     display: none!important;
+ }

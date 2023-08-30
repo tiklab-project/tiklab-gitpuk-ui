@@ -19,14 +19,13 @@ import commitsStore from "../store/CommitsStore"
  */
 const CommitsDetails = props =>{
 
-    const {repositoryStore,match} = props
-    const webUrl = `${match.params.namespace}/${match.params.name}`
+    const {repositoryStore,match,setPageType} = props
 
     const {repositoryInfo} = repositoryStore
     const {findCommitFileDiffList,findCommitFileDiff,findCommitLineFile,commitDiff,setCommitDiff,findLikeCommitDiffFileList,diffDropList} = commitsStore
 
+    const webUrl = `${match.params.namespace}/${match.params.name}`
     const commitId = match.params.commitsId
-
     //加载
     const [isLoading,setIsLoading] = useState(true)
 
@@ -42,23 +41,59 @@ const CommitsDetails = props =>{
     // diff文件列表
     const [commitDiffList,setCommitDiffList] = useState([])
 
+    // 没有更多提交信息
+    const [hasData,setHasData] = useState(true)
+    const [findNumber,setFindNumber] = useState(false)  // 第二次获取提交文件加载状态
+    const isExpandedTree = key => expandedTree.some(item => item === key)
+
     useEffect(()=>{
         // 获取所有提交文件
-        repositoryInfo.name && findCommitFileDiffList({
-            rpyId:repositoryInfo.rpyId,
-            branch:commitId,
-            findCommitId:true,
-        }).then(res=>{
-            if(res.code===0){
-                setCommitDiffList(res.data && res.data.diffList)
-            }
-            setIsLoading(false)
-        })
+        repositoryInfo.name&&findCommitDate()
         return ()=>setCommitDiff()
     },[repositoryInfo.name])
 
 
-    const isExpandedTree = key => expandedTree.some(item => item === key)
+    /**
+     * 查询提交文件
+     */
+    const findCommitDate = (number) => {
+        findCommitFileDiffList({
+            rpyId:repositoryInfo.rpyId,
+            branch:commitId,
+            findCommitId:true,
+            number:number
+        }).then(res=>{
+            if(res.code===0){
+                if (number){
+                    setCommitDiffList(commitDiffList.concat(res.data && res.data.diffList))
+                }else {
+                    setCommitDiffList(res.data && res.data.diffList)
+                }
+            }
+            if(number){
+                setHasData(false)
+                setFindNumber(false)
+                return
+            }
+            setIsLoading(false)
+        })
+    }
+
+    /**
+     * 滚动执行二次查询
+     */
+    const handleScroll =async () => {
+        const scrollTop=document.getElementById("commits_contrast")
+        if (scrollTop) {
+            const contentScrollTop = scrollTop.scrollTop; //滚动条距离顶部
+            const clientHeight = scrollTop.clientHeight; //可视区域
+            const scrollHeight = scrollTop.scrollHeight; //滚动条内容的总高度
+            if (contentScrollTop + clientHeight >= scrollHeight && hasData) {
+              /*  setFindNumber(true)
+                findCommitDate("all")*/
+            }
+        }
+    }
 
     /**
      * 文件标题显示
@@ -71,13 +106,14 @@ const CommitsDetails = props =>{
      * 文件模糊查询
      * @param e
      */
-    const changDropList = e => {
+    const changDropList = e  => {
         findLikeCommitDiffFileList({
             rpyId:repositoryInfo.rpyId,
             branch:commitId,
             findCommitId:true,
             likePath:e.target.value
         })
+
     }
 
     /**
@@ -139,6 +175,8 @@ const CommitsDetails = props =>{
         })
         return a
     }
+
+
 
     /**
      * 文件内容，查看全部操作
@@ -237,9 +275,9 @@ const CommitsDetails = props =>{
     }
 
     return (
-        <div className='commitsDetails' id='commits_contrast'>
+        <div className='commitsDetails' id='commits_contrast'  onScroll={handleScroll}>
             <div className='commitsDetails-content xcode-home-limited xcode'>
-                <BreadcrumbContent firstItem={'Commits'} secondItem={commitDiff && commitDiff.commitMessage} goBack={()=>props.history.go(-1)}/>
+                <BreadcrumbContent firstItem={commitDiff && commitDiff.commitMessage}  goBack={()=>props.history.go(-1)}/>
                 <div className='commitsDetails-head'>
                     <div className='commitsDetails-head-left'>
                         <div className='head-title-icon'>
@@ -261,7 +299,6 @@ const CommitsDetails = props =>{
                 <div className='commitsDetails-contrast'>
                     <div className='commitsDetails-contrast-content'>
                         <div className='contrast-title'>
-                            变化（{commitDiffList && commitDiffList.length}）
                         </div>
                         <div className='contrast-affected'>
                             <div className='contrast-affected-opt'>
@@ -280,11 +317,13 @@ const CommitsDetails = props =>{
                                     <span>文件变更 <CaretDownOutlined/></span>
                                 </Dropdown>
                             </div>
-                            <div className='contrast-affected-num'>
-                                <span className='num-title'>受影响行:</span>
+                            <div style={{paddingLeft:20}}> {commitDiffList && commitDiffList.length}文件被修改</div>
+                            （ <div className='contrast-affected-num'>
+                                增加行
                                 <span className='num-add'>+{commitDiff && commitDiff.addLine}</span>
+                                减少行
                                 <span className='num-reduce'>-{commitDiff && commitDiff.deleteLine}</span>
-                            </div>
+                            </div> ）
                         </div>
                         <div className='contrast-content'>
                             {

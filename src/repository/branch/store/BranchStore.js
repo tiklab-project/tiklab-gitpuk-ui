@@ -13,7 +13,7 @@ export class BranchStore{
     fresh = false
 
     /**
-     * 获取所有分支
+     * 获取仓库下面所有分支
      * @param value
      * @returns {Promise<void>}
      */
@@ -22,6 +22,19 @@ export class BranchStore{
         const params = new FormData()
         params.append('rpyId',value)
         const data = await Axios.post('/branch/findAllBranch',params)
+        if(data.code===0){
+            this.branchList = data.data && data.data
+        }
+    }
+
+    /**
+     * 条件查询分支
+     * @param value
+     * @returns {Promise<void>}
+     */
+    @action
+    findBranchList = async params =>{
+        const data = await Axios.post('/branch/findBranchList',params)
         if(data.code===0){
             this.branchList = data.data && data.data
         }
@@ -54,6 +67,22 @@ export class BranchStore{
             message.info('删除成功',0.5)
             this.fresh = !this.fresh
         }
+    }
+
+    /**
+     * 修改默认分支
+     * @param value
+     * @returns {Promise<void>}
+     */
+    @action
+    updateDefaultBranch=async value=>{
+        const data = await Axios.post('/branch/updateDefaultBranch',value)
+        if(data.code===0){
+            message.success('切换成功',1)
+        }else {
+            message.error('切换失败',1)
+        }
+
     }
 
 }

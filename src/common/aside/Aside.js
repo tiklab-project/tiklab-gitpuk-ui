@@ -18,7 +18,6 @@ import './Aside.scss';
 const Aside = props => {
 
     const {location,route,firstRouters,list,info,asideType,repositoryAddress} = props
-
     let path = location.pathname
     const {t} = useTranslation()
     const isSide = localStorage.getItem('isSide')
@@ -118,10 +117,10 @@ const Aside = props => {
                         overlayClassName={`aside-dropdown-${normalOrScrum} aside-dropdown`}
                     >
                         <div className={`${normalOrScrum}-aside_chang`} onClick={(e)=>e.preventDefault()}>
-                            <Listicon text={info.name}/>
+                            <Listicon text={info?.name}/>
                             {
                                 normalOrScrum === 'scrum' &&
-                                <span className='dropdowns_name'>{info.name}</span>
+                                <span className='dropdowns_name'>{info?.name}</span>
                             }
                             <span><CaretDownOutlined /></span>
                         </div>

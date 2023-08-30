@@ -18,6 +18,10 @@ const AsideMenu = props =>{
         }
     },[timeout])
 
+    //跳转仓库列表
+    const goRpyList = () => {
+        props.history.push(`/index/repository`)
+    }
     /**
      * 切换仓库或仓库组
      * @param item
@@ -29,11 +33,10 @@ const AsideMenu = props =>{
                 case 'group':
                     props.history.push(`/index/group/${item.name}/survey`)
                     break
-                case 'house':
-                    item.codeGroup ?
-                        props.history.push(`/index/repository/${item.codeGroup.name}/${item.name}/tree`)
-                        :
-                        props.history.push(`/index/repository/${item.user.name}/${item.name}/tree`)
+                case 'repository':
+                    props.history.push(`/index/repository/${item.address}/tree`)
+                    break
+
             }
             setIsLoading(true)
             timeout = setTimeout(()=>setIsLoading(false),150)
@@ -60,9 +63,14 @@ const AsideMenu = props =>{
             <div className='menu-toggle-title'>切换仓库</div>
             <div className='menu-toggle-group'>
                 {
-                    list && list.map((item,index)=>houseMenu(item,index))
+                    list&&list.length>5&&list.slice(0,5).map((item,index)=>houseMenu(item,index))||
+                    list && list.length<6&&list.map((item,index)=>houseMenu(item,index))
                 }
             </div>
+            {
+                list.length>2&&
+                <div className='menu-toggle-tail' onClick={goRpyList}>查看更多...</div>
+            }
         </div>
     )
 }

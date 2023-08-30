@@ -1,5 +1,6 @@
 import React from 'react';
-import pip_meiyouxiangguan from "../../assets/images/svg/pip_meiyouxiangguan.svg";
+import notData from "../../assets/images/img/not-data.png";
+import {Empty} from "antd";
 
 /**
  * 无数据渲染
@@ -9,12 +10,16 @@ import pip_meiyouxiangguan from "../../assets/images/svg/pip_meiyouxiangguan.svg
  */
 const EmptyText = props =>{
 
-    const {title} = props
+    const {title,type} = props
 
-    return  <div style={{textAlign:'center'}}>
-                <img src={pip_meiyouxiangguan} alt="maven" style={{width:50,height:50}}/>
+    return  <div style={{textAlign:'center',marginTop:30}}>
+                <img src={notData} alt="maven" style={{width:50,height:50}}/>
+                {/*<Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />*/}
+                {
+                    !type&&
+                    <div style={{fontSize:13,color:'#999',paddingTop:10}}>{title ? title : '没有查询到数据'}</div>
+                }
 
-                <div style={{fontSize:13,color:'#999'}}>{title ? title : '没有查询到数据'}</div>
             </div>
 }
 

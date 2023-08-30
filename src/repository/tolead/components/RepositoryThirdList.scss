@@ -1,0 +1,29 @@
+.third{
+  height: 100%;
+  overflow: auto;
+  &-content {
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+  }
+  &-table{
+    margin-top: 20px;
+  }
+  &-operate{
+    cursor: pointer;
+    color: #1890ff;
+  }
+  &-gray{
+    color:#9b9b9b;
+  }
+  &-green{
+    color:#55a532;
+  }
+  &-red{
+    color: red;
+  }
+}
+.toLea.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+  border: none;
+
+}

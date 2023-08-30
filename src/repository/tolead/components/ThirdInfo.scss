@@ -1,0 +1,12 @@
+.third-info{
+  height: 100%;
+  overflow: auto;
+  &-content {
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+  }
+  .from-top{
+    margin-top:20px ;
+  }
+}

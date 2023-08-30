@@ -121,4 +121,4 @@ const ServerDeploy = (props) => {
     )
 }
 
-export default ServerDeploy
+export default observer(ServerDeploy)

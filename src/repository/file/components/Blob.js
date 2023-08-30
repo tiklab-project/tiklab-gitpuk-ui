@@ -53,14 +53,13 @@ const Blob = props =>{
     },[repositoryInfo.name])
 
     const goEdit = () =>{
-        
+
         props.history.push(`/index/repository/${webUrl}/edit/${filePath[1]}`)
     }
-
     return(
         <div className='blob'>
             <div className='blob-content xcode-home-limited xcode'>
-                <BreadcrumbContent firstItem={'Code'} goBack={()=>props.history.go(-1)}/>
+                <BreadcrumbContent firstItem={'Code'} secondItem={ blobFile?.fileName} goBack={()=>props.history.go(-1)}/>
                 <div className='blob-content-head'>
                     <BreadChang
                         {...props}

@@ -5,7 +5,6 @@ import './RepositoryPower.scss';
 const RepositoryPower = props =>{
 
     const {set,powerType,setPowerType,powerTitle} = props
-
     const powerLis = [
         {
             id:"public",

@@ -103,4 +103,4 @@ const EnvDeploy = (props) => {
         </div>
     )
 }
-export default EnvDeploy
+export default observer(EnvDeploy)

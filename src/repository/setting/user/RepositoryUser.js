@@ -1,5 +1,5 @@
 /*
- * @Descripttion:
+ * @Descripttion: 仓库角色
  * @version: 1.0.0
  * @Author: 李明亮
  * @Date: 2023-01-03 19:56:02
@@ -10,20 +10,23 @@ import React ,{useEffect}from "react";
 import {DomainUser} from "tiklab-user-ui";
 import { inject, observer } from "mobx-react";
 
-const ProgramUser =(props)  => {
-    const{repositoryStore}=props
-    const {findRepository,repositoryInfo}=repositoryStore
+const RepositoryUser =(props)  => {
+    const{match,repositoryStore}=props
+    const {findRepositoryByAddress,repositoryInfo}=repositoryStore
 
-   const rpyId= props.match.params.rpyId
+    const webUrl = `${match.params.namespace}/${match.params.name}`
+    useEffect(()=>{
+        findRepositoryByAddress(webUrl)
+    },[])
     return (
         <div >
             <DomainUser
                 {...props}
-                domainId={rpyId}
+                domainId={repositoryInfo.rpyId}
                 bgroup = {"xcode"}
             />
         </div>
     )
 }
 
-export default inject("domainUserStore","repositoryStore")(observer(ProgramUser));
+export default inject("repositoryStore")(observer(RepositoryUser));

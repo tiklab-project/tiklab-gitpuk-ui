@@ -143,6 +143,11 @@
         &-active{
             background:#f4f4f4;
         }
+        &-tail{
+            cursor: pointer;
+            padding: 5px 0;
+            text-align: center;
+        }
     }
 }
 

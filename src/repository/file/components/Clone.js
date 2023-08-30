@@ -7,7 +7,7 @@ import {copy} from '../../../common/client/Client';
 import './Clone.scss';
 
 /**
- * 克隆
+ * leadAuth
  * @param props
  * @returns {JSX.Element}
  * @constructor

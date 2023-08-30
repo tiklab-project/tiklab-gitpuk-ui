@@ -18,7 +18,7 @@ import Page from "../../../common/page/Page";
 
 const RepositoryTable = props => {
 
-    const {isLoading,repositoryList,createOpenRecord,changPage,totalPage,currentPage,type} = props
+    const {isLoading,repositoryList,createOpenRecord,changPage,totalPage,currentPage} = props
     /**
      * 跳转代码文件
      * @param text
@@ -45,7 +45,7 @@ const RepositoryTable = props => {
             title: '仓库名称',
             dataIndex: 'name',
             key: 'name',
-            width:'60%',
+            width:'50%',
             ellipsis:true,
             render:(text,record)=>{
                 return (
@@ -53,14 +53,14 @@ const RepositoryTable = props => {
                         <Listicon text={text}/>
                         <div className='name-text'>
                             <div className='name-text-title'>
-                                <span className='name-text-name'>
-                                    {
-                                        type==="group"?text:
-                                            (record.group ? record.group.name: record?.user.name)+"/"+text
-                                    }
-                                </span>
+                                <span className='name-text-name'>{ record?.address.substring(0, record?.address.indexOf("/",1))+"/"+record.name}</span>
                                 <span className='name-text-lock'>{record.rules==='private'?<LockOutlined/>:<UnlockOutlined />}</span>
-                                <span className='name-text-type'>{record.userType === '3' ? '管理员':'开发者'}</span>
+                                {
+                                    text==="sample-repository"&&
+                                    <span className='name-text-type'>{ "示例仓库"}</span>
+
+                                }
+
                             </div>
                             {
                                 record.codeGroup &&
@@ -72,10 +72,17 @@ const RepositoryTable = props => {
             }
         },
         {
+            title: '负责人',
+            dataIndex: ['user','name'],
+            key: 'user',
+            width:'20%',
+            ellipsis:true,
+        },
+        {
             title: '更新',
             dataIndex: 'updateTime',
             key: 'updateTime',
-            width:'30%',
+            width:'20%',
             ellipsis:true,
             render:text => text?text:'暂无更新'
         },
@@ -93,7 +100,7 @@ const RepositoryTable = props => {
                                 <SettingOutlined className='actions-se'/>
                             </span>
                         </Tooltip>
-                        <Tooltip title='收藏'>
+                        {/*<Tooltip title='收藏'>
                                 <span className='repository-tables-collect'>
                                 {
                                     record.collect === 1 ?
@@ -106,7 +113,7 @@ const RepositoryTable = props => {
                                     </svg>
                                 }
                                 </span>
-                        </Tooltip>
+                        </Tooltip>*/}
                     </Space>
                 )
             }
@@ -125,7 +132,7 @@ const RepositoryTable = props => {
                         <SpinLoading type="table"/>: <EmptyText title={"没有仓库"}/>}}
             />
             {
-                (!isLoading &&totalPage>1)?
+                (totalPage>1)?
                 <Page pageCurrent={currentPage} changPage={changPage} totalPage={totalPage}/>:null
             }
 

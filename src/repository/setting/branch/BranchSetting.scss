@@ -1,0 +1,40 @@
+.branch-setting{
+  &-mode{
+    margin: var(--tiklab-padding-item) 0;
+    .mode-title{
+      font-size: 13px;
+      font-weight: var(--tiklab-font-weight-bold);
+    }
+    .mode-desc{
+      color: #9b9b9b;
+      padding: 10px 0;
+    }
+  }
+
+  &-rule{
+    margin-top: 50px;
+    .rule-title{
+      font-size: 13px;
+      font-weight: var(--tiklab-font-weight-bold);
+    }
+    .rule-desc{
+      color: #9b9b9b;
+      padding: 10px 0;
+    }
+    .rule-justify{
+      display: flex;
+      justify-content: space-between;
+    }
+    .rule-text{
+      text-align: center;
+      margin-top: 10px;
+    }
+    .rule-text-color{
+      color: var(--tiklab-blue);
+      margin-left: 10px;
+      font-size: 15px;
+      font-weight: var(--tiklab-font-weight-bold);
+      cursor: pointer;
+    }
+  }
+}

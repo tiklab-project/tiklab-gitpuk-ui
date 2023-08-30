@@ -35,5 +35,10 @@
     "Users Directory" : "Users Directory",
     "Backups And Rec": "Backups And Rec",
     "Backups": "Backups",
-    "Recover": "Recover"
+    "Recover": "Recover",
+    "RepositoryInfo": "RepositoryInfo",
+    "RemoteInfo": "RemoteInfo",
+    "codeReview": "codeReview",
+    "Code_data": "CodeData",
+    "BranchSetting":"BranchSetting"
 }

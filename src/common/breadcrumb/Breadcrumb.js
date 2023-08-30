@@ -14,7 +14,6 @@ const BreadcrumbContent = props =>{
     const {firstItem,secondItem,goBack} = props
 
     const {t} = useTranslation()
-
     return  <div className='xcode-breadcrumb'>
                 <div className='xcode-breadcrumb-content'>
                     { goBack && <LeftOutlined onClick={goBack} style={{color:'#0063FF',paddingRight:8}}/>}

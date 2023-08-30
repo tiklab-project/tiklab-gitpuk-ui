@@ -49,7 +49,7 @@ const Backups = (props) => {
     //执行备份
     const backups =async () => {
         const res=await backupsExec()
-        if (res.code===0&&res.data==="ok"){
+        if (res.code===0&&res.data==="OK"){
             timeTask("backups")
         }
     }
@@ -136,8 +136,8 @@ const Backups = (props) => {
                 <div className='backups-nave'>
                     <div className='backups-data'>
                         <div className='backups-nav-title'>备份路径：</div>
-                        <div id='myDiv'  >{backupsData?.backupsAddress}</div>
-                        <div className='backups-exec' onClick={edit}>修改</div>
+                        <div  >{backupsData?.backupsAddress}</div>
+                       {/* <div className='backups-exec' onClick={edit}>修改</div>*/}
                     </div>
                     <div className=''>
                         <div className='backups-data'>

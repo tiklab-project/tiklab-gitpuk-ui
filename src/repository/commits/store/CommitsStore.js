@@ -15,12 +15,27 @@ export class CommitsStore{
     @observable
     diffDropList = []
 
+    //仓库成员列表
+    @observable
+    userList=[]
+    //查询数据
+    @observable
+    queryData=''
+
     /**
      * 设置提交信息数据
      */
     @action
     setCommitsList = () =>{
         this.commitsList = []
+    }
+
+    /**
+     * 提交记录列表的查询条件数据
+     */
+    @action
+    setCommitsQueryData=(value)=>{
+        this.queryData=value
     }
 
     /**
@@ -40,7 +55,11 @@ export class CommitsStore{
     findBranchCommit = async value =>{
         const data = await Axios.post('/commit/findBranchCommit',value)
         if(data.code===0){
-            this.commitsList = this.commitsList.concat(data.data && data.data)
+            if (value.number==='all'){
+                this.commitsList = this.commitsList.concat(data.data && data.data)
+            }else {
+                this.commitsList = data.data && data.data
+            }
         }
         else {
             this.commitsList = []
@@ -97,6 +116,19 @@ export class CommitsStore{
         return data
     }
 
+    /**
+     * 查询仓库下面的成员
+     * @param value
+     * @returns {Promise<*>}
+     */
+    @action
+    findDmUserList = async value =>{
+        const data = await Axios.post('/dmUser/findDmUserList',value)
+        if(data.code===0){
+            this.userList = data.data && data.data
+        }
+        return data
+    }
 }
 
 const commitsStore=new CommitsStore()

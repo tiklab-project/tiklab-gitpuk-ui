@@ -75,22 +75,65 @@ export class GroupStore {
     @action
     updateGroup = async values =>{
         const data = await Axios.post('/rpyGroup/updateGroup',values)
-        if(data){
-
+        if(data.code===0){
+            message.success('更新成功')
         }
         return data
     }
 
     /**
-     * 获取仓库组
+     * 通过名字查询
      * @param values
      * @returns {Promise<*>}
      */
     @action
-    findUserGroup = async () =>{
-        const param = new FormData()
+    findGroupByName = async value =>{
+        const param=new FormData()
+        param.append("groupName",value)
+        const data = await Axios.post('/rpyGroup/findGroupByName',param)
+        if(data.code===0){
+            
+            this.groupInfo=data.data
+        }
+        return data
+    }
+
+    /**
+     * 分页查询仓库组
+     * @param values
+     * @returns {Promise<*>}
+     */
+    @action
+    findRepositoryGroupPage = async (param) =>{
+        const data = await Axios.post('/rpyGroup/findRepositoryGroupPage',param)
+        if(data.code===0){
+            this.groupList = data.data && data.data
+        }
+        return data
+    }
+
+    /**
+     * 查询所有仓库组
+     * @returns {Promise<*>}
+     */
+    @action
+    findAllGroup = async () =>{
+        const data = await Axios.post('/rpyGroup/findRepositoryGroupPage')
+        if(data.code===0){
+            this.groupList = data.data && data.data
+        }
+        return data
+    }
+    /**
+     * 查询自己创建和授权可以看见的仓库组
+     * @returns {Promise<*>}
+     */
+    @action
+    findCanCreateRpyGroup = async () =>{
+        const param=new  FormData()
         param.append('userId',getUser().userId)
-        const data = await Axios.post('/rpyGroup/findUserGroup',param)
+        const data = await Axios.post('/rpyGroup/findCanCreateRpyGroup',param)
+
         if(data.code===0){
             this.groupList = data.data && data.data
         }

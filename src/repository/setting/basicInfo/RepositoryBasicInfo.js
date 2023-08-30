@@ -6,7 +6,7 @@
  * @update: 2023-05-22 14:30
  */
 import React,{useState,useEffect} from 'react';
-import {Modal,Form, Input} from 'antd';
+import {Modal, Form, Input, Select} from 'antd';
 import {
     ExclamationCircleOutlined,
     DeleteOutlined,
@@ -21,17 +21,54 @@ import BreadcrumbContent from '../../../common/breadcrumb/Breadcrumb';
 import {Loading} from '../../../common/loading/Loading';
 import RepositoryPower from '../../repository/components/RepositoryPower';
 import './RepositoryBasicInfo.scss';
+import FileStore from "../../file/store/FileStore";
+import GroupStore from "../../../repositoryGroup/repositoryGroup/store/RepositoryGroupStore";
+import {getUser} from "tiklab-core-ui";
+import {Validation} from "../../../common/client/Client";
 
 const RepositoryBasicInfo = props =>{
 
-    const {repositoryStore} = props
+    const {repositoryStore,match} = props
 
-    const {repositoryInfo,deleteRpy,isLoading,updateRpy,errorMsg} = repositoryStore
+    const {repositoryInfo,deleteRpy,isLoading,updateRpy} = repositoryStore
+    const {findCloneAddress}=FileStore
+    const {findCanCreateRpyGroup}=GroupStore
 
     const [form] = Form.useForm()
     const [expandedTree,setExpandedTree] = useState([1])  // 树的展开与闭合
-    const [powerType,setPowerType] = useState(1)  // 树的展开与闭合
+    const [powerType,setPowerType] = useState("")  //  仓库权限类型
     const [repositoryName,setRepositoryName]=useState('')
+    const [prepAddress,setPrepAddress]=useState('')  //前置地址
+
+    const [groupList,setGroupList]=useState([])  //仓库组list
+    const [groupData,setGroupData]=useState()   //选择仓库组信息
+    const [groupOptions,setGroupOptions]=useState([])   //仓库组的opt
+    const [name,setName]=useState()  //仓库地址的仓库组名或者用户名
+
+    const [errorMsg,setErrorMsg]=useState('')
+
+
+    const webUrl = `${match.params.namespace}/${match.params.name}`
+
+    useEffect(()=>{
+        setPowerType(repositoryInfo.rules)
+        setGroupData(repositoryInfo.group)
+        setName(match.params.namespace)
+        address()
+        findGroup()
+    },[repositoryInfo])
+
+
+
+    //截取项目地址
+    const address =async () => {
+         const res=await findCloneAddress(repositoryInfo.rpyId)
+        if (res.code===0){
+            const httpAddress=res.data.httpAddress
+            const prepAddress=httpAddress.substring(0,httpAddress.indexOf(match.params.name));
+            setPrepAddress(prepAddress)
+        }
+    }
 
     const onConfirm = () =>{
         Modal.confirm({
@@ -44,9 +81,22 @@ const RepositoryBasicInfo = props =>{
         });
     }
 
-    const onOk = value => {
-        updateRpy({...value,group:repositoryInfo.group,user:repositoryInfo.user,rpyId:repositoryInfo.rpyId})
-        form.validateFields(['name'])
+    //提交更新
+    const onOk =async value => {
+       const repositoryPath=name+"/"+value.address;
+        const res=await updateRpy({...value,user:repositoryInfo.user,rpyId:repositoryInfo.rpyId,rules:powerType,
+            address:repositoryPath,group:groupData
+        })
+        if (res.code===9000){
+            setErrorMsg(res.msg)
+            form.validateFields(['name'])
+        }
+        if (res.code===9001){
+            setErrorMsg(res.msg)
+            form.validateFields(['address'])
+        }
+        props.history.push(`/index/repository/${repositoryPath}/sys/info`)
+
     }
 
     /**
@@ -54,13 +104,67 @@ const RepositoryBasicInfo = props =>{
      */
     const delRepository = () =>{
         deleteRpy(repositoryInfo.rpyId).then(res=>{
-            res.code===0 && props.history.push('/index/group')
+            res.code===0 && props.history.push('/index/repository')
         })
     }
 
     const inputName = (value) => {
+        setErrorMsg('')
       setRepositoryName(value)
     }
+
+    const inputAddress = () => {
+        setErrorMsg('')
+    }
+
+    //切换分组
+    const selectGroup = (value) => {
+        setErrorMsg('')
+        if (value===getUser().userId){
+            setName(getUser().name?getUser().name:getUser().phone)
+        }else {
+            const res = groupList.filter(a => a.groupId === value)
+            setGroupData(res[0])
+            setName(res[0].name)
+        }
+    }
+    //查询仓库组
+    const findGroup =async () => {
+        const group = await findCanCreateRpyGroup()
+        if (group.code===0){
+            setGroupList(group.data)
+            groupOption(group.data)
+        }
+
+    }
+    const groupOption = (groupList) => {
+        const group=groupList.length>0 && groupList.map(item=>(
+            { label:item.name,
+                value: item.groupId
+            }
+        ))
+        if (group){
+            setGroupOptions(group)
+        }
+    }
+
+    const option=[
+        {
+            label: '用户',
+            options: [
+                {
+                    label: getUser().name?getUser().name:getUser().phone,
+                    value: getUser().userId
+                }
+            ],
+        },
+        {
+            label: '仓库组',
+            options:groupOptions
+        },
+    ]
+
+
 
     const lis = [
         {
@@ -75,9 +179,13 @@ const RepositoryBasicInfo = props =>{
                             autoComplete='off'
                             layout='vertical'
                             name='name'
-                            initialValues={{name:repositoryInfo.name,remarks:repositoryInfo.remarks}}
+                            initialValues={{name:repositoryInfo.name,remarks:repositoryInfo.remarks,address:match.params.name,
+                                group:match.params.namespace
+                        }}
                         >
                             <Form.Item label='仓库名称' name='name' rules={[
+                                {required:true,message:'请输入名称'},
+                                Validation('名称','appoint'),
                                 {max:30,message:'请输入1~31位以内的名称'},
                                 ({getFieldValue}) => ({
                                 validator(rule,value) {
@@ -89,6 +197,30 @@ const RepositoryBasicInfo = props =>{
                                 }),
                             ]}>
                                 <Input key={repositoryName} onChange={inputName}/>
+                            </Form.Item>
+
+
+                            <Form.Item  label='仓库地址' name='address' rules={[
+                                {required:true,message:'请输入地址'},
+                                Validation('路径','appoint'),
+                                ({getFieldValue}) => ({
+                                    validator(rule,value) {
+                                        if (errorMsg) {
+                                            return Promise.reject(errorMsg)
+                                        }
+                                        return Promise.resolve()
+                                    }
+                                }),
+                            ]}>
+                                    <Input addonBefore={`${prepAddress}`}    onChange={inputAddress}/>
+                            </Form.Item>
+                            <Form.Item  label='仓库组' name='group'>
+                                <Select
+                                    defaultValue={match.params.namespace}
+                                    value={match.params.namespace}
+                                    onChange={value=>selectGroup(value)}
+                                    options={option}
+                                />
                             </Form.Item>
                             <RepositoryPower
                                 powerType={powerType}
@@ -105,22 +237,26 @@ const RepositoryBasicInfo = props =>{
                                 isMar={true}
                                 onClick={()=>setOpenOrClose(1)}
                             />
-                            <Btn
-                                type={'primary'}
-                                title={'确定'}
-                                onClick={() => {
-                                    form.validateFields()
-                                        .then((values) => {
-                                            onOk(values)
+                            <PrivilegeProjectButton code={"xcode_update"} domainId={repositoryInfo && repositoryInfo.rpyId}>
+                                <Btn
+                                    type={'primary'}
+                                    title={'确定'}
+                                    onClick={() => {
+                                        form.validateFields()
+                                            .then((values) => {
+                                                onOk(values)
 
-                                        })
-                                }}
-                            />
+                                            })
+                                    }}
+                                />
+                            </PrivilegeProjectButton>
+
                         </div>
                      </div>
         },
+
         {
-            key:2,
+            key:3,
             title:'仓库删除',
             desc: '删除仓库',
             icon: <DeleteOutlined />,
@@ -130,7 +266,9 @@ const RepositoryBasicInfo = props =>{
                             此操作无法恢复！请慎重操作！
                         </div>
                         <Btn title={'取消'} isMar={true} onClick={()=>setOpenOrClose(2)}/>
-                        <Btn onClick={onConfirm} type={'dangerous'} title={'删除'}/>
+                        <PrivilegeProjectButton code={"xcode_delete"} domainId={repositoryInfo && repositoryInfo.rpyId}>
+                             <Btn onClick={onConfirm} type={'dangerous'} title={'删除'}/>
+                        </PrivilegeProjectButton>
                     </div>
         }
     ]

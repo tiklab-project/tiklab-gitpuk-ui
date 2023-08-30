@@ -4,23 +4,19 @@ import {inject,observer} from 'mobx-react';
 import Btn from '../../../common/btn/Btn';
 import {Validation} from '../../../common/client/Client';
 import BreadcrumbContent from '../../../common/breadcrumb/Breadcrumb';
-import RepositoryUser from '../../../repository/repository/components/RepositoryUser';
 import RepositoryPower from '../../../repository/repository/components/RepositoryPower';
 import './RepositoryGroupAdd.scss';
 import groupStore from '../store/RepositoryGroupStore'
 const RepositoryGroupAdd = props =>{
 
-    const {createGroup,findUserGroup,groupList} = groupStore
+    const {createGroup,findAllGroup,groupList} = groupStore
 
     const [form] = Form.useForm()
     const [powerType,setPowerType] = useState("public")
-    const [yUserList,setYUserList] = useState([])
-    const [nUserList,setNUserList] = useState([])
-    const [member,setMember] = useState([])
 
     useEffect(()=>{
         // 仓库组
-        findUserGroup()
+        findAllGroup()
     },[])
 
     /**
@@ -62,7 +58,7 @@ const RepositoryGroupAdd = props =>{
                                 ({getFieldValue}) => ({
                                     validator(rule,value) {
                                         let nameArray = []
-                                        if(groupList){
+                                        if(groupList&&groupList.length>0){
                                             nameArray = groupList && groupList.map(item=>item.name)
                                         }
                                         if (nameArray.includes(value)) {
@@ -80,19 +76,6 @@ const RepositoryGroupAdd = props =>{
                             setPowerType={setPowerType}
                             powerTitle={'仓库组'}
                         />
-                        {/*{
-                            powerType===2 &&
-                            <RepositoryUser
-                                yUserList={[yUserList]}
-                                setYUserList={setYUserList}
-                                nUserList={nUserList}
-                                setNUserList={setNUserList}
-                                userId={'11111'}
-                                member={member}
-                                setMember={setMember}
-                                userTitle={'仓库组'}
-                            />
-                        }*/}
                         <Form.Item name='remarks' label='仓库组描述'>
                             <Input.TextArea style={{background:'#fff'}} />
                         </Form.Item>

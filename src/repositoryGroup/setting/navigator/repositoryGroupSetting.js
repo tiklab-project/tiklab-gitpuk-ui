@@ -1,9 +1,11 @@
-import React from 'react';
-import Setting from '../../../common/aside/Setting';
-
+import React,{useEffect} from 'react';
+import RpySetting from '../../../common/aside/RpySetting';
+import groupStore from "../../repositoryGroup/store/RepositoryGroupStore"
+import {observer} from "mobx-react";
 const RepositoryGroupSetting = props =>{
 
     const {match} = props
+    const {groupInfo} = groupStore
 
     const groupName = match.params.name
 
@@ -22,11 +24,12 @@ const RepositoryGroupSetting = props =>{
         }
     ]
 
-    return  <Setting
+    return  <RpySetting
                 {...props}
                 secondRouter={secondRouter}
+                domainId={groupInfo.groupId}
             />
 
 }
 
-export default RepositoryGroupSetting
+export default observer(RepositoryGroupSetting)

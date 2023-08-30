@@ -31,6 +31,9 @@ export class RepositoryStore {
     @observable
     errorMsg=""
 
+    @observable
+    address=''
+
     /**
      * 设置仓库信息
      * @param value
@@ -124,9 +127,7 @@ export class RepositoryStore {
         if(data.code===0){
             message.success('更新成功')
         }
-        if (data.code===9000){
-            this.errorMsg=data.msg
-        }
+
         return data
     }
 
@@ -172,6 +173,7 @@ export class RepositoryStore {
         return data
     }
 
+
     /**
      * 通过仓库名字或仓库组查询仓库
      * @param param
@@ -179,10 +181,12 @@ export class RepositoryStore {
      */
     @action
     findRepositoryByName = async (param) =>{
+        this.isLoading=true
         const data = await Axios.post('/rpy/findRepositoryByName',param)
         if(data.code===0){
             this.repositoryList = data.data
         }
+        this.isLoading=false
         return data
     }
 
@@ -204,7 +208,7 @@ export class RepositoryStore {
 
 
     /**
-     * 查询最近打开的仓库
+     * 分页查询有权限的仓库
      * @param param
      * @returns {Promise<unknown>}
      */
@@ -214,6 +218,19 @@ export class RepositoryStore {
         return data
     }
 
+
+    /**
+     * 查询用户推送过的仓库
+     * @param param
+     * @returns {Promise<unknown>}
+     */
+    @action
+    findCommitRepository = async () =>{
+        const param=new FormData()
+        param.append("userId",getUser().userId)
+        const data = await Axios.post('/rpy/findCommitRepository',param)
+        return data
+    }
 
 
     /**
@@ -248,6 +265,16 @@ export class RepositoryStore {
         const data = await Axios.post('/recordOpen/createRecordOpen',param)
         return data
     }
+
+    @action
+    getAddress = async () =>{
+        const data = await Axios.post('/rpy/getAddress')
+        if (data.code===0){
+            this.address=data.data
+        }
+        return data
+    }
+
 
 }
 

@@ -74,7 +74,7 @@ const HooksAdd = props =>{
 
     return (
         <Modal
-            visible={addVisible}
+            open={addVisible}
             onCancel={()=>setAddVisible(false)}
             closable={false}
             footer={modalFooter}
