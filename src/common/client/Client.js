@@ -55,7 +55,7 @@ export const copy = data => {
  */
 export const interceptUrl = (url,data) =>{
     if(data){
-        return url.split('/index/repository/'+data)
+        return url.split('/repository/'+data)
     }
     else {
         return url.split('/')

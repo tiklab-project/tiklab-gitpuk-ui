@@ -64,7 +64,7 @@ const Publish = props =>{
 
     return (
         <div className='publish'>
-            <div className='publish xcode-home-limited xcode'>
+            <div className='publish xcode-repository-width xcode'>
                 <div className='publish-top'>
                     <BreadcrumbContent firstItem={'发行版详情'} goBack={goBack}/>
                     <div className='publish-top-btn'>

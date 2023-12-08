@@ -25,6 +25,7 @@ const Aside = props => {
     const [normalOrScrum,setNormalOrScrum] = useState('normal')
     const [isLoading,setIsLoading] = useState(false)
     const [triggerVisible,setTriggerVisible] = useState(false)
+
     useEffect(()=>{
         // 侧边栏 -- 展开/收起
         setNormalOrScrum(isSide?isSide:'normal')
@@ -35,16 +36,18 @@ const Aside = props => {
         let indexPath
         switch (asideType) {
             case 'repository':
-                indexPath = renderType(interceptUrl(path)[5])
+                indexPath = renderType(interceptUrl(path)[4])
                 break
             case 'group':
                 indexPath = path
         }
+
         setNav(indexPath)
     },[path,info])
 
     const renderType = pathType =>{
-        let path = `/index/repository/${repositoryAddress}`
+        
+        let path = `/repository/${repositoryAddress}`
         if(!pathType){
             return path
         }
@@ -54,8 +57,12 @@ const Aside = props => {
             case 'edit':
                 return path
             case 'commit':
+                return `${path}/commits/${info && info.defaultBranch}`
+            case 'scanRecord':
+                return `${path}/scanPlay`
             case 'commits':
                 return `${path}/commits/${info && info.defaultBranch}`
+
             default:
                 return path + '/'+pathType
         }
@@ -81,15 +88,16 @@ const Aside = props => {
     const goSys = () =>{
         switch (asideType) {
             case 'repository':
-                props.history.push(`/index/repository/${repositoryAddress}/sys/info`)
+                props.history.push(`/repository/${repositoryAddress}/setting/info`)
                 break
             case 'group':
-                props.history.push(`/index/group/${repositoryAddress}/sys/info`)
+                props.history.push(`/group/${repositoryAddress}/setting/info`)
         }
     }
 
     // 渲染左侧一级菜单
     const renderTaskRouter = item => {
+
         return  <div  key={item.to}
                       className={`${normalOrScrum}-aside-item ${nav===item.to ? `${normalOrScrum}-aside-select`:''}`}
                       onClick={()=> props.history.push(item.to)}
@@ -117,7 +125,7 @@ const Aside = props => {
                         overlayClassName={`aside-dropdown-${normalOrScrum} aside-dropdown`}
                     >
                         <div className={`${normalOrScrum}-aside_chang`} onClick={(e)=>e.preventDefault()}>
-                            <Listicon text={info?.name}/>
+                            <Listicon text={info?.name} colors={info?.color}/>
                             {
                                 normalOrScrum === 'scrum' &&
                                 <span className='dropdowns_name'>{info?.name}</span>
@@ -134,10 +142,10 @@ const Aside = props => {
                     <div className={`${normalOrScrum}-aside-item-icon`}><SettingOutlined/></div>
                     <div className={`${normalOrScrum}-aside-item-title`}>{t('Setting')}</div>
                 </div>
-                <div className={`${normalOrScrum}-aside-item`} onClick={()=>setMenuFold()}>
+             {/*   <div className={`${normalOrScrum}-aside-item`} onClick={()=>setMenuFold()}>
                     <div className={`${normalOrScrum}-aside-item-icon`}><MenuUnfoldOutlined/></div>
                     <div className={`${normalOrScrum}-aside-item-title`}>{t(normalOrScrum==='scrum'?'Collapse':'Expand')}</div>
-                </div>
+                </div>*/}
             </div>
             {
                 isLoading ? <Loading/> :

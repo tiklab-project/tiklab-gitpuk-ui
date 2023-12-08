@@ -1,0 +1,104 @@
+.scanScheme{
+  display: flex;
+  height: 100%;
+  .scheme-left-style{
+    width: 200px;
+    height: auto;
+    border-right: 1px solid #e3e9ed;
+    .scan-title-nav{
+      margin: 15px 0 10px 15px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      .scan-title{
+        flex: 1;
+        font-size: 16px;
+        font-weight: var(--tiklab-font-weight-bold);
+      }
+      .scan-icon{
+        margin-right: 10px;
+      }
+    }
+    .scheme-nav{
+      padding: 10px 0;
+      margin-left: 15px;
+      .scheme-nav-dec{
+        font-size: 13px;
+        color: #94979a;
+      }
+    }
+    .choices-scheme-nav{
+      background-color: #b3d4fc;
+    }
+
+  }
+  .scheme-right-style{
+    flex: 1;
+    max-width: 1280px;
+    min-width: 508px;
+    margin: 0 auto ;
+    padding: var(--tiklab-padding);
+    overflow: auto;
+    .data-title-desc{
+      display: flex;
+      gap: 25px;
+      margin: 10px 0;
+      color: #94979a;
+    }
+    .tab-style{
+      display: flex;
+      gap: 10px;
+      .choose-tab-nav{
+        color: #0063FF;
+        border-bottom:2px solid #0063FF;
+      }
+      .tab-nav{
+        font-size: var(--tiklab-font-14);;
+        cursor: pointer;
+        height: 50px;
+        line-height: 50px;
+        margin-top: 10px;
+      }
+    }
+    .tab-data{
+      margin-top: 10px;
+    }
+
+  }
+
+
+  .scanScheme-up{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .scanScheme-table{
+    padding-top: var(---xcode-table-top);
+  }
+  .scanScheme-ill{
+    margin: var(--tiklab-padding-item) 0;
+    padding: 10px;
+    background: #F8FFFF;
+    color: var(--tiklab-blue);
+    border: 1px solid #e3e9ed;
+  }
+  .scanScheme-table-title{
+    color: var(--tiklab-blue);
+    cursor: pointer;
+  }
+}
+.scanScheme-add-modal{
+  .scanScheme-add-up{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: var(--tiklab-font-weight-bold);
+    padding: var(--tiklab-padding) var(--tiklab-padding) var(--tiklab-padding-item);
+  }
+  .scanScheme-add-content{
+    padding: 0 var(--tiklab-padding);
+    overflow:auto;
+  }
+}

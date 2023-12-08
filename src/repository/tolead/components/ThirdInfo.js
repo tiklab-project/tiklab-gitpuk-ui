@@ -12,7 +12,7 @@ import BreadcrumbContent from "../../../common/breadcrumb/Breadcrumb";
 import {Form, Input,message} from "antd";
 import Btn from "../../../common/btn/Btn";
 import ToLeadStore from "../store/ToLeadStore"
-import {getUser} from "tiklab-core-ui";
+import {getUser} from "thoughtware-core-ui";
 const ThirdInfo = (props) => {
     const {match:{params}} = props
     const [form] = Form.useForm()
@@ -23,7 +23,7 @@ const ThirdInfo = (props) => {
         form.validateFields().then((values) => {
            createImportAuth({...values,type:params.type,userId:getUser().userId}).then(res=>{
                message.success("添加认证信息成功",1)
-               props.history.push(`/index/repository/lead/thirdList/${res.data}`)
+               props.history.push(`/repository/lead/thirdList/${res.data}`)
            })
         })
     }

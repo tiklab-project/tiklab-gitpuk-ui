@@ -226,10 +226,10 @@ const CommitsDetails = props =>{
      */
     const findFile = (type,item) => {
         if(type==='tree'){
-            props.history.push(`/index/repository/${webUrl}/tree/${commitId+commitU4}`)
+            props.history.push(`/repository/${webUrl}/tree/${commitId+commitU4}`)
             return
         }
-        props.history.push(`/index/repository/${webUrl}/blob/${commitId+commitU4}/${item.newFilePath}`)
+        props.history.push(`/repository/${webUrl}/blob/${commitId+commitU4}/${item.newFilePath}`)
     }
 
     /**
@@ -276,7 +276,7 @@ const CommitsDetails = props =>{
 
     return (
         <div className='commitsDetails' id='commits_contrast'  onScroll={handleScroll}>
-            <div className='commitsDetails-content xcode-home-limited xcode'>
+            <div className='commitsDetails-content xcode-repository-width xcode'>
                 <BreadcrumbContent firstItem={commitDiff && commitDiff.commitMessage}  goBack={()=>props.history.go(-1)}/>
                 <div className='commitsDetails-head'>
                     <div className='commitsDetails-head-left'>

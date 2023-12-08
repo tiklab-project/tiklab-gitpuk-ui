@@ -1,5 +1,5 @@
 import {observable,action} from 'mobx';
-import {Axios} from 'tiklab-core-ui';
+import {Axios} from 'thoughtware-core-ui';
 
 export class CommitsStore{
 
@@ -21,6 +21,10 @@ export class CommitsStore{
     //查询数据
     @observable
     queryData=''
+
+    //提交信息
+    @observable
+    commit=''
 
     /**
      * 设置提交信息数据
@@ -63,6 +67,20 @@ export class CommitsStore{
         }
         else {
             this.commitsList = []
+        }
+        return data
+    }
+
+    /**
+     * 获取分支z最新提交信息
+     * @param value
+     * @returns {Promise<*>}
+     */
+    @action
+    findLatelyBranchCommit = async value =>{
+        const data = await Axios.post('/commit/findLatelyBranchCommit',value)
+        if (data.code===0){
+            this.commit=data.data
         }
         return data
     }

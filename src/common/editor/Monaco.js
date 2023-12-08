@@ -41,7 +41,7 @@ const MonacoBlob = props =>{
             monacoEditorRef.current = undefined
         }
     }, [monacoEditorRef.current])
-    debugger
+
     const newMonaco = () => {
         try {
             monacoEditorRef.current = monaco.editor.create(monacoEditorDomRef.current, {

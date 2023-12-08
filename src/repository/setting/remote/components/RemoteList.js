@@ -151,7 +151,7 @@ const RemoteList = (props) => {
     }
     return(
        <div className='remote'>
-            <div className='xcode-home-limited xcode'>
+            <div className='xcode-repository-width-setting xcode'>
                 <div className='remote-up'>
                     <BreadcrumbContent firstItem={'RemoteInfo'}/>
                     <Btn

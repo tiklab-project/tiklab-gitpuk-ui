@@ -26,14 +26,14 @@ const RepositoryGroupAdd = props =>{
     const onOk =()  => {
         form.validateFields().then((values) => {
             createGroup({...values,rules:powerType}).then(res=>{
-                props.history.push(`/index/group/${values.name}/repository`)
-             /*   res.code===0 && props.history.push(`/index/group/${value.name}/survey`)*/
+                props.history.push(`/group/${values.name}/repository`)
+             /*   res.code===0 && props.history.push(`/group/${value.name}/survey`)*/
             })
         })
     }
 
     const goBack = () => {
-        props.history.push('/index/group')
+        props.history.push('/group')
     }
 
     return(

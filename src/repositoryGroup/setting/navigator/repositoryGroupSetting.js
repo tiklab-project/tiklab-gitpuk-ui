@@ -11,15 +11,15 @@ const RepositoryGroupSetting = props =>{
 
     const secondRouter = [
         {
-            to:`/index/group/${groupName}/sys/info`,
+            to:`/group/${groupName}/setting/info`,
             title:`Setting`,
         },
         {
-            to:`/index/group/${groupName}/sys/member`,
+            to:`/group/${groupName}/setting/member`,
             title:`Member`,
         },
         {
-            to:`/index/group/${groupName}/sys/role`,
+            to:`/group/${groupName}/setting/role`,
             title:`Privilege`,
         }
     ]

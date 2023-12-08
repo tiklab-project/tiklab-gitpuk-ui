@@ -49,6 +49,18 @@ const RemoteList=AsyncComponent(()=>import('./repository/setting/remote/componen
 const RepositoryToLead=AsyncComponent(()=>import('./repository/tolead/components/RepositoryToLead'))
 const RepositoryThirdList=AsyncComponent(()=>import('./repository/tolead/components/RepositoryThirdList'))
 const ThirdInfo=AsyncComponent(()=>import('./repository/tolead/components/ThirdInfo'))
+
+//代码扫描
+const ScanPlay=AsyncComponent(()=>import('./repository/scan/components/ScanPlay'))
+const ScanRecord=AsyncComponent(()=>import('./repository/scan/components/ScanRecord'))
+const ScanDetails=AsyncComponent(()=>import('./repository/scan/components/ScanDetails'))
+
+//扫描方案
+const ScanScheme=AsyncComponent(()=>import('./setting/scan/components/ScanScheme'))
+const ScanRule=AsyncComponent(()=>import('./setting/scan/components/ScanRule'))
+const ScanRuleDetails=AsyncComponent(()=>import('./setting/scan/components/ScanRuleDetails'))
+const EnvServer=AsyncComponent(()=>import('./setting/scan/components/ScanEnvironment'))
+
 /**
  * 仓库组
  */
@@ -84,9 +96,10 @@ const MessageNoticeTrue=AsyncComponent(()=>import('./setting/message/MessageNoti
 const EnvDeploy=AsyncComponent(()=>import('./setting/deploy/components/EnvDeploy'))
 const ServerDeploy=AsyncComponent(()=>import('./setting/deploy/components/ServerDeploy'))
 
+
 //备份 恢复
-const Backups=AsyncComponent(()=>import('./setting/backups/components/Backups'))
-const Recover=AsyncComponent(()=>import('./setting/backups/components/Recover'))
+const BackupRecoveryContent=AsyncComponent(()=>import('./setting/backups/BackupRecoveryContent'))
+
 
 // security
 const MyLog=AsyncComponent(()=>import("./setting/security/MyLog"))
@@ -101,6 +114,7 @@ const TodoType=AsyncComponent(()=>import("./setting/todotask/TodoType"))
 
 // licence
 const Version=AsyncComponent(()=>import('./setting/licence/Version'))
+const AuthContent=AsyncComponent(()=>import('./setting/licence/AuthContent'))
 
 const CommitRepository=AsyncComponent(()=>import('./setting/operation/CommitRepository'))
 // user
@@ -117,6 +131,12 @@ const ProjectFeature=AsyncComponent(()=>import('./setting/user/ProjectFeature'))
 
 const Login=AsyncComponent(()=>import('./login/login'))
 const Logout=AsyncComponent(()=>import('./login/Logout'))
+// 仓库权限
+const PowerUserList=AsyncComponent(()=>import('./setting/repository/components/UserList'))
+const UserRpyList=AsyncComponent(()=>import('./setting/repository/components/UserRpyList'))
+
+
+
 export {
     Breadcrumb,
     xcodeZh,
@@ -173,9 +193,9 @@ export {
     MessageNoticeTrue,
     EnvDeploy,
     ServerDeploy,
-    Backups ,
+
+    BackupRecoveryContent,
     MyLog,
-    Recover,
     LogTemplate,
     LogType ,
     MyTodoTask,
@@ -183,6 +203,7 @@ export {
     TodoTemp,
     TodoType,
     Version,
+    AuthContent,
     User ,
     Directory,
     Orga,
@@ -201,4 +222,15 @@ export {
     xcodeStore,
     ExcludeProductUser,
     CommitRepository,
+
+    ScanPlay,
+    ScanRecord,
+    ScanDetails,
+    ScanScheme,
+    ScanRule,
+    ScanRuleDetails,
+    EnvServer,
+
+    PowerUserList,
+    UserRpyList
 }

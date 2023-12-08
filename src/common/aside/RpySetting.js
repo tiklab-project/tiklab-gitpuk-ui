@@ -8,7 +8,7 @@
 import React,{useEffect,useState} from 'react';
 import {renderRoutes} from 'react-router-config';
 import {useTranslation} from 'react-i18next';
-import {ProjectNav,PrivilegeProjectButton} from 'tiklab-privilege-ui';
+import {ProjectNav,PrivilegeProjectButton} from 'thoughtware-privilege-ui';
 import './Setting.scss';
 const RpySetting = props =>{
 
@@ -40,7 +40,7 @@ const RpySetting = props =>{
             {...props}
             domainId={domainId}
             projectRouters={secondRouter}
-           // outerPath={`/index/repository/${domainId}/set`}
+           // outerPath={`/repository/${domainId}/set`}
         >
             <div className='xcode-setting'>
                 <div className='xcode-setting-aside'>

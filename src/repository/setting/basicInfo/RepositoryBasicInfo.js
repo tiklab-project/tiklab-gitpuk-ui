@@ -14,7 +14,7 @@ import {
     RightOutlined,
     EditOutlined
 } from '@ant-design/icons';
-import {PrivilegeProjectButton} from 'tiklab-privilege-ui';
+import {PrivilegeProjectButton} from 'thoughtware-privilege-ui';
 import {inject,observer} from 'mobx-react';
 import Btn from '../../../common/btn/Btn';
 import BreadcrumbContent from '../../../common/breadcrumb/Breadcrumb';
@@ -23,7 +23,7 @@ import RepositoryPower from '../../repository/components/RepositoryPower';
 import './RepositoryBasicInfo.scss';
 import FileStore from "../../file/store/FileStore";
 import GroupStore from "../../../repositoryGroup/repositoryGroup/store/RepositoryGroupStore";
-import {getUser} from "tiklab-core-ui";
+import {getUser} from "thoughtware-core-ui";
 import {Validation} from "../../../common/client/Client";
 
 const RepositoryBasicInfo = props =>{
@@ -35,7 +35,7 @@ const RepositoryBasicInfo = props =>{
     const {findCanCreateRpyGroup}=GroupStore
 
     const [form] = Form.useForm()
-    const [expandedTree,setExpandedTree] = useState([1])  // 树的展开与闭合
+    const [expandedTree,setExpandedTree] = useState([])  // 树的展开与闭合
     const [powerType,setPowerType] = useState("")  //  仓库权限类型
     const [repositoryName,setRepositoryName]=useState('')
     const [prepAddress,setPrepAddress]=useState('')  //前置地址
@@ -65,7 +65,7 @@ const RepositoryBasicInfo = props =>{
          const res=await findCloneAddress(repositoryInfo.rpyId)
         if (res.code===0){
             const httpAddress=res.data.httpAddress
-            const prepAddress=httpAddress.substring(0,httpAddress.indexOf(match.params.name));
+            const prepAddress=httpAddress.substring(0,httpAddress.indexOf(match.params.name+".git"));
             setPrepAddress(prepAddress)
         }
     }
@@ -95,7 +95,7 @@ const RepositoryBasicInfo = props =>{
             setErrorMsg(res.msg)
             form.validateFields(['address'])
         }
-        props.history.push(`/index/repository/${repositoryPath}/sys/info`)
+        props.history.push(`/repository/${repositoryPath}/setting/info`)
 
     }
 
@@ -104,7 +104,7 @@ const RepositoryBasicInfo = props =>{
      */
     const delRepository = () =>{
         deleteRpy(repositoryInfo.rpyId).then(res=>{
-            res.code===0 && props.history.push('/index/repository')
+            res.code===0 && props.history.push('/repository')
         })
     }
 
@@ -312,11 +312,11 @@ const RepositoryBasicInfo = props =>{
                         {isExpandedTree(item.key)? <DownOutlined />:<RightOutlined />}
                     </div>
                 </div>
-            <div className={`${isExpandedTree(item.key)? 'houseReDel-li-bottom':'houseReDel-li-none'}`}>
-                {
-                    isExpandedTree(item.key) && item.content
-                }
-            </div>
+                <div className={`${isExpandedTree(item.key)? 'houseReDel-li-bottom':'houseReDel-li-none'}`}>
+                    {
+                        isExpandedTree(item.key) && item.content
+                    }
+                </div>
         </div>
     }
 
@@ -327,7 +327,7 @@ const RepositoryBasicInfo = props =>{
     }
 
     return(
-        <div className='houseReDel xcode-home-limited xcode'>
+        <div className='houseReDel xcode-repository-width-setting xcode'>
             <div className='houseReDel-up'>
                 <BreadcrumbContent firstItem={'仓库信息'}/>
             </div>

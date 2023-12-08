@@ -13,20 +13,23 @@ import Usher from "./Usher";
 import RecentSubmitMsg from "./RecentSubmitMsg";
 import BreadChang from "./BreadChang";
 import Clone from "./Clone";
-import {setBranch,setFileAddress,findCommitId} from "./Common";
+import {setBranch,setFileAddress,findType,findCommitId} from "./Common";
 import {SpinLoading} from "../../../common/loading/Loading";
 import fileStore from '../store/FileStore';
 import "./File.scss";
+import tagStore from "../../tag/store/TagStore";
 
 const File = props =>{
 
     const {repositoryStore,location,match} = props
-    const {repositoryInfo} = repositoryStore
+    const {findRepositoryByAddress,repositoryInfo} = repositoryStore
     const {findFileTree,codeTreeData,findCloneAddress,cloneAddress,findLatelyBranchCommit,latelyBranchCommit} = fileStore
+    const {findTagByName} = tagStore
     const webUrl = `${match.params.namespace}/${match.params.name}`
 
     const searValue = useRef(null)
     const urlInfo = match.params.branch
+
     const branch = setBranch(urlInfo,repositoryInfo)
     const fileAddress = setFileAddress(location,webUrl+"/tree/"+urlInfo)
 
@@ -38,17 +41,17 @@ const File = props =>{
     //加载
     const [isLoading,setIsLoading] = useState(true)
 
-    useEffect(()=>{
+    useEffect(async ()=>{
         if(repositoryInfo.name){
             // 获取文件，同时监听路由变化
             findFileTree({
                 rpyId:repositoryInfo.rpyId,
                 path:fileAddress[1],
                 branch:branch,
-                findCommitId:findCommitId(urlInfo)
+                findType:findType(urlInfo)
             }).then(res=>{
                 setIsLoading(false)
-                res.code===500001 && props.history.push("/index/404")
+                res.code===500001 && props.history.push("/404")
             })
 
             // 获取文件地址
@@ -57,13 +60,25 @@ const File = props =>{
     },[repositoryInfo.name,location.pathname])
 
 
-    useEffect(()=>{
-        // 获取最近提交信息
-        findLatelyBranchCommit({
-            rpyId:repositoryInfo.rpyId,
-            branch:branch,
-            findCommitId:findCommitId(urlInfo)
+    useEffect(async ()=>{
+        let branchName;
+        if (urlInfo&&urlInfo.endsWith("tag")){
+            const res=await findTagByName(repositoryInfo.rpyId,urlInfo.substring(0,urlInfo.length-"tag".length))
+            if (res.code===0){
+                branchName=res.data.commitId
+            }
+        }else {
+            branchName=branch
+        }
+        findRepositoryByAddress(webUrl).then(res=>{
+            // 获取最近提交信息
+            findLatelyBranchCommit({
+                rpyId:res.data.rpyId,
+                branch:branchName,
+                findCommitId:findCommitId(urlInfo)
+            })
         })
+
     },[urlInfo,location.pathname])
 
 
@@ -79,7 +94,8 @@ const File = props =>{
      * @param record
      */
     const goFileChild = record => {
-        props.history.push(`/index/repository/${webUrl}${record.path}`)
+
+        props.history.push(`/repository/${webUrl}${record.path}`)
     }
 
     /**
@@ -87,7 +103,7 @@ const File = props =>{
      * @param fileParent
      */
     const goFileParent = fileParent => {
-        props.history.push(`/index/repository/${webUrl}/tree/${urlInfo}${fileParent}`)
+        props.history.push(`/repository/${webUrl}/tree/${urlInfo}${fileParent}`)
     }
 
     /**
@@ -96,7 +112,7 @@ const File = props =>{
      * @returns {string|*}
      */
     const renderFileIcon = fileType => {
-        debugger
+
         switch (fileType) {
             case "txt":
             case "yaml":
@@ -121,7 +137,7 @@ const File = props =>{
     }
 
     const goWebIde = () => {
-        // props.history.push(`/index/ide/${repositoryInfo.name}`)
+        // props.history.push(`/ide/${repositoryInfo.name}`)
     }
 
     const addFileMenu = (
@@ -163,7 +179,7 @@ const File = props =>{
 
     return(
         <div className="code">
-            <div className="code-content xcode-home-limited xcode">
+            <div className="code-content xcode-repository-width xcode">
                 <BreadcrumbContent firstItem={"Code"}/>
                 <div className="code-content-head">
                     <BreadChang

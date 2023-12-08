@@ -1,6 +1,6 @@
 import {action, observable} from 'mobx';
 import {message} from 'antd';
-import {getUser,Axios} from 'tiklab-core-ui';
+import {getUser,Axios} from 'thoughtware-core-ui';
 
 export class AuthStore {
 

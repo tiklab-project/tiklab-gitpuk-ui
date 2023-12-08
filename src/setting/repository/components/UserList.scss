@@ -1,0 +1,40 @@
+.user-list{
+  .user-list-table{
+    padding-top: var(---xcode-table-top);
+  }
+  .user-list-tables-name{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+    .name-text{
+      flex: 1;
+      .name-text-name{
+        font-weight: var(--tiklab-font-weight-bold);
+        &:hover{
+          text-decoration: underline;
+        }
+      }
+      .name-text-lock{
+        padding: 0 8px;
+        font-weight: 50;
+        font-size: 15px;
+      }
+      .name-text-desc{
+        color: var(--tiklab-gray-500);
+        font-size: var(--tiklab-font-13);
+      }
+    }
+  }
+
+}
+.user-tag{
+  display: inline-block;
+  color: #707070;
+  font-size: 12px;
+  line-height: 20px;
+  padding: 0 7px;
+  border: 1px solid #e5e5e5;
+  border-radius: 100px;
+  font-weight: 400;
+}

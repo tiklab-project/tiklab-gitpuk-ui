@@ -1,6 +1,6 @@
 import React,{useEffect,useState} from 'react';
 import {Tooltip} from 'antd';
-import {AimOutlined,HistoryOutlined} from '@ant-design/icons';
+import {AimOutlined, CloudUploadOutlined, HistoryOutlined} from '@ant-design/icons';
 import homePageStore from "../store/homePageStore"
 import Guide from '../../common/guide/Guide';
 import EmptyText from "../../common/emptyText/EmptyText";
@@ -35,7 +35,7 @@ const HomePage = props =>{
      * 跳转仓库all
      */
     const goRepository =async () => {
-        props.history.push("/index/repository")
+        props.history.push("/repository")
     }
 
     /**
@@ -44,14 +44,14 @@ const HomePage = props =>{
      */
     const goDetails = repository => {
 
-        props.history.push(`/index/repository/${repository.address}/tree`)
+        props.history.push(`/repository/${repository.address}/tree`)
     }
     /**
      * 跳转commit
      * @param repository
      */
     const goCommit = (repository) => {
-        props.history.push(`/index/repository/${repository.address}/commits/master`)
+        props.history.push(`/repository/${repository.address}/commits/master`)
     }
 
     /**
@@ -60,10 +60,10 @@ const HomePage = props =>{
      */
     const filedState = (value) => {
         return(
-            value?.length>20?
+            value?.length>17?
                 <Tooltip placement="right" title={value}>
                     <div style={{
-                        width: 110,
+                        width: 125,
                         overflow: "hidden",
                         textOverflow: "ellipsis",
                         whiteSpace: "nowrap"
@@ -78,11 +78,11 @@ const HomePage = props =>{
 
     return(
         <div className='homePage'>
-            <div className='homePage-content xcode-home-limited'>
+            <div className='homePage-content xcode-repository-width'>
                 <div className='houseRecent'>
                     <div className='houseRecent-title'>
-                        <Guide title={'最近访问的仓库'} icon={<HistoryOutlined />}/>
-                        <div className='houseRecent-more-text' onClick={goRepository}>更多</div>
+                        <Guide title={'常用仓库'} icon={<HistoryOutlined />}/>
+                     {/*   <div className='houseRecent-more-text' onClick={goRepository}>更多</div>*/}
                     </div>
 
                     {
@@ -94,10 +94,10 @@ const HomePage = props =>{
                                 {
                                     recordOpenList.map((item,key)=>{
                                         return(
-                                            key < 6 ?
+                                            key < 5 ?
                                                 <div key={key} className='houseRecent-border' onClick={()=>goDetails(item.repository)}>
                                                     <div className='houseRecent-border-flex'>
-                                                        <Listicon text={item?.repository?.name}/>
+                                                        <Listicon text={item?.repository?.name} colors={item?.repository.color}/>
                                                         <div className='houseRecent-border-text' >{filedState(item?.repository?.name)}</div>
                                                     </div>
                                                     <div className='houseRecent-border-flex houseRecent-border-text-top'>
@@ -121,7 +121,7 @@ const HomePage = props =>{
 
                 </div>
                 <div className='newCommit'>
-                    <Guide title={'最近提交的仓库'} icon={<HistoryOutlined />}/>
+                    <Guide title={'最近提交'} icon={<CloudUploadOutlined />}/>
                        {
                            commitLoading ?
                            <SpinLoading type='table'/>
@@ -131,11 +131,16 @@ const HomePage = props =>{
                                    return(
                                        <div key={key} className='newCommit-lab newCommit-cursor' onClick={()=>goCommit(item?.repository)}>
                                            <div className='newCommit-lab-style'>
-                                               <Listicon text={item?.repository.name}/>
-                                               <div className=''>
-                                                   <span>{`${item.groupName}`}</span>
-                                                   <span className='newCommit-text-sym'>{"/"}</span>
-                                                   <span className='newCommit-text-name'>{`${item?.repository.name}`}</span>
+                                               <Listicon text={item?.repository.name} colors={item?.repository.color}/>
+                                               <div>
+                                                   <div>
+                                                       <span>{`${item.groupName}`}</span>
+                                                       <span className='newCommit-text-sym'>{"/"}</span>
+                                                       <span className='newCommit-text-name'>{`${item?.repository.name}`}</span>
+                                                   </div>
+                                                    <div className='text-desc'>
+                                                        { `推送信息 : ${item?.commitMsg}` }
+                                                    </div>
                                                </div>
                                            </div>
                                            <div className='newCommit-time'>{item?.commitTimeBad}</div>
@@ -143,7 +148,7 @@ const HomePage = props =>{
                                    )
                                 })
                                 :
-                                <EmptyText title={'暂无访问的仓库'}/>
+                                <EmptyText title={'暂无提交记录'}/>
                     }
 
                 </div>

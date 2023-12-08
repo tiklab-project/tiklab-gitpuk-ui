@@ -154,7 +154,7 @@ const Merge = props => {
 
     return (
         <div className='merge'>
-            <div className='merge-content xcode-home-limited xcode'>
+            <div className='merge-content xcode-repository-width xcode'>
                 <div className='merge-top'>
                     <BreadcrumbContent firstItem={'Merge Requests'}/>
                     <Btn

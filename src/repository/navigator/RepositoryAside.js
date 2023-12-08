@@ -1,15 +1,22 @@
 import React,{useState,useEffect} from 'react';
-import {ApartmentOutlined, BarChartOutlined, BranchesOutlined, PushpinOutlined} from '@ant-design/icons';
+import {
+    ApartmentOutlined,
+    BarChartOutlined,
+    BranchesOutlined,
+    PushpinOutlined,
+    TagOutlined,
+    TagsOutlined
+} from '@ant-design/icons';
 import {inject,observer} from 'mobx-react';
 import Aside from "../../common/aside/Aside";
 import {Loading} from '../../common/loading/Loading';
-import {getUser} from "tiklab-core-ui";
+import {getUser} from "thoughtware-core-ui";
 
 const RepositoryAside= props=>{
 
     const {match,repositoryStore,systemRoleStore}=props
 
-    const {findRepositoryPage,repositoryInfo,setRepositoryInfo,findRepositoryByAddress} = repositoryStore
+    const {findRepositoryPage,repositoryInfo,setRepositoryInfo,findRepositoryByAddress,findRepositoryAuth} = repositoryStore
 
     const {getInitProjectPermissions} = systemRoleStore
 
@@ -22,6 +29,18 @@ const RepositoryAside= props=>{
 
     const [repositoryList,setRepositoryList]=useState([])
     useEffect(async ()=>{
+        findRepositoryByAddress(webUrl).then(res=>{
+            if (res.code===0){
+                findRepositoryAuth(res.data.rpyId).then(data=>{
+                    if (data.code===0){
+                        
+                        if (data.data==='false'){
+                            props.history.push(`/repository`)
+                        }
+                    }
+                })
+            }
+        })
         // 所有仓库
       const res=await  findRepositoryPage({   pageParam:{
                 currentPage:1,
@@ -35,22 +54,23 @@ const RepositoryAside= props=>{
         return ()=>{
             setRepositoryInfo('')
         }
+
     },[])
 
     useEffect(()=>{
         // 仓库信息
         findRepositoryByAddress(namespace+"/"+name).then(res=>{
             if(res.code===0){
-                // 获取流水线权限
+                // 获取项目权限
                 getInitProjectPermissions(getUser().userId,res.data.rpyId,res.data?.rules==='public')
                 setIsLoading(false)
             }else {
                 //仓库不存
                 if (res.code===9000){
-                    props.history.push(`/index/${namespace+"/"+name}/404`)
-                }else {
-                    props.history.push('/index/error')
-                }
+                    props.history.push(`/${namespace+"/"+name}/404`)
+                }/*else {
+                    props.history.push('/error')
+                }*/
             }
         })
     },[webUrl])
@@ -59,22 +79,27 @@ const RepositoryAside= props=>{
     // 侧边第一栏导航
     const firstRouters=[
         {
-            to:`/index/repository/${namespace}/${name}`,
+            to:`/repository/${namespace}/${name}`,
             title:`Code`,
             icon:<ApartmentOutlined />,
         },
         {
-            to:`/index/repository/${webUrl}/commits/${repositoryInfo && repositoryInfo.defaultBranch}`,
+            to:`/repository/${webUrl}/commits/${repositoryInfo && repositoryInfo.defaultBranch}`,
             title: `Commits`,
             icon: <PushpinOutlined />,
         },
         {
-            to:`/index/repository/${webUrl}/branch`,
+            to:`/repository/${webUrl}/branch`,
             title: `Branch`,
             icon: <BranchesOutlined />,
         },
         {
-            to:`/index/repository/${webUrl}/sonarQube`,
+            to:`/repository/${webUrl}/tag`,
+            title: `标签`,
+            icon: <TagsOutlined />,
+        },
+        {
+            to:`/repository/${webUrl}/scanPlay`,
             title: `代码检测`,
             icon: <BarChartOutlined />,
         },

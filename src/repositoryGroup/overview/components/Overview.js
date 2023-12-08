@@ -7,7 +7,7 @@ import './Overview.scss';
 const Overview = props =>{
     return (
         <div className='overview'>
-            <div className='overview-content xcode-home-limited xcode'>
+            <div className='overview-content xcode-repository-width xcode'>
                 <BreadcrumbContent firstItem={'overview'}/>
                 <div className='overview-dyna'>
                     <Guide title={"动态"} icon={<AimOutlined/>} type={"dynamic"}/>

@@ -1,0 +1,58 @@
+.scanRecord{
+  .scanRecord-top{
+    margin-bottom: 20px;
+  }
+  .scan-play-style{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    .scan-play-text{
+      margin-left: 8px;
+      font-size: 18px;
+    }
+    .scan-but-style{
+      display: flex;
+      gap: 15px;
+    }
+  }
+  .scan-play-desc{
+    display:flex;
+    margin-left: 8px;
+    margin-top: 15px;
+    gap: 30px;
+    color: #94979a;
+  }
+  .scan-data-style {
+    margin-top: var(--xcode-data-top-30);
+    .scan-tab-style{
+      display: flex;
+      gap: 15px;
+      font-size: 14px;
+      font-weight: bold;
+      margin-left: 8px;
+      cursor: pointer;
+      .choose-scanRecord-type{
+        color: #0063FF;
+        border-bottom:2px solid #0063FF;
+      }
+    }
+    .scan-data-desc{
+      margin-top: 20px;
+      margin-left: 8px;
+    }
+    .icon-text{
+      gap: 5px;
+      display: flex;
+    }
+  }
+
+  .text-red{
+    color: red;
+  }
+  .text-yellow{
+    color: #ee9900;
+  }
+  .text-blue{
+    color: #3967FF;
+  }
+}

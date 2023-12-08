@@ -91,7 +91,7 @@ const SonarQube = (props) => {
     return(
         <div className='sonar'>
             <Spin  spinning={spinningState}>
-                <div className='sonar-content xcode-home-limited '>
+                <div className='sonar-content xcode-repository-width '>
                     {codeTreeData?
                         <>
                             <div className='sonar-content-top'>

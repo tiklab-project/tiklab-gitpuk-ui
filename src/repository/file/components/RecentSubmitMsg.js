@@ -2,6 +2,8 @@ import React from 'react';
 import {CopyOutlined} from '@ant-design/icons';
 import {copy} from '../../../common/client/Client';
 import './RecentSubmitMsg.scss';
+import {observer} from "mobx-react";
+import UserIcon from "../../../common/list/UserIcon";
 
 /**
  * 最近提交信息
@@ -11,16 +13,16 @@ import './RecentSubmitMsg.scss';
  */
 const RecentSubmitMsg = props =>{
 
-    const {latelyBranchCommit,webUrl} = props
+    const {latelyBranchCommit,webUrl,repositoryInfo} = props
     const goDetails = () => {
-        props.history.push(`/index/repository/${webUrl}/commit`)
+        props.history.push(`/repository/${webUrl}/commit`)
     }
 
     return (
         <div className='recent-submit-msg'>
-            <div className='code-commit-icon'/>
+           <UserIcon text={latelyBranchCommit && latelyBranchCommit.commitUser} size={"middle"}/>
             <div className='code-commit-msg'>
-                <div className='msg-title' onClick={()=>props.history.push(`/index/repository/${webUrl}/commit/${latelyBranchCommit.commitId}`)}>
+                <div className='msg-title' onClick={()=>props.history.push(`/repository/${webUrl}/commit/${latelyBranchCommit.commitId}`)}>
                     { latelyBranchCommit && latelyBranchCommit.commitMessage }
                 </div>
                 <div className='msg-desc'>
@@ -44,4 +46,4 @@ const RecentSubmitMsg = props =>{
     )
 }
 
-export default RecentSubmitMsg
+export default observer(RecentSubmitMsg)

@@ -1,0 +1,33 @@
+.scheme-rule {
+  flex: 1;
+  max-width: 1280px;
+  min-width: 508px;
+  margin: 0 auto;
+  padding: var(--tiklab-padding);
+  overflow: auto;
+
+  .data-title-desc {
+    margin: 10px 0;
+    color: #94979a;
+  }
+
+  .table-icon-style{
+    display: flex;
+    gap: 12px;
+    .icon-style{
+      cursor: pointer;
+    }
+  }
+  .text-red{
+    color: red;
+  }
+  .text-yellow{
+    color: #df5000;
+  }
+  .text-blue{
+    color: #3967FF;
+  }
+  .text-green{
+    color: #55a532;
+  }
+}

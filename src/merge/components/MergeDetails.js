@@ -1,7 +1,7 @@
 import React,{useState,useRef,useEffect} from 'react';
 import {Input} from 'antd';
 import {FolderOutlined} from '@ant-design/icons';
-import {getUser} from 'tiklab-core-ui';
+import {getUser} from 'thoughtware-core-ui';
 import BreadcrumbContent from '../../common/breadcrumb/Breadcrumb';
 import Btn from '../../common/btn/Btn';
 import Tabs from '../../common/tabs/Tabs';
@@ -194,7 +194,7 @@ const MergeDetails = props =>{
 
     return (
         <div className='mergeDetails'>
-            <div className='mergeDetails-content xcode-home-limited xcode'>
+            <div className='mergeDetails-content xcode-repository-width xcode'>
                 <BreadcrumbContent firstItem={'Merge Requests'} secondItem={'34567'} goBack={()=>setDetails(false)}/>
                 <div className='mergeDetails-head'>
                     <div className='mergeDetails-head-left'>

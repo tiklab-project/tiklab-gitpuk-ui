@@ -20,7 +20,7 @@ const Branch = props =>{
     const {repositoryStore,match} = props
 
     const {repositoryInfo} = repositoryStore
-    const {createBranch,findAllBranch,branchList,fresh,deleteBranch,findBranchList} = branchStore
+    const {createBranch,branchList,fresh,deleteBranch,findBranchList} = branchStore
 
     const [branchType,setBranchType] = useState("all")
     const [addVisible,setAddVisible] = useState(false)
@@ -64,7 +64,7 @@ const Branch = props =>{
      * @param item
      */
    const goCode = item =>{
-       props.history.push(`/index/repository/${webUrl}/tree/${item.branchName}`)
+       props.history.push(`/repository/${webUrl}/tree/${item.branchName}`)
    }
 
    //输入搜索的分支名字
@@ -117,7 +117,6 @@ const Branch = props =>{
                             <svg className='icon' aria-hidden='true'>
                                 <use xlinkHref='#icon-xiazai'/>
                             </svg>
-                          {/*  <DownOutlined style={{fontSize:13,paddingLeft:5}}/>*/}
                         </div>
                     </Tooltip>
                     {
@@ -151,7 +150,7 @@ const Branch = props =>{
 
     return(
         <div className='branch'>
-            <div className='branch-content xcode-home-limited xcode'>
+            <div className='branch-content xcode-repository-width xcode'>
                 <div className='branch-content-top'>
                     <BreadcrumbContent firstItem={'Branch'}/>
                     <Btn

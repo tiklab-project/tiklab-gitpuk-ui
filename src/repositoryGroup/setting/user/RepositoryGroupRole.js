@@ -6,7 +6,7 @@
  */
 
 import React,{useEffect} from "react";
-import { DomainRole } from 'tiklab-privilege-ui';
+import { DomainRole } from 'thoughtware-privilege-ui';
 import { inject, observer } from "mobx-react";
 import { Row, Col } from "antd";
 import groupStore from "../../repositoryGroup/store/RepositoryGroupStore"

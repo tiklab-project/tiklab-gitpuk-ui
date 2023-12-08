@@ -7,13 +7,6 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    .code-commit-icon{
-        width: 32px;
-        height: 32px;
-        border-radius: 50px;
-        background: #cccccc;
-        margin-right: var(--tiklab-padding-item);
-    }
     .code-commit-msg{
         flex: 1;
         .msg-title{

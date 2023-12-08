@@ -1,5 +1,5 @@
 import React from "react";
-import {Version} from "tiklab-licence-ui";
+import {Version} from "thoughtware-licence-ui";
 import {Table} from "antd";
 import {CloseOutlined,CheckOutlined} from "@ant-design/icons";
 

@@ -13,7 +13,7 @@ const ErrorFound = props =>{
         <>
            没有访问权限或未知错误，
             <span style={{color:'var(--tiklab-blue)',cursor:'pointer'}}
-                  onClick={()=>props.history.push('/index/home')}>点击这里</span>
+                  onClick={()=>props.history.push('/home')}>点击这里</span>
             返回首页
         </>
     )

@@ -1,25 +1,18 @@
 import React,{useState,useEffect} from "react";
 import {Dropdown,Badge} from "antd";
 import {useTranslation} from "react-i18next";
-import {getUser} from "tiklab-core-ui";
+import {getUser} from "thoughtware-core-ui";
 import {renderRoutes} from "react-router-config";
 import {
-    GlobalOutlined,
     BellOutlined,
     SettingOutlined,
-    LogoutOutlined,
-    QuestionCircleOutlined,
-    ProfileOutlined,
-    ExpandOutlined,
-    ScheduleOutlined,
-    WhatsAppOutlined
 } from "@ant-design/icons";
 import {inject,observer} from "mobx-react";
-import Profile from "../../common/profile/Profile";
 import { PortalDropdown } from "../../common/dropdown/DropdownMenu";
 import PortalMessage from "./PortalMessage";
 import "./Portal.scss";
-
+import {AvatarLink, HelpLink} from "thoughtware-licence-ui";
+import xcode from "../../assets/images/img/xcode.png"
 /**
  * header 头部
  * @param props
@@ -44,7 +37,12 @@ const  Portal = props =>{
     },[])
 
     useEffect(()=>{
-
+        if(path.indexOf('/repository')===0){
+            path='/repository'
+        }
+        if(path.indexOf('/group')===0){
+            path='/group'
+        }
         setCurrentLink(path)
     },[path])
 
@@ -52,17 +50,17 @@ const  Portal = props =>{
     const routers=[
         {
             key:"home",
-            to:"/index/home",
+            to:"/home",
             title: "home",
         },
         {
             key:"repository",
-            to:"/index/repository",
+            to:"/repository",
             title: "Repository",
         },
         {
             key:"group",
-            to:"/index/group",
+            to:"/group",
             title:"Repository_group",
         }
     ]
@@ -105,6 +103,7 @@ const  Portal = props =>{
     // 渲染一级标题
     const renderRouter = routers => {
         return routers && routers.map(routers=>{
+
             return  <div key={routers.key}
                          onClick={()=>changeCurrentLink(routers)}
                          className={currentLink===routers.to ? "headers-active" : null}
@@ -128,11 +127,12 @@ const  Portal = props =>{
                 <div className="frame-header-right">
                     {AppLink}
                     <div className="frame-header-logo">
-                      {/*  <img src={logo} alt="logo" />*/}
+                        <div style={{paddingTop:13}}>
+                            <img  src={xcode}  style={{width:22,height:22}}/>
+                        </div>
                         <div className={'text'}>
                             {"Xcode"}
                         </div>
-
                     </div>
                     <div className="headers-link">
                         {renderRouter(routers)}
@@ -143,7 +143,7 @@ const  Portal = props =>{
                         <PortalDropdown
                             tooltip={'设置'}
                             Icon={<SettingOutlined className="frame-header-icon"/>}
-                            onClick={()=>props.history.push("/index/sys")}
+                            onClick={()=>props.history.push("/setting/org")}
                         />
                         <PortalDropdown
                             tooltip={'消息'}
@@ -152,14 +152,9 @@ const  Portal = props =>{
                             </Badge>}
                             onClick={()=>setVisible(true)}
                         />
-                        <PortalMessage
-                            {...props}
-                            visible={visible}
-                            setVisible={setVisible}
-                            unread={unread}
-                            setUnread={setUnread}
-                        />
-                        <PortalDropdown
+                        <HelpLink/>
+                        <AvatarLink {...props}/>
+                        {/*<PortalDropdown
                             tooltip={'帮助与支持'}
                             Icon={<QuestionCircleOutlined className="frame-header-icon"/>}
                             width={200}
@@ -182,9 +177,9 @@ const  Portal = props =>{
                                     在线客服
                                 </div>
                             </div>
-                        </PortalDropdown>
+                        </PortalDropdown>*/}
 
-                        <PortalDropdown
+                        {/*<PortalDropdown
                             tooltip={'个人中心'}
                             Icon={<Profile />}
                             width={240}
@@ -216,10 +211,16 @@ const  Portal = props =>{
                                     </div>
                                 </div>
                             </div>
-                        </PortalDropdown>
+                        </PortalDropdown>*/}
                     </div>
                 </div>
-
+                <PortalMessage
+                    {...props}
+                    visible={visible}
+                    setVisible={setVisible}
+                    unread={unread}
+                    setUnread={setUnread}
+                />
             </div>
             <div className="frame-content">
                 {renderRoutes(route.routes)}

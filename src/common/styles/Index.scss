@@ -131,10 +131,23 @@ ul li{
     }
 }
 
-.xcode-home-limited{
+.xcode-setting-with{
+    margin: auto;
+    max-width: 75%;
+    min-width: 1000px;
+    padding: var(--tiklab-padding);
+}
+
+.xcode-repository-width{
+    margin: auto;
+    max-width: 75%;
+    min-width: 1080px;
+    padding: var(--tiklab-padding);
+}
+.xcode-repository-width-setting{
     margin: auto;
     max-width: 1280px;
-    min-width: 768px;
+    min-width: 980px;
     padding: var(--tiklab-padding);
 }
 
@@ -184,7 +197,9 @@ ul li{
     --tiklab-icon-size-16: 16px;
     --tiklab-icon-size-20: 20px;
     --tiklab-icon-size-22: 22px;
+    --tiklab-icon-size-25: 25px;
     --tiklab-icon-size-32: 32px;
+    --tiklab-icon-size-45: 45px;
 
     --xcode-sider-color: #efefef;
     --xcode-select-color: #e3e8f0;
@@ -193,5 +208,11 @@ ul li{
     --xcode-head-height: 48px;
     --xcode-content-height: calc(100vh - 48px);
 
-    ---xcode-table-top:10px
+    ---xcode-table-top:10px;
+    --xcode-data-top-20:20px;
+    --xcode-data-top-30:30px
+}
+.text-color:hover{
+    color: #1890ff;
+    cursor: pointer;
 }

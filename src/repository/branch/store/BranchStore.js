@@ -1,6 +1,6 @@
 import {observable,action} from 'mobx';
 import {message} from 'antd';
-import {Axios} from 'tiklab-core-ui';
+import {Axios} from 'thoughtware-core-ui';
 
 export class BranchStore{
 
@@ -25,6 +25,7 @@ export class BranchStore{
         if(data.code===0){
             this.branchList = data.data && data.data
         }
+        return data;
     }
 
     /**

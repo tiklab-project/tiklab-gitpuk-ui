@@ -72,18 +72,18 @@ const Edit = props =>{
         //     fileContent:previewValue,
         //     ...value
         // }).then(res=>{
-        //     res.code===0 && props.history.push(`/index/${webUrl}/tree/${urlInfo}`)
+        //     res.code===0 && props.history.push(`/${webUrl}/tree/${urlInfo}`)
         // })
     }
 
     return(
         <div className='xcode-edit'>
-            <div className='edit-content xcode-home-limited xcode'>
+            <div className='edit-content xcode-repository-width xcode'>
                 <BreadcrumbContent firstItem={'Code'} goBack={()=>props.history.go(-1)}/>
                 <div className='edit-content-head'>编辑文件</div>
                 <div className='edit-content-title'>
                     <span className='edit-title'
-                          onClick={()=>props.history.push(`/index/repository/${webUrl}/tree/${branch}`)}
+                          onClick={()=>props.history.push(`/repository/${webUrl}/tree/${branch}`)}
                     >{repositoryInfo.name}</span>
                     <span className='edit-title'>/</span>
                     <span className='edit-title'>

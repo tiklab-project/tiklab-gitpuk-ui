@@ -10,7 +10,7 @@ const Hooks = props => {
 
     return (
         <div className='hooks'>
-            <div className='hooks-content xcode-home-limited xcode'>
+            <div className='hooks-content xcode-repository-width-setting xcode'>
                 <div className='hooks-up'>
                     <BreadcrumbContent firstItem={'WebHooks'}/>
                     <Btn

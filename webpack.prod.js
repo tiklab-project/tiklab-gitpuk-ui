@@ -55,7 +55,7 @@ module.exports = merge(baseWebpackConfig, {
         new CssMinimizerPlugin(),
         new ProgressBarPlugin(),
         new BundleAnalyzerPlugin({
-            analyzerPort: 8881,
+            analyzerPort: 8883,
         }),
         new MonacoWebpackPlugin({
             languages:['json']
@@ -80,116 +80,102 @@ module.exports = merge(baseWebpackConfig, {
         nodeEnv: process.env.NODE_ENV,
         splitChunks: {
             chunks: 'all',
-            minSize: 30000, // 默认值，超过30K才独立分包
+            minSize: 1000, ////默认值，超过30K才独立分包
             minChunks: 1,
-            maxAsyncRequests: 6,
-            maxInitialRequests: 3,
+            maxAsyncRequests: 10,
+            maxInitialRequests: 10,
             automaticNameDelimiter: '--', // 分包打包生成文件的名称的连接符
             name:false,
             cacheGroups: { //  cacheGroups 缓存组，如：将某个特定的库打包
                 lodash: {
-                    name: "chunk-lodash",
-                    chunks:"all",
+                    name: 'chunk-lodash',
+                    chunks:'all',
                     test: /lodash/,
-                    priority: 0,
+                    priority: 40,
                     reuseExistingChunk: true
                 },
                 antIcon: {
-                    name: "chunk-antIcon",
-                    chunks: "all",
+                    name: 'chunk-antIcon',
+                    chunks: 'all',
                     test: /@ant-design/,
-                    priority: 0,
+                    priority: 65,
                     reuseExistingChunk: true //遇到重复包直接引用，不重新打包
                 },
                 tiklabPluginUI: {
-                    name: "chunk-tiklab-plugin-manager-ui",
-                    chunks: "all",
-                    test: /tiklab-plugin-manager-ui/,
-                    priority: 0,
-                    reuseExistingChunk: true
-                },
-                tiklabPrivilegeUI: {
-                    name: "chunk-tiklab-privilege-ui",
-                    chunks: "all",
-                    test: /tiklab-privilege-ui/,
-                    priority: 0,
-                    reuseExistingChunk: true
-                },
-                tiklabMessageUI: {
-                    name: "chunk-tiklab-message-ui",
-                    chunks: "all",
-                    test: /tiklab-message-ui/,
-                    priority: 0,
-                    reuseExistingChunk: true
-                },
-                tiklabUserUI: {
-                    name: "chunk-tiklab-user-ui",
-                    chunks: "all",
-                    test: /tiklab-user-ui/,
-                    priority: 0,
-                    reuseExistingChunk: true
-                },
-                tiklabSlateUI: {
-                    name: 'chunk-tiklab-slate-ui',
+                    name: 'chunk-tiklab-plugin-ui',
                     chunks: 'all',
-                    test: /tiklab-slate-ui/,
-                    priority: 0,
+                    test: /tiklab-plugin-ui/,
+                    priority: 60,
                     reuseExistingChunk: true
                 },
                 tiklabEamUI: {
-                    name: "chunk-tiklab-eam-ui",
-                    chunks: "all",
-                    test: /tiklab-eam-ui/,
-                    priority: 0,
+                    name: 'chunk-thoughtware-eam-ui',
+                    chunks: 'all',
+                    test: /thoughtware-eam-ui/,
+                    priority: 60,
                     reuseExistingChunk: true
                 },
-                moment: {
-                    name: "chunk-moment",
-                    chunks: "all",
-                    test: /moment/,
-                    priority: 0,
+                tiklabUserUI: {
+                    name: 'chunk-thoughtware-user-ui',
+                    chunks: 'all',
+                    test: /thoughtware-user-ui/,
+                    priority: 65,
+                    reuseExistingChunk: true
+                },
+                tiklabPrivilegeUI: {
+                    name: 'chunk-thoughtware-licence-ui',
+                    chunks: 'all',
+                    test: /thoughtware-licence-ui/,
+                    priority: 70,
+                    reuseExistingChunk: true
+                },
+                tiklabMessageUI: {
+                    name: 'chunk-thoughtware-message-ui',
+                    chunks: 'all',
+                    test: /thoughtware-message-ui/,
+                    priority: 70,
                     reuseExistingChunk: true
                 },
                 echarts: {
-                    name: "chunk-echarts",
-                    chunks: "all",
+                    name: 'chunk-echarts',
+                    chunks: 'all',
                     test: /echarts/,
-                    priority: 1,
-                    reuseExistingChunk: true
-                },
-                codemirror: {
-                    name: "chunk-codemirror",
-                    chunks: "all",
-                    test: /codemirror/,
-                    priority: 1,
-                    reuseExistingChunk: true
-                },
-                antdUI: {
-                    name: "chunk-antdUI",
-                    chunks: "all",
-                    test: /antd/,
-                    priority: 1,
-                    reuseExistingChunk: true
-                },
-                icon: {
-                    name: "chunk-icon",
-                    chunks: "all",
-                    test: /font_icon/,
-                    priority: 1,
-                    reuseExistingChunk: true
-                },
-                rcomponent: {
-                    name: "chunk-rcomponent",
-                    chunks: "all",
-                    test: /rc-[a-zA-Z]/,
-                    priority: 1,
+                    priority: 60,
                     reuseExistingChunk: true
                 },
                 monacoEditor: {
                     name: 'chunk-monaco-editor',
                     chunks: 'all',
                     test: /monaco-editor/,
-                    priority: 1,
+                    priority: 70,
+                    reuseExistingChunk: true
+                },
+                moment: {
+                    name: 'chunk-moment',
+                    chunks: 'all',
+                    test: /moment/,
+                    priority: 70,
+                    reuseExistingChunk: true
+                },
+                antdUI: {
+                    name: 'chunk-antdUI',
+                    chunks: 'async',
+                    test: /antd/,
+                    priority: 80,
+                    reuseExistingChunk: true
+                },
+                icon: {
+                    name: 'chunk-icon',
+                    chunks: 'all',
+                    test: /font_icon/,
+                    priority: 80,
+                    reuseExistingChunk: true
+                },
+                rcomponent: {
+                    name: 'chunk-rcomponent',
+                    chunks: 'all',
+                    test: /rc-[a-zA-Z]/,
+                    priority: 80,
                     reuseExistingChunk: true
                 },
                 /* 提取共用部分，一下提取的部分会议commons 命名 */
@@ -211,11 +197,6 @@ module.exports = merge(baseWebpackConfig, {
                     // minportal: 0 // 提取公共部分最小的大小
                     // enforce: true
                 },
-                default: {
-                    minChunks: 2,
-                    priority: -20,
-                    reuseExistingChunk: true
-                }
             }
         },
         minimizer: [
@@ -226,7 +207,7 @@ module.exports = merge(baseWebpackConfig, {
                     compress: {
                         // 去除console.log ,
                         drop_console: false,
-                        drop_: false,
+                        drop_debugger: false,
                     },
                 }
             })

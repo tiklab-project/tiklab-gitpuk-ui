@@ -1,0 +1,22 @@
+.ruleDetails{
+  .ruleDetails-up{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .ruleDetails-table{
+    padding-top: var(---xcode-table-top);
+  }
+
+  .text-red{
+    color: red;
+  }
+  .text-yellow{
+    color: #df5000;
+  }
+  .text-blue{
+    color: #3967FF;
+  }
+
+}

@@ -56,4 +56,14 @@
         width: 24px;
         height: 24px;
     }
+
+    .icon-text-user{
+        display: flex;
+        align-items:center;
+    }
+    .icon-text-use{
+        display: flex;
+        align-items:center;
+        gap: 5px;
+    }
 }

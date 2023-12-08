@@ -14,7 +14,7 @@ const AuthDetail = props =>{
 
     return (
         <div className='sys-keys-detail'>
-            <div className='sys-keys-detail-content xcode-home-limited xcode'>
+            <div className='sys-keys-detail-content xcode-repository-width xcode'>
                 <BreadcrumbContent firstItem={'密钥详情'} goBack={()=>setDetailsVisible(false)}/>
                 <div className='keys-detail-title'>
                     标题：{formValue && formValue.title}

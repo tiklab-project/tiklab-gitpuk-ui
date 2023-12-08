@@ -12,7 +12,7 @@
   }
 
   &-rule{
-    margin-top: 50px;
+    margin-top: 20px;
     .rule-title{
       font-size: 13px;
       font-weight: var(--tiklab-font-weight-bold);
@@ -36,5 +36,62 @@
       font-weight: var(--tiklab-font-weight-bold);
       cursor: pointer;
     }
+  }
+
+
+  &-li {
+    border: 1px solid #ececec;
+    border-radius: 4px;
+    &:not(:last-child) {
+      margin-bottom: var(--tiklab-padding-item);
+    }
+    .border-top{
+      border-top: 1px solid #ececec;
+      border-radius: 4px;
+    }
+    .branch-setting-li-top{
+      display: flex;
+      align-items: flex-start;
+      padding: 10px 20px;
+      cursor: pointer;
+      background-color: #f8f8f8;
+
+      &:hover{
+        background: #f4f4f4;
+      }
+    }
+    .branch-setting-li-icon{
+      width: 16px;
+      height: 16px;
+      line-height: 16px;
+      margin-right: 10px;
+      margin-top: 4px;
+      font-weight: var(--tiklab-font-weight-bold);
+    }
+    .branch-setting-li-center{
+      flex-grow: 1;
+    }
+    .branch-setting-li-title{
+      font-weight: var(--tiklab-font-weight-bold);
+    }
+    .branch-setting-li-desc{
+      font-size: var(--tiklab-font-13);
+      color: var(--tiklab-gray-500);
+    }
+    .branch-setting-li-down{
+      align-self: center;
+    }
+    .branch-setting-li-select{
+      background: #f4f4f4;
+    }
+    .branch-setting-li-bottom{
+      padding:10px 20px;
+    }
+    .branch-setting-li-none{
+      display: none;
+    }
+  }
+  .border-margin{
+    margin-top: 15px;
   }
 }

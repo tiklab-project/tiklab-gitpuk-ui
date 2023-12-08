@@ -15,27 +15,23 @@ export const departmentRouters =[
         icon: <TeamOutlined/>,
         children: [
             {
-                id: "/index/sys/org",
+                id: "/setting/org",
                 title: "部门",
-                icon: <GroupOutlined/>,
                 purviewCode: "orga",
             },
             {
-                id: "/index/sys/user",
+                id: "/setting/user",
                 title: "Users",
-                icon: <TeamOutlined/>,
                 purviewCode: "user",
             },
             {
-                id: "/index/sys/userGroup",
+                id: "/setting/userGroup",
                 title: "用户组",
-                icon: <TeamOutlined/>,
                 purviewCode: "user_group",
             },
             {
-                id: "/index/sys/directory",
+                id: "/setting/directory",
                 title: "用户目录",
-                icon: <BarsOutlined/>,
                 purviewCode: "user_dir",
             },
         ]
@@ -50,77 +46,77 @@ export const templateRouter = [
         icon:<ProjectOutlined />,
         children:[
             {
-                id:"/index/sys/syr/feature",
+                id:"/setting/syr/feature",
                 title:"系统功能",
                 icon:<MenuOutlined />,
             },
             {
-                id:"/index/sys/roletrue",
+                id:"/setting/roletrue",
                 title:"系统角色",
                 icon: <MenuOutlined />,
             },
             {
-                id:"/index/sys/project/feature",
+                id:"/setting/project/feature",
                 title:"项目功能",
                 icon:<MenuOutlined />,
             },
             {
-                id:"/index/sys/project/role",
+                id:"/setting/project/role",
                 title:"项目角色",
                 icon:<MenuOutlined />,
             },
             {
-                id:"/index/sys/todoTask",
+                id:"/setting/todoTask",
                 title:"待办任务",
                 icon:<MenuOutlined />,
             },
             {
-                id:"/index/sys/task",
+                id:"/setting/task",
                 title:"待办事项",
                 icon:<MenuOutlined />,
             },
             {
-                id:"/index/sys/todoTemp",
+                id:"/setting/todoTemp",
                 title:"代办模板 ",
                 icon:<MenuOutlined />,
             },
             {
-                id:"/index/sys/todoType",
+                id:"/setting/todoType",
                 title:"代办类型 ",
                 icon:<MenuOutlined />,
             },
             {
-                id:"/index/sys/logTemplate",
+                id:"/setting/logTemplate",
                 title:"日志模板",
                 icon:<MenuOutlined />,
             },
             {
-                id:"/index/sys/logType",
+                id:"/setting/logType",
                 title:"日志类型",
                 icon:<MenuOutlined />,
             },
             {
-                id:"/index/sys/management",
+                id:"/setting/management",
                 title:"消息管理",
                 icon:<MenuOutlined />,
             },
             {
-                id:"/index/sys/type",
+                id:"/setting/type",
                 title:"消息类型",
                 icon:<MenuOutlined />,
             },
             {
-                id:"/index/sys/sendtrue",
+                id:"/setting/sendtrue",
                 title:"消息通知类型",
                 icon:<MenuOutlined />,
             },
             {
-                id:"/index/sys/noticetrue",
+                id:"/setting/noticetrue",
                 title:"通知方案",
                 icon:<MenuOutlined />
             },
             {
-                id:"/index/sys/userGrouptrue",
+                id:"/setting/userGrouptrue",
                 title:"用户组true",
                 icon:<MenuOutlined />
             },

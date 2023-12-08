@@ -45,7 +45,7 @@ const globals = {
     'react-dom': 'ReactDOM',
     antd:"antd",
     'react-i18next':'reactI18next',
-    "tiklab-core-ui":"tiklabCoreUi",
+    "thoughtware-core-ui":"tiklabCoreUi",
     "@ant-design/icons":"icons",
     "tiklab-plugin-ui":"tiklabPluginUi",
     'mobx-react':'mobxReact',

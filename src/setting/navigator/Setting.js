@@ -6,8 +6,6 @@ import {
     SoundOutlined,
     VerifiedOutlined,
     KeyOutlined,
-    TeamOutlined,
-    GroupOutlined,
     BarsOutlined,
     FileDoneOutlined,
     BuildOutlined,
@@ -19,7 +17,7 @@ const Setting = props =>{
     const applicationRouters = [
 
             {
-                id:'/index/sys/role',
+                id:'/setting/role',
                 title:'Privilege',
                 icon: <SafetyCertificateOutlined />,
                 purviewCode:'xcode_permission',
@@ -30,101 +28,87 @@ const Setting = props =>{
                 icon:<SoundOutlined/>,
                 children: [
                     {
-                        id:'/index/sys/mes/notice',
+                        id:'/setting/mes/notice',
                         title:'Message Notification Scheme',
-                        icon:<SoundOutlined />,
                         purviewCode:'message_type',
                     },
                     {
-                        id:'/index/sys/mes/send',
+                        id:'/setting/mes/send',
                         title: 'Message Send Type',
-                        icon:<SoundOutlined />,
                         purviewCode: 'message_setting',
                     },
                 ]
             },
             {
-                id:'/index/sys/auth',
-                title: 'Keys',
-                icon:<KeyOutlined />,
-            },
-            {
-                id:'/index/sys/plugin',
+                id:'/setting/plugin',
                 title:'Plugin',
                 icon:<MergeCellsOutlined />,
                 purviewCode:'xcode_plugin',
             },
-        /*    {
-                id:'/index/sys/hooks',
-                title: 'WebHooks',
-                icon:<FileDoneOutlined />,
-            },*/
             {
-              id:'3',
-              title: 'codeReview',
-              icon:<FileDoneOutlined />,
-                children: [
-                    {
-                        id:'/index/sys/deploy/server',
-                        title:'server_deploy',
-                        icon:<FileDoneOutlined />,
-                    },
-                    {
-                        id:'/index/sys/deploy/env',
-                        title:'env_deploy',
-                        icon:<BuildOutlined />,
-                    },
-                ]
-          },
-            {
-                id:'4',
-                title:'Backups And Rec',
-                purviewCode:'xcode_backupsVer',
-                icon:<BuildOutlined />,
-                children: [
-                    {
-                        id: '/index/sys/deploy/backups',
-                        title: 'Backups',
-                        purviewCode:'xcode_backups',
-                        icon: <BarsOutlined/>,
-                    },
-                    {
-                        id: '/index/sys/deploy/recover',
-                        title: 'Recover',
-                        purviewCode:'xcode_recover',
-                        icon: <BarsOutlined/>,
-                    },
-                ]
+                id:'/setting/auth',
+                title: 'Keys',
+                icon:<KeyOutlined />,
             },
-            {
-                id:'/index/sys/commitRepository',
-                title:'操作仓库',
-                icon:<MergeCellsOutlined />,
-            },
-            /*{
-                id:'/index/sys/deploy/recover',
-                title:'Recover',
-                icon:<BuildOutlined />,
-            },*/
-            {
-                id:'5',
-                title:'Security',
-                icon:<LayoutOutlined />,
-                children: [
-                    {
-                        id:'/index/sys/myLog',
-                        title:'Operation Log',
-                        icon:<LayoutOutlined />,
-                        purviewCode:'xcode_log',
-                    }
-                ]
-            },
-            {
-                id:'/index/sys/version',
-                title:'Version And Licence',
-                icon:<VerifiedOutlined />,
-                purviewCode:'xcode_version',
-            },
+
+        {
+             id:'3',
+             title: '代码扫描',
+             icon:<FileDoneOutlined />,
+               children: [
+                   {
+                       id:'/setting/scanScheme',
+                       title: '扫描方案',
+                   },
+                   {
+                       id:'/setting/scanRuleSet',
+                       title:'扫描规则',
+                   },
+                   {
+                       id:'/setting/scanEnv',
+                       title:'扫描环境',
+                   },
+               ]
+         },
+
+        {
+            id:'/setting/power/user',
+            title:'用户仓库',
+            purviewCode:'xcode_rpy_power',
+            icon:<MergeCellsOutlined />,
+        },
+        {
+            id:'5',
+            title:'Security',
+            icon:<LayoutOutlined />,
+            children: [
+                {
+                    id:'/setting/myLog',
+                    title:'Operation Log',
+                    purviewCode:'xcode_log',
+                },
+                {
+                    id:'/setting/backupRecovery',
+                    title:'备份与恢复',
+                },
+            ]
+        },
+        {
+            id:'6',
+            title:'应用',
+            icon:<VerifiedOutlined />,
+            children: [
+                {
+                    id:'/setting/version',
+                    title:'Version And Licence',
+                    purviewCode:'xcode_version',
+                },
+                {
+                    id:'/setting/authContent',
+                    title:'应用访问权限',
+                },
+            ]
+        },
         ]
 
     return  <SettingContent

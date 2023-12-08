@@ -15,7 +15,7 @@ import {Space, Table, Tooltip} from "antd";
 import {SpinLoading} from "../../../common/loading/Loading";
 import EmptyText from "../../../common/emptyText/EmptyText";
 import ToLeadStore from "../store/ToLeadStore"
-import {getUser} from "tiklab-core-ui";
+import {getUser} from "thoughtware-core-ui";
 import Page from "../../../common/page/Page";
 import {text} from "node-forge/lib/util";
 const RepositoryThirdList = (props) => {
@@ -158,7 +158,7 @@ const RepositoryThirdList = (props) => {
     }
 
     const goBack = () => {
-        props.history.push(`/index/repository/lead`)
+        props.history.push(`/repository/lead`)
     }
 
     //table row 选中切换
@@ -183,7 +183,7 @@ const RepositoryThirdList = (props) => {
     };
     return(
         <div className='third'>
-            <div className='xcode-home-limited xcode'>
+            <div className='xcode-repository-width xcode'>
                 <BreadcrumbContent firstItem='Gitlab仓库列表' goBack={goBack}/>
                 <div className='third-table'>
                     {

@@ -1,6 +1,6 @@
 import {observable,action} from 'mobx';
 import {message} from 'antd';
-import {Axios, getUser} from 'tiklab-core-ui';
+import {Axios, getUser} from 'thoughtware-core-ui';
 
 export class CodeScanStore {
     // 刷新

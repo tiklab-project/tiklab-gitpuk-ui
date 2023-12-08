@@ -2,7 +2,7 @@ import React,{useEffect,useState} from 'react';
 import {Input} from 'antd';
 import {CopyOutlined} from '@ant-design/icons';
 import {observer} from 'mobx-react';
-import {getUser} from 'tiklab-core-ui';
+import {getUser} from 'thoughtware-core-ui';
 import BreadcrumbContent from '../../../common/breadcrumb/Breadcrumb';
 import {copy} from '../../../common/client/Client';
 import './Usher.scss';
@@ -31,7 +31,7 @@ const Usher = props =>{
 
     return (
         <div className='usher'>
-            <div className='usher-content xcode-home-limited xcode'>
+            <div className='usher-content xcode-repository-width xcode'>
                 <BreadcrumbContent firstItem={'Code'}/>
                 <div className='usher-segment'>
                     <div className='usher-segment-url'>

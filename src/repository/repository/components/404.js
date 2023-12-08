@@ -27,7 +27,7 @@ const NotFound = props =>{
         const res=await deleteRpyByAddress(webUrl)
           if (res.code===0){
               message.info('删除成功')
-              props.history.push('/index/repository')
+              props.history.push('/repository')
           }else {
               message.info(res.msg)
           }

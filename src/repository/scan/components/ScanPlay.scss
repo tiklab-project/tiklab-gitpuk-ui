@@ -1,0 +1,38 @@
+.scanPlay{
+  .scanPlay-top{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10px;
+}
+  .scanPlay-data-style{
+    margin-top: var(--xcode-data-top-20);
+  }
+
+  .icon-style{
+    display: flex;
+    gap: 15px;
+    cursor: pointer;
+    .icon-style-size{
+      font-weight: 20;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  }
+  .last-scan{
+    display: flex;
+    gap: 10px;
+    font-weight:400;
+    font-size: 15px;
+  }
+  .last-scan-style{
+    display: flex;
+    margin-top: 10px;
+    gap: 5px;
+    .last-scan-text{
+      color: #94979a;
+      font-size: 13px;
+    }
+  }
+
+}

@@ -73,7 +73,7 @@ const EnvDeploy = (props) => {
     }
     return(
         <div className='dev-deploy'>
-            <div className='xcode-home-limited xcode'>
+            <div className='xcode-repository-width xcode'>
                 <div className='dev-deploy-up'>
                     <BreadcrumbContent firstItem={'env_deploy'}/>
                     <Btn

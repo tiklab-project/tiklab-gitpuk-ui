@@ -5,7 +5,7 @@ import './Pipeline.scss';
 const Pipeline = props => {
     return (
         <div className='pipeline'>
-            <div className='pipeline-content xcode-home-limited xcode'>
+            <div className='pipeline-content xcode-repository-width xcode'>
                 <div className='pipeline-add-btn'>
                     <Btn type={'primary'} title={'创建流水线'}/>
                 </div>

@@ -7,7 +7,7 @@ import Btn from '../../../common/btn/Btn';
 import Tabs from '../../../common/tabs/Tabs';
 import RepositoryTable from "./RepositoryTable";
 import './Repository.scss';
-import {getUser} from "tiklab-core-ui";
+import {getUser} from "thoughtware-core-ui";
 
 const Repository = props => {
 
@@ -24,34 +24,31 @@ const Repository = props => {
 
     const [currentPage,setCurrentPage]=useState(1)
     const [totalPage,setTotalPage]=useState()
+    const [pageSize]=useState(15)
 
     const [isLoading,setIsLoading]=useState(false)
+
 
     useEffect(async ()=>{
        await findRpyPage(1,repositoryType)
     },[])
 
-    const findRpyPage =async (currentPage,repositoryType) => {
-        const param={
-            pageParam:{
-                currentPage:currentPage,
-                pageSize:15
-            },
-            userId:getUser().userId,
-            name:repositoryName,
-            findType:repositoryType
-        }
+    const findRpyPage =async (currentPage,repositoryType,sort) => {
+         setIsLoading(true)
+       findRepositoryPage({ pageParam:{currentPage:currentPage,pageSize:pageSize},
+               userId:getUser().userId,
+               name:repositoryName,
+               findType:repositoryType,
+               sort:sort
+           }).then(res=>{
+               if (res.code===0){
+                   setIsLoading(false)
+                   setRepositoryList(res.data?.dataList)
+                   setTotalPage(res.data.totalPage)
+                   setCurrentPage(res.data.currentPage)
+               }
+       })
 
-        setIsLoading(true)
-
-       const res=await findRepositoryPage(param)
-        setIsLoading(false)
-        if (res.code===0){
-
-            setRepositoryList(res.data?.dataList)
-            setTotalPage(res.data.totalPage)
-            setCurrentPage(res.data.currentPage)
-        }
     }
 
     /**
@@ -85,14 +82,29 @@ const Repository = props => {
      * 分页
      */
     const changPage =async (value) => {
+        setCurrentPage(value)
         await findRpyPage(value,repositoryType)
+    }
+
+    const onChange = (pagination, filters, sorter, extra) => {
+        //降序
+        if (sorter.order==='descend'){
+            findRpyPage (currentPage,repositoryType,"desc")
+        }
+        //升序
+        if (sorter.order==='ascend'){
+            findRpyPage (currentPage,repositoryType,"asc")
+        }
+        if (!sorter.order){
+            findRpyPage (currentPage,repositoryType)
+        }
     }
 
     const items=[
         {
             key: '1',
             label: (
-                <div  onClick={()=>props.history.push('/index/repository/new')}>
+                <div  onClick={()=>props.history.push('/repository/new')}>
                    新建仓库
                 </div>
             ),
@@ -100,7 +112,7 @@ const Repository = props => {
         {
             key: '2',
             label: (
-                <div  onClick={()=>props.history.push('/index/repository/lead')}>
+                <div  onClick={()=>props.history.push('/repository/lead')}>
                     导入仓库
                 </div>
             ),
@@ -109,7 +121,7 @@ const Repository = props => {
 
     return(
         <div className='repository'>
-            <div className=' xcode-home-limited xcode'>
+            <div className=' xcode-repository-width xcode'>
                 <div className='repository-top'>
                     <BreadcrumbContent firstItem={'Repository'}/>
                     <Dropdown  menu={{items}} >
@@ -117,16 +129,10 @@ const Repository = props => {
                             <Btn
                                 type={'primary'}
                                 title={'创建仓库'}
-                                icon={<PlusOutlined/>}
+                               /* icon={<PlusOutlined/>}*/
                             />
                         </div>
                     </Dropdown>
-                   {/* <Btn
-                        type={'primary'}
-                        title={'新建仓库'}
-                        icon={<PlusOutlined/>}
-                        onClick={()=>props.history.push('/index/repository/new')}
-                    />*/}
                 </div>
                 <div className='repository-type'>
                     <Tabs
@@ -157,6 +163,7 @@ const Repository = props => {
                     changPage={changPage}
                     totalPage={totalPage}
                     currentPage={currentPage}
+                    onChange={onChange}
                 />
             </div>
         </div>

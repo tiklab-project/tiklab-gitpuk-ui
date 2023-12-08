@@ -21,7 +21,7 @@
     "Collapse": "收起",
     "Plugin": "插件",
     "Message": "消息",
-    "Keys": "密钥",
+    "Keys": "SSH密钥",
     "server_deploy":"服务配置",
     "env_deploy":"环境配置",
     "Security": "安全",

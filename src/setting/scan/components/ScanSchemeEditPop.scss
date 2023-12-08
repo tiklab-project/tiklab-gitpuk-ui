@@ -1,0 +1,30 @@
+
+.language-type{
+  display: flex;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+.rule_package{
+  .rule_package_text:after{
+      display: inline-block;
+      margin-right: 4px;
+      color: #ff4d4f;
+      font-size: 14px;
+      font-family: SimSun, sans-serif;
+      line-height: 1;
+      content: "*";
+  }
+  .rule_package_border{
+    border: 1px solid #d9d9d9;
+    padding: 20px;
+    margin-top: 10px;
+    .border-nav{
+      display: flex;
+      margin-top: 10px;
+      .border-nav-text{
+        width: 100px;
+      }
+    }
+  }
+}
+

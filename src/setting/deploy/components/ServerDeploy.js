@@ -90,7 +90,7 @@ const ServerDeploy = (props) => {
     }
     return(
         <div className='server-deploy'>
-            <div className='xcode-home-limited xcode'>
+            <div className='xcode-repository-width xcode'>
                 <div className='server-deploy-up'>
                     <BreadcrumbContent firstItem={'server_deploy'}/>
                     <Btn

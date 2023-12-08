@@ -7,7 +7,7 @@ import {
     RightOutlined,
     EditOutlined
 } from '@ant-design/icons'
-import {PrivilegeProjectButton} from 'tiklab-privilege-ui';
+import {PrivilegeProjectButton} from 'thoughtware-privilege-ui';
 import {inject,observer} from 'mobx-react';
 import Btn from '../../../common/btn/Btn';
 import BreadcrumbContent from '../../../common/breadcrumb/Breadcrumb';
@@ -19,7 +19,7 @@ const GroupBasicInfo = props =>{
 
     const {groupInfo,deleteGroup,updateGroup} = groupStore
     const [form] = Form.useForm()
-    const [expandedTree,setExpandedTree] = useState([1])  // 树的展开与闭合
+    const [expandedTree,setExpandedTree] = useState([])  // 树的展开与闭合
     const [powerType,setPowerType] = useState("")  //  仓库权限类型
 
 
@@ -51,8 +51,13 @@ const GroupBasicInfo = props =>{
      * @param value
      */
     const onOk = value => {
-        updateGroup({...value,groupId:groupInfo.groupId,rules:powerType})
         form.validateFields(['name'])
+        updateGroup({...value,groupId:groupInfo.groupId,rules:powerType}).then(res=>{
+            if (res.code===0){
+
+                props.history.push(`/group/${value.name}/setting/info`)
+            }
+        })
     }
 
     /**
@@ -60,7 +65,7 @@ const GroupBasicInfo = props =>{
      */
     const delGroup = () =>{
         deleteGroup(groupInfo.groupId).then(res=>{
-            res.code===0 && props.history.push('/index/group')
+            res.code===0 && props.history.push('/group')
         })
 
     }
@@ -182,7 +187,7 @@ const GroupBasicInfo = props =>{
     }
 
     return(
-        <div className='groupSetting xcode-home-limited xcode'>
+        <div className='groupSetting xcode-repository-width-setting xcode'>
             <div className='groupSetting-up'>
                 <BreadcrumbContent firstItem={'Setting'}/>
             </div>

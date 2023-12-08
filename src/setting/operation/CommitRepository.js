@@ -67,12 +67,12 @@ const CommitRepository = (props) => {
 
     //跳转详情
     const goDetails =async (record) => {
-        props.history.push(`/index/repository/${record.address}/tree`)
+        props.history.push(`/repository/${record.address}/tree`)
     }
 
     return(
         <div className='repository'>
-            <div className='xcode-home-limited xcode'>
+            <div className='xcode-repository-width xcode'>
                 <div className='backups-up'>
                     <BreadcrumbContent firstItem={'推送仓库'}/>
                 </div>

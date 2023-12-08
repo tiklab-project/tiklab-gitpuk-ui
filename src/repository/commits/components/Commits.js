@@ -127,7 +127,7 @@ const Commits = props =>{
         //setPageType("details")
         //setCommitId(item.commitId)
         setCommitsQueryData({commitName:commitName,commitUser:commitUser})
-        props.history.push(`/index/repository/${webUrl}/commit/${item.commitId}`)
+        props.history.push(`/repository/${webUrl}/commit/${item.commitId}`)
     }
 
     /**
@@ -135,7 +135,7 @@ const Commits = props =>{
      * @param item
      */
     const findFile = item => {
-        props.history.push(`/index/repository/${webUrl}/tree/${item.commitId+commitU4}`)
+        props.history.push(`/repository/${webUrl}/tree/${item.commitId+commitU4}`)
     }
 
     const renderCommits = item => {
@@ -194,7 +194,7 @@ const Commits = props =>{
 
     return (
         <div className='commits' id='xcode-commits' onScroll={handleScroll}>
-            <div className='commits-content xcode-home-limited'>
+            <div className='commits-content xcode-repository-width'>
                 <BreadcrumbContent firstItem={'Commits'}/>
                 <div className='commits-head'>
                     <div className='commits-head-left'>

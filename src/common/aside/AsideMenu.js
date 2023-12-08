@@ -9,7 +9,6 @@ import React,{useEffect} from 'react';
 const AsideMenu = props =>{
 
     const {list,setIsLoading,asideType,info,setTriggerVisible} = props
-
     let timeout = null
     useEffect(()=>{
         // 销毁定时器
@@ -20,42 +19,66 @@ const AsideMenu = props =>{
 
     //跳转仓库列表
     const goRpyList = () => {
-        props.history.push(`/index/repository`)
+        switch (asideType) {
+            case 'group':
+                props.history.push(`/group`)
+                break
+            case 'repository':
+                props.history.push(`/repository`)
+                break
+
+        }
+
     }
     /**
      * 切换仓库或仓库组
      * @param item
      */
     const changeHouseDetails = item => {
-        if(item.name!==info.name){
             setTriggerVisible(false)
             switch (asideType) {
                 case 'group':
-                    props.history.push(`/index/group/${item.name}/survey`)
+                    if(item.groupId!==info.groupId) {
+
+                        props.history.push(`/group/${item.name}/repository`)
+                    }
                     break
                 case 'repository':
-                    props.history.push(`/index/repository/${item.address}/tree`)
+                    if(item.rpyId!==info.rpyId) { props.history.push(`/repository/${item.address}/tree`)}
                     break
-
             }
             setIsLoading(true)
-            timeout = setTimeout(()=>setIsLoading(false),150)
-        }
+            timeout = setTimeout(() => setIsLoading(false), 150)
+
     }
 
     // 切换项目菜单列表
     const houseMenu = (item,index) =>{
-        return  <div onClick={()=>{changeHouseDetails(item)}} key={index}
-                     className={`menu-toggle-item ${info && info.name===item.name?'menu-toggle-active':''}`}
+        return(
+                asideType==='repository'?
+                <div onClick={()=>{changeHouseDetails(item)}} key={index}
+                     className={`menu-toggle-item ${info && info.rpyId===item.rpyId?'menu-toggle-active':''}`}
                 >
-                    <span className={`menu-toggle-icon xcode-icon-1`}>
+                    <span className={`menu-toggle-icon ${item.color?`xcode-icon-${item.color}`:"xcode-icon-0"}`}>
                         {item.name.substring(0,1).toUpperCase()}
                     </span>
                     <span className='menu-toggle-name'>
-                        { item.codeGroup && item.codeGroup.name + '/'}
+                     {/*   { item.codeGroup && item.codeGroup.name + '/'}*/}
                         { item.name }
                     </span>
-                </div>
+                </div>:
+                    <div onClick={()=>{changeHouseDetails(item)}} key={index}
+                         className={`menu-toggle-item ${info && info.groupId===item.groupId?'menu-toggle-active':''}`}
+                    >
+                        <span className={`menu-toggle-icon ${item.color?`xcode-icon-${item.color}`:"xcode-icon-0"}`}>
+                            {item.name.substring(0,1).toUpperCase()}
+                        </span>
+                         <span className='menu-toggle-name'>
+                         {/*   { item.codeGroup && item.codeGroup.name + '/'}*/}
+                                { item.name }
+                        </span>
+                    </div>
+        )
     }
 
     return (
@@ -68,8 +91,8 @@ const AsideMenu = props =>{
                 }
             </div>
             {
-                list.length>2&&
-                <div className='menu-toggle-tail' onClick={goRpyList}>查看更多...</div>
+                list.length>5&&
+                <div className='menu-toggle-tail cursor' onClick={goRpyList}>查看更多...</div>
             }
         </div>
     )

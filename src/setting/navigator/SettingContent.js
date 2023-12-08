@@ -1,6 +1,6 @@
 import React,{useEffect,useState} from 'react';
 import {DownOutlined,UpOutlined} from '@ant-design/icons';
-import {PrivilegeButton,SystemNav} from 'tiklab-privilege-ui';
+import {PrivilegeButton,SystemNav} from 'thoughtware-privilege-ui';
 import {departmentRouters,templateRouter} from "./SettingRouters";
 import {renderRoutes} from 'react-router-config';
 import {useTranslation} from 'react-i18next';
@@ -20,18 +20,23 @@ const SettingContent= props =>  {
 
 
     useEffect(()=>{
-        setSelectKey(path)
+        if (path.startsWith("/setting/scanRule")){
+            setSelectKey("/setting/scanRuleSet")
+        }else {
+            setSelectKey(path)
+        }
+
     },[path])
 
     // 菜单
     let menus = () => {
         try{
             if(isDepartment && devProduction){
-                return [...departmentRouters,...applicationRouters,...templateRouter]
+                return [...departmentRouters,...applicationRouters]
             }
-            if(!isDepartment && devProduction){
+          /*  if(!isDepartment && devProduction){
                 return [...applicationRouters,...templateRouter]
-            }
+            }*/
             if(isDepartment && !devProduction){
                 return [...departmentRouters,...applicationRouters]
             }
@@ -121,8 +126,8 @@ const SettingContent= props =>  {
             expandedTree={expandedTree} // 树的展开和闭合(非必传)
             setExpandedTree={setExpandedTree} // 树的展开和闭合(非必传)
             applicationRouters={applicationRouters} // 菜单
-            outerPath={"/index/sys"} // 系统设置Layout路径
-            notFoundPath={""}  //找不到页面路径
+            outerPath={"/setting"} // 系统设置Layout路径
+            notFoundPath={"/setting/org"}  //找不到页面路径
         >
             <div className='system'>
                 <div className='system-aside'>

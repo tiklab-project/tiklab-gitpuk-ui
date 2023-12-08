@@ -6,7 +6,7 @@
  * @update: 2023-05-22 14:30
  */
 
-import React from 'react';
+import React ,{Fragment}from 'react';
 import {observer} from "mobx-react";
 import {LockOutlined, SettingOutlined, UnlockOutlined} from '@ant-design/icons';
 import {Space,Table,Tooltip} from 'antd';
@@ -15,10 +15,11 @@ import Listicon from '../../../common/list/Listicon';
 import {SpinLoading} from "../../../common/loading/Loading";
 import './RepositoryTable.scss';
 import Page from "../../../common/page/Page";
+import UserIcon from "../../../common/list/UserIcon";
 
 const RepositoryTable = props => {
 
-    const {isLoading,repositoryList,createOpenRecord,changPage,totalPage,currentPage} = props
+    const {isLoading,repositoryList,createOpenRecord,changPage,totalPage,currentPage,onChange} = props
     /**
      * 跳转代码文件
      * @param text
@@ -26,7 +27,7 @@ const RepositoryTable = props => {
      */
     const goDetails = (text,record) => {
         createOpenRecord(record.rpyId)
-        props.history.push(`/index/repository/${record.address}/tree`)
+        props.history.push(`/repository/${record.address}/tree`)
     }
 
     /**
@@ -36,7 +37,7 @@ const RepositoryTable = props => {
      */
     const goSet = (text,record) => {
         createOpenRecord(record.rpyId)
-        props.history.push(`/index/repository/${record.address}/sys/info`)
+        props.history.push(`/repository/${record.address}/setting/info`)
     }
 
 
@@ -45,22 +46,19 @@ const RepositoryTable = props => {
             title: '仓库名称',
             dataIndex: 'name',
             key: 'name',
-            width:'50%',
+            width:'35%',
             ellipsis:true,
             render:(text,record)=>{
                 return (
                     <div className='repository-tables-name' onClick={()=>goDetails(text,record)}>
-                        <Listicon text={text}/>
+                        <Listicon text={text} colors={record.color}/>
                         <div className='name-text'>
                             <div className='name-text-title'>
-                                <span className='name-text-name'>{ record?.address.substring(0, record?.address.indexOf("/",1))+"/"+record.name}</span>
-                                <span className='name-text-lock'>{record.rules==='private'?<LockOutlined/>:<UnlockOutlined />}</span>
-                                {
+                                <span className='name-text-name text-color'>{ record?.address.substring(0, record?.address.indexOf("/",1))+"/"+record.name}</span>
+                              {
                                     text==="sample-repository"&&
                                     <span className='name-text-type'>{ "示例仓库"}</span>
-
                                 }
-
                             </div>
                             {
                                 record.codeGroup &&
@@ -75,8 +73,42 @@ const RepositoryTable = props => {
             title: '负责人',
             dataIndex: ['user','name'],
             key: 'user',
-            width:'20%',
+            width:'15%',
             ellipsis:true,
+            render:(text)=><div className='icon-text-user'>
+                    <UserIcon text={text} size={"small"}/>
+                    <div>{text}</div>
+                </div>
+        },
+        {
+            title: '可见范围',
+            dataIndex: 'rules',
+            key: 'rules',
+            width:'15%',
+            ellipsis:true,
+            render:(text,record)=>{
+                return (
+                    <div className='repository-tables-name'>
+                        {text==='private'?
+                            <div className='icon-text-use'>
+                                <LockOutlined/>
+                                <span>私有</span>
+                            </div>:
+                            <div className='icon-text-use'>
+                                <UnlockOutlined />
+                                <span>公开</span>
+                            </div>
+                        }
+                    </div>
+                )}
+        },
+        {
+            title: '大小',
+            dataIndex: 'rpySize',
+            key: 'rpySize',
+            width:'10%',
+            ellipsis:true,
+            sorter: (a, b) => a.size - b.size,
         },
         {
             title: '更新',
@@ -90,7 +122,7 @@ const RepositoryTable = props => {
             title: '操作',
             dataIndex: 'action',
             key:'action',
-            width:'10%',
+            width:'5%',
             ellipsis:true,
             render:(text,record)=>{
                 return(
@@ -130,12 +162,9 @@ const RepositoryTable = props => {
                 pagination={false}
                 locale={{emptyText: isLoading ?
                         <SpinLoading type="table"/>: <EmptyText title={"没有仓库"}/>}}
+                onChange={onChange}
             />
-            {
-                (totalPage>1)?
-                <Page pageCurrent={currentPage} changPage={changPage} totalPage={totalPage}/>:null
-            }
-
+            <Page pageCurrent={currentPage} changPage={changPage} totalPage={totalPage}/>
         </div>
     )
 }

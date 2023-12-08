@@ -6,7 +6,7 @@ import './PushRule.scss';
 const PushRule = props => {
     return (
         <div className='push-rule'>
-            <div className='push-rule-content xcode-home-limited xcode'>
+            <div className='push-rule-content xcode-repository-width-setting xcode'>
                 <BreadcrumbContent firstItem={'Push_rules'}/>
                 <div className='push-rule-mode'>
                     <div className='mode-title'>推送评审模式</div>

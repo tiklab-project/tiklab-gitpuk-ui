@@ -12,7 +12,7 @@ const AccessKeys = props => {
 
     return (
         <div className='keys'>
-            <div className='keys-content xcode-home-limited xcode'>
+            <div className='keys-content xcode-repository-width-setting xcode'>
                 <div className='keys-up'>
                     <BreadcrumbContent firstItem={'Access_keys'}/>
                     <Btn

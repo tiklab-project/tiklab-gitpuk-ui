@@ -1,6 +1,6 @@
 import {observable,action} from 'mobx';
 import {message} from 'antd';
-import {getUser,Axios} from 'tiklab-core-ui';
+import {getUser,Axios} from 'thoughtware-core-ui';
 
 export class RepositoryStore {
 
@@ -33,6 +33,10 @@ export class RepositoryStore {
 
     @observable
     address=''
+
+    //仓库地址
+    @observable
+    repositoryPath=''
 
     /**
      * 设置仓库信息
@@ -191,18 +195,14 @@ export class RepositoryStore {
     }
 
     /**
-     * 通过仓库组的名字查询仓库列表
-     * @param value  仓库组名字
+     * 条件查询仓库组下面的仓库
+     * @param param  查询条件
      * @returns {Promise<unknown>}
      */
     @action
-    findRepositoryByGroupName = async (value) =>{
-        const param = new FormData();
-        param.append("groupName",value)
-        const data = await Axios.post('/rpy/findRepositoryByGroupName',param)
-        if(data.code===0){
-            this.repositoryList = data.data
-        }
+    findGroupRepository = async (param) =>{
+        const data = await Axios.post('/rpy/findGroupRepository',param)
+
         return data
     }
 
@@ -218,6 +218,16 @@ export class RepositoryStore {
         return data
     }
 
+    /**
+     * 通过用户分页查询有权限的仓库
+     * @param param
+     * @returns {Promise<unknown>}
+     */
+    @action
+    findPrivateRepositoryByUser = async (param) =>{
+        const data = await Axios.post('/rpy/findPrivateRepositoryByUser',param)
+        return data
+    }
 
     /**
      * 查询用户推送过的仓库
@@ -272,6 +282,33 @@ export class RepositoryStore {
         if (data.code===0){
             this.address=data.data
         }
+        return data
+    }
+
+    /**
+     * 查询仓库地址
+     * @param repositoryId
+     * @returns {Promise<unknown>}
+     */
+    @action
+    getRepositoryPath = async () =>{
+        const data = await Axios.post('/rpy/getRepositoryPath')
+        if (data.code===0){
+            this.repositoryPath=data.data
+        }
+       return data
+    }
+
+    /**
+     * 查询当前仓库用户是否有权限
+     * @param repositoryId
+     * @returns {Promise<unknown>}
+     */
+    @action
+    findRepositoryAuth = async (rpyId) =>{
+        const param=new FormData()
+        param.append("rpyId",rpyId)
+        const data = await Axios.post('/rpy/findRepositoryAuth',param)
         return data
     }
 

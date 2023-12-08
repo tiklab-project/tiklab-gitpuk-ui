@@ -15,10 +15,8 @@ import github from "../../../assets/images/img/github.png";
 import notice from "../../../assets/images/img/notice.png"
 import link from "../../../assets/images/img/link.png"
 import ToLeadStore from "../store/ToLeadStore"
-import Btn from "../../../common/btn/Btn";
-import {getUser} from "tiklab-core-ui";
+import {getUser} from "thoughtware-core-ui";
 import {Table, Tag} from "antd";
-import {SpinLoading} from "../../../common/loading/Loading";
 import EmptyText from "../../../common/emptyText/EmptyText";
 const RepositoryToLead = (props) => {
     const {findImportAuthList,deleteImportAuth,findAllLeadRecord,leadRecordList}=ToLeadStore
@@ -34,7 +32,7 @@ const RepositoryToLead = (props) => {
      * 跳转到上一级路由
      */
     const goBack = () => {
-        props.history.push(`/index/repository`)
+        props.history.push(`/repository`)
     }
 
     const goInfo = async (type) => {
@@ -44,7 +42,7 @@ const RepositoryToLead = (props) => {
 
             setAuthInfo(res.data)
             if (res.data.length===0){
-                props.history.push(`/index/repository/lead/info/${type}`)
+                props.history.push(`/repository/lead/info/${type}`)
             }
         }
     }
@@ -54,7 +52,7 @@ const RepositoryToLead = (props) => {
     }
     //跳转第三方仓库列表
     const goThirdList = () => {
-        props.history.push(`/index/repository/lead/thirdList/${authInfo[0].id}`)
+        props.history.push(`/repository/lead/thirdList/${authInfo[0].id}`)
     }
     //解除绑定
     const deleteBound = () => {
@@ -63,7 +61,7 @@ const RepositoryToLead = (props) => {
     }
 
     const goDetails = (text,record) => {
-        props.history.push(`/index/repository/${record.repository.address}/tree`)
+        props.history.push(`/repository/${record.repository.address}/tree`)
     }
 
     const columns = [

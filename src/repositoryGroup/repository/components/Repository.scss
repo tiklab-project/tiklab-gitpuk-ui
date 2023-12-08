@@ -1,10 +1,10 @@
 .group-repository{
     &-head{
-        margin: var(--tiklab-padding-item) 0 ;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
+        margin-bottom: 10px;
         .head-left{
             display: flex;
             flex-direction: row;
@@ -35,4 +35,34 @@
             }
         }
     }
+
+}
+
+
+.group-listname-icon{
+    display: inline-block;
+    width: var(--tiklab-icon-size-45);
+    height: var(--tiklab-icon-size-45);
+    line-height: var(--tiklab-icon-size-45);
+    margin-right: 10px;
+    border-radius: 4px;
+    text-align: center;
+    color: black;
+}
+.xcode-icon-0 {
+     background: #cadbf3;
+ }
+
+.xcode-icon-1 {
+    background: #ffebee;
+}
+.xcode-icon-2 {
+    background: #e8eaf6;
+}
+.xcode-icon-3 {
+    background: #e0f2f1;
+}
+
+.xcode-icon-4 {
+    background: #f3e5f5;
 }

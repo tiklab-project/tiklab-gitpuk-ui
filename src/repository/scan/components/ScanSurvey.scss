@@ -1,0 +1,61 @@
+.scanSurvey{
+  .scan-border-1{
+    display: flex;
+    gap: 50px;
+    .scan-result-border{
+      display: flex;
+      width: auto;
+      border: 1px solid #d9d9d9;
+      gap: 10px;
+      .scan-result-success{
+        background-color:#9ee09e;
+        padding: 31px 25px;
+      }
+      .scan-result-access{
+        display: flex;
+        gap: 70px;
+        padding: 20px;
+        color: #94979a;
+        .access-desc-nav{
+          text-align: center;
+        }
+      }
+
+      .scan-result-false{
+        background-color:#DD4A68;
+      }
+      .scan-result-not{
+        background-color: #999999;
+      }
+      .scan-result-text-style{
+        font-size: 18px;
+        .scan-result-text-desc{
+          margin:15px 0 0 20px;
+        }
+      }
+      .scan-result-collect{
+        font-size: 18px;
+        margin:15px 0 0 20px;
+        .collect-desc-style{
+          display: flex;
+          margin:5px 80px;
+          gap:140px;
+          .collect-desc-nav{
+            text-align: center;
+
+          }
+          .collect-desc{
+            color: #94979a;
+            font-size: 18px;
+          }
+        }
+      }
+    }
+  }
+  .scan-result-access-num{
+    font-size: 25px;
+    font-weight: bold;
+    margin: 5px 0;
+    color: black;
+  }
+}

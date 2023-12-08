@@ -14,9 +14,10 @@ import Listicon from '../../../common/list/Listicon';
 import './RepositoryGroup.scss';
 import groupStore from "../store/RepositoryGroupStore"
 import {observer} from "mobx-react";
-import {getUser} from "tiklab-core-ui";
+import {getUser} from "thoughtware-core-ui";
 import {SpinLoading} from "../../../common/loading/Loading";
 import Page from "../../../common/page/Page";
+import UserIcon from "../../../common/list/UserIcon";
 
 const RepositoryGroup = props => {
 
@@ -70,7 +71,7 @@ const RepositoryGroup = props => {
     }
 
     const goDetails = (text) => {
-         props.history.push(`/index/group/${text}/repository`)
+         props.history.push(`/group/${text}/repository`)
     }
 
     /**
@@ -78,7 +79,7 @@ const RepositoryGroup = props => {
      * @param value 仓库信息
      */
     const goSet = (value) => {
-        props.history.push(`/index/group/${value.name}/sys/info`)
+        props.history.push(`/group/${value.name}/setting/info`)
     }
 
     /**
@@ -102,17 +103,16 @@ const RepositoryGroup = props => {
             title: '仓库组名称',
             dataIndex: 'name',
             key: 'name',
-            width:'60%',
+            width:'40%',
             ellipsis:true,
             render:(text,record)=>{
                 return (
                     <div className='repository-group-tables-name' onClick={()=>goDetails(text,record)}>
                         <div className='name-icon'>
-                            <Listicon text={text}/>
+                            <Listicon text={text} colors={record.color}/>
                         </div>
                         <div className='name-text'>
-                            <span className='name-text-name'>{text}</span>
-                            <span className='name-text-lock'>{record.rules==='private'?<LockOutlined/>:<UnlockOutlined />}</span>
+                            <span className='name-text-name text-color'>{text}</span>
                         </div>
                     </div>
                 )
@@ -124,12 +124,38 @@ const RepositoryGroup = props => {
             key: 'user',
             width:'20%',
             ellipsis:true,
+            render:(text)=><div className='icon-text-user'>
+                <UserIcon text={text} size={"small"}/>
+                <div>{text}</div>
+            </div>
+        },
+        {
+            title: '可见范围',
+            dataIndex: 'rules',
+            key: 'rules',
+            width:'15%',
+            ellipsis:true,
+            render:(text)=>{
+                return (
+                    <div className='repository-tables-name'>
+                        {text==='private'?
+                            <div className='icon-text-use'>
+                                <LockOutlined/>
+                                <span>私有</span>
+                            </div>:
+                            <div className='icon-text-use'>
+                                <UnlockOutlined />
+                                <span>公开</span>
+                            </div>
+                        }
+                    </div>
+                )}
         },
         {
             title: '仓库数',
             dataIndex: 'repositoryNum',
             key: 'repositoryNum',
-            width:'30%',
+            width:'15%0%',
             ellipsis:true,
         },
   /*      {
@@ -176,14 +202,14 @@ const RepositoryGroup = props => {
 
     return(
         <div className='repository-group'>
-            <div className='repository-group-content xcode-home-limited xcode'>
+            <div className='repository-group-content xcode-repository-width xcode'>
                 <div className='repository-group-top'>
                     <BreadcrumbContent firstItem={'Repository_group'}/>
                     <Btn
                         type={'primary'}
                         title={'新建仓库组'}
-                        icon={<PlusOutlined/>}
-                        onClick={()=>props.history.push('/index/group/new')}
+                       /* icon={<PlusOutlined/>}*/
+                        onClick={()=>props.history.push('/group/new')}
                     />
                 </div>
                 <div className='repository-group-type'>
@@ -217,10 +243,7 @@ const RepositoryGroup = props => {
                         locale={{emptyText: isLoading ?
                                 <SpinLoading type="table"/>: <EmptyText title={"没有仓库"}/>}}
                     />
-                    {
-                        (!isLoading &&totalPage>1)?
-                            <Page pageCurrent={currentPage} changPage={changPage} totalPage={totalPage}/>:null
-                    }
+                    <Page pageCurrent={currentPage} changPage={changPage} totalPage={totalPage}/>
                 </div>
             </div>
         </div>

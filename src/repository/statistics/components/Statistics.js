@@ -72,7 +72,7 @@ const Statistics = props =>{
 
     return (
         <div className='statistics'>
-            <div className='statistics-content xcode-home-limited xcode'>
+            <div className='statistics-content xcode-repository-width xcode'>
                 <BreadcrumbContent firstItem={'Statistics'} />
                 <div className='statistics-head'>
                     {

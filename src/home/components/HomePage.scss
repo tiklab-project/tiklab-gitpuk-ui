@@ -22,7 +22,7 @@
                 height: 100px;
                 text-align: center;
                 border-radius: 4px;
-                background: #fff;
+                background: #f7f7f7;
                 cursor: pointer;
                 flex: 1;
                 &:not(:last-child){
@@ -70,7 +70,7 @@
             }
             .houseRecent-repository{
                 /*flex-wrap: wrap;*/
-                grid-column: span 6 / span 6;
+                grid-column: span 5 / span 5;
                 display: flex;
                 gap: 1rem;
                 margin-top: 5px;
@@ -78,10 +78,11 @@
                     display: block;
                     position: relative;
                     box-sizing: border-box;
-                    width: 100%;
-                    max-width: 208px;
-                    background-image: linear-gradient(rgb(244, 245, 247), transparent 33%);
-                    box-shadow: var(--ds-shadow-raised,0 1px 1px rgba(9,30,66,0.25),0 0 1px 1px rgba(9,30,66,0.13));
+                    width: 20%;
+                    max-width: 308px;
+                    background: #f7f7f7;
+                    /*background-image: linear-gradient(rgb(244, 245, 247), transparent 33%);
+                    box-shadow: var(--ds-shadow-raised,0 1px 1px rgba(9,30,66,0.25),0 0 1px 1px rgba(9,30,66,0.13));*/
                     border-radius: 3px;
                     padding: 16px;
                     cursor: pointer;
@@ -181,7 +182,6 @@
         .newCommit{
             border-radius: 4px;
             padding: 10px;
-            height: 300px;
             background: #fff;
             flex: 1;
             margin-bottom: 15px;
@@ -213,6 +213,10 @@
                     size: 2px;
                     font-size: 4px;
                 }
+            }
+            .text-desc{
+                font-size: 13px;
+                color: var(--tiklab-gray-500);
             }
         }
 
@@ -301,3 +305,4 @@
 
     }
 }
+

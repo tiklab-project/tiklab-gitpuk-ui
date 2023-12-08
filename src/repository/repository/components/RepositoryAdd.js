@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react';
 import {Form,Input,Select} from 'antd';
-import {getUser} from 'tiklab-core-ui';
+import {getUser} from 'thoughtware-core-ui';
 import {inject,observer} from "mobx-react";
 import Btn from '../../../common/btn/Btn';
 import {Loading} from '../../../common/loading/Loading';
@@ -14,8 +14,9 @@ const RepositoryAdd = props =>{
     const {repositoryStore,location} = props
 
     const {createRpy,isLoading,findRepositoryByName,createOpenRecord,getAddress,address} = repositoryStore
-    const {findCanCreateRpyGroup,groupList} = groupStore
+    const {findCanCreateRpyGroup} = groupStore
 
+    const [groupList,setGroupList]=useState([])
     const [form] = Form.useForm()
     const [powerType,setPowerType] = useState("public")
 
@@ -35,20 +36,23 @@ const RepositoryAdd = props =>{
         const groups= await findCanCreateRpyGroup()
         if (groups.code===0){
             groupOption(groups.data)
+            setGroupList(groups.data)
         }
         if (location.search) {
+            
             initialize(groups.data,res.data)
         }
 
         getAddress()
     },[])
 
+
+
     const initialize =  (groups,repositorys) => {
         const groupName = location.search.substring(6)
         const group = groups.filter(a => a.name === groupName)
         if (group.length) {
             setGroup(group[0])
-
             if (repositorys){
                 const repList=repositorys.filter(b=>b.groupId===group[0].groupId)
                 setRepositoryList(repList)
@@ -56,15 +60,19 @@ const RepositoryAdd = props =>{
         }
     }
 
-
     /**
      * 确定添加仓库
      */
     const onOk = () => {
         form.validateFields().then((values) => {
-            let address= getUser().name
-            if (!getUser().name){
-                address= getUser().phone?getUser().phone:getUser().email
+            let address
+            if (group){
+                address=group.name;
+            }else {
+                address = getUser().name
+                if (!getUser().name){
+                    address= getUser().phone?getUser().phone:getUser().email
+                }
             }
             createRpy({
                 ...values,
@@ -72,9 +80,10 @@ const RepositoryAdd = props =>{
                 address:address+"/"+values.address,
                 rules:powerType,
             }).then(res=>{
+
                 if(res.code===0){
-                    props.history.push(`/index/repository/${(group?group.name:address)+"/"+values.address}/tree`)
-                  /* props.history.push(`/index/house/${groupId?groupId:userName}/${values.name}/tree`)*/
+                    props.history.push(`/repository/${(group?group.name:address)+"/"+values.address}/tree`)
+                  /* props.history.push(`/house/${groupId?groupId:userName}/${values.name}/tree`)*/
                 }
                 createOpenRecord(res.data)
             })
@@ -95,8 +104,8 @@ const RepositoryAdd = props =>{
             form.validateFields(['address'])
         }
         if (value){
-            const group=groupList.filter(a=>a.groupId===value)[0]
-            setGroup(group)
+            const group1=groupList.filter(a=>value==a.groupId)[0]
+            setGroup(group1)
         }
 
     }
@@ -109,6 +118,7 @@ const RepositoryAdd = props =>{
         form.validateFields(['address'])
     }
 
+    //配置仓库组
     const groupOption = (groups) => {
         const group=groups.length>0 && groups.map(item=>(
             { label:item.name,
@@ -141,7 +151,7 @@ const RepositoryAdd = props =>{
             form={form}
             autoComplete='off'
             layout='vertical'
-            initialValues={{group:1}}
+            initialValues={{group:group?group.groupId :getUser().userId}}
         >
             <Form.Item
                 label='仓库名称'
@@ -173,7 +183,7 @@ const RepositoryAdd = props =>{
                 <Form.Item  label={<span className={'must'}>仓库路径</span>} rules={[{required:true,message:'请输入路径'}]} >
                     <Input style={{background:'#fff'}} disabled  value={address}/>
                 </Form.Item>
-                <Form.Item label={<span style={{opacity:0}}>仓库组</span>}>
+                <Form.Item name='group' label={<span style={{opacity:0}}>仓库组</span>}>
                     <Select
                         style={{background:'#fff',width:150,height:30,margin:'0 3px'}}
                         defaultValue={group?group.groupId :getUser().userId}

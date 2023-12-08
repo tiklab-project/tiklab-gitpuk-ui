@@ -1,6 +1,7 @@
 import React from 'react';
 import {Space} from 'antd';
 import './Btn.scss';
+import {LoadingOutlined} from "@ant-design/icons";
 
 /**
  * 操作按钮
@@ -20,7 +21,7 @@ const Btn = props =>{
                     {
                         icon &&  <span className='xcode-btn-icon'>{icon}</span>
                     }
-                    {title}
+                    {title!=='加载中'?title:<LoadingOutlined />}
                 </Space>
             </div>
 }

@@ -102,7 +102,7 @@ const Auth = props => {
 
     return (
         <div className='sys-keys'>
-            <div className='sys-keys-content xcode-home-limited xcode'>
+            <div className='sys-keys-content xcode-repository-width xcode'>
                 <div className='sys-keys-up'>
                     <BreadcrumbContent firstItem={'Keys'}/>
                     <Btn
@@ -134,4 +134,4 @@ const Auth = props => {
     )
 }
 
-export default Auth
+export default observer(Auth)

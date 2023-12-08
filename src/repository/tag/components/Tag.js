@@ -1,44 +1,53 @@
 import React,{useEffect,useState} from 'react';
-import {Input,Space,Table,Tooltip,Popconfirm} from 'antd';
+import {Input,Tooltip,Popconfirm} from 'antd';
 import {
     PlusOutlined,
     SearchOutlined,
-    EditOutlined,
-    DeleteOutlined,
     TagOutlined
 } from '@ant-design/icons';
 import BreadcrumbContent from '../../../common/breadcrumb/Breadcrumb';
 import Btn from '../../../common/btn/Btn';
 import Tabs from '../../../common/tabs/Tabs';
-import EmptyText from '../../../common/emptyText/EmptyText';
 import Publish from './Publish';
 import TagAdd from './TagAdd';
 import PublishAdd from './PublishAdd';
 import './Tag.scss';
-
+import branchStore from "../../branch/store/BranchStore";
+import {inject, observer} from "mobx-react";
+import tagStore from "../store/TagStore";
+import Omit from "../../../common/omit/Omit";
+import EmptyText from "../../../common/emptyText/EmptyText";
+const lis = [{id:1, title:'标签'},{id:2, title:'发行版'}]
 const Tag = props =>{
 
-    const {match} = props
+    const {repositoryStore,match} = props
+    const {repositoryInfo} = repositoryStore
+    const {findTag,tagList,deleteTag}=tagStore
+    const {branchList,fresh,findBranchList} = branchStore
+    const webUrl = `${match.params.namespace}/${match.params.name}`
 
-    const [tagType,setTagType] = useState(2)
+    const [tagType,setTagType] = useState(1)
     const [publishDetails,setPublishDetails] = useState(false)
     const [addTagVisible,setAddTagVisible] = useState(false)
     const [addPublishVisible,setAddPublishVisible] = useState(false)
+
+    useEffect(()=>{
+        repositoryInfo.name && findBranchList({rpyId:repositoryInfo.rpyId})
+
+        findTag(repositoryInfo.rpyId)
+    },[repositoryInfo.name,fresh])
+
+    //查询标签
+    const findTags = () => {
+        findTag(repositoryInfo.rpyId).then(res=>
+        res.code===0&&setAddTagVisible(false)
+        )
+    }
 
     const clickType = item => {
         setTagType(item.id)
     }
 
-    const lis = [
-        {
-            id:1,
-            title:'标签',
-        },
-        {
-            id:2,
-            title:'发行版',
-        },
-    ]
 
     const goDetails = (text,record) => {
         switch (tagType) {
@@ -49,129 +58,6 @@ const Tag = props =>{
         }
     }
 
-    const renderName = (text,record) =>{
-        return <div className='tag-tables-name' onClick={()=>goDetails(text,record)}>
-            <div className='name-icon'>
-                <TagOutlined/>
-            </div>
-            <div className='name-text'>
-                <div className='name-text-title'>{text}</div>
-                <div className='name-text-desc'>
-                    <span className='desc-name'>admin</span>
-                    <span>信息完善</span>
-                </div>
-            </div>
-        </div>
-    }
-
-    const renderAction = (text,record) =>{
-        return <Space>
-            <Tooltip title='编辑'>
-                <span className='tag-tables-edit'>
-                    <EditOutlined />
-                </span>
-            </Tooltip>
-            <Tooltip title='删除'>
-                <Popconfirm
-                    placement='topRight'
-                    title='你确定删除吗'
-                    okText='确定'
-                    cancelText='取消'
-                >
-                    <span className='tag-tables-del'>
-                        <DeleteOutlined />
-                    </span>
-                </Popconfirm>
-            </Tooltip>
-        </Space>
-    }
-
-    const columnsTag = [
-        {
-            title: '标签名',
-            dataIndex: 'name',
-            key: 'name',
-            width:'40%',
-            ellipsis:true,
-            render:(text,record)=> renderName(text,record)
-        },
-        {
-            title: '标签来源',
-            dataIndex: 'update',
-            key: 'update',
-            width:'20%',
-            ellipsis:true,
-        },
-        {
-            title: '描述',
-            dataIndex: 'desc',
-            key: 'desc',
-            width:'30%',
-            ellipsis:true,
-        },
-        {
-            title: '操作',
-            dataIndex: 'action',
-            key:'action',
-            width:'10%',
-            ellipsis:true,
-            render:(text,record)=> renderAction(text,record)
-        },
-    ]
-
-    const columnsPublish = [
-        {
-            title: '发行版',
-            dataIndex: 'name',
-            key: 'name',
-            width:'40%',
-            ellipsis:true,
-            render:(text,record)=> renderName(text,record)
-        },
-        {
-            title: '标签',
-            dataIndex: 'update',
-            key: 'update',
-            width:'20%',
-            ellipsis:true,
-        },
-        {
-            title: '发行说明',
-            dataIndex: 'desc',
-            key: 'desc',
-            width:'30%',
-            ellipsis:true,
-        },
-        {
-            title: '操作',
-            dataIndex: 'action',
-            key:'action',
-            width:'10%',
-            ellipsis:true,
-            render:(text,record)=> renderAction(text,record)
-        },
-    ]
-
-    const dataSource = [
-        {
-            id:'1',
-            name:'node',
-            update:'master',
-            desc:'desc'
-        },
-        {
-            id:'2',
-            name:'api',
-            update:'master',
-            desc:'desc'
-        },
-        {
-            id:'3',
-            name:'boss',
-            update:'master',
-            desc: 'desc'
-        }
-    ]
 
     if(publishDetails){
         return  <Publish
@@ -179,13 +65,25 @@ const Tag = props =>{
                 />
     }
 
-    // if(!houseInfo.notNull) {
-    //     props.history.push('/index/404')
-    // }
+    //删除标签
+    const delTag = (value) => {
+        deleteTag({rpyId:repositoryInfo.rpyId,tagName:value.tagName}).then(res=>{
+            res.code===0&&findTags()
+        })
+    }
+
+    //跳转file 界面
+    const goFile = (value) => {
+        props.history.push(`/repository/${webUrl}/tree/${value.tagName}tag`)
+    }
+    //跳转commit 界面
+    const goCommit = (value) => {
+        props.history.push(`/repository/${webUrl}/commit/${value.commitId}`)
+    }
 
     return(
         <div className='tag'>
-            <div className='tag-content xcode-home-limited xcode'>
+            <div className='tag-content xcode-repository-width xcode'>
                 <div className='tag-top'>
                     <BreadcrumbContent firstItem={'Tag'}/>
                     {
@@ -204,14 +102,10 @@ const Tag = props =>{
                                 onClick={()=>setAddPublishVisible(true)}
                             />
                     }
-                    <TagAdd
-                        addTagVisible={addTagVisible}
-                        setAddTagVisible={setAddTagVisible}
+                    <TagAdd addTagVisible={addTagVisible} setAddTagVisible={setAddTagVisible} branchList={branchList} repositoryInfo={repositoryInfo}
+                            findTags={findTags}
                     />
-                    <PublishAdd
-                        addPublishVisible={addPublishVisible}
-                        setAddPublishVisible={setAddPublishVisible}
-                    />
+                    <PublishAdd addPublishVisible={addPublishVisible} setAddPublishVisible={setAddPublishVisible}/>
                 </div>
                 <div className='tag-type'>
                     <Tabs
@@ -230,18 +124,78 @@ const Tag = props =>{
                     </div>
                 </div>
                 <div className='tag-tables'>
-                    <Table
+                    {
+                        tagList.length>0?tagList.map(item=>{
+                            return(
+                                <div className='tag-tables-style'>
+                                    <div className=''>
+                                        <div className='tag-tables-item'>
+                                            <div style={{paddingTop:5}}>
+                                                <TagOutlined />
+                                            </div>
+                                            <div className='tag-tables-name'>
+                                                <div className='tag-tables-name-cursor' onClick={()=>goFile(item)}>
+                                                    {item.tagName}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className='tag-tables-item tag-tables-item-top'>
+                                            <div className='tag-tables-commitId'>
+                                                <div className='tag-tables-commitId-cursor' onClick={()=>goCommit(item)}>
+                                                    <Omit value={item.commitId} maxWidth={"69px"} />
+                                                </div>
+
+                                            </div>
+                                            <div>{item.commitDesc}</div>
+                                            <div>{item.timeDiffer}</div>
+                                        </div>
+                                    </div>
+                                    <div className='tag-tables-action'>
+                                        <Tooltip title='下载'>
+                                            <div className='tag-tables-download'>
+                                                <svg className='icon' aria-hidden='true'>
+                                                    <use xlinkHref='#icon-xiazai'/>
+                                                </svg>
+                                            </div>
+                                        </Tooltip>
+                                        <Tooltip title='删除'>
+                                            <Popconfirm
+                                                title="你确定删除吗"
+                                                onConfirm={()=>delTag(item)}
+                                                okText="确定"
+                                                cancelText="取消"
+                                                placement="topRight"
+                                            >
+                                                <div className='tag-tables-del'>
+                                                    <svg className="icon" aria-hidden="true">
+                                                        <use xlinkHref="#icon-delete"/>
+                                                    </svg>
+                                                </div>
+                                            </Popconfirm>
+                                        </Tooltip>
+                                    </div>
+                                </div>
+
+                            )
+                        }):
+                            <div style={{marginTop:30}}>
+                                <EmptyText title={'暂无标签'}     />
+                            </div>
+
+                    }
+
+               {/*     <Table
                         bordered={false}
                         columns={tagType===1?columnsTag:columnsPublish}
                         dataSource={[]}
                         rowKey={record=>record.id}
                         pagination={false}
                         locale={{emptyText: <EmptyText title={tagType===1?'暂无标签':'暂无发行版'}/>}}
-                    />
+                    />*/}
                 </div>
             </div>
         </div>
     )
 }
 
-export default Tag
+export default inject('repositoryStore')(observer(Tag))

@@ -22,7 +22,7 @@ const WEBIDE=AsyncComponent(()=>import('./WEBIDE/components/WebIde'))
  */
 const Repository=AsyncComponent(()=>import('./repository/repository/components/Repository'))
 const RepositoryAdd=AsyncComponent(()=>import('./repository/repository/components/RepositoryAdd'))
-const RepositoryDetails=AsyncComponent(()=>import('./repository/navigator/RepositoryAside'))
+const RepositoryAside=AsyncComponent(()=>import('./repository/navigator/RepositoryAside'))
 const File=AsyncComponent(()=>import('./repository/file/components/File'))
 const Blob=AsyncComponent(()=>import('./repository/file/components/Blob'))
 const Edit=AsyncComponent(()=>import('./repository/file/components/Edit'))
@@ -34,20 +34,28 @@ const CommitsDetails=AsyncComponent(()=>import('./repository/commits/components/
 const Issue=AsyncComponent(()=>import('./repository/issue/components/Issue'))
 const Pipeline=AsyncComponent(()=>import('./repository/pipeline/components/Pipeline'))
 const Statistics=AsyncComponent(()=>import('./repository/statistics/components/Statistics'))
+const SonarQube=AsyncComponent(()=>import('./repository/detection/components/SonarQube'))
+const notRepository=AsyncComponent(()=>import('./repository/repository/components/404'))
+const RepositoryToLead=AsyncComponent(()=>import('./repository/tolead/components/RepositoryToLead'))
+const ThirdInfo=AsyncComponent(()=>import('./repository/tolead/components/ThirdInfo'))
+const thirdList=AsyncComponent(()=>import('./repository/tolead/components/RepositoryThirdList'))
+
+//代码扫描
+const ScanPlay=AsyncComponent(()=>import('./repository/scan/components/ScanPlay'))
+const ScanRecord=AsyncComponent(()=>import('./repository/scan/components/ScanRecord'))
+const ScanDetails=AsyncComponent(()=>import('./repository/scan/components/ScanDetails'))
+
+
+/*仓库设置*/
+const BranchSetting=AsyncComponent(()=>import('./repository/setting/branch/BranchSetting'))
+const RepositoryUser=AsyncComponent(()=>import("./repository/setting/user/RepositoryUser"))
+const RepositoryRole=AsyncComponent(()=>import('./repository/setting/user/RepositoryRole'))
+const RemoteList=AsyncComponent(()=>import('./repository/setting/remote/components/RemoteList'))
 const RepositoryDetailsSet=AsyncComponent(()=>import('./repository/setting/navigator/RepositorySetting'))
 const RepositoryBasicInfo=AsyncComponent(()=>import('./repository/setting/basicInfo/RepositoryBasicInfo'))
 const PushRule=AsyncComponent(()=>import('./repository/setting/pushRule/components/PushRule'))
 const AccessKeys=AsyncComponent(()=>import('./repository/setting/accessKeys/components/AccessKeys'))
 const WebHooks=AsyncComponent(()=>import('./repository/setting/webHooks/components/Hooks'))
-const SonarQube=AsyncComponent(()=>import('./repository/detection/components/SonarQube'))
-const RemoteList=AsyncComponent(()=>import('./repository/setting/remote/components/RemoteList'))
-const notRepository=AsyncComponent(()=>import('./repository/repository/components/404'))
-const RepositoryUser=AsyncComponent(()=>import("./repository/setting/user/RepositoryUser"))
-const RepositoryRole=AsyncComponent(()=>import('./repository/setting/user/RepositoryRole'))
-const RepositoryToLead=AsyncComponent(()=>import('./repository/tolead/components/RepositoryToLead'))
-const ThirdInfo=AsyncComponent(()=>import('./repository/tolead/components/ThirdInfo'))
-const thirdList=AsyncComponent(()=>import('./repository/tolead/components/RepositoryThirdList'))
-const BranchSetting=AsyncComponent(()=>import('./repository/setting/branch/BranchSetting'))
 
 /**
  * 仓库组
@@ -81,16 +89,14 @@ const MessageSendTypeTrue=AsyncComponent(()=>import('./setting/message/MessageSe
 const MessageNotice=AsyncComponent(()=>import('./setting/message/MessageNotice'))
 const MessageNoticeTrue=AsyncComponent(()=>import('./setting/message/MessageNoticeTrue'))
 
-//deploy
-const EnvDeploy=AsyncComponent(()=>import('./setting/deploy/components/EnvDeploy'))
-const ServerDeploy=AsyncComponent(()=>import('./setting/deploy/components/ServerDeploy'))
-
 //备份 恢复
-const Backups=AsyncComponent(()=>import('./setting/backups/components/Backups'))
-const Recover=AsyncComponent(()=>import('./setting/backups/components/Recover'))
+const BackupRecoveryContent=AsyncComponent(()=>import('./setting/backups/BackupRecoveryContent'))
+
 
 //已经提交过代码的仓库列表
 const CommitRepository=AsyncComponent(()=>import('./setting/operation/CommitRepository'))
+const PowerUserList=AsyncComponent(()=>import('./setting/repository/components/UserList'))
+const UserRpyList=AsyncComponent(()=>import('./setting/repository/components/UserRpyList'))
 
 // security
 const MyLog=AsyncComponent(()=>import("./setting/security/MyLog"))
@@ -105,7 +111,7 @@ const TodoType=AsyncComponent(()=>import("./setting/todotask/TodoType"))
 
 // licence
 const Version=AsyncComponent(()=>import('./setting/licence/Version'))
-
+const AuthContent=AsyncComponent(()=>import('./setting/licence/AuthContent'))
 
 // user
 const User=AsyncComponent(()=>import("./setting/user/User"))
@@ -119,6 +125,13 @@ const sysRoleTrue=AsyncComponent(()=>import('./setting/user/SystemRoleTrue'))
 const ProjectRole=AsyncComponent(()=>import('./setting/user/ProjectRole'))
 const ProjectFeature=AsyncComponent(()=>import('./setting/user/ProjectFeature'))
 
+//扫描方案
+const ScanScheme=AsyncComponent(()=>import('./setting/scan/components/ScanScheme'))
+const ScanRule=AsyncComponent(()=>import('./setting/scan/components/ScanRule'))
+const ScanRuleDetails=AsyncComponent(()=>import('./setting/scan/components/ScanRuleDetails'))
+
+//扫描环境
+const EnvServer=AsyncComponent(()=>import('./setting/scan/components/ScanEnvironment'))
 const routers = [
     {
         path:'/login',
@@ -138,365 +151,395 @@ const routers = [
         exact:true,
         component:Wechat,
     },
+
     {
-        path:'/index',
+        path:'/',
         component:Home,
         routes:[
             {
-                path: '/index',
+                path: '/',
                 exact:true,
-                render:()=><Redirect to={'/index/home'}/>,
+                render:()=><Redirect to={'/home'}/>,
             },
             {
-                path:'/index/home',
+                path:'/home',
                 exact:true,
                 component:Homepage,
             },
             {
-                path:'/index/ide/*',
+                path:'/ide/*',
                 component:WEBIDE,
             },
             {
-                path:'/index/repository',
+                path:'/repository',
                 exact:true,
                 component:Repository,
             },
             {
-                path:'/index/repository/new',
+                path:'/repository/new',
                 exact:true,
                 component:RepositoryAdd,
             },
             {
-                path:'/index/repository/lead',
+                path:'/repository/lead',
                 exact:true,
                 component:RepositoryToLead,
             },
             {
-                path:'/index/repository/lead/info/:type',
+                path:'/repository/lead/info/:type',
                 exact:true,
                 component:ThirdInfo,
             },
             {
-                path:'/index/repository/lead/thirdList/:authId',
+                path:'/repository/lead/thirdList/:authId',
                 exact:true,
                 component:thirdList,
             },
             {
-                path:'/index/group',
+                path:'/group',
                 exact:true,
                 component:RepositoryGroup,
             },
             {
-                path:'/index/group/new',
+                path:'/group/new',
                 exact:true,
                 component:RepositoryGroupAdd,
             },
             {
-                path:'/index/repository/:namespace/:name',
-                component:RepositoryDetails,
+                path:'/repository/:namespace/:name',
+                component:RepositoryAside,
                 routes:[
                     {
-                        path:'/index/repository/:namespace/:name',
+                        path:'/repository/:namespace/:name',
                         exact: true,
                         component:File,
                     },
                     {
-                        path:'/index/repository/:namespace/:name/tree',
+                        path:'/repository/:namespace/:name/tree',
                         exact: true,
                         component:File,
                     },
                     {
-                        path:'/index/repository/:namespace/:name/tree/:branch',
+                        path:'/repository/:namespace/:name/tree/:branch',
                         component:File,
                     },
                     {
-                        path:'/index/repository/:namespace/:name/blob/:branch/*',
+                        path:'/repository/:namespace/:name/blob/:branch/*',
                         exact:false,
                         component:Blob,
                     },
                     {
-                        path:'/index/repository/:namespace/:name/edit/:branch/*',
+                        path:'/repository/:namespace/:name/edit/:branch/*',
                         exact:false,
                         component:Edit,
                     },
                     {
-                        path:'/index/repository/:namespace/:name/branch',
+                        path:'/repository/:namespace/:name/branch',
                         exact:true,
                         component:Branch,
                     },
                     {
-                        path:'/index/repository/:namespace/:name/tag',
+                        path:'/repository/:namespace/:name/tag',
                         exact:true,
                         component:Tag,
                     },
                     {
-                        path:'/index/repository/:namespace/:name/merge_requests',
+                        path:'/repository/:namespace/:name/merge_requests',
                         exact:true,
                         component:RepositoryMerge,
                     },
                     {
-                        path:'/index/repository/:namespace/:name/commits/:branch',
+                        path:'/repository/:namespace/:name/commits/:branch',
                         component:Commits,
                     },
                     {
-                        path:'/index/repository/:namespace/:name/commit/:commitsId',
+                        path:'/repository/:namespace/:name/commit/:commitsId',
                         component:CommitsDetails,
                     },
                     {
-                        path:'/index/repository/:namespace/:name/statistics',
+                        path:'/repository/:namespace/:name/statistics',
                         component: Statistics
                     },
                     {
-                        path:'/index/repository/:namespace/:name/sonarQube',
+                        path:'/repository/:namespace/:name/sonarQube',
                         component:SonarQube
                     },
 
                     {
-                        path:'/index/repository/:namespace/:name/issue',
+                        path:'/repository/:namespace/:name/issue',
                         component: Issue
                     },
                     {
-                        path:'/index/repository/:namespace/:name/pipeline',
+                        path:'/repository/:namespace/:name/pipeline',
                         component: Pipeline
                     },
+
                     {
-                        path:'/index/repository/:namespace/:name/sys',
+                        path:'/repository/:namespace/:name/scanPlay',
+                        component: ScanPlay
+                    },
+                    {
+                        path:'/repository/:namespace/:name/scanRecord/:playId',
+                        component: ScanRecord
+                    },
+                    {
+                        path:'/repository/:namespace/:name/scanDetails/:recordId',
+                        component: ScanDetails
+                    },
+                    {
+                        path:'/repository/:namespace/:name/setting',
                         component: RepositoryDetailsSet,
                         routes:[
                             {
-                                path:'/index/repository/:namespace/:name/sys/info',
+                                path:'/repository/:namespace/:name/setting/info',
                                 component:RepositoryBasicInfo
                             },
                             {
-                                path:'/index/repository/:namespace/:name/sys/pushRule',
+                                path:'/repository/:namespace/:name/setting/pushRule',
                                 component:PushRule
                             },
                             {
-                                path:'/index/repository/:namespace/:name/sys/keys',
+                                path:'/repository/:namespace/:name/setting/keys',
                                 component:AccessKeys
                             },
                             {
-                                path:'/index/repository/:namespace/:name/sys/hooks',
+                                path:'/repository/:namespace/:name/setting/hooks',
                                 component:WebHooks
                             },
 
                             {
-                                path:'/index/repository/:namespace/:name/sys/member',
+                                path:'/repository/:namespace/:name/setting/member',
                                 component: RepositoryUser
                             },
                             {
-                                path:'/index/repository/:namespace/:name/sys/role',
+                                path:'/repository/:namespace/:name/setting/role',
                                 component: RepositoryRole
                             },
                             {
-                                path:'/index/repository/:namespace/:name/sys/branch',
+                                path:'/repository/:namespace/:name/setting/branch',
                                 component: BranchSetting
                             },
                             {
-                                path:'/index/repository/:namespace/:name/sys/remote',
+                                path:'/repository/:namespace/:name/setting/remote',
                                 component:RemoteList
                             },
 
                         ]
                     },
-                 /*   {
-                        path:'/index/repository/:namespace/:name/!*',
-                        render:()=><Redirect to={'/index/error'}/>,
-                    }*/
+                    /*   {
+                           path:'/repository/:namespace/:name/!*',
+                           render:()=><Redirect to={'/error'}/>,
+                       }*/
                 ]
             },
             {
-                path:'/index/group/:name',
+                path:'/group/:name',
                 component: RepositoryGroupDetails,
                 routes: [
                     {
-                        path:'/index/group/:name/survey',
+                        path:'/group/:name/survey',
                         component: Overview,
                         exact: true,
                     },
                     {
-                        path:'/index/group/:name/merge_requests',
+                        path:'/group/:name/merge_requests',
                         component: GroupMerge,
                         exact: true,
                     },
                     {
-                        path:'/index/group/:name/repository',
+                        path:'/group/:name/repository',
                         component: GroupRepository,
                         exact: true,
                     },
                     {
-                        path:'/index/group/:name/sys',
+                        path:'/group/:name/setting',
                         component: GroupDetailsSet,
                         routes:[
                             {
-                                path:'/index/group/:name/sys/info',
+                                path:'/group/:name/setting/info',
                                 component:GroupBasic,
                                 exact:true
                             },
                             {
-                                path:'/index/group/:name/sys/member',
+                                path:'/group/:name/setting/member',
                                 component: RepositoryGroupUser,
                                 exact:true
                             },
                             {
-                                path:'/index/group/:name/sys/role',
+                                path:'/group/:name/setting/role',
                                 component: RepositoryGroupRole,
                                 exact:true
                             }
                         ]
                     },
-                   /* {
-                        path:'/index/group/:name/!*',
-                        render:()=><Redirect to={'/index/error'}/>,
-                    }*/
+                    /* {
+                         path:'/group/:name/!*',
+                         render:()=><Redirect to={'/error'}/>,
+                     }*/
                 ]
             },
             {
-                path:'/index/sys',
+                path:'/setting',
                 component: Setting,
                 routes: [
 
                     {
-                        path: '/index/sys/auth',
+                        path: '/setting/auth',
                         component: Auth,
                     },
                     {
-                        path: '/index/sys/plugin',
+                        path: '/setting/plugin',
                         component: Plugin,
                     },
                     {
-                        path: '/index/sys/role',
+                        path: '/setting/role',
                         component: sysRole,
                     },
                     {
-                        path: '/index/sys/roletrue',
+                        path: '/setting/roletrue',
                         component: sysRoleTrue,
                     },
                     {
-                        path: '/index/sys/syr/feature',
+                        path: '/setting/syr/feature',
                         component: sysFeature,
                     },
                     {
-                        path: '/index/sys/project/role',
+                        path: '/setting/project/role',
                         component: ProjectRole,
                     },
                     {
-                        path: '/index/sys/project/feature',
+                        path: '/setting/project/feature',
                         component: ProjectFeature,
                     },
                     {
-                        path: '/index/sys/task',
+                        path: '/setting/task',
                         component: Task,
                     },
                     {
-                        path: '/index/sys/todoTask',
+                        path: '/setting/todoTask',
                         component: MyTodoTask,
                     },
                     {
-                        path: '/index/sys/todoTemp',
+                        path: '/setting/todoTemp',
                         component: TodoTemp,
                     },
                     {
-                        path: '/index/sys/todoType',
+                        path: '/setting/todoType',
                         component: TodoType,
                     },
                     {
-                        path:'/index/sys/myLog',
+                        path:'/setting/myLog',
                         component: MyLog,
                     },
                     {
-                        path:'/index/sys/logTemplate',
+                        path:'/setting/logTemplate',
                         component: LogTemplate,
                     },{
 
-                        path:'/index/sys/logType',
+                        path:'/setting/logType',
                         component: LogType,
                     },
                     {
-                        path: '/index/sys/org',
+                        path: '/setting/org',
                         component: Orga,
                     },
                     {
-                        path: '/index/sys/userGroup',
+                        path: '/setting/userGroup',
                         component: UserGroup,
                     },
                     {
-                        path: '/index/sys/directory',
+                        path: '/setting/directory',
                         component: Directory,
                     },
                     {
-                        path: '/index/sys/user',
+                        path: '/setting/user',
                         component: User,
                     },
                     {
-                        path:'/index/sys/mes/management',
+                        path:'/setting/mes/management',
                         component: MessageManagement,
                     },
                     {
-                        path:'/index/sys/mes/type',
+                        path:'/setting/mes/type',
                         component: MessageType,
                     },
                     {
-                        path:'/index/sys/mes/send',
+                        path:'/setting/mes/send',
                         component: MessageSendType,
                     },
                     {
-                        path:'/index/sys/mes/sendtrue',
+                        path:'/setting/mes/sendtrue',
                         component: MessageSendTypeTrue,
                     },
                     {
-                        path:'/index/sys/mes/notice',
+                        path:'/setting/mes/notice',
                         component: MessageNotice,
                     },
                     {
-                        path:'/index/sys/mes/noticetrue',
+                        path:'/setting/mes/noticetrue',
                         component: MessageNoticeTrue,
                     },
                     {
-                        path:'/index/sys/deploy/env',
-                        component: EnvDeploy,
+                        path:'/setting/backupRecovery',
+                        component: BackupRecoveryContent,
                     },
                     {
-                        path:'/index/sys/deploy/backups',
-                        component: Backups,
-                    },
-
-                    {
-                        path:'/index/sys/deploy/recover',
-                        component: Recover,
-                    },
-                    {
-                        path:'/index/sys/commitRepository',
+                        path:'/setting/commitRepository',
                         component: CommitRepository,
                     },
                     {
-                        path:'/index/sys/deploy/server',
-                        component:ServerDeploy ,
+                        path:'/setting/power/user',
+                        component: PowerUserList,
                     },
                     {
-                        path: '/index/sys/user/userGrouptrue',
+                        path:'/setting/power/repository/:userId',
+                        component: UserRpyList,
+                    },
+                    {
+                        path: '/setting/user/userGrouptrue',
                         component: UserGroupTrue,
                     },
                     {
-                        path:'/index/sys/version',
+                        path:'/setting/version',
                         component: Version,
-                    }
+                    },
+                    {
+                        path:'/setting/authContent',
+                        component: AuthContent,
+                    },
+                    {
+                        path: '/setting/scanScheme',
+                        component: ScanScheme,
+                    },
+                    {
+                        path: '/setting/scanRuleSet',
+                        component: ScanRule,
+                    },
+                    {
+                        path: '/setting/scanRule/:ruleSetId',
+                        component: ScanRuleDetails,
+                    },
+                    {
+                        path: '/setting/scanEnv',
+                        component: EnvServer,
+                    },
                 ]
             },
             {
-                path:'/index/error',
+                path:'/error',
                 component:NotFound,
             },
             {
-                path:'/index/:namespace/:name/404',
+                path:'/:namespace/:name/404',
                 component:notRepository
             },
-          /*  {
-                path:'/index/!*',
-                render:()=><Redirect to={'/index/error'}/>,
-            }*/
+            /*  {
+                  path:'/!*',
+                  render:()=><Redirect to={'/error'}/>,
+              }*/
         ]
     },
+
     {
         path:'/',
         component: Home,
@@ -505,7 +548,7 @@ const routers = [
     },
  /*   {
         path: '*',
-        render:()=><Redirect to='/index/error'/>,
+        render:()=><Redirect to='/error'/>,
     },*/
 ]
 

@@ -8,8 +8,11 @@
         width: 100%;
         min-width: 600px;
         height: var(--xcode-head-height);
-        background: var(--tiklab-blue);
+        border-bottom: 1px solid #e9e9e9;
+        /*background: var(--tiklab-blue);*/
         &-logo{
+            gap: 10px;
+            display: flex;
             height: var(--xcode-head-height);
             width: 100px;
             margin: 0 20px;
@@ -34,6 +37,7 @@
                 height: 100%;
                 width: 100%;
                 padding-right: 20px;
+                gap: 15px;
             }
             &-search-wrap{
                 position: relative;
@@ -49,7 +53,7 @@
         }
         &-icon{
             font-size: var(--tiklab-icon-size-22);
-            color: #ffffff;
+          /*  color: #ffffff;*/
         }
         &-icon-ban{
             color: #94979a;
@@ -70,7 +74,7 @@
                 display: flex;
                 flex-direction: row;
                 flex-shrink: 0;
-                color: #ffffff;
+              /*  color: #ffffff;*/
                 & > div{
                     cursor: pointer;
                     margin-right: 10px;
@@ -83,7 +87,8 @@
                 }
             }
             &-active{
-                background: rgba(255, 255, 255, 0.4);
+              /*  background: rgba(255, 255, 255, 0.4);*/
+                border-bottom:2px solid #0063FF;
             }
         }
     }
@@ -181,6 +186,7 @@
 }
 
 .text{
-    color: #f6f6f6;
-    font-size: 30px;
+   /* color: #f6f6f6;*/
+    font-size: 19px;
+    margin-top: 10px;
 }
