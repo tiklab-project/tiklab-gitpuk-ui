@@ -25,7 +25,7 @@ const RepositoryRole = props =>{
                 <DomainRole
                     {...props}
                     domainId={repositoryInfo.rpyId}
-                    bgroup = {"xcode"}
+                    bgroup = {"gittork"}
                 />
             </Col>
         </Row>

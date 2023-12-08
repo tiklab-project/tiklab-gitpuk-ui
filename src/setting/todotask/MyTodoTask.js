@@ -9,7 +9,7 @@ import {MyTodoTask} from "thoughtware-todotask-ui";
  */
 const MyTodoTaskContent = props =>{
 
-    return <MyTodoTask {...props} bgroup={"xcode"}/>
+    return <MyTodoTask {...props} bgroup={"gittork"}/>
 
 }
 

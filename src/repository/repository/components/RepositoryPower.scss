@@ -1,5 +1,5 @@
 .repository-power{
-    padding-bottom: var(--tiklab-padding);
+    padding-bottom: var(--thoughtware-padding);
     .repository-power-title{
         padding: 0 0 8px;
     }
@@ -29,7 +29,7 @@
         .power-select-show{
             width: 13px;
             height: 13px;
-            background: var(--tiklab-blue);
+            background: var(--thoughtware-blue);
             border-radius: 50px;
             position: relative;
             &:after{
@@ -39,7 +39,7 @@
                 height: 23px;
                 top: -5px;
                 left: -5px;
-                border: 3px solid var(--tiklab-blue);
+                border: 3px solid var(--thoughtware-blue);
                 border-radius: 50px;
             }
         }
@@ -52,6 +52,6 @@
         flex: 1;
     }
     .repository-power-select{
-        border: 2px solid var(--tiklab-blue) !important;
+        border: 2px solid var(--thoughtware-blue) !important;
     }
 }

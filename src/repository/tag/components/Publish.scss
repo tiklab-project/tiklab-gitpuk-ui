@@ -16,7 +16,7 @@
             display: flex;
             flex-direction: row;
             .line-item:first-child{
-                margin-right: var(--tiklab-padding-item);
+                margin-right: var(--thoughtware-padding-item);
             }
             .line-item-icon{
                 padding-right: 5px;
@@ -24,11 +24,11 @@
         }
     }
     &-show{
-        margin: var(--tiklab-padding-item) 0;
+        margin: var(--thoughtware-padding-item) 0;
         .publish-show-title{
             margin-bottom: 10px;
             font-size: 13px;
-            font-weight: var(--tiklab-font-weight-bold);
+            font-weight: var(--thoughtware-font-weight-bold);
         }
         .publish-show-content{
             background: #f4f4f4;
@@ -40,7 +40,7 @@
         .publish-annex-title{
             margin-bottom: 10px;
             font-size: 13px;
-            font-weight: var(--tiklab-font-weight-bold);
+            font-weight: var(--thoughtware-font-weight-bold);
         }
         .publish-annex-content{
             .annex-item{
@@ -53,14 +53,14 @@
                 }
                 .annex-item-title{
                     flex: 2;
-                    margin-right: var(--tiklab-padding-item);
+                    margin-right: var(--thoughtware-padding-item);
                     .title-icon{
                         padding-right: 8px;
                     }
                 }
                 .annex-item-size{
                     flex: 1;
-                    margin-right: var(--tiklab-padding-item);
+                    margin-right: var(--thoughtware-padding-item);
                 }
 
             }

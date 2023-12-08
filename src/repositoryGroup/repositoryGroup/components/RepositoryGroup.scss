@@ -26,7 +26,7 @@
         .name-text{
             flex: 1;
             .name-text-name{
-                font-weight: var(--tiklab-font-weight-bold);
+                font-weight: var(--thoughtware-font-weight-bold);
                 &:hover{
                     text-decoration: underline;
                 }
@@ -51,7 +51,7 @@
                 font-size: 16px;
             }
             &:hover{
-                color: var(--tiklab-blue);
+                color: var(--thoughtware-blue);
             }
         }
         .repository-group-tables-collect{

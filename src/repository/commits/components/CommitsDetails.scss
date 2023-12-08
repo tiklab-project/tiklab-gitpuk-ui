@@ -32,7 +32,7 @@
             .contrast-title{
                 display: flex;
                 border-bottom: 1px solid #d9d9d9;
-                margin-bottom: var(--tiklab-padding-item);
+                margin-bottom: var(--thoughtware-padding-item);
             }
             .contrast-affected{
                 display: flex;
@@ -47,7 +47,7 @@
                         padding-right: 5px;
                     }
                     .num-add{
-                        color: var(--tiklab-gree);
+                        color: var(--thoughtware-gree);
                     }
                     .num-reduce{
                         color: #ff0000;
@@ -81,8 +81,8 @@
                                 padding-right: 8px;
                             }
                             .item-title-type{
-                                font-size: var(--tiklab-font-13);
-                                color: var(--tiklab-gray-500);
+                                font-size: var(--thoughtware-font-13);
+                                color: var(--thoughtware-gray-500);
                                 padding-right: 8px;
                             }
                             .item-title-icon{
@@ -140,7 +140,7 @@
     }
     .diff-expand .diff-line-code{
         background-color: #f1f8ff;
-        color: var(--tiklab-gray-500);
+        color: var(--thoughtware-gray-500);
     }
     .diff-add .diff-line-code{
         background-color: #e6ffed;
@@ -203,7 +203,7 @@
             padding-left: 8px;
         }
         .diff-drop-title-item-add{
-            color: var(--tiklab-gree);
+            color: var(--thoughtware-gree);
         }
         .diff-drop-title-item-delete{
             color: #ff0000;

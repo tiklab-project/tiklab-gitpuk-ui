@@ -1,12 +1,12 @@
 .houseReDel{
     .houseReDel-up{
-        padding-bottom: var(--tiklab-padding-item);
+        padding-bottom: var(--thoughtware-padding-item);
     }
     &-li{
         border: 1px solid #ececec;
         border-radius: 4px;
         &:not(:last-child){
-            margin-bottom: var(--tiklab-padding-item);
+            margin-bottom: var(--thoughtware-padding-item);
         }
         .border-top{
             border-top: 1px solid #ececec;
@@ -29,17 +29,17 @@
             line-height: 16px;
             margin-right: 10px;
             margin-top: 4px;
-            font-weight: var(--tiklab-font-weight-bold);
+            font-weight: var(--thoughtware-font-weight-bold);
         }
         .houseReDel-li-center{
             flex-grow: 1;
         }
         .houseReDel-li-title{
-            font-weight: var(--tiklab-font-weight-bold);
+            font-weight: var(--thoughtware-font-weight-bold);
         }
         .houseReDel-li-desc{
-            font-size: var(--tiklab-font-13);
-            color: var(--tiklab-gray-500);
+            font-size: var(--thoughtware-font-13);
+            color: var(--thoughtware-gray-500);
         }
         .houseReDel-li-down{
             align-self: center;

@@ -11,7 +11,7 @@
     .name-text{
         flex: 1;
         .name-text-name{
-            font-weight: var(--tiklab-font-weight-bold);
+            font-weight: var(--thoughtware-font-weight-bold);
             &:hover{
                 text-decoration: underline;
             }
@@ -32,8 +32,8 @@
             font-weight: 400;
         }
         .name-text-desc{
-            color: var(--tiklab-gray-500);
-            font-size: var(--tiklab-font-13);
+            color: var(--thoughtware-gray-500);
+            font-size: var(--thoughtware-font-13);
         }
     }
     .repository-tables-set{
@@ -42,7 +42,7 @@
             font-size: 16px;
         }
         &:hover{
-            color: var(--tiklab-blue);
+            color: var(--thoughtware-blue);
         }
     }
     .repository-tables-collect{

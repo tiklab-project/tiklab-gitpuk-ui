@@ -37,7 +37,7 @@
             align-items: center;
             flex-direction: row;
             &:hover{
-                background: var(--tiklab-gray-300);
+                background: var(--thoughtware-gray-300);
             }
             &-icon{
                 padding-right: 10px;
@@ -45,8 +45,8 @@
             }
         }
         .scrum-aside-select{
-            background: var(--tiklab-gray-400);
-            border-left: 3px solid var(--tiklab-blue);
+            background: var(--thoughtware-gray-400);
+            border-left: 3px solid var(--thoughtware-blue);
         }
     }
     .normal-aside{
@@ -76,18 +76,18 @@
             flex-direction: column;
             justify-content: center;
             &:hover{
-                background: var(--tiklab-gray-300);
+                background: var(--thoughtware-gray-300);
             }
             &:not(:last-child){
                 margin-bottom: 5px;
             }
         }
         .normal-aside-select{
-            background: var(--tiklab-gray-400);
-            border-left: 3px solid var(--tiklab-blue);
+            background: var(--thoughtware-gray-400);
+            border-left: 3px solid var(--thoughtware-blue);
         }
         .normal-aside_content_icon{
-            font-size: var(--tiklab-icon-size-16);
+            font-size: var(--thoughtware-icon-size-16);
         }
     }
 }
@@ -108,18 +108,18 @@
         width: 200px;
         min-height: 100px;
         &-title{
-            font-weight: var(--tiklab-font-weight-bold);
-            padding: 0 var(--tiklab-padding-item);
+            font-weight: var(--thoughtware-font-weight-bold);
+            padding: 0 var(--thoughtware-padding-item);
             height: 40px;
             line-height: 40px;
-            border-bottom: 1px solid var(--tiklab-gray-200);
+            border-bottom: 1px solid var(--thoughtware-gray-200);
         }
         &-group{
             max-height: 500px;
             overflow: auto;
         }
         &-item{
-            padding: 0 var(--tiklab-padding-item);
+            padding: 0 var(--thoughtware-padding-item);
             height: 40px;
             line-height: 40px;
             cursor: pointer;

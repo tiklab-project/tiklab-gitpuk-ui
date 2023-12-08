@@ -9,7 +9,7 @@ import {MessageManagement} from "thoughtware-message-ui";
  */
 const MessageManagementContent = props => {
 
-    return <MessageManagement {...props} bgroup={"xcode"}/>
+    return <MessageManagement {...props} bgroup={"gittork"}/>
 
 }
 

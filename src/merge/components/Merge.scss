@@ -22,7 +22,7 @@
                 margin-right: 10px;
             }
             .tables-title-text{
-                font-weight: var(--tiklab-font-weight-bold);
+                font-weight: var(--thoughtware-font-weight-bold);
                 &:hover{
                     text-decoration: underline;
                 }
@@ -54,11 +54,11 @@
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
-        font-weight: var(--tiklab-font-weight-bold);
-        padding: var(--tiklab-padding) var(--tiklab-padding) var(--tiklab-padding-item);
+        font-weight: var(--thoughtware-font-weight-bold);
+        padding: var(--thoughtware-padding) var(--thoughtware-padding) var(--thoughtware-padding-item);
     }
     .merge-add-content{
-        padding: 0 var(--tiklab-padding);
+        padding: 0 var(--thoughtware-padding);
         max-height:calc(100% - 120px);
         overflow:auto;
         .merge-add-branch{
@@ -69,7 +69,7 @@
                 flex: 1;
             }
             .add-branch-arrow{
-                margin: 0 var(--tiklab-padding-item);
+                margin: 0 var(--thoughtware-padding-item);
                 padding-top: 20px;
             }
         }

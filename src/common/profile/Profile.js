@@ -23,7 +23,7 @@ const ProfileContent = ({userInfo = undefined}) => {
         return <Avatar size={32} icon={<UserOutlined />} />
     }
 
-    return  <div className={'tiklab-profile'}>
+    return  <div className={'thoughtware-profile'}>
                 {renderEl()}
             </div>
 }

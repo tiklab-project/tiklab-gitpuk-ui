@@ -51,7 +51,7 @@ module.exports = {
         },"thoughtware-eam-ui"],
 
         ["import", {
-            "libraryName": "tiklab-integration-ui",
+            "libraryName": "thoughtware-integration-ui",
             "libraryDirectory": "es",
             "style": true,
             "customName": (name) => {
@@ -65,9 +65,9 @@ module.exports = {
                     const name = UpBit + lowBit
                     return total += name;
                 },'');
-                return `tiklab-integration-ui/es/${fullName}`;
+                return `thoughtware-integration-ui/es/${fullName}`;
             }
-        }, "tiklab-integration-ui"],
+        }, "thoughtware-integration-ui"],
 
         ["import", {
             "libraryName": "thoughtware-message-ui",

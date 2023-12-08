@@ -26,7 +26,7 @@ const CommitsDetailsDrop = props => {
     const renderIcon = type => {
         switch (type) {
             case 'ADD':
-                return <PlusSquareOutlined style={{color:'var(--tiklab-blue)'}}/>
+                return <PlusSquareOutlined style={{color:'var(--thoughtware-blue)'}}/>
             case 'DELETE':
                 return <CloseSquareOutlined style={{color:'#ff0000'}}/>
             default:

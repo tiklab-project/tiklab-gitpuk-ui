@@ -14,7 +14,7 @@
             }
             .head-left-desc{
                 .desc-name{
-                    font-weight: var(--tiklab-font-weight-bold);
+                    font-weight: var(--thoughtware-font-weight-bold);
                     &:hover{
                         text-decoration: underline;
                     }
@@ -41,9 +41,9 @@
 
 .group-listname-icon{
     display: inline-block;
-    width: var(--tiklab-icon-size-45);
-    height: var(--tiklab-icon-size-45);
-    line-height: var(--tiklab-icon-size-45);
+    width: var(--thoughtware-icon-size-45);
+    height: var(--thoughtware-icon-size-45);
+    line-height: var(--thoughtware-icon-size-45);
     margin-right: 10px;
     border-radius: 4px;
     text-align: center;

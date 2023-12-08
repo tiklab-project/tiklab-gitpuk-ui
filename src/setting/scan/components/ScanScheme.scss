@@ -13,7 +13,7 @@
       .scan-title{
         flex: 1;
         font-size: 16px;
-        font-weight: var(--tiklab-font-weight-bold);
+        font-weight: var(--thoughtware-font-weight-bold);
       }
       .scan-icon{
         margin-right: 10px;
@@ -37,7 +37,7 @@
     max-width: 1280px;
     min-width: 508px;
     margin: 0 auto ;
-    padding: var(--tiklab-padding);
+    padding: var(--thoughtware-padding);
     overflow: auto;
     .data-title-desc{
       display: flex;
@@ -53,7 +53,7 @@
         border-bottom:2px solid #0063FF;
       }
       .tab-nav{
-        font-size: var(--tiklab-font-14);;
+        font-size: var(--thoughtware-font-14);;
         cursor: pointer;
         height: 50px;
         line-height: 50px;
@@ -77,14 +77,14 @@
     padding-top: var(---xcode-table-top);
   }
   .scanScheme-ill{
-    margin: var(--tiklab-padding-item) 0;
+    margin: var(--thoughtware-padding-item) 0;
     padding: 10px;
     background: #F8FFFF;
-    color: var(--tiklab-blue);
+    color: var(--thoughtware-blue);
     border: 1px solid #e3e9ed;
   }
   .scanScheme-table-title{
-    color: var(--tiklab-blue);
+    color: var(--thoughtware-blue);
     cursor: pointer;
   }
 }
@@ -94,11 +94,11 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    font-weight: var(--tiklab-font-weight-bold);
-    padding: var(--tiklab-padding) var(--tiklab-padding) var(--tiklab-padding-item);
+    font-weight: var(--thoughtware-font-weight-bold);
+    padding: var(--thoughtware-padding) var(--thoughtware-padding) var(--thoughtware-padding-item);
   }
   .scanScheme-add-content{
-    padding: 0 var(--tiklab-padding);
+    padding: 0 var(--thoughtware-padding);
     overflow:auto;
   }
 }

@@ -3,17 +3,17 @@
         &-head{
             display: flex;
             justify-content: flex-start;
-            margin: var(--tiklab-padding-item) 0;
+            margin: var(--thoughtware-padding-item) 0;
             .code-head-right{
                 display: flex;
                 .code-search,.code-file-add{
-                    margin-left: var(--tiklab-padding-item);
+                    margin-left: var(--thoughtware-padding-item);
                     font-size: 16px;
                     cursor: pointer;
                     padding: 8px 0;
                 }
                 .code-desc,.code-clone{
-                    margin-left: var(--tiklab-padding-item);
+                    margin-left: var(--thoughtware-padding-item);
 
                 }
             }
@@ -48,7 +48,7 @@
                 }
                 .code-item-commitMessage{
                     width: 30%;
-                    padding: 0 var(--tiklab-padding-item);
+                    padding: 0 var(--thoughtware-padding-item);
                 }
                 .code-item-commitTime{
                     width: 10%;
@@ -89,7 +89,7 @@
     background-color: #ffffff;
     width: 350px;
     .clone-item{
-        padding: 0 var(--tiklab-padding-item);
+        padding: 0 var(--thoughtware-padding-item);
         .clone-item-title{
             padding: 10px 0;
         }
@@ -100,7 +100,7 @@
     .clone-download{
         display: flex;
         align-items: center;
-        margin-top: var(--tiklab-padding-item);
+        margin-top: var(--thoughtware-padding-item);
         border-top: 1px solid #d9d9d9;
         .clone-item-download{
             flex: 1;

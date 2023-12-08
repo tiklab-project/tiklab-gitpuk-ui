@@ -7,14 +7,14 @@
             display: flex;
             justify-content: flex-start;
             align-items: center;
-            margin: var(--tiklab-padding-item) 0;
+            margin: var(--thoughtware-padding-item) 0;
             .blob-head-left{
                 flex: 1;
                 display: flex;
                 align-items: center;
                 .blob-branch{
                     width: 160px;
-                    margin-right: var(--tiklab-padding-item);
+                    margin-right: var(--thoughtware-padding-item);
                     .ant-select{
                         width: 100% !important;
                     }
@@ -36,12 +36,12 @@
                 display: flex;
                 align-items: center;
                 .blob-search,.blob-file-add{
-                    margin-left: var(--tiklab-padding-item);
+                    margin-left: var(--thoughtware-padding-item);
                     font-size: 16px;
                     cursor: pointer;
                 }
                 .blob-download,.blob-clone{
-                    margin-left: var(--tiklab-padding-item);
+                    margin-left: var(--thoughtware-padding-item);
                 }
             }
         }
@@ -59,7 +59,7 @@
                     flex: 1;
                     .editor-title-text{
                         font-size: 13px;
-                        font-weight: var(--tiklab-font-weight-bold);
+                        font-weight: var(--thoughtware-font-weight-bold);
                     }
                     .editor-title-size{
                         padding: 0 8px;
@@ -101,11 +101,11 @@
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
-        font-weight: var(--tiklab-font-weight-bold);
-        padding: var(--tiklab-padding) var(--tiklab-padding) var(--tiklab-padding-item);
+        font-weight: var(--thoughtware-font-weight-bold);
+        padding: var(--thoughtware-padding) var(--thoughtware-padding) var(--thoughtware-padding-item);
     }
     .bold-del-content{
-        padding: 0 var(--tiklab-padding);
+        padding: 0 var(--thoughtware-padding);
         max-height:calc(100% - 120px);
         overflow:auto;
     }

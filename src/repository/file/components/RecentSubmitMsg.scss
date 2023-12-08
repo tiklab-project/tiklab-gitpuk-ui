@@ -1,7 +1,7 @@
 
 .recent-submit-msg{
-    margin-bottom: var(--tiklab-padding-item);
-    padding: var(--tiklab-padding-item);
+    margin-bottom: var(--thoughtware-padding-item);
+    padding: var(--thoughtware-padding-item);
     background-color: #f4f4f4;
     border-radius: 4px;
     display: flex;
@@ -10,7 +10,7 @@
     .code-commit-msg{
         flex: 1;
         .msg-title{
-            font-weight: var(--tiklab-font-weight-bold);
+            font-weight: var(--thoughtware-font-weight-bold);
             margin-bottom: 8px;
             &:hover{
                 cursor: pointer;
@@ -18,7 +18,7 @@
             }
         }
         .msg-desc{
-            color: var(--tiklab-gray-500);
+            color: var(--thoughtware-gray-500);
         }
     }
     .code-commit-ident{

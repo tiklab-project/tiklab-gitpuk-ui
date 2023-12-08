@@ -32,7 +32,7 @@
                 .branch-tables-name{
                     flex: 1;
                     .name-text-name{
-                        font-weight: var(--tiklab-font-weight-bold);
+                        font-weight: var(--thoughtware-font-weight-bold);
                         margin-right: 8px;
                         cursor: pointer;
                         display: inline-block;
@@ -60,8 +60,8 @@
                         font-weight: 400;
                     }
                     .name-text-desc{
-                        color: var(--tiklab-gray-500);
-                        font-size: var(--tiklab-font-13);
+                        color: var(--thoughtware-gray-500);
+                        font-size: var(--thoughtware-font-13);
                         .desc-name{
                             margin-right: 8px;
                         }

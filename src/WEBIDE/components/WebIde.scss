@@ -23,7 +23,7 @@
                     cursor: pointer;
                     padding: 0 5px;
                     &:hover{
-                        background: var(--tiklab-gray-300);
+                        background: var(--thoughtware-gray-300);
                     }
                 }
                 .tree-item-first{
@@ -32,7 +32,7 @@
                     width: calc(100% - 15px);
                 }
                 .tree-item-active{
-                    background: var(--tiklab-gray-400);
+                    background: var(--thoughtware-gray-400);
                 }
                 .tree-item-name{
                     overflow: hidden;
@@ -47,7 +47,7 @@
                     display: none;
                 }
                 .tree-item-time{
-                    font-size: var(--tiklab-font-13);
+                    font-size: var(--thoughtware-font-13);
                     color: #999;
                 }
             }
@@ -60,14 +60,14 @@
                 display: flex;
                 justify-content: center;
                 &:hover .web-ide-move-hidden{
-                    background: var(--tiklab-blue);
+                    background: var(--thoughtware-blue);
                 }
                 .web-ide-move-show,.web-ide-move-hidden{
                     height: 100%;
                     width: 2px;
                 }
                 .web-ide-move-show{
-                    background: var(--tiklab-blue);
+                    background: var(--thoughtware-blue);
                 }
             }
         }

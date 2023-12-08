@@ -97,7 +97,7 @@ const  Portal = props =>{
      * 帮助文档
      */
     const goHelp = path => {
-        window.open(`http://tiklab.net/${path}`)
+        window.open(`http://thoughtware.net/${path}`)
     }
 
     // 渲染一级标题

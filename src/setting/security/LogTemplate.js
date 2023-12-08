@@ -9,7 +9,7 @@ import {LogTemplate} from "thoughtware-security-ui";
  */
 const LogTemplateContent = props => {
 
-    return <LogTemplate {...props} bgroup={"xcode"}/>
+    return <LogTemplate {...props} bgroup={"gittork"}/>
 
 }
 

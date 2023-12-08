@@ -1,9 +1,9 @@
 .branch-setting{
   &-mode{
-    margin: var(--tiklab-padding-item) 0;
+    margin: var(--thoughtware-padding-item) 0;
     .mode-title{
       font-size: 13px;
-      font-weight: var(--tiklab-font-weight-bold);
+      font-weight: var(--thoughtware-font-weight-bold);
     }
     .mode-desc{
       color: #9b9b9b;
@@ -15,7 +15,7 @@
     margin-top: 20px;
     .rule-title{
       font-size: 13px;
-      font-weight: var(--tiklab-font-weight-bold);
+      font-weight: var(--thoughtware-font-weight-bold);
     }
     .rule-desc{
       color: #9b9b9b;
@@ -30,10 +30,10 @@
       margin-top: 10px;
     }
     .rule-text-color{
-      color: var(--tiklab-blue);
+      color: var(--thoughtware-blue);
       margin-left: 10px;
       font-size: 15px;
-      font-weight: var(--tiklab-font-weight-bold);
+      font-weight: var(--thoughtware-font-weight-bold);
       cursor: pointer;
     }
   }
@@ -43,7 +43,7 @@
     border: 1px solid #ececec;
     border-radius: 4px;
     &:not(:last-child) {
-      margin-bottom: var(--tiklab-padding-item);
+      margin-bottom: var(--thoughtware-padding-item);
     }
     .border-top{
       border-top: 1px solid #ececec;
@@ -66,17 +66,17 @@
       line-height: 16px;
       margin-right: 10px;
       margin-top: 4px;
-      font-weight: var(--tiklab-font-weight-bold);
+      font-weight: var(--thoughtware-font-weight-bold);
     }
     .branch-setting-li-center{
       flex-grow: 1;
     }
     .branch-setting-li-title{
-      font-weight: var(--tiklab-font-weight-bold);
+      font-weight: var(--thoughtware-font-weight-bold);
     }
     .branch-setting-li-desc{
-      font-size: var(--tiklab-font-13);
-      color: var(--tiklab-gray-500);
+      font-size: var(--thoughtware-font-13);
+      color: var(--thoughtware-gray-500);
     }
     .branch-setting-li-down{
       align-self: center;

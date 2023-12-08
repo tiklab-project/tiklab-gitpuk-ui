@@ -33,7 +33,7 @@
                     justify-content: center;
                     align-items: center;
                     .quickIn-group-title{
-                        font-weight: var(--tiklab-font-weight-bold);
+                        font-weight: var(--thoughtware-font-weight-bold);
                     }
                     .quickIn-group-icon .icon{
                         width: 30px;
@@ -136,11 +136,11 @@
             }
             .houseRecent-item:hover{
                 border-radius: 4px 4px 0 0;
-                border-bottom-color: var(--tiklab-blue);
+                border-bottom-color: var(--thoughtware-blue);
                 transition: 1s;
             }
             .houseRecent-item-title{
-                padding-bottom: var(--tiklab-padding-item);
+                padding-bottom: var(--thoughtware-padding-item);
                 .houseRecent-icon{
                     display: inline-block;
                     width: 32px;
@@ -158,11 +158,11 @@
                     white-space: nowrap;
                     text-overflow: ellipsis;
                     -o-text-overflow: ellipsis;
-                    font-weight: var(--tiklab-font-weight-bold);
+                    font-weight: var(--thoughtware-font-weight-bold);
                 }
             }
             .houseRecent-item-details{
-                font-size: var(--tiklab-font-13);
+                font-size: var(--thoughtware-font-13);
                 display: flex;
                 justify-content: space-around;
                 white-space: nowrap;
@@ -216,7 +216,7 @@
             }
             .text-desc{
                 font-size: 13px;
-                color: var(--tiklab-gray-500);
+                color: var(--thoughtware-gray-500);
             }
         }
 
@@ -238,7 +238,7 @@
                 &-list{
                     padding: 8px;
                     &:not(:last-child){
-                        border-bottom: 1px solid var(--tiklab-gray-200);
+                        border-bottom: 1px solid var(--thoughtware-gray-200);
                     }
                     &:hover{
                         background: #f4f4f4;
@@ -292,7 +292,7 @@
                                 background: #87d068;
                             }
                             &-2{
-                                background: var(--tiklab-blue);
+                                background: var(--thoughtware-blue);
                             }
                             &-3{
                                 background: red;

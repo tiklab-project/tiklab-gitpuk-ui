@@ -3,22 +3,22 @@
     text-align: center;
     padding-top: 10px;
     height: 47px;
-    border-top: 1px solid var(--tiklab-gray-200);
+    border-top: 1px solid var(--thoughtware-gray-200);
     .xcode-page-ban{
         cursor:not-allowed;
-        color: var(--tiklab-gray-500);
+        color: var(--thoughtware-gray-500);
     }
     .xcode-page-allow{
         cursor: pointer;
         &:hover{
-          color: var(--tiklab-blue);
+          color: var(--thoughtware-blue);
         }
     }
     .xcode-page-icon{
        padding: 0 5px;
     }
     .xcode-page-current{
-        color: var(--tiklab-blue);
+        color: var(--thoughtware-blue);
     }
 
 }
