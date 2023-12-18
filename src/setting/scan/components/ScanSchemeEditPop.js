@@ -19,7 +19,8 @@ const languageList=["Java","JavaScript"]
 const sanWay=[{key:"sonar",value:"sonar扫描"},{key:"rule",value:"规则包扫描"}]
 const ScanSchemeEditPop = (props) => {
     const [form] = Form.useForm()
-    const {editVisible,setEditVisible,createScanScheme,createScanSchemeRuleSet,createScanSchemeSonar}=props
+    const {editVisible,setEditVisible,createScanScheme,createScanSchemeRuleSet,createScanSchemeSonar
+        ,schemeDate,setSchemeDate,updateScanScheme,scanSchemeList}=props
 
     const {findDeployEnvList,deployEnvList,findDeployServerList,deployServerList}=DeployStore
     const {findScanRuleSetList}=scanRuleSetStore
@@ -32,26 +33,51 @@ const ScanSchemeEditPop = (props) => {
     const [server,setServer]=useState('')     //选择应用
 
     const [choiceRuleSetList,setChoiceRuleSetList]=useState([])
+    const [verifyScanSchemeList,setVerifyScanSchemeList]=useState([])
+
+    useEffect(()=>{
+
+        if (schemeDate){
+            form.setFieldsValue({
+                schemeName:schemeDate.schemeName,
+            })
+            if (scanSchemeList){
+               const list=scanSchemeList.filter(item=>item.id!==schemeDate.id)
+                debugger
+                setVerifyScanSchemeList(list)
+            }
+        }
+        if (scanSchemeList){
+            setVerifyScanSchemeList(scanSchemeList)
+        }
+
+    },[schemeDate,editVisible])
 
     //添加
     const onOk = () => {
         const languages=language.join(",");
         form.validateFields().then(async values => {
-            createScanScheme({schemeName:values.schemeName,scanWay:scanWay,language:languages,describe:values.describe}).then(res=>{
-                if (res.code===0){
-                    if (scanWay==="rule"){
-                        choiceRuleSetList.map(item=>{
-
-                            createScanSchemeRuleSet({scanSchemeId:res.data,scanRuleSet:{id:item}})
-                        })
-                       // createScanSchemeRule({scanSchemeId:res.data,ruleSetId:})
-                    }
-                    if (scanWay==='sonar'){
-                        createScanSchemeSonar({scanSchemeId:res.data,deployEnv:{id:dev},deployServer:{id:server}})
-                    }
+            if (schemeDate){
+                updateScanScheme({...schemeDate,schemeName:values.schemeName}).then(res=>{
                     cancel()
-                }
-            })
+                })
+            }else {
+                createScanScheme({schemeName:values.schemeName,scanWay:scanWay,language:languages,describe:values.describe}).then(res=>{
+                    if (res.code===0){
+                        if (scanWay==="rule"){
+                            choiceRuleSetList.map(item=>{
+
+                                createScanSchemeRuleSet({scanSchemeId:res.data,scanRuleSet:{id:item}})
+                            })
+                            // createScanSchemeRule({scanSchemeId:res.data,ruleSetId:})
+                        }
+                        if (scanWay==='sonar'){
+                            createScanSchemeSonar({scanSchemeId:res.data,deployEnv:{id:dev},deployServer:{id:server}})
+                        }
+                        cancel()
+                    }
+                })
+            }
         })
     }
 
@@ -62,6 +88,7 @@ const ScanSchemeEditPop = (props) => {
         setDev("")
         setServer("")
         setEditVisible(false)
+        setSchemeDate(null)
     }
 
 
@@ -83,7 +110,6 @@ const ScanSchemeEditPop = (props) => {
 
     //选择 规则集
     const choiceRuleSet = (value) => {
-
         if (choiceRuleSetList&&choiceRuleSetList.length>0){
             setChoiceRuleSetList(choiceRuleSetList.concat(value))
         }else {
@@ -134,7 +160,7 @@ const ScanSchemeEditPop = (props) => {
             footer={modalFooter}
             destroyOnClose={true}
             width={500}
-            title={"添加方案"}
+            title={schemeDate?"修改方案":'添加方案'}
         >
             <Form form={form}
                   layout='vertical'
@@ -142,81 +168,37 @@ const ScanSchemeEditPop = (props) => {
                 <Form.Item
                     label={'方案名称'}
                     name={'schemeName'}
-                    rules={[{required:true,message:'方案名称不能为空'}]}
+                    rules={[{required:true,message:'方案名称不能为空'},
+                        ({getFieldValue}) => ({
+                            validator(rule,value) {
+                                let nameArray = []
+
+                                if(verifyScanSchemeList){
+                                    nameArray =  verifyScanSchemeList.map(item=>item.schemeName)
+                                }
+                                if (nameArray.includes(value)) {
+                                    return Promise.reject('扫描方案名字已经存在')
+                                }
+                                return Promise.resolve()
+                            }
+                        }),
+                    ]}
                 >
                     <Input  placeholder={"方案名称"}/>
                 </Form.Item>
-                <Form.Item
-                    label={'扫描方式'}
-                    name={'sanWay'}
-                    rules={[{required:true,message:'扫描方式不能为空'}]}
-                >
-                    <Select   allowClear onChange={choiceSanWay} placeholder={"请选择扫描方式"}>
-                        {
-                            sanWay.map(item=>{
-                                    return(
-                                        <Select.Option key={item.key} value={item.key}>{item.value}</Select.Option>
-                                    )
-                                }
-                            )
-                        }
-                    </Select>
-                </Form.Item>
-                <Form.Item
-                    label={'检测语言'}
-                    name={'scanSchemeId'}
-                    rules={[{required:true,message:'检测语言'}]}
-                >
-                    <div className='language-type'>
-                        {
-                            languageList.map(item=>{
-                                return(
-                                    <Checkbox key={item} onChange={languageType} value={item}>{item}</Checkbox>
-                                )
-                            })
-                        }
-                    </div>
-                </Form.Item>
                 {
-                    (  scanWay==='rule'&&language.length>0)&&
-                    <div className='rule_package'>
-                        <div className='rule_package_text'>规则包</div>
-                        <div className='rule_package_border'>
-                            {
-                                language.map(item=>{
-                                    return(
-                                        <div className='border-nav'>
-                                            <div className='border-nav-text'>{item}</div>
-                                            <Select   allowClear onChange={choiceRuleSet} onClick={()=>getScanRuleSetList(item)} placeholder={"请选择扫描方式"} style={{width:300}}>
-                                                {
-                                                    ruleSetList.map(item=>{
-                                                            return(
-                                                                <Select.Option key={item.id} value={item.id}>{item.ruleSetName}</Select.Option>
-                                                            )
-                                                        }
-                                                    )
-                                                }
-                                            </Select>
-                                        </div>
-                                    )
-                                })
-                            }
-                        </div>
-                    </div>
-                }
-                {
-                    scanWay==='sonar' &&
+                    !schemeDate&&
                     <Fragment>
                         <Form.Item
-                            label={'执行环境'}
-                            name={'maven'}
-                            rules={[{required:true,message:'执行环境'}]}
+                            label={'扫描方式'}
+                            name={'sanWay'}
+                            rules={[{required:true,message:'扫描方式不能为空'}]}
                         >
-                            <Select  allowClear onChange={choiceDev} placeholder={"请选择"}>
+                            <Select   allowClear onChange={choiceSanWay} placeholder={"请选择扫描方式"}>
                                 {
-                                    deployEnvList?.map(item=>{
+                                    sanWay.map(item=>{
                                             return(
-                                                <Select.Option key={item.id} value={item.id}>{item.envName}</Select.Option>
+                                                <Select.Option key={item.key} value={item.key}>{item.value}</Select.Option>
                                             )
                                         }
                                     )
@@ -224,23 +206,99 @@ const ScanSchemeEditPop = (props) => {
                             </Select>
                         </Form.Item>
                         <Form.Item
-                            label={'sonar地址'}
-                            name={'sonar'}
-                            rules={[{required:true,message:'sonar地址'}]}
+                            label={'检测语言'}
+                            name={'language'}
+                            rules={[{required:true},
+                                    ({getFieldValue}) => ({
+                                        validator(rule,value) {
+                                        if (language.length<1) {
+
+                                            return Promise.reject('检测语言不能为空')
+                                        }
+                                        return Promise.resolve()
+                                    }
+                                    }),
+                            ]}
                         >
-                            <Select  allowClear onChange={choiceServer}  placeholder={"请选择"}>
+                            <div className='language-type'>
                                 {
-                                    deployServerList?.map(item=>{
+                                    languageList.map(item=>{
+                                        return(
+                                            <Checkbox key={item} onChange={languageType} value={item}>{item}</Checkbox>
+                                        )
+                                    })
+                                }
+                            </div>
+                        </Form.Item>
+                        {
+                            (  scanWay==='rule'&&language.length>0)&&
+                            <div className='rule_package'>
+                                <div className='rule_package_text'>规则包</div>
+                                <div className='rule_package_border'>
+                                    {
+                                        language.map(item=>{
                                             return(
-                                                <Select.Option key={item.id} value={item.id}>{item.taskName}</Select.Option>
+                                                <div className='border-nav'>
+                                                    <div className='border-nav-text'>{item}</div>
+                                                    <Select   allowClear onChange={choiceRuleSet} onClick={()=>getScanRuleSetList(item)} placeholder={"请选择扫描方式"} style={{width:300}}>
+                                                        {
+                                                            ruleSetList.map(item=>{
+                                                                    return(
+                                                                        <Select.Option key={item.id} value={item.id}>{item.ruleSetName}</Select.Option>
+                                                                    )
+                                                                }
+                                                            )
+                                                        }
+                                                    </Select>
+                                                </div>
+                                            )
+                                        })
+                                    }
+                                </div>
+                            </div>
+                        }
+                        {
+                            scanWay==='sonar' &&
+                            <Fragment>
+                                <Form.Item
+                                    label={'执行环境'}
+                                    name={'maven'}
+                                    rules={[{required:true,message:'执行环境'}]}
+                                >
+                                    <Select  allowClear onChange={choiceDev} placeholder={"请选择"}>
+                                        {
+                                            deployEnvList?.map(item=>{
+                                                    return(
+                                                        <Select.Option key={item.id} value={item.id}>{item.envName}</Select.Option>
+                                                    )
+                                                }
                                             )
                                         }
-                                    )
-                                }
-                            </Select>
-                        </Form.Item>
+                                    </Select>
+                                </Form.Item>
+                                <Form.Item
+                                    label={'sonar地址'}
+                                    name={'sonar'}
+                                    rules={[{required:true,message:'sonar地址'}]}
+                                >
+                                    <Select  allowClear onChange={choiceServer}  placeholder={"请选择"}>
+                                        {
+                                            deployServerList?.map(item=>{
+                                                    return(
+                                                        <Select.Option key={item.id} value={item.id}>{item.taskName}</Select.Option>
+                                                    )
+                                                }
+                                            )
+                                        }
+                                    </Select>
+                                </Form.Item>
+                            </Fragment>
+                        }
                     </Fragment>
+
                 }
+
+
                 {/* <Form.Item
                             label={'方案描述'}
                             name={'describe'}

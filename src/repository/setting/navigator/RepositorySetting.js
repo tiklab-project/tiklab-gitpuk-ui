@@ -52,7 +52,7 @@ const RepositorySetting = props =>{
     return  <RpySetting
                 {...props}
                 secondRouter={secondRouter}
-                domainId={repositoryInfo.rpyId}
+                domainId={repositoryInfo?.rpyId}
             />
 }
 

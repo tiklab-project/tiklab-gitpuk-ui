@@ -13,6 +13,7 @@ import PortalMessage from "./PortalMessage";
 import "./Portal.scss";
 import {AvatarLink, HelpLink} from "thoughtware-licence-ui";
 import xcode from "../../assets/images/img/xcode.png"
+import MessageStore from "../store/MessageStore";
 /**
  * header 头部
  * @param props
@@ -24,12 +25,16 @@ const  Portal = props =>{
     const {route,systemRoleStore,AppLink} = props
 
     const {getSystemPermissions} = systemRoleStore
+    const {findMessageItemPage}=MessageStore
 
     let path = props.location.pathname
     const {i18n,t} = useTranslation()
     const [currentLink,setCurrentLink] = useState(path)
     const [visible,setVisible] = useState(false)
-    const [unread,setUnread] = useState(1)
+    const [unread,setUnread] = useState(0)
+
+
+
 
     useEffect(()=>{
 
@@ -121,6 +126,18 @@ const  Portal = props =>{
         </div>
     )
 
+    //打开消息抽屉
+    const openMessage = (currentPage) => {
+        findMessageItemPage({ pageParam:{currentPage:currentPage,pageSize:pageSize},
+            bgroup:"gittork",receiver:getUser().userId,sendType:'site'})
+            .then(res=>{
+                if (res.code===0){
+
+                }
+        })
+      setVisible(true)
+    }
+
     return(
         <div className="frame">
             <div className="frame-header">
@@ -131,7 +148,7 @@ const  Portal = props =>{
                             <img  src={xcode}  style={{width:22,height:22}}/>
                         </div>
                         <div className={'text'}>
-                            {"Xcode"}
+                            {"GitTork"}
                         </div>
                     </div>
                     <div className="headers-link">
@@ -154,64 +171,6 @@ const  Portal = props =>{
                         />
                         <HelpLink/>
                         <AvatarLink {...props}/>
-                        {/*<PortalDropdown
-                            tooltip={'帮助与支持'}
-                            Icon={<QuestionCircleOutlined className="frame-header-icon"/>}
-                            width={200}
-                        >
-                            <div className="header-helpMenu">
-                                <div className="header-helpMenu-item" onClick={()=>goHelp("document/documentList")}>
-                                    <ProfileOutlined className="header-dropdown-icon"/>
-                                    文档
-                                </div>
-                                <div className="header-helpMenu-item" onClick={()=>goHelp("question/questionList")}>
-                                    <ExpandOutlined className="header-dropdown-icon"/>
-                                    社区支持
-                                </div>
-                                <div className="header-helpMenu-item" onClick={()=>goHelp("account/workOrder/workOrderList")}>
-                                    <ScheduleOutlined className="header-dropdown-icon"/>
-                                    在线工单
-                                </div>
-                                <div className="header-helpMenu-item" onClick={()=>goHelp("account/group/onlineservice")}>
-                                    <WhatsAppOutlined className="header-dropdown-icon"/>
-                                    在线客服
-                                </div>
-                            </div>
-                        </PortalDropdown>*/}
-
-                        {/*<PortalDropdown
-                            tooltip={'个人中心'}
-                            Icon={<Profile />}
-                            width={240}
-                        >
-                            <div className="header-outMenu">
-                                <div className="header-outMenu-top">
-                                    <div className="outMenu-out">
-                                        <Profile user={getUser()} />
-                                        <div className="outMenu-out-info">
-                                            <div className="outMenu-out-name">
-                                                <span>{getUser().nickname || getUser().name || "用户"}</span>
-                                            </div>
-                                            <div className="outMenu-out-eamil">{getUser().phone || getUser().eamil || "--"}</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="header-outMenu-lan">
-                                    <Dropdown overlay={languageMenu}>
-                                        <div className="outMenu-lan">
-                                            <GlobalOutlined className="header-dropdown-icon"/>
-                                            <span className="lan">切换语言</span>
-                                        </div>
-                                    </Dropdown>
-                                </div>
-                                <div className="header-outMenu-out">
-                                    <div onClick={()=>goOut()} className="outMenu-out">
-                                        <LogoutOutlined className="header-dropdown-icon"/>
-                                        <span className="bottom-out">退出</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </PortalDropdown>*/}
                     </div>
                 </div>
                 <PortalMessage

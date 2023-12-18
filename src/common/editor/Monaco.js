@@ -57,7 +57,7 @@ const MonacoBlob = props =>{
                 readOnly: true, //是否只读
                 formatOnPaste: false,
                 overviewRulerBorder: false, // 滚动条的边框
-                scrollBeyondLastLine: true,
+                scrollBeyondLastLine: false,
                 theme: 'vs', // 主题
             })
         } catch {}
@@ -106,7 +106,7 @@ const MonacoEdit = props =>{
                 readOnly: false, //是否只读
                 formatOnPaste: true,
                 overviewRulerBorder: false, // 滚动条的边框
-                scrollBeyondLastLine: true,
+                scrollBeyondLastLine: false,
                 theme: 'vs', // 主题
             })
             // onDidChangeModelContent，方法产生的监听需要在组件销毁的时候dispose下

@@ -1,4 +1,4 @@
-import React,{useEffect,useState} from 'react';
+import React,{useEffect,useState,Fragment} from 'react';
 import {Tooltip} from 'antd';
 import {AimOutlined, CloudUploadOutlined, HistoryOutlined} from '@ant-design/icons';
 import homePageStore from "../store/homePageStore"
@@ -24,12 +24,22 @@ const HomePage = props =>{
     // 最近提交的加载状态
     const [commitLoading,setCommitLoading] = useState(true)
 
+    const [innerWidth,setInnerWidth]=useState(window.innerWidth)
+
     useEffect(async ()=>{
         // 获取最近打开的仓库
         findRecordOpenList().then(()=>setNewlyLoading(false))
         // 获取最近提交的仓库
         findRecordCommitList().then(()=>setCommitLoading(false))
     },[])
+
+
+    //实时获取浏览器宽度
+    window.onresize = function() {
+        let windowWidth = window.innerWidth;
+        setInnerWidth(windowWidth)
+        console.log(windowWidth);
+    };
 
     /**
      * 跳转仓库all
@@ -63,7 +73,7 @@ const HomePage = props =>{
             value?.length>17?
                 <Tooltip placement="right" title={value}>
                     <div style={{
-                        width: 125,
+                        width: 155,
                         overflow: "hidden",
                         textOverflow: "ellipsis",
                         whiteSpace: "nowrap"
@@ -76,12 +86,33 @@ const HomePage = props =>{
         )
     }
 
+    const openBorder = (item) => {
+      return(
+          <Fragment>
+              <div className='houseRecent-border-flex'>
+                  <Listicon text={item?.repository?.name} colors={item?.repository.color}/>
+                  <div className='houseRecent-border-text' >{filedState(item?.repository?.name)}</div>
+              </div>
+              <div className='houseRecent-border-flex houseRecent-border-text-top'>
+                  <div className='houseRecent-border-desc'>
+                      <span className='title-color'>分支</span>
+                      <span className='desc-text'>{item?.branchNum}</span>
+                  </div>
+                  <div className='houseRecent-border-desc'>
+                      <span className='title-color'>成员</span>
+                      <span className='desc-text'>{item?.memberNum}</span>
+                  </div>
+              </div>
+          </Fragment>
+      )
+    }
+
     return(
         <div className='homePage'>
             <div className='homePage-content xcode-repository-width'>
                 <div className='houseRecent'>
                     <div className='houseRecent-title'>
-                        <Guide title={'常用仓库'} icon={<HistoryOutlined />}/>
+                        <Guide title={'常用仓库'}/>
                      {/*   <div className='houseRecent-more-text' onClick={goRepository}>更多</div>*/}
                     </div>
 
@@ -94,23 +125,14 @@ const HomePage = props =>{
                                 {
                                     recordOpenList.map((item,key)=>{
                                         return(
-                                            key < 5 ?
-                                                <div key={key} className='houseRecent-border' onClick={()=>goDetails(item.repository)}>
-                                                    <div className='houseRecent-border-flex'>
-                                                        <Listicon text={item?.repository?.name} colors={item?.repository.color}/>
-                                                        <div className='houseRecent-border-text' >{filedState(item?.repository?.name)}</div>
-                                                    </div>
-                                                    <div className='houseRecent-border-flex houseRecent-border-text-top'>
-                                                        <div className='houseRecent-border-desc'>
-                                                            <span className='title-color'>分支</span>
-                                                            <span className='desc-text'>{item?.branchNum}</span>
-                                                        </div>
-                                                        <div className='houseRecent-border-desc'>
-                                                            <span className='title-color'>成员</span>
-                                                            <span className='desc-text'>{item?.memberNum}</span>
-                                                        </div>
-                                                    </div>
-                                                </div> : null
+                                            (innerWidth>=1700&&key < 5) &&
+                                                <div key={key} className='houseRecent-border houseRecent-border-width-20' onClick={()=>goDetails(item.repository)}>
+                                                    {openBorder(item)}
+                                                </div> ||
+                                            (innerWidth<1700&&key < 4) &&
+                                            <div key={key} className='houseRecent-border houseRecent-border-width-25' onClick={()=>goDetails(item.repository)}>
+                                                {openBorder(item)}
+                                            </div>
                                         )
                                     })
                                 }
@@ -121,7 +143,7 @@ const HomePage = props =>{
 
                 </div>
                 <div className='newCommit'>
-                    <Guide title={'最近提交'} icon={<CloudUploadOutlined />}/>
+                    <Guide title={'最近提交'} />
                        {
                            commitLoading ?
                            <SpinLoading type='table'/>
@@ -133,13 +155,14 @@ const HomePage = props =>{
                                            <div className='newCommit-lab-style'>
                                                <Listicon text={item?.repository.name} colors={item?.repository.color}/>
                                                <div>
-                                                   <div>
+                                                   <div className='option-commit-nav'>
                                                        <span>{`${item.groupName}`}</span>
                                                        <span className='newCommit-text-sym'>{"/"}</span>
                                                        <span className='newCommit-text-name'>{`${item?.repository.name}`}</span>
                                                    </div>
                                                     <div className='text-desc'>
-                                                        { `推送信息 : ${item?.commitMsg}` }
+                                                        <div>{item.commitId.substring(0,8)}:</div>
+                                                        <div>{item?.commitMsg}</div>
                                                     </div>
                                                </div>
                                            </div>
@@ -153,7 +176,7 @@ const HomePage = props =>{
 
                 </div>
                 <div className='home-pull'>
-                    <Guide title={'提交请求'} icon={<AimOutlined/>} />
+                    <Guide title={'提交请求'} />
                     <EmptyText title={'暂无提交请求'}/>
                 </div>
             </div>

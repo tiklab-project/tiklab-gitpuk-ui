@@ -17,9 +17,10 @@ import {inject, observer} from "mobx-react";
 import scanPlayStore from "../store/ScanPlayStore";
 import success from "../../../assets/images/img/success.png";
 import fail from "../../../assets/images/img/fail.png";
+import ScanLogDrawer from "./ScanLogDrawer";
 const ScanPlay = (props) => {
     const {repositoryStore,match} = props
-    const {findScanPlayPage,createScanPlay,updateScanPlay,deleteScanPlay,refresh}=scanPlayStore
+    const {findScanPlayPage,deleteScanPlay,refresh}=scanPlayStore
     const {repositoryInfo} = repositoryStore
 
     const [scanPlayList,setScanPlayList]=useState([])
@@ -32,6 +33,9 @@ const ScanPlay = (props) => {
     const [editType,setEditType]=useState('')
     const [multiState,setMultiState]=useState(false)
     const [addPlayId,setAddPlayId]=useState('')  //添加后的计划id
+
+    const [logVisible,setLogVisible]=useState(false)  //日志抽屉状态
+    const [logScanRecord,setLogScanRecord]=useState()  //打开日志的扫描记录
 
     const webUrl = `${match.params.namespace}/${match.params.name}`
     useEffect(async () => {
@@ -153,10 +157,11 @@ const ScanPlay = (props) => {
                 />
                 <Page pageCurrent={currentPage} changPage={changPage} totalPage={totalPage}/>
             </div>
-            <ScanPlayEditPop editVisible={editVisible} setEditVisible={setEditVisible} createScanPlay={createScanPlay}
-                             updateScanPlay={updateScanPlay} repositoryId={repositoryInfo.rpyId}  scanPlay={scanPlay}
+            <ScanPlayEditPop editVisible={editVisible} setEditVisible={setEditVisible} setLogScanRecord={setLogScanRecord}
+                              repositoryId={repositoryInfo.rpyId}  scanPlay={scanPlay} setLogVisible={setLogVisible}
                              setScanPlay={setScanPlay} editType={editType} setMultiState={setMultiState} setAddPlayId={setAddPlayId}/>
 
+            <ScanLogDrawer visible={logVisible} setVisible={setLogVisible} scanRecord={logScanRecord}/>
         </div>
 
 

@@ -27,6 +27,7 @@ const Repository = props => {
     const [pageSize]=useState(15)
 
     const [isLoading,setIsLoading]=useState(false)
+    const [sort,setSort]=useState(null)
 
 
     useEffect(async ()=>{
@@ -57,7 +58,7 @@ const Repository = props => {
      */
     const clickType =async item => {
         setRepositoryType(item.id)
-        await  findRpyPage(currentPage,item.id)
+        await  findRpyPage(1,item.id)
     }
 
     /**
@@ -75,7 +76,7 @@ const Repository = props => {
      */
     const onSearch =async () => {
 
-        await findRpyPage(1,repositoryType)
+        await findRpyPage(1,repositoryType,sort)
     }
 
     /**
@@ -83,19 +84,23 @@ const Repository = props => {
      */
     const changPage =async (value) => {
         setCurrentPage(value)
-        await findRpyPage(value,repositoryType)
+        await findRpyPage(value,repositoryType,sort)
     }
 
     const onChange = (pagination, filters, sorter, extra) => {
+
         //降序
         if (sorter.order==='descend'){
+            setSort("desc")
             findRpyPage (currentPage,repositoryType,"desc")
         }
         //升序
         if (sorter.order==='ascend'){
+            setSort("asc")
             findRpyPage (currentPage,repositoryType,"asc")
         }
         if (!sorter.order){
+            setSort()
             findRpyPage (currentPage,repositoryType)
         }
     }

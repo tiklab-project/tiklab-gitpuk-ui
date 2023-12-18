@@ -7,6 +7,10 @@ export class DeployStore {
     @observable
     fresh = false
 
+    // 环境刷新
+    @observable
+    deployFresh = false
+
     // 第三方认证地址
     @observable
     authThirdList = []
@@ -45,7 +49,7 @@ export class DeployStore {
         const data = await Axios.post('/deployEnv/createDeployEnv',value)
         if(data.code===0){
             message.info('创建成功',0.5)
-            this.fresh = !this.fresh
+            this.deployFresh = !this.deployFresh
         }
     }
 
@@ -76,7 +80,7 @@ export class DeployStore {
         const data = await Axios.post('/deployServer/createDeployServer',value)
         if(data.code===0){
             message.info('创建成功',0.5)
-            this.fresh = !this.fresh
+            this.deployFresh = !this.deployFresh
         }
     }
     /**

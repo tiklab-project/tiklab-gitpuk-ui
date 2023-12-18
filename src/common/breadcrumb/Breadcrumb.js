@@ -11,7 +11,7 @@ import './Breadcrumb.scss';
  */
 const BreadcrumbContent = props =>{
 
-    const {firstItem,secondItem,goBack} = props
+    const {firstItem,secondItem,goBack,children} = props
 
     const {t} = useTranslation()
     return  <div className='xcode-breadcrumb'>
@@ -22,6 +22,7 @@ const BreadcrumbContent = props =>{
                     </span>
                     {secondItem && <span className='xcode-breadcrumb-secondItem'>/&nbsp;&nbsp;{secondItem}</span>}
                 </div>
+                <div>{children}</div>
             </div>
 }
 

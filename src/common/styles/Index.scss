@@ -208,9 +208,12 @@ ul li{
     --xcode-head-height: 48px;
     --xcode-content-height: calc(100vh - 48px);
 
-    ---xcode-table-top:10px;
-    --xcode-data-top-20:20px;
-    --xcode-data-top-30:30px
+    --git-hover-color:var(--thoughtware-gray-300); /*hover颜色*/
+    --git-action-color:var(--thoughtware-gray-400); /*选中*/
+
+    --gittork-table-top:10px;
+    --gittork-data-top-20:20px;
+    --gittork-data-top-30:30px
 }
 .text-color:hover{
     color: #1890ff;

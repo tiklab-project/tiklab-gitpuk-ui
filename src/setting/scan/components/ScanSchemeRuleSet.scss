@@ -1,5 +1,5 @@
 .scanSchemeRuleSet-style{
-
+  position: relative;
   .border-style{
     border:1px solid #cccccc;
     cursor: pointer;
@@ -9,11 +9,15 @@
         font-size: 14px;
         font-weight: bold;
       }
-
       .data-desc{
         color: #94979a;
         padding-top: 10px;
       }
+      .data-desc-rule{
+        color: rgb(250, 140, 21);;
+        padding-top: 10px;
+      }
+
       .data-rule-style{
         padding-top: 15px;
         color: #94979a;
@@ -24,13 +28,25 @@
       }
     }
   }
+  .border-style-disabled{
+    cursor:not-allowed;
+  }
 }
 
+.scanSchemeRuleSet-style:hover .delete-icon{
+  display: block;
+  position: absolute;
+  right: 5px;
+  top: 0;
+  height: 100%;
+}
 
 .delete-icon{
-  display: block;
+  display: none;
   text-align: end;
-  position: static;
+  font-size: 16px;
+  cursor: pointer;
+  color: #94979a;
 }
 
 @media (max-width: 1024px){

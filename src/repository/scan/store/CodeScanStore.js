@@ -45,15 +45,6 @@ export class CodeScanStore  {
      * @param  param
      */
     @action
-    findScanIssuesBySonar=async (param)=>{
-        const res = await Axios.post("/codeScan/findScanIssuesBySonar",param)
-        return res
-    }
-    /**
-     *查询sonar 的扫描问题列表
-     * @param  param
-     */
-    @action
     findScanIssuesDeBySonar=async (issueKey,component)=>{
         const param=new FormData()
         param.append("issueKey",issueKey)

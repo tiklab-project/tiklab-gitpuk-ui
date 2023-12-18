@@ -76,7 +76,7 @@ export class ScanSchemeStore {
         }
     }
     /**
-     * 更新扫描方案和规则关系
+     * 更新扫描方案
      * @param value
      * @returns {Promise<void>}
      */
@@ -144,6 +144,19 @@ export class ScanSchemeStore {
         return data
     }
 
+    /**
+     * 修改扫描方案sonar关系
+     * @param value
+     * @returns {Promise<void>}
+     */
+    @action
+    updateScanSchemeSonar = async (param) =>{
+        const data = await Axios.post('/scanSchemeSonar/updateScanSchemeSonar',param)
+        if (data.code===0){
+            message.info("更新成功",1)
+        }
+        return data
+    }
 }
 
 const scanSchemeStore=new ScanSchemeStore()

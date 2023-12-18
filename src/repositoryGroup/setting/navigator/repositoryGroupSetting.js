@@ -27,7 +27,7 @@ const RepositoryGroupSetting = props =>{
     return  <RpySetting
                 {...props}
                 secondRouter={secondRouter}
-                domainId={groupInfo.groupId}
+                domainId={groupInfo?.groupId}
             />
 
 }

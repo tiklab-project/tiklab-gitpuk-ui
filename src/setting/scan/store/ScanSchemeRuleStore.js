@@ -33,6 +33,21 @@ export class ScanSchemeRuleStore {
         return data
     }
 
+    /**
+     * 移出扫描方案的规则集
+     * @param value
+     * @returns {Promise<void>}
+     */
+    @action
+    deleteScanSchemeRuleSet = async (id) =>{
+        const param=new FormData()
+        param.append("id",id)
+        const data = await Axios.post('/scanSchemeRuleSet/deleteScanSchemeRuleSet',param)
+        if (data.code===0){
+            this.fresh = !this.fresh
+        }
+        return data
+    }
 
     /**
      * 分页查询扫描方案的规则集关联的规则

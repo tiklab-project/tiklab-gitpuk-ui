@@ -31,29 +31,37 @@ const RepositoryAside= props=>{
     useEffect(async ()=>{
         findRepositoryByAddress(webUrl).then(res=>{
             if (res.code===0){
-                findRepositoryAuth(res.data.rpyId).then(data=>{
-                    if (data.code===0){
-                        
-                        if (data.data==='false'){
-                            props.history.push(`/repository`)
+                if (res.data){
+                    findRepositoryAuth(res.data.rpyId).then(data=>{
+                        if (data.code===0){
+                            if (data.data==='false'){
+                                props.history.push(`/repository`)
+                            }
                         }
-                    }
-                })
+                    })
+
+                    // 所有仓库
+                    findRepositoryPage({ pageParam:{currentPage:1, pageSize:15},
+                        userId:getUser().userId}).then(rpyData=>{
+                        if (rpyData.code===0){
+                            const a=rpyData.data.dataList.filter(a=>a.rpyId!==res.data.rpyId)
+                            a.unshift(res.data)
+                            setRepositoryList(a)
+                        }
+                    })
+                }else {
+                    //仓库不存在
+                    props.history.push(`/repository`)
+                }
+
             }
         })
-        // 所有仓库
-      const res=await  findRepositoryPage({   pageParam:{
-                currentPage:1,
-                pageSize:15
-            },
-            userId:getUser().userId})
-        if (res.code===0){
-            setRepositoryList(res.data.dataList)
-        }
 
         return ()=>{
             setRepositoryInfo('')
         }
+
+
 
     },[])
 
@@ -100,7 +108,7 @@ const RepositoryAside= props=>{
         },
         {
             to:`/repository/${webUrl}/scanPlay`,
-            title: `代码检测`,
+            title: `代码扫描`,
             icon: <BarChartOutlined />,
         },
 

@@ -33,6 +33,7 @@ const ScanReqDrawer = (props) => {
             placement='right'
             closable={false}
             width={"60%"}
+            contentWrapperStyle={{top:48,height:"calc(100% - 48px)"}}
             className='library-drawer'
             onClose={cancelDrawer}
             visible={visible}

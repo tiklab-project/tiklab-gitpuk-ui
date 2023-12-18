@@ -122,7 +122,7 @@ const ScanEnvironmentEditPop = (props) => {
                             </Form.Item>
                             {
                                 authType==='account'?
-                                    <>
+                                    <Fragment>
                                         <Form.Item
                                             label={'用户名'}
                                             name={'userName'}
@@ -137,7 +137,7 @@ const ScanEnvironmentEditPop = (props) => {
                                         >
                                             <Input placeholder={"sonar登录密码"}/>
                                         </Form.Item>
-                                    </>:
+                                    </Fragment>:
                                     <Form.Item
                                         label={'私钥'}
                                         name={'privateKey'}

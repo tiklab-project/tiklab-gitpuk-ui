@@ -12,36 +12,15 @@ import "./ScanSchemeRuleSet.scss"
 import {Popconfirm, Table, Tooltip} from "antd";
 import Omit from "../../../common/omit/Omit";
 import {DeleteOutlined} from "@ant-design/icons";
-import EmptyText from "../../../common/emptyText/EmptyText";
 const ScanSchemeRuleSet = (props) => {
-    const {scheme,scanSonar,scanSchemeRuleSetList,goSchemeRule}=props
+    const {scheme,scanSchemeRuleSetList,goSchemeRule,deleteScanSchemeRuleSet}=props
+
+
+
     const cuteBorder = (value) => {
         goSchemeRule(value)
     }
 
-    const columns = [
-        {
-            title: '名称',
-            dataIndex: 'envName',
-            key: 'envName',
-            width:'15%',
-            ellipsis:true,
-        },
-        {
-            title: '类型',
-            dataIndex: 'envType',
-            key: 'envType',
-            width:'15%',
-            ellipsis:true,
-        },
-        {
-            title: '地址',
-            dataIndex: 'envAddress',
-            key: 'envAddress',
-            width:'60%',
-            ellipsis:true,
-        }
-    ]
 
     return(
         <div className='ruleSet'>
@@ -62,31 +41,31 @@ const ScanSchemeRuleSet = (props) => {
                                     </div>
                                 </div>
                             </div>
+
+                            <div className='delete-icon'>
+                                <Popconfirm
+                                    placement="bottomRight"
+                                    title="移除规则包"
+                                    description={"变更将影响关联该方案的扫描结果"}
+                                    okText='确定'
+                                    cancelText='取消'
+                                    onConfirm={()=>deleteScanSchemeRuleSet(item.id)}
+                                >
+                                    <DeleteOutlined />
+                                </Popconfirm>
+                            </div>
                         </div>
                     )
                 }):
                 <Fragment>
                     <div  className='scanSchemeRuleSet-style'>
                         <div  className='border-style' onClick={()=>cuteBorder(item)}>
-                            <div className='border-data-style'>
-                                <div className='data-title'>{scanSonar.deployEnv?.envType}环境地址</div>
-                                <Tooltip placement="top" title={scanSonar.deployEnv?.envAddress} >
-                                    <div className='data-desc'>
-                                        <Omit value={scanSonar.deployEnv?.envAddress} maxWidth={1000}/>
-                                    </div>
-                                </Tooltip>
-                            </div>
-                        </div>
-                    </div>
-                    <div  className='scanSchemeRuleSet-style'>
-                        <div  className='border-style' onClick={()=>cuteBorder(item)}>
-                            <div className='border-data-style'>
-                                <div className='data-title'>{scanSonar.deployServer?.serverName}地址</div>
-                                <Tooltip placement="top" title={scanSonar.deployServer?.serverAddress} >
-                                        <div className='data-desc'>
-                                            <Omit value={scanSonar.deployServer?.serverAddress} maxWidth={1000}/>
-                                        </div>
-                                    </Tooltip>
+                            <div className='border-data-style border-style-disabled'>
+                                <div className='data-title'>sonar规则包</div>
+                                <div className='data-desc'>
+                                    基于sonar检测工具帮助开发者检测开发过程中的编码问题，帮助开发人员提高代码质量
+                                </div>
+                                <div className='data-desc-rule'>不支持查看规则</div>
                             </div>
                         </div>
                     </div>

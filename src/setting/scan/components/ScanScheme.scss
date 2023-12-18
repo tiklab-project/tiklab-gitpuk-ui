@@ -2,7 +2,7 @@
   display: flex;
   height: 100%;
   .scheme-left-style{
-    width: 200px;
+    width: 260px;
     height: auto;
     border-right: 1px solid #e3e9ed;
     .scan-title-nav{
@@ -27,11 +27,45 @@
         color: #94979a;
       }
     }
+
+    .cate-li{
+      position: relative;
+      cursor: pointer;
+    }
+    .categoryNav-li:hover{
+      background-color: var(--git-hover-color);
+    }
     .choices-scheme-nav{
-      background-color: #b3d4fc;
+      background-color: var( --git-action-color);
     }
 
+    .category-action {
+      display: none;
+      width: 50px;
+      font-size: 24px;
+      .category-action-more {
+        width: 60px;
+        display: flex;
+        justify-content: space-around;
+      }
+      .category-action-right{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 100%;
+      }
+    }
+
+    .cate-li:hover .category-action{
+      display: block;
+      position: absolute;
+      right: 10px;
+      top: 0;
+      height: 100%;
+    }
   }
+
+
   .scheme-right-style{
     flex: 1;
     max-width: 1280px;
@@ -47,7 +81,7 @@
     }
     .tab-style{
       display: flex;
-      gap: 10px;
+      gap: 18px;
       .choose-tab-nav{
         color: #0063FF;
         border-bottom:2px solid #0063FF;
@@ -61,9 +95,13 @@
       }
     }
     .tab-data{
-      margin-top: 10px;
+      margin-top: 13px;
     }
 
+    .add-rule-style{
+      text-align: end;
+      margin-top: 5px;
+    }
   }
 
 
@@ -74,7 +112,7 @@
     align-items: center;
   }
   .scanScheme-table{
-    padding-top: var(---xcode-table-top);
+    padding-top: var(--gittork-table-top);
   }
   .scanScheme-ill{
     margin: var(--thoughtware-padding-item) 0;

@@ -14,7 +14,7 @@ import ScanPlayStore from "../store/ScanPlayStore";
 import {observer} from "mobx-react";
 import ScanSurvey from "./ScanSurvey";
 import scanRecordStore from "../store/ScanRecordStore"
-import {Table, message, Empty} from "antd";
+import {Table, message, Empty, Tooltip} from "antd";
 import Page from "../../../common/page/Page";
 import codeScanStore from "../store/CodeScanStore";
 import success from "../../../assets/images/img/success.png";
@@ -23,6 +23,8 @@ import ScanReqList from "./ScanReqList";
 import ScanSchemeStore from "../../../setting/scan/store/scanSchemeStore";
 import fileStore from "../../file/store/FileStore";
 import {findCommitId} from "../../file/components/Common";
+import {FileTextOutlined, SettingOutlined} from "@ant-design/icons";
+import ScanLogDrawer from "./ScanLogDrawer";
 const ScanRecord= (props) => {
     const {match:{params}} = props;
     const {findScanPlay,scanPlay}=ScanPlayStore
@@ -30,10 +32,8 @@ const ScanRecord= (props) => {
     const {codeScanExec,findScanState}=codeScanStore
     const {findScanSchemeSonarList}=ScanSchemeStore
 
-
     const [scanRecordList,setScanRecordList]=useState([])
-    const [tableType,setTableType]=useState('survey')
-
+    const [tableType,setTableType]=useState('history')
 
     const [currentPage,setCurrentPage]=useState(1)
     const [totalPage,setTotalPage]=useState()
@@ -42,10 +42,15 @@ const ScanRecord= (props) => {
     const [multiState,setMultiState]=useState(false)
     const [scanRecord,setScanRecord]=useState('')
 
+    const [logVisible,setLogVisible]=useState(false)  //日志抽屉状态
+    const [logScanRecord,setLogScanRecord]=useState()  //打开日志的扫描记录
+
+    const [exeState,setExeState]=useState(false)
+
     useEffect(async () => {
         await findScanPlay(params.playId)
         findScanRecord(currentPage)
-    }, []);
+    }, [exeState]);
 
     const recordColumns =[
         {
@@ -93,7 +98,7 @@ const ScanRecord= (props) => {
             title: '扫描方式',
             dataIndex: 'scanWay',
             key:"scanWay",
-            width:'10%',
+            width:'20%',
             render:(text)=>text==="hand"&&<div>手动触发</div>
         },
         {
@@ -101,7 +106,21 @@ const ScanRecord= (props) => {
             dataIndex: 'createTime',
             width:'20%',
         },
+        {
+            title: '操作',
+            dataIndex: 'exec',
+            width:'5%',
+            render:(text,record)=>{
+                return(
+                    <Tooltip title='日志'>
+                        <span style={{cursor:"pointer",fontSize:15}} onClick={()=>openLog(record)}>
+                            <FileTextOutlined />
+                        </span>
+                    </Tooltip>
 
+                )
+            }
+        },
     ]
 
     //查询扫描记录
@@ -122,6 +141,7 @@ const ScanRecord= (props) => {
     }
 
     const excMultiScan = () => {
+        setLogVisible(true)
         codeScanExec(params.playId).then(res=>{
             if (res.code===0&&res.data==='ok'){
                 setMultiState(true)
@@ -135,22 +155,27 @@ const ScanRecord= (props) => {
         let timer=setInterval(()=>{
             findScanState(params.playId,scanPlay?.scanScheme.scanWay).then(res=>{
                 if (res.code===0){
-                    if (res.data==='success'){
+                    setLogScanRecord(res.data)
+                    if (res.data.scanResult==='success'){
                         message.success('扫描成功',1)
-                        clearInterval(timer)
+                        setExeState(true)
                         setMultiState(false)
-                    }
-                    if (res.data==='fail'){
-                        message.error('扫描失败',1)
                         clearInterval(timer)
-                        setMultiState(false)
                     }
+                    if (res.data.scanResult==='fail'){
+                        message.success('扫描失败',1)
+                        setExeState(true)
+                        setMultiState(false)
+                        clearInterval(timer)
+                    }
+
+
                 }else {
                     clearInterval(timer)
                     setMultiState(false)
                 }
             })
-        },2000)
+        },1000)
     }
 
 
@@ -161,6 +186,7 @@ const ScanRecord= (props) => {
             findScanRecord(currentPage)
         }
     }
+
 
     const goScanResult= (value) => {
         if (scanPlay.scanScheme.scanWay==='sonar'){
@@ -179,13 +205,27 @@ const ScanRecord= (props) => {
         findScanRecord(value)
     }
 
+
+    //打开扫描日志
+    const openLog = (value) => {
+        setLogVisible(true)
+        setLogScanRecord(value)
+    }
+
     return(
         <div className='scanRecord xcode-repository-width  xcode'>
             <div className='scanRecord-top'>
-                <BreadcrumbContent firstItem={`代码扫描`} goBack={goBack}/>
+                <BreadcrumbContent firstItem={scanPlay?.playName} goBack={goBack}/>
             </div>
             <div className='scan-play-style'>
-                <div className='scan-play-text'>{scanPlay?.playName}</div>
+                {
+                    scanPlay&&
+                    <div className='scan-play-desc'>
+                        <div>分支：{`${scanPlay.repository?.name} / ${scanPlay.branch}`}</div>
+                        <div>扫描方式: {scanPlay.scanScheme.scanWay==='sonar'?"sonar扫描":"规则包扫描"}</div>
+                        <div>最近扫描：{`${scanPlay.userName} 扫描于${scanPlay.latScanTime}`}</div>
+                    </div>
+                }
                 <div className='scan-but-style'>
                     {
                         multiState?
@@ -194,14 +234,7 @@ const ScanRecord= (props) => {
                     }
                 </div>
             </div>
-            {
-                scanPlay&&
-                <div className='scan-play-desc'>
-                    <div>分支：{`${scanPlay.repository?.name} / ${scanPlay.branch}`}</div>
-                    <div>扫描方式: {scanPlay.scanScheme.scanWay==='sonar'?"sonar扫描":"规则包扫描"}</div>
-                    <div>最近扫描：{`${scanPlay.userName} 扫描于${scanPlay.latScanTime}`}</div>
-                </div>
-            }
+
 
             <div className='scan-data-style'>
                 <div className='scan-tab-style'>
@@ -235,6 +268,7 @@ const ScanRecord= (props) => {
                     }
                 </div>
             </div>
+            <ScanLogDrawer visible={logVisible} setVisible={setLogVisible} scanRecord={logScanRecord}/>
         </div>
     )
 

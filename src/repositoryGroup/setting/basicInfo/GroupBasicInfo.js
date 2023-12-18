@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react';
+import React,{useState,useEffect,Fragment} from 'react';
 import {Modal,Form, Input} from 'antd';
 import {
     ExclamationCircleOutlined,
@@ -15,12 +15,14 @@ import RepositoryPower from '../../../repository/repository/components/Repositor
 import './GroupBasicInfo.scss';
 import groupStore from "../../repositoryGroup/store/RepositoryGroupStore"
 const GroupBasicInfo = props =>{
-
-
+    const {repositoryStore}=props
+    const {findRepositoryList}=repositoryStore
     const {groupInfo,deleteGroup,updateGroup} = groupStore
     const [form] = Form.useForm()
     const [expandedTree,setExpandedTree] = useState([])  // 树的展开与闭合
     const [powerType,setPowerType] = useState("")  //  仓库权限类型
+
+    const [repositoryList,setRepositoryList]=useState([])  //制品库下面的仓库
 
 
     useEffect(()=>{
@@ -30,7 +32,14 @@ const GroupBasicInfo = props =>{
                 name:groupInfo.name,
                 remarks:groupInfo.remarks
             })
+
+            findRepositoryList({groupId:groupInfo.groupId
+            }).then(res=>{
+                
+                res.code===0&&setRepositoryList(res.data)
+            })
         }
+
 
 
     },[groupInfo])
@@ -124,11 +133,24 @@ const GroupBasicInfo = props =>{
             icon: <DeleteOutlined />,
             enCode:'house_delete',
             content: <div className='bottom-delete'>
-                <div style={{color:'#ff0000',paddingBottom:5,fontSize:13}}>
-                    此操作无法恢复！请慎重操作！
-                </div>
-                <Btn title={'取消'} isMar={true} onClick={()=>setOpenOrClose(2)}/>
-                <Btn onClick={onConfirm} type={'dangerous'} title={'删除'}/>
+
+                {
+                    repositoryList.length>0?
+                        <Fragment>
+                            <div style={{color:'#ff0000',paddingBottom:5,fontSize:13}}>
+                                该仓库组存在仓库，请先移出仓库
+                            </div>
+                            <Btn title={'取消'} isMar={true} onClick={()=>setOpenOrClose(2)}/>
+                            <Btn type={'disabled'} title={'删除'}/>
+                        </Fragment>:
+                        <Fragment>
+                            <div style={{color:'#ff0000',paddingBottom:5,fontSize:13}}>
+                                此操作无法恢复！请慎重操作！
+                            </div>
+                            <Btn title={'取消'} isMar={true} onClick={()=>setOpenOrClose(2)}/>
+                            <Btn onClick={onConfirm} type={'dangerous'} title={'删除'}/>
+                        </Fragment>
+                }
             </div>
         }
     ]
@@ -202,4 +224,4 @@ const GroupBasicInfo = props =>{
     )
 }
 
-export default observer(GroupBasicInfo)
+export default inject('repositoryStore')(observer(GroupBasicInfo))

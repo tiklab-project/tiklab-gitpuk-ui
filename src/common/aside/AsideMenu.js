@@ -1,4 +1,5 @@
 import React,{useEffect} from 'react';
+import {Tooltip} from "antd";
 
 /**
  * 左侧菜单切换仓库或仓库组目录
@@ -26,10 +27,11 @@ const AsideMenu = props =>{
             case 'repository':
                 props.history.push(`/repository`)
                 break
-
         }
 
     }
+
+
     /**
      * 切换仓库或仓库组
      * @param item
@@ -52,6 +54,27 @@ const AsideMenu = props =>{
 
     }
 
+    /**
+     * 字段过长省略
+     * @param value  当前字段参数
+     */
+    const filedState = (value) => {
+        return(
+            value?.length>25?
+                <Tooltip placement="top" title={value}>
+                    <div style={{
+                        width: 145,
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap"
+                    }}>
+                        {value}
+                    </div>
+                </Tooltip>
+                :
+                <div>{value}</div>
+        )
+    }
     // 切换项目菜单列表
     const houseMenu = (item,index) =>{
         return(
@@ -59,13 +82,12 @@ const AsideMenu = props =>{
                 <div onClick={()=>{changeHouseDetails(item)}} key={index}
                      className={`menu-toggle-item ${info && info.rpyId===item.rpyId?'menu-toggle-active':''}`}
                 >
-                    <span className={`menu-toggle-icon ${item.color?`xcode-icon-${item.color}`:"xcode-icon-0"}`}>
+                    <div className={`menu-toggle-icon ${item.color?`xcode-icon-${item.color}`:"xcode-icon-0"}`}>
                         {item.name.substring(0,1).toUpperCase()}
-                    </span>
-                    <span className='menu-toggle-name'>
-                     {/*   { item.codeGroup && item.codeGroup.name + '/'}*/}
-                        { item.name }
-                    </span>
+                    </div>
+                    <div>
+                        {filedState(item?.name)}
+                    </div>
                 </div>:
                     <div onClick={()=>{changeHouseDetails(item)}} key={index}
                          className={`menu-toggle-item ${info && info.groupId===item.groupId?'menu-toggle-active':''}`}
@@ -74,7 +96,6 @@ const AsideMenu = props =>{
                             {item.name.substring(0,1).toUpperCase()}
                         </span>
                          <span className='menu-toggle-name'>
-                         {/*   { item.codeGroup && item.codeGroup.name + '/'}*/}
                                 { item.name }
                         </span>
                     </div>
@@ -92,7 +113,7 @@ const AsideMenu = props =>{
             </div>
             {
                 list.length>5&&
-                <div className='menu-toggle-tail cursor' onClick={goRpyList}>查看更多...</div>
+                <div className='menu-toggle-tail cursor' onClick={goRpyList}>查看更多</div>
             }
         </div>
     )

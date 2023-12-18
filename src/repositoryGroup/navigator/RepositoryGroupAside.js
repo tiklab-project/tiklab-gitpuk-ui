@@ -19,13 +19,26 @@ const RepositoryGroupAside= props =>{
     useEffect(()=>{
         // 初始化仓库组
         findGroupByName(groupName).then(res=>{
-            setGroupInfo(res.data)
+            debugger
+            if (res.code===0){
+                if (res.data){
+                    setGroupInfo(res.data)
+                    findRepositoryGroupPage({pageParam:{currentPage:1,pageSize:15},
+                        userId:getUser().userId}).then(groupData=>{
+                        if (groupData.code===0){
+                            const a=groupData.data.dataList.filter(a=>a.groupId!==res.data.groupId)
+                            a.unshift(res.data)
+                            setGroupList(a)
+                        }
+                    })
+                }else {
+                    //仓库组不存在
+                    props.history.push(`/group`)
+                }
+
+            }
         })
 
-        findRepositoryGroupPage({pageParam:{currentPage:1,pageSize:15}, userId:getUser().userId}).then(res=>{
-            res.code===0&&
-            setGroupList(res.data.dataList)
-        })
     },[groupName])
 
     // 侧边第一栏导航

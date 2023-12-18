@@ -1,3 +1,9 @@
+/**
+ * 消息
+ * @param props
+ * @returns {JSX.Element}
+ * @constructor
+ */
 import React, {useState,useEffect,useRef} from "react";
 import {Tooltip} from "antd";
 import "./DropdownMenu.scss";

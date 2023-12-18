@@ -13,18 +13,21 @@ import branchStore from "../../branch/store/BranchStore";
 import scanSchemeStore from "../../../setting/scan/store/scanSchemeStore";
 import { observer} from "mobx-react";
 import codeScanStore from "../store/CodeScanStore";
+import scanPlayStore from "../store/ScanPlayStore";
 const ScanPlayEditPop = (props) => {
 
     const [form] = Form.useForm()
-    const {editVisible,setEditVisible,createScanPlay,repositoryId,scanPlay,updateScanPlay,setScanPlay,editType,
+    const {editVisible,setEditVisible,repositoryId,scanPlay,setScanPlay,editType,setLogVisible,setLogScanRecord,
         setMultiState,setAddPlayId}=props
     const {codeScanExec,findScanState}=codeScanStore
+    const {findScanPlayPage,createScanPlay,updateScanPlay,deleteScanPlay,refresh}=scanPlayStore
 
     const {findAllBranch,branchList} = branchStore
     const {findAllScanScheme,scanSchemeList} = scanSchemeStore
 
     const [branch,setBranch]=useState('')  //选择的分支
-    const [scheme,setScheme]=useState('')  //选择的方案
+    const [scheme,setScheme]=useState('')  //选择的方案id
+    const [schemeData,setSchemeData]=useState(null)
 
     useEffect(()=>{
         if (scanPlay){
@@ -54,8 +57,9 @@ const ScanPlayEditPop = (props) => {
             if (editType==='add'){
                 createScanPlay({playName:values.playName,repository:{rpyId:repositoryId},branch:branch,scanScheme:{id:scheme}}).then(res=>{
                     if (res.code===0){
-                        setAddPlayId(res.data)
                         cancel()
+                        setLogVisible(true)
+                        setAddPlayId(res.data)
                         codeScanExec(res.data).then(scanCode=>{
                             if (scanCode.code===0&&scanCode.data==='ok'){
                                 setMultiState(true)
@@ -75,24 +79,23 @@ const ScanPlayEditPop = (props) => {
     //扫描定时任务
     const scanLibraryTime =async(playId)=>{
         let timer=setInterval(()=>{
-            findScanState(playId,scanPlay?.scanScheme.scanWay).then(res=>{
+            findScanState(playId,schemeData?.scanWay).then(res=>{
                 if (res.code===0){
-                    if (res.data==='success'){
+                    setLogScanRecord(res.data)
+                    if (res.data.scanResult==='success'){
                         message.success('扫描成功',1)
                         clearInterval(timer)
-                        setMultiState(false)
                     }
-                    if (res.data==='fail'){
-                        message.error('扫描失败',1)
+                    if (res.data.scanResult==='fail'){
+                        message.success('扫描失败',1)
                         clearInterval(timer)
-                        setMultiState(false)
                     }
                 }else {
                     clearInterval(timer)
                     setMultiState(false)
                 }
             })
-        },2000)
+        },1000)
     }
 
     //选择分支
@@ -102,6 +105,7 @@ const ScanPlayEditPop = (props) => {
 
     //选择方案
     const choiceScheme = (value) => {
+        setSchemeData(scanSchemeList.filter(a=>a.id===value)[0])
         setScheme(value)
     }
 

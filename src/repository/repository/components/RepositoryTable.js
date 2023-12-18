@@ -6,7 +6,7 @@
  * @update: 2023-05-22 14:30
  */
 
-import React ,{Fragment}from 'react';
+import React ,{Fragment,useState}from 'react';
 import {observer} from "mobx-react";
 import {LockOutlined, SettingOutlined, UnlockOutlined} from '@ant-design/icons';
 import {Space,Table,Tooltip} from 'antd';
@@ -16,10 +16,14 @@ import {SpinLoading} from "../../../common/loading/Loading";
 import './RepositoryTable.scss';
 import Page from "../../../common/page/Page";
 import UserIcon from "../../../common/list/UserIcon";
+import Omit from "../../../common/omit/Omit";
+
 
 const RepositoryTable = props => {
 
     const {isLoading,repositoryList,createOpenRecord,changPage,totalPage,currentPage,onChange} = props
+
+    const [innerWidth,setInnerWidth]=useState(window.innerWidth)
     /**
      * 跳转代码文件
      * @param text
@@ -40,6 +44,13 @@ const RepositoryTable = props => {
         props.history.push(`/repository/${record.address}/setting/info`)
     }
 
+    //实时获取浏览器宽度
+    window.onresize = function() {
+        let windowWidth = window.innerWidth;
+        setInnerWidth(windowWidth)
+        console.log(windowWidth);
+    };
+
 
     const columns = [
         {
@@ -54,7 +65,13 @@ const RepositoryTable = props => {
                         <Listicon text={text} colors={record.color}/>
                         <div className='name-text'>
                             <div className='name-text-title'>
-                                <span className='name-text-name text-color'>{ record?.address.substring(0, record?.address.indexOf("/",1))+"/"+record.name}</span>
+                                <span className='name-text-name text-color'>
+                                    {
+                                        innerWidth<1550?
+                                            <Omit  value={record?.address} maxWidth={300}/>:
+                                            <div>{record?.address}</div>
+                                    }
+                                </span>
                               {
                                     text==="sample-repository"&&
                                     <span className='name-text-type'>{ "示例仓库"}</span>

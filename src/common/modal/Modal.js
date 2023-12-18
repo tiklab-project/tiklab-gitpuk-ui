@@ -29,7 +29,7 @@ const Modals = props => {
 
     return (
         <Modal
-            style={{height:height,top:60}}
+            style={{height:height,top:70}}
             bodyStyle={{padding:0}}
             className="xcode"
             {...res}

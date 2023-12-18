@@ -92,7 +92,7 @@ export class GroupStore {
         param.append("groupName",value)
         const data = await Axios.post('/rpyGroup/findGroupByName',param)
         if(data.code===0){
-            
+
             this.groupInfo=data.data
         }
         return data
@@ -118,7 +118,7 @@ export class GroupStore {
      */
     @action
     findAllGroup = async () =>{
-        const data = await Axios.post('/rpyGroup/findRepositoryGroupPage')
+        const data = await Axios.post('/rpyGroup/findAllGroup')
         if(data.code===0){
             this.groupList = data.data && data.data
         }

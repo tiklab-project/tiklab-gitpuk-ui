@@ -24,6 +24,8 @@ const ScanRuleDetails = (props) => {
     const {match:{params}} = props;
     const {createScanRule,deleteScanRule,findScanRulePage,fresh}=ScanRuleStore
     const {findScanRuleSet,scanRuleSet}=ScanRuleSetStore
+
+
     const [scanRuleList,setScanRuleList]=useState()
     const [scanRule,setScanRule]=useState()
     const [editVisible,setEditVisible] = useState(false)
@@ -36,6 +38,8 @@ const ScanRuleDetails = (props) => {
     useEffect(()=>{
         getScanRulePage(currentPage);
         findScanRuleSet(params.ruleSetId)
+
+
     },[fresh])
 
 
@@ -131,7 +135,7 @@ const ScanRuleDetails = (props) => {
         <div className='ruleDetails'>
             <div className='xcode-repository-width xcode'>
                 <div className='ruleDetails-up'>
-                    <BreadcrumbContent firstItem={"扫描规则"} goBack={goBack}/>
+                    <BreadcrumbContent firstItem={scanRuleSet?.ruleSetName} goBack={goBack}/>
                     <Btn
                         type={'primary'}
                         title={'创建规则'}

@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react';
 import {renderRoutes} from 'react-router-config';
-import {Dropdown} from 'antd';
+import {Dropdown, Tooltip} from 'antd';
 import {CaretDownOutlined, MenuUnfoldOutlined, SettingOutlined} from '@ant-design/icons';
 import {useTranslation} from 'react-i18next';
 import {Loading} from '../loading/Loading';
@@ -29,6 +29,7 @@ const Aside = props => {
     useEffect(()=>{
         // 侧边栏 -- 展开/收起
         setNormalOrScrum(isSide?isSide:'normal')
+
     },[normalOrScrum])
 
     useEffect(()=>{
@@ -46,7 +47,7 @@ const Aside = props => {
     },[path,info])
 
     const renderType = pathType =>{
-        
+
         let path = `/repository/${repositoryAddress}`
         if(!pathType){
             return path
@@ -125,7 +126,10 @@ const Aside = props => {
                         overlayClassName={`aside-dropdown-${normalOrScrum} aside-dropdown`}
                     >
                         <div className={`${normalOrScrum}-aside_chang`} onClick={(e)=>e.preventDefault()}>
-                            <Listicon text={info?.name} colors={info?.color}/>
+                            <Tooltip placement="right" title={info?.name} >
+                                <div>  <Listicon text={info?.name} colors={info?.color}/></div>
+                            </Tooltip >
+
                             {
                                 normalOrScrum === 'scrum' &&
                                 <span className='dropdowns_name'>{info?.name}</span>
@@ -142,10 +146,6 @@ const Aside = props => {
                     <div className={`${normalOrScrum}-aside-item-icon`}><SettingOutlined/></div>
                     <div className={`${normalOrScrum}-aside-item-title`}>{t('Setting')}</div>
                 </div>
-             {/*   <div className={`${normalOrScrum}-aside-item`} onClick={()=>setMenuFold()}>
-                    <div className={`${normalOrScrum}-aside-item-icon`}><MenuUnfoldOutlined/></div>
-                    <div className={`${normalOrScrum}-aside-item-title`}>{t(normalOrScrum==='scrum'?'Collapse':'Expand')}</div>
-                </div>*/}
             </div>
             {
                 isLoading ? <Loading/> :

@@ -16,9 +16,11 @@ import {Popconfirm, Table, Tooltip} from "antd";
 import EmptyText from "../../../common/emptyText/EmptyText";
 import ScanEnvironmentEditPop from "./ScanEnvironmentEditPop";
 import scanEnvStore from "../store/ScanEnvStore";
+import deployStore from "../store/DeployStore";
 
 const ScanEnvironment = (props) => {
     const {deployEnvList,findDeployEnvList,deleteDeployEnv,deleteDeployServer,findDeployServerList,deployServerList,fresh} = scanEnvStore
+    const {deployFresh} = deployStore
 
     const [addVisible,setAddVisible] = useState(false)
     const [tab,setTab]=useState('maven')
@@ -27,7 +29,7 @@ const ScanEnvironment = (props) => {
 
         findDeployEnvList();
         findDeployServerList("sonar")
-    },[fresh])
+    },[fresh,deployFresh])
 
     const columns = [
         {
@@ -141,7 +143,7 @@ const ScanEnvironment = (props) => {
                     />
                 </div>
                 <div className='tab-style'>
-                    <div className={`${tab==='maven'&& ' choose-tab-nav '}  tab-nav`} onClick={()=>setTableType("maven")}>执行环境</div>
+                    <div className={`${tab==='maven'&& ' choose-tab-nav '}  tab-nav`} onClick={()=>setTableType("maven")}>maven</div>
                     <div className={`${tab==='sonar'&& ' choose-tab-nav '}  tab-nav`} onClick={()=>setTableType("sonar")}>Sonar</div>
                 </div>
                 <div className='dev-deploy-table'>
@@ -166,7 +168,6 @@ const ScanEnvironment = (props) => {
                     }
 
                 </div>
-
                 <ScanEnvironmentEditPop addVisible={addVisible} setAddVisible={setAddVisible}/>
             </div>
         </div>
