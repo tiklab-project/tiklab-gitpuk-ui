@@ -1,6 +1,6 @@
 .scanRecord{
   .scanRecord-top{
-    margin-bottom: 15px;
+    margin-bottom: 20px;
   }
   .scan-play-style{
     display: flex;
@@ -18,7 +18,6 @@
   .scan-play-desc{
     display:flex;
     margin-left: 8px;
-    margin-top: 15px;
     gap: 30px;
     color: #94979a;
   }
@@ -26,15 +25,29 @@
     margin-top: var(--gittork-data-top-30);
     .scan-tab-style{
       display: flex;
-      gap: 15px;
-      font-size: 14px;
-      font-weight: bold;
+      gap: 20px;
+      font-size: 16px;
+      font-weight: normal;
       margin-left: 8px;
       cursor: pointer;
       .choose-scanRecord-type{
         color: #0063FF;
         border-bottom:2px solid #0063FF;
       }
+    }
+    .scan-tab-desc{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 20px 0 10px 0;
+      .scan-tab-desc-num{
+        margin-left: 5px;
+        font-size: 15px;
+        color: #999999;
+      }
+    }
+    .tab-top{
+      margin-top: 20px;
     }
     .scan-data-desc{
       margin-top: 20px;
@@ -54,5 +67,10 @@
   }
   .text-blue{
     color: #3967FF;
+  }
+
+  .table-icon{
+    display: flex;
+    gap: 12px;
   }
 }

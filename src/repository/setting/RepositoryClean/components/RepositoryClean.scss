@@ -1,0 +1,39 @@
+.clean{
+  margin-top: 20px;
+  .clean-condition-style{
+    display: flex;
+    justify-items: center;
+    margin-left: 10px;
+    .clean-condition-title{
+      width: 100px;
+    }
+    .clean-condition-data{
+      flex: 1;
+      .clean-condition-desc{
+        padding: 0 10px;
+      }
+    }
+  }
+
+  .clean-condition-height{
+    padding: 15px 0;
+  }
+
+  .clean-table-20{
+
+    margin-top: 20px;
+  }
+  .clean-table-5{
+    margin-top: 5px;
+  }
+  .clean-style{
+    display: flex;
+    margin: 20px 0 10px 10px;
+
+    align-items: center;
+    .clean-num{
+      color: #999999;
+      flex: 1;
+    }
+  }
+}

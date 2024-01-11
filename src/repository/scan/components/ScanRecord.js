@@ -6,7 +6,7 @@
  * @update: 2023-11-03 14:30
  */
 
-import React,{useState,useEffect} from 'react';
+import React,{useState,useEffect,Fragment} from 'react';
 import "./ScanRecord.scss"
 import BreadcrumbContent from "../../../common/breadcrumb/Breadcrumb";
 import Btn from "../../../common/btn/Btn";
@@ -14,21 +14,20 @@ import ScanPlayStore from "../store/ScanPlayStore";
 import {observer} from "mobx-react";
 import ScanSurvey from "./ScanSurvey";
 import scanRecordStore from "../store/ScanRecordStore"
-import {Table, message, Empty, Tooltip} from "antd";
-import Page from "../../../common/page/Page";
+import {Table, message, Empty, Tooltip, Popconfirm} from "antd";
 import codeScanStore from "../store/CodeScanStore";
 import success from "../../../assets/images/img/success.png";
 import fail from "../../../assets/images/img/fail.png";
-import ScanReqList from "./ScanReqList";
 import ScanSchemeStore from "../../../setting/scan/store/scanSchemeStore";
-import fileStore from "../../file/store/FileStore";
-import {findCommitId} from "../../file/components/Common";
-import {FileTextOutlined, SettingOutlined} from "@ant-design/icons";
+import {DeleteOutlined, FileTextOutlined, SettingOutlined} from "@ant-design/icons";
 import ScanLogDrawer from "./ScanLogDrawer";
+import UserIcon from "../../../common/list/UserIcon";
+import ScanSetting from "./ScanSetting";
+import DeleteExec from "../../../common/delete/DeleteExec";
 const ScanRecord= (props) => {
     const {match:{params}} = props;
     const {findScanPlay,scanPlay}=ScanPlayStore
-    const {findScanRecordPage}=scanRecordStore
+    const {findScanRecordPage,deleteScanRecord,refresh}=scanRecordStore
     const {codeScanExec,findScanState}=codeScanStore
     const {findScanSchemeSonarList}=ScanSchemeStore
 
@@ -47,20 +46,22 @@ const ScanRecord= (props) => {
 
     const [exeState,setExeState]=useState(false)
 
+    const [totalRecord,setTotalRecord]=useState(0)
+
+
     useEffect(async () => {
         await findScanPlay(params.playId)
         findScanRecord(currentPage)
-    }, [exeState]);
-
+    }, [exeState,refresh]);
     const recordColumns =[
         {
-            title: '扫描对象',
+            title: '报告编号',
             dataIndex: 'scanObject',
             key:"name",
             width:'20%',
             render: (text,record) =>{
                 return(
-                    <div className='text-color' onClick={()=>goScanResult(text)}>{text?.substring(0,8)}</div>
+                    <div className='text-color' onClick={()=>goScanResult(record)}>{text?.substring(0,8)}</div>
                 )
             }
         },
@@ -79,7 +80,7 @@ const ScanRecord= (props) => {
                                     <span>成功</span>
                                 </div>:
                                 <div className='icon-text'>
-                                    <img  src={fail}  style={{width:20,height:20}}/>
+                                    <img  src={fail}  style={{width:16,height:16}}/>
                                     <span>失败</span>
                                 </div>
                         }
@@ -88,22 +89,33 @@ const ScanRecord= (props) => {
             }
 
         },
+
         {
-            title: '扫描人',
-            dataIndex: ['scanUser','name'],
-            key:"scanUserId",
-            width:'20%',
-        },
-        {
-            title: '扫描方式',
+            title: '触发信息',
             dataIndex: 'scanWay',
             key:"scanWay",
             width:'20%',
-            render:(text)=>text==="hand"&&<div>手动触发</div>
+            render:(text,record)=>{
+                return(
+                    <div style={{display:"flex" ,alignItems:"center"}}>
+                        <UserIcon text={record?.scanUser?.nickname?record.scanUser.nickname:record?.scanUser?.name} size={"small"}/>
+                        <div>{record?.scanUser?.nickname?record.scanUser.nickname:record?.scanUser?.name}</div>
+                        {
+                            text==="hand"?<div>手动触发</div>:<div>触发</div>
+                        }
+                    </div>
+                )
+            }
         },
         {
             title: '扫描时间',
             dataIndex: 'createTime',
+            width:'20%',
+        },
+        {
+            title: '耗时',
+            dataIndex: 'scanTime',
+            key:"scanTime",
             width:'20%',
         },
         {
@@ -112,12 +124,13 @@ const ScanRecord= (props) => {
             width:'5%',
             render:(text,record)=>{
                 return(
-                    <Tooltip title='日志'>
-                        <span style={{cursor:"pointer",fontSize:15}} onClick={()=>openLog(record)}>
-                            <FileTextOutlined />
-                        </span>
-                    </Tooltip>
+                    <div className='table-icon'>
 
+                        <Tooltip title='日志'>
+                            <FileTextOutlined style={{cursor:"pointer",fontSize:15}} onClick={()=>openLog(record)}/>
+                        </Tooltip>
+                        <DeleteExec value={record} deleteData={deleteScanRecord} title={"确认删除"}/>
+                    </div>
                 )
             }
         },
@@ -129,6 +142,7 @@ const ScanRecord= (props) => {
             if (res.code===0){
                 setScanRecordList(res.data.dataList)
                 setTotalPage(res.data.totalPage)
+                setTotalRecord(res.data.totalRecord)
                 if (res.data.dataList){
                     setScanRecord(res.data.dataList[0])
                 }
@@ -141,6 +155,7 @@ const ScanRecord= (props) => {
     }
 
     const excMultiScan = () => {
+        setLogScanRecord(null)
         setLogVisible(true)
         codeScanExec(params.playId).then(res=>{
             if (res.code===0&&res.data==='ok'){
@@ -163,7 +178,7 @@ const ScanRecord= (props) => {
                         clearInterval(timer)
                     }
                     if (res.data.scanResult==='fail'){
-                        message.success('扫描失败',1)
+                        message.error('扫描失败',1)
                         setExeState(true)
                         setMultiState(false)
                         clearInterval(timer)
@@ -196,6 +211,8 @@ const ScanRecord= (props) => {
                     window.open(`${data.deployServer.serverAddress}/project/issues?id=${scanPlay.repository.name}&resolved=false`)
                 }
             })
+        }else {
+            props.history.push(`/repository/${params?.namespace+"/"+params?.name}/scanDetails/${value.id}`)
         }
     }
 
@@ -238,11 +255,38 @@ const ScanRecord= (props) => {
 
             <div className='scan-data-style'>
                 <div className='scan-tab-style'>
+                    <div className={`${tableType==='history'&&' choose-scanRecord-type'}`} onClick={()=>cuteTab("history")}>扫描报告</div>
+                    <div className={`${tableType==='setting'&&' choose-scanRecord-type'}`} onClick={()=>cuteTab("setting")}>触发设置</div>
+                </div>
+
+                {
+                    tableType === 'history' &&
+                    <Fragment>
+                        <div className='scan-tab-desc'>
+                            <div className='scan-tab-desc-num'>报告数：{totalRecord}</div>
+                            <Btn  type={'disabled'} title={'导出'}/>
+                        </div>
+                        <div  className='tab-top'>
+                            <Table
+                                columns={recordColumns}
+                                dataSource={scanRecordList}
+                                rowKey={record=>record.id}
+                                pagination={false}
+
+                            />
+                        </div>
+                    </Fragment>||
+                    tableType === 'setting' &&
+                    <ScanSetting scanPlayId={params.playId}/>
+                }
+
+
+                {/*  <div className='scan-tab-style'>
                     <div className={`${tableType==='survey'&&' choose-scanRecord-type'}`} onClick={()=>cuteTab("survey")}>问题概览</div>
 
                     <div className={`${tableType==='trouble'&&' choose-scanRecord-type'}`} onClick={()=>cuteTab("trouble")}>问题列表</div>
 
-                    <div className={`${tableType==='history'&&' choose-scanRecord-type'}`} onClick={()=>cuteTab("history")}>扫描历史</div>
+                    <div className={`${tableType==='history'&&' choose-scanRecord-type'}`} onClick={()=>cuteTab("history")}>扫描报告</div>
                 </div>
                 <div className='scan-data-desc'>
                     {
@@ -266,7 +310,7 @@ const ScanRecord= (props) => {
                             <Page pageCurrent={currentPage} changPage={changPage} totalPage={totalPage}/>
                         </div>
                     }
-                </div>
+                </div>*/}
             </div>
             <ScanLogDrawer visible={logVisible} setVisible={setLogVisible} scanRecord={logScanRecord}/>
         </div>

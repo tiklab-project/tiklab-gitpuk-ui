@@ -14,18 +14,24 @@ const ScanReqDrawer = (props) => {
     const {visible,setVisible,issuesDetails,reqDetails,scanWay,blobFile}=props
     const [fileName,setFileName]=useState('')
 
+    const [dataList,setDataList]=useState([])
+
     useEffect(async () => {
         if (reqDetails){
             const fileName=reqDetails.fileName.substring(reqDetails.fileName.lastIndexOf("/")+1);
             setFileName(fileName)
         }
-    }, [reqDetails]);
+        if (blobFile){
+            const lines = blobFile.fileMessage.split("\n")
+            setDataList(lines)
+        }
+    }, [reqDetails,blobFile]);
     //取消弹窗
     const cancelDrawer = () => {
         setVisible(false)
-
     }
 
+    debugger
 
     return(
         <Drawer
@@ -66,7 +72,32 @@ const ScanReqDrawer = (props) => {
                         })
                     }
                 </div>:
-                <MonacoBlob readOnly={true} blobFile={blobFile}/>
+                <div className='reqDrawer'>
+                    {
+                        dataList&&dataList.map((item,key)=>{
+                            return(
+                                <div key={key} className='nav-tabs'>
+                                    <div className="nav-tabs-text">{key}</div>
+                                    {
+                                        reqDetails&&reqDetails.problemLine ===key?
+                                            <div style={{ whiteSpace: "pre-wrap" }}>
+                                                <code className='error_nav'>{item}</code>
+                                                <div className='issues_border'>
+                                                    {reqDetails.repairDesc}
+                                                </div>
+                                            </div>
+                                            :
+                                            <pre style={{ whiteSpace: "pre-wrap" }}>
+                                                <code>{item}</code>
+                                            </pre>
+                                         /*   <div dangerouslySetInnerHTML={{__html: item}}/>*/
+                                    }
+                                </div>
+                            )
+                        })
+                    }
+                </div>
+              /*  <MonacoBlob readOnly={true} blobFile={blobFile}/>*/
             }
         </Drawer>
     )

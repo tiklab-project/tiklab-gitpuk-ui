@@ -47,8 +47,7 @@ export class FileStore {
         const data = await Axios.post('/file/readFile',value)
         if(data.code===0){
             this.blobFile = data.data && data.data
-        }
-        else {
+        } else {
             this.blobFile = ''
         }
         return data

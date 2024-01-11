@@ -6,7 +6,7 @@ import {MessageNotice} from "thoughtware-message-ui";
  */
 const MessageNoticeContent = props =>{
 
-    return <MessageNotice {...props} bgroup={"gittork"}/>
+    return <MessageNotice {...props} bgroup={"gittok"}/>
 
 }
 

@@ -60,6 +60,7 @@ const ScanScheme=AsyncComponent(()=>import('./setting/scan/components/ScanScheme
 const ScanRule=AsyncComponent(()=>import('./setting/scan/components/ScanRule'))
 const ScanRuleDetails=AsyncComponent(()=>import('./setting/scan/components/ScanRuleDetails'))
 const EnvServer=AsyncComponent(()=>import('./setting/scan/components/ScanEnvironment'))
+const RepositoryClean=AsyncComponent(()=>import('./repository/setting/RepositoryClean/components/RepositoryClean'))
 
 /**
  * 仓库组
@@ -135,7 +136,8 @@ const Logout=AsyncComponent(()=>import('./login/Logout'))
 const PowerUserList=AsyncComponent(()=>import('./setting/repository/components/UserList'))
 const UserRpyList=AsyncComponent(()=>import('./setting/repository/components/UserRpyList'))
 
-
+//资源监控
+const Resources =AsyncComponent(()=>import('./setting/resources/components/Resources'))
 
 export {
     Breadcrumb,
@@ -232,5 +234,7 @@ export {
     EnvServer,
 
     PowerUserList,
-    UserRpyList
+    UserRpyList,
+    Resources,
+    RepositoryClean,
 }

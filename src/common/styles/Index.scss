@@ -150,6 +150,12 @@ ul li{
     min-width: 980px;
     padding: var(--thoughtware-padding);
 }
+.xcode-home-limited-870{
+    margin: auto;
+    max-width: 870px;
+    min-width: 768px;
+    padding: var(--thoughtware-padding);
+}
 
 ::-webkit-scrollbar {
     /* 滚动条宽度， width：对应竖滚动条的宽度  height：对应横滚动条的高度*/

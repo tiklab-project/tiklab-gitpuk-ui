@@ -36,22 +36,6 @@ const ScanSurvey = (props) => {
                             <div>提示问题</div>
                         </div>
                     </div>
-
-                </div>
-                <div className={"scan-result-border"}>
-                    <div className='scan-result-collect'>
-                        <div>问题总览</div>
-                        <div className='collect-desc-style'>
-                            <div className='collect-desc-nav'>
-                                <div className='scan-result-access-num'>{scanRecord?.allTrouble}</div>
-                                <div className='collect-desc'>未解决问题</div>
-                            </div>
-                            <div className='collect-desc-nav'>
-                                <div className='scan-result-access-num'>0</div>
-                                <div className='collect-desc'>已解决问题</div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
 

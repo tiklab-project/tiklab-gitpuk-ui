@@ -9,7 +9,7 @@ import {SystemRole} from "thoughtware-privilege-ui";
 import { inject, observer } from "mobx-react";
 const SystemRoleContent = props =>{
 
-    return <SystemRole {...props} bgroup={"gittork"}/>
+    return <SystemRole {...props} bgroup={"gittok"}/>
 
 }
 

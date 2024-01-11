@@ -61,6 +61,9 @@ const Aside = props => {
                 return `${path}/commits/${info && info.defaultBranch}`
             case 'scanRecord':
                 return `${path}/scanPlay`
+            case 'scanDetails':
+                return `${path}/scanPlay`
+
             case 'commits':
                 return `${path}/commits/${info && info.defaultBranch}`
 

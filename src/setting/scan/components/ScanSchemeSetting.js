@@ -33,7 +33,7 @@ const ScanSchemeSetting = (props) => {
         setMaven(scanSonar.deployEnv.id)
         setSonar(scanSonar.deployServer.id)
     },[])
-debugger
+
     //确认
     const onOk = () => {
         form.validateFields().then(async values => {

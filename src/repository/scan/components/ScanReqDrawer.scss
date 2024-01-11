@@ -1,11 +1,11 @@
 .reqDrawer{
-  margin-top: 10px;
+/*  margin-top: 10px;
   border: 1px solid #e9e9e9;
-  background-color: #f6f6f6;
+  background-color: #f6f6f6;*/
 
   .nav-tabs{
     flex: 1;
-    margin: 10px;
+   /* margin: 10px;*/
     display: flex;
     gap: 25px;
     word-wrap: break-word; /* 控制单词换行 */
@@ -33,7 +33,9 @@
     background-size: 4px;
     background-position: bottom;
   }
-
+  .error_nav{
+    color: red;
+  }
   .issues_border{
     margin-top: 10px;
     border: 1px solid #e9e9e9;

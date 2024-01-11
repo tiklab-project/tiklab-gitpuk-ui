@@ -18,10 +18,12 @@ import scanPlayStore from "../store/ScanPlayStore";
 import success from "../../../assets/images/img/success.png";
 import fail from "../../../assets/images/img/fail.png";
 import ScanLogDrawer from "./ScanLogDrawer";
+import ScanSchemeStore from "../../../setting/scan/store/scanSchemeStore";
 const ScanPlay = (props) => {
     const {repositoryStore,match} = props
     const {findScanPlayPage,deleteScanPlay,refresh}=scanPlayStore
     const {repositoryInfo} = repositoryStore
+    const {findScanSchemeSonarList}=ScanSchemeStore
 
     const [scanPlayList,setScanPlayList]=useState([])
     const [currentPage,setCurrentPage]=useState(1)
@@ -37,6 +39,8 @@ const ScanPlay = (props) => {
     const [logVisible,setLogVisible]=useState(false)  //日志抽屉状态
     const [logScanRecord,setLogScanRecord]=useState()  //打开日志的扫描记录
 
+
+
     const webUrl = `${match.params.namespace}/${match.params.name}`
     useEffect(async () => {
         await findScanPlay(currentPage)
@@ -51,31 +55,31 @@ const ScanPlay = (props) => {
             render: (text,record) =><div className='text-color' onClick={()=>goScanList(record.id)}>{text}</div>
         },
         {
-            title: '创建时间',
-            dataIndex: 'createTime',
-            width:'40%',
-        },
-        {
             title: '最后一次扫描',
             dataIndex: 'scanTime',
-            width:'30%',
+            width:'40%',
             render:(text,record)=>{
                 return(
                     <div>
                         <div className='last-scan'>
-                            <div>{record.userName}</div>
-                            <div>手动触发</div>
+                            <div>{record?.userName}</div>
+                            <div className='last-scan-text'>扫描{record.scanTime}</div>
                         </div>
-                        <div className='last-scan-style'>
+                        <div className='last-scan-style' onClick={()=>goDetails(record)}>
                             {
-                                record?.scanResult==='OK'&& <img  src={success}  style={{width:16,height:16}}/>||
+                                record?.scanResult==='success'&& <img  src={success}  style={{width:16,height:16}}/>||
                                 record?.scanResult==='fail'&&   <img  src={fail}  style={{width:16,height:16}}/>
                             }
-                            <div className='last-scan-text'>扫描于：{record.scanTime}</div>
+                            <div className="">  {record?.scanObject?.substring(0,8)}</div>
                         </div>
                     </div>
                 )
             }
+        },
+        {
+            title: '创建时间',
+            dataIndex: 'createTime',
+            width:'30%',
         },
 
         {
@@ -113,6 +117,25 @@ const ScanPlay = (props) => {
                 setTotalPage(res.data.totalPage)
             }
         })
+    }
+
+    //跳转详情
+    const goDetails = (value) => {
+        if (value?.scanScheme?.scanWay==='sonar'){
+            if (value?.scanResult==='success'){
+                findScanSchemeSonarList({scanSchemeId:value.scanScheme.id}).then(res=>{
+                    if (res.code===0&&res.data){
+                        const data=res.data[0];
+                        window.open(`${data.deployServer.serverAddress}/project/issues?id=${value.repository.name}&resolved=false`)
+                    }
+                })
+            }else {
+                props.history.push(`/repository/${webUrl}/scanDetails/${value.recordId}`)
+            }
+        }else {
+            props.history.push(`/repository/${webUrl}/scanDetails/${value.recordId}`)
+        }
+
     }
 
     //跳转扫描详情

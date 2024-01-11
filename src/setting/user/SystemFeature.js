@@ -9,7 +9,7 @@ import {SystemFeature} from "thoughtware-privilege-ui";
  */
 const SystemFeatureContent = props =>{
 
-    return <SystemFeature {...props} bgroup={"gittork"}/>
+    return <SystemFeature {...props} bgroup={"gittok"}/>
 
 }
 

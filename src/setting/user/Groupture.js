@@ -8,7 +8,7 @@ import {UserGroup} from "thoughtware-user-ui";
  * @constructor
  */
 const GroupTrue = props => {
-    return <UserGroup {...props} bgroup={"gittork"} isBase={true}/>
+    return <UserGroup {...props} bgroup={"gittok"} isBase={true}/>
 }
 
 export default GroupTrue

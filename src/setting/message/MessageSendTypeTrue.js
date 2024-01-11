@@ -9,7 +9,7 @@ import {MessageSendType} from "thoughtware-message-ui";
  */
 const MessageSendTypeContentTrue = props => {
 
-    return <MessageSendType {...props} bgroup={"gittork"} isBase={true}/>
+    return <MessageSendType {...props} bgroup={"gittok"} isBase={true}/>
 
 }
 

@@ -12,8 +12,7 @@ import Omit from "../../../common/omit/Omit";
 import Page from "../../../common/page/Page";
 import ScanReqDrawer from "./ScanReqDrawer";
 import ScanRecordStore from "../store/ScanRecordStore";
-import "./ScanRecord.scss"
-import {findCommitId} from "../../file/components/Common";
+import "./ScanDetails.scss"
 import fileStore from "../../file/store/FileStore";
 const ScanReqList = (props) => {
     const {scanPlay,scanRecord}=props
@@ -34,8 +33,10 @@ const ScanReqList = (props) => {
     const [blobFile,setBlobFile]=useState('')   //类文件详情
 
     useEffect(async () => {
-        await findScanIssues(currentPage)
-    }, []);
+        if (scanPlay){
+            await findScanIssues(currentPage)
+        }
+    }, [scanPlay]);
 
     const recordColumns =[
         {
@@ -48,37 +49,26 @@ const ScanReqList = (props) => {
             </div>
             </Tooltip>
         },
-      /*  {
-            title: '问题',
-            dataIndex: 'problemOverview',
-            key:"problemOverview",
-            width:'30%',
-            render:(text,record)=>   <Tooltip placement="top" title={text} ><div className='text-color' onClick={()=>openReqDrawer(record)}>
-              <Omit value={text} maxWidth={200}/>
-            </div>
-            </Tooltip>
-        },*/
-
         {
             title: '文件名',
             dataIndex: 'fileName',
             key:"fileName",
-            width:'30%',
-            render:(text)=> <Tooltip placement="top" title={text}><Omit value={text} maxWidth={200}/> </Tooltip>
+            width:'40%',
+            render:(text)=> <Tooltip placement="top" title={text}><Omit value={text} maxWidth={500}/> </Tooltip>
         },
         {
             title: '问题等级',
             dataIndex: 'problemLevel',
             key:"problemLevel",
             width:'10%',
-            render:(text)=>text===1&&<div className='text-red'>严重</div>|| text===2&&<div className='text-yellow'>警告</div>
-                ||text===3&&<div className='text-blue'>建议</div>
+            render:(text)=>text===1&&<div className='scanDetails-hole-red'>严重</div>|| text===2&&<div className='scanDetails-hole-dired'>警告</div>
+                ||text===3&&<div className='scanDetails-hole-blue'>建议</div>
         },
         {
             title: '引入时间',
             dataIndex: 'importTime',
             key:"importTime",
-            width:'20%',
+            width:'10%',
         },
 
     ]
@@ -86,7 +76,9 @@ const ScanReqList = (props) => {
     const findScanIssues = (currentPage) => {
         findRecordInstancePageByPlay({scanPlayId:scanPlay?.id,scanRecordId:scanRecord.id,
             pageParam:{currentPage:currentPage, pageSize:pageSize}}).then(res=>{
+
             if (res.code===0){
+
                 setScanIssuesList(res.data.dataList)
                 setTotalPage(res.data.totalPage)
             }
@@ -127,7 +119,7 @@ const ScanReqList = (props) => {
             />
             <Page totalPage={totalPage} pageCurrent={currentPage} changPage={handleChange}/>
             <ScanReqDrawer visible={drawerVisible} setVisible={setDrawerVisible} issuesDetails={issuesDetails} reqDetails={reqDetails}
-                           scanWay={scanPlay?.scanScheme.scanWay} blobFile={blobFile}
+                           scanWay={scanPlay?.scanScheme?.scanWay} blobFile={blobFile}
             />
 
 

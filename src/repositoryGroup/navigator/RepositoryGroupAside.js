@@ -19,7 +19,7 @@ const RepositoryGroupAside= props =>{
     useEffect(()=>{
         // 初始化仓库组
         findGroupByName(groupName).then(res=>{
-            debugger
+            
             if (res.code===0){
                 if (res.data){
                     setGroupInfo(res.data)

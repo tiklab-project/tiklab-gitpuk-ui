@@ -56,6 +56,8 @@ const RepositoryBasicInfo=AsyncComponent(()=>import('./repository/setting/basicI
 const PushRule=AsyncComponent(()=>import('./repository/setting/pushRule/components/PushRule'))
 const AccessKeys=AsyncComponent(()=>import('./repository/setting/accessKeys/components/AccessKeys'))
 const WebHooks=AsyncComponent(()=>import('./repository/setting/webHooks/components/Hooks'))
+const RepositoryClean=AsyncComponent(()=>import('./repository/setting/RepositoryClean/components/RepositoryClean'))
+
 
 /**
  * 仓库组
@@ -132,6 +134,9 @@ const ScanRuleDetails=AsyncComponent(()=>import('./setting/scan/components/ScanR
 
 //扫描环境
 const EnvServer=AsyncComponent(()=>import('./setting/scan/components/ScanEnvironment'))
+
+//资源监控
+const Resources =AsyncComponent(()=>import('./setting/resources/components/Resources'))
 const routers = [
     {
         path:'/login',
@@ -305,6 +310,10 @@ const routers = [
                             {
                                 path:'/repository/:namespace/:name/setting/hooks',
                                 component:WebHooks
+                            },
+                            {
+                                path:'/repository/:namespace/:name/setting/clean',
+                                component:RepositoryClean
                             },
 
                             {
@@ -522,6 +531,10 @@ const routers = [
                     {
                         path: '/setting/scanEnv',
                         component: EnvServer,
+                    },
+                    {
+                        path:'/setting/resources',
+                        component: Resources,
                     },
                 ]
             },

@@ -87,7 +87,7 @@ const ScanPlayEditPop = (props) => {
                         clearInterval(timer)
                     }
                     if (res.data.scanResult==='fail'){
-                        message.success('扫描失败',1)
+                        message.error('扫描失败',1)
                         clearInterval(timer)
                     }
                 }else {

@@ -26,6 +26,7 @@ export class ScanPlayStore  {
         const param=new FormData()
         param.append("id",id)
         const res = await Axios.post("/scanPlay/findScanPlay",param)
+        
         if (res.code===0){
             this.scanPlay=res.data
         }

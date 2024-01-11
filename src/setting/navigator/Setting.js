@@ -8,7 +8,7 @@ import {
     KeyOutlined,
     BarsOutlined,
     FileDoneOutlined,
-    BuildOutlined,
+    BuildOutlined, ThunderboltOutlined,
 } from '@ant-design/icons';
 import SettingContent from './SettingContent';
 
@@ -44,6 +44,11 @@ const Setting = props =>{
                 title:'Plugin',
                 icon:<MergeCellsOutlined />,
                 purviewCode:'xcode_plugin',
+            },
+            {
+                id:'/setting/resources',
+                title: '资源监控',
+                icon:<ThunderboltOutlined />
             },
             {
                 id:'/setting/auth',

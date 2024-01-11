@@ -1,3 +1,120 @@
 .scanDetails{
+  .scanDetails-border{
+    display: flex;
+    gap: 50px;
+    margin-top: 20px;
+    .scanDetails-rpy-border{
+      border: 1px solid #e3e9ed;
+      width: 20%;
+      height: 120px;
+      background-color:#9ee09e;
+      .scanDetails-rpy-desc{
+        margin-left: 20px;
+        margin-top: 15px;
+        font-size: 15px;
+        font-weight: bold;
+      }
+      .scanDetails-rpy-num{
+        margin-left: 20px;
+        margin-top: 10px;
+        font-size: 18px;
+        font-weight: bold;
+      }
+      .relyOn-num{
+        cursor: pointer;
+      }
+    }
 
+    .scanDetails-hole-border{
+      display: flex;
+      border: 1px solid #e3e9ed;
+      width: 80%;
+      height: 120px;
+      .scanDetails-hold-style{
+        width: 25%;
+        .scanDetails-hole-desc{
+          margin-left: 20px;
+          margin-top: 15px;
+          font-size: 15px;
+          font-weight: bold;
+        }
+        .scanDetails-hole-num{
+          margin-left: 20px;
+          margin-top: 10px;
+          font-size: 18px;
+          font-weight: bold;
+        }
+        .scanDetails-access{
+          color: #999999;
+          margin-left: 20px;
+          margin-top: 5px;
+        }
+
+      }
+    }
+  }
+
+  .scanDetails-table{
+    margin-top: 30px;
+    .scanDetails-table-title{
+      font-size: 14px;
+      font-weight: bold;
+      margin-left: 5px;
+    }
+    .scanDetails-table-de{
+      margin-top: 10px;
+    }
+  }
+
+  .scanDetails-fail{
+    display: flex;
+    font-size: 14px;
+    font-weight: bold;
+    margin: 20px 0 0 15px ;
+    .fail-result{
+      color: red;
+    }
+  }
+  .fail-log-style{
+    margin: 20px 0 0 15px ;
+    .fail-log{
+      font-size: 14px;
+      font-weight: bold;
+    }
+    .scan-log-bottom{
+      height: calc(100% - 83px);
+      display: flex;
+      flex-direction: row;
+      padding-top: 20px;
+      .scan-detail-log{
+        flex: 1;
+        overflow: auto;
+        border-radius: 4px;
+        padding: 10px;
+        background: #000000;
+        color: #ffffff;
+        word-wrap: break-word;
+        white-space: pre-wrap;
+        .bottom-log{
+          color: #fff;
+          padding: 10px;
+          word-wrap: break-word;
+          white-space: pre-wrap;
+        }
+        .bottom-log-item:not(:last-child){
+          margin-bottom: 50px;
+        }
+      }
+    }
+  }
+}
+
+.scanDetails-hole-red{
+  color: red;
+}
+.scanDetails-hole-dired{
+  color:#df5000;
+}
+.scanDetails-hole-blue{
+  color:#1890ff;
 }

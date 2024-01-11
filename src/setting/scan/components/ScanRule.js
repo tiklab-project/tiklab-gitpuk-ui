@@ -61,7 +61,7 @@ const ScanRule = (props) => {
             title:'操作',
             dataIndex: 'action',
             key: 'action',
-            width:'10%',
+            width:'5%',
             render:(text,record)=>(
                 <Tooltip title={"删除"}>
                     <Popconfirm

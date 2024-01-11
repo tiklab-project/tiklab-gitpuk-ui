@@ -43,7 +43,7 @@ const ScanSchemeEditPop = (props) => {
             })
             if (scanSchemeList){
                const list=scanSchemeList.filter(item=>item.id!==schemeDate.id)
-                debugger
+                
                 setVerifyScanSchemeList(list)
             }
         }

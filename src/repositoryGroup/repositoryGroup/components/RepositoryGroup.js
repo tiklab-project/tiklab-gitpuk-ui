@@ -120,13 +120,13 @@ const RepositoryGroup = props => {
         },
         {
             title: '负责人',
-            dataIndex: ['user','name'],
+            dataIndex: ['user','nickname'],
             key: 'user',
             width:'20%',
             ellipsis:true,
-            render:(text)=><div className='icon-text-user'>
-                <UserIcon text={text} size={"small"}/>
-                <div>{text}</div>
+            render:(text,record)=><div className='icon-text-user'>
+                <UserIcon text={record?.user?.nickname?text:record?.user?.name} size={"small"}/>
+                <div>{record?.user?.nickname?text:record?.user?.name}</div>
             </div>
         },
         {

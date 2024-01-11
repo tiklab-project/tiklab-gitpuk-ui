@@ -129,7 +129,7 @@ const  Portal = props =>{
     //打开消息抽屉
     const openMessage = (currentPage) => {
         findMessageItemPage({ pageParam:{currentPage:currentPage,pageSize:pageSize},
-            bgroup:"gittork",receiver:getUser().userId,sendType:'site'})
+            bgroup:"gittok",receiver:getUser().userId,sendType:'site'})
             .then(res=>{
                 if (res.code===0){
 
@@ -148,7 +148,7 @@ const  Portal = props =>{
                             <img  src={xcode}  style={{width:22,height:22}}/>
                         </div>
                         <div className={'text'}>
-                            {"GitTork"}
+                            {"GitTok"}
                         </div>
                     </div>
                     <div className="headers-link">

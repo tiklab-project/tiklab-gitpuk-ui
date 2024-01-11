@@ -9,7 +9,7 @@ import {TodoTemp} from "thoughtware-todotask-ui";
  */
 const TodoTempContent = props =>{
 
-    return <TodoTemp {...props} bgroup={"gittork"}/>
+    return <TodoTemp {...props} bgroup={"gittok"}/>
 
 }
 

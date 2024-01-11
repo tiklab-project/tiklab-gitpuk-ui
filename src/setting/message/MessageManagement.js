@@ -1,16 +1,22 @@
 import React from "react";
-import {MessageManagement} from "thoughtware-message-ui";
+import {ProjectMessageNotice} from "thoughtware-message-ui";
 
 /**
- * 消息管理页面
+ * 消息通知方案
  * @param props
  * @returns {JSX.Element}
  * @constructor
  */
-const MessageManagementContent = props => {
+const ProjectMessageNoticeContent = props =>{
 
-    return <MessageManagement {...props} bgroup={"gittork"}/>
+     return (
+        <ProjectMessageNotice
+            {...props}
+            isBase={true}
+            bgroup={"gittok"} // 产品code
+        />
+    )
 
 }
 
-export default MessageManagementContent
+export default ProjectMessageNoticeContent

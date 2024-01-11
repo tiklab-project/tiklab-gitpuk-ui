@@ -51,7 +51,7 @@ export class ScanRuleSetStore {
         param.append("id",id)
         const data = await Axios.post('/scanRuleSet/findScanRuleSet',param)
         if (data.code===0){
-            debugger
+            
             this.scanRuleSet = data.data
         }
     }

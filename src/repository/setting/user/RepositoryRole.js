@@ -20,15 +20,14 @@ const RepositoryRole = props =>{
     },[])
 
     return (
-        <Row>
-            <Col lg={{ span: 24 }} xxl={{ span: "18", offset: "3" }}>
-                <DomainRole
-                    {...props}
-                    domainId={repositoryInfo.rpyId}
-                    bgroup = {"gittork"}
-                />
-            </Col>
-        </Row>
+
+        <DomainRole
+            {...props}
+            domainId={repositoryInfo.rpyId}
+            bgroup = {"gittok"}
+        />
+
+
     )
 
 

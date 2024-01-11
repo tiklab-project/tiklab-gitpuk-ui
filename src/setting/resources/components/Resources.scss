@@ -1,0 +1,24 @@
+.resources{
+    .resources-data{
+        padding-top: 10px;
+        .resources-data-item{
+            border-bottom: 1px solid #f0f0f0;
+            padding: 15px 0;
+            align-items: center;
+            display: flex;
+            .data-item-title{
+                width: 130px
+            }
+            .data-item-desc{
+                flex: 1;
+                .data-item-middle{
+                    padding: 0 5px;
+                }
+            }
+            .data-item-but{
+                color: var(--thoughtware-blue);
+                cursor: pointer;
+            }
+        }
+    }
+}

@@ -1,14 +1,14 @@
 {
-    "name": "thoughtware-gittork-ui",
+    "name": "thoughtware-gittok-ui",
     "version": "1.0.2",
-    "description": "thoughtware gittork",
+    "description": "thoughtware gittok",
     "main": "es/src/ui.js",
     "module": "es/src/ui.js",
     "files": [
         "es"
     ],
     "scripts": {
-        "gittork-ce-start": "cross-env NODE_ENV=development CUSTOM_ENV=local webpack-dev-server --progress --config webpack.dev.js",
+        "gittok-ce-start": "cross-env NODE_ENV=development CUSTOM_ENV=local webpack-dev-server --progress --config webpack.dev.js",
         "dev": "cross-env NODE_ENV=dev CUSTOM_ENV=dev webpack-dev-server --progress  --config webpack.dev.js --open",
         "build": "rimraf es/* && ./node_modules/.bin/babel src --copy-files --extensions .js --out-dir es/module && ncp ./src/ui.js es/index.js && ncp README.md es/README.md",
         "build:dev": "npm run build:dev:esm && npm run build:dev:cjs && npm run build:umd && npm run build:css",
@@ -27,7 +27,7 @@
     "author": "",
     "license": "ISC",
     "publishConfig": {
-        "registry": "http://172.13.1.24:8080/repository/npm-hosted"
+        "registry": "http://192.168.10.9:8080/repository/npm-hosted"
     },
     "devDependencies": {
         "@babel/cli": "^7.12.1",
@@ -154,7 +154,7 @@
         "thoughtware-core-ui": "^1.0.2",
         "thoughtware-eam-ui": "^1.0.2",
         "thoughtware-licence-ui": "^1.0.2",
-        "thoughtware-message-ui": "^1.0.2",
+        "thoughtware-message-ui": "^1.0.3",
         "thoughtware-plugin-core-ui": "^1.0.2",
         "thoughtware-plugin-manager-ui": "^1.0.2",
         "thoughtware-privilege-ui": "^1.0.2",

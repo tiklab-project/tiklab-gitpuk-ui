@@ -43,6 +43,11 @@ const RepositorySetting = props =>{
             title:'WebHooks',
         },
         {
+            to:`/repository/${webUrl}/setting/clean`,
+            title:'仓库清理',
+            /*purviewCode: "xcode_mirror",*/
+        },
+        {
             to:`/repository/${webUrl}/setting/remote`,
             title:'仓库镜像',
             purviewCode: "xcode_mirror",

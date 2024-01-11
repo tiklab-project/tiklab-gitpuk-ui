@@ -32,6 +32,8 @@ const Blob = props =>{
     const fileAddress = setFileAddress(location, webUrl+'/blob/'+urlInfo)
     const [delVisible,setDelVisible] = useState(false)
     const [isLoading,setIsLoading] = useState(true)
+
+    const [height,setHeight]=useState()
     useEffect(()=>{
         if(repositoryInfo.name){
             // 获取文本内容
@@ -40,7 +42,14 @@ const Blob = props =>{
                 fileAddress:fileAddress[1],
                 commitBranch:branch,
                 findCommitId:findCommitId(urlInfo)
-            }).then(()=>setIsLoading(false))
+            }).then(res=>{
+                setIsLoading(false)
+              /*  if (data.code===0){
+                    const lines = data.data.split("\n")
+                    lines.
+                    debugger
+                }*/
+            })
             // 获取最近提交信息
             findLatelyBranchCommit({
                 rpyId:repositoryInfo.rpyId,
@@ -49,6 +58,8 @@ const Blob = props =>{
             })
             // 获取文本地址
             findCloneAddress(repositoryInfo.rpyId)
+
+
         }
     },[repositoryInfo.name])
 
@@ -100,7 +111,7 @@ const Blob = props =>{
                             <div className='editor-title-item'>下载</div>
                         </div>
                     </div>
-                    <div className='blob-editor-content'>
+                    <div className='blob-editor-content' >
                         {
                             isLoading ? <SpinLoading type='table'/> :
                             <MonacoBlob readOnly={true} blobFile={blobFile}/>

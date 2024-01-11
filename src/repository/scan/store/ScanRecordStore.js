@@ -17,6 +17,36 @@ export class ScanRecordStore  {
     //扫描方案
     @observable scanScheme=[]
 
+
+    /**
+     *通过id 删除
+     * @param  param
+     */
+    @action
+    deleteScanRecord=async (id)=>{
+        const param=new FormData()
+        param.append("id",id)
+        const res = await Axios.post("/scanRecord/deleteScanRecord",param)
+        if (res.code===0){
+            this.refresh=!this.refresh
+        }
+        return res
+    }
+
+
+    /**
+     *通过id 查询扫描记录
+     * @param  param
+     */
+    @action
+    findScanRecord=async (id)=>{
+        const param=new FormData()
+        param.append("id",id)
+        const res = await Axios.post("/scanRecord/findScanRecord",param)
+        return res
+    }
+
+
     /**
      *分页查询扫描记录
      * @param  param
