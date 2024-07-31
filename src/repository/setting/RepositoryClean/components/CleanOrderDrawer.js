@@ -102,14 +102,9 @@ const CleanOrderDrawer = (props) => {
                                     <Btn onClick={cleanFile} type={'primary'} title={'清理无效文件'}/>
                             }
                         </div>
-
                     </div>
-
                 </div>
-
-
             </div>
-
         </Drawer>
     )
 

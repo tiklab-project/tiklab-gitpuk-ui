@@ -1,0 +1,45 @@
+.dynamic-content {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 1;
+    min-width: 0;
+    flex: 1;
+    .dynamic-work-action {
+        line-height: 30px; 
+    }
+    .dynamic-work-item {
+        line-height: 30px; 
+        display: flex; 
+        align-items: center; 
+        height: 30px;
+        .dynamic-work-title {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+        .dynamic-work-title:hover {
+            color: var(--thoughtware-blue);
+            cursor: pointer;
+        }
+        .dynamic-work-oldvalue {
+            padding: 5px 10px; 
+            background-color: #F4F5F7; 
+            font-size: 12px; 
+            line-height: 15px;
+            border-radius: 5px; 
+            margin: 0 10px;
+            width: 44px;
+            white-space: nowrap;
+        }
+        .dynamic-work-newValue {
+            padding: 5px 10px; 
+            background-color: #F4F5F7; 
+            font-size: 12px; 
+            line-height: 15px;
+            border-radius: 5px; 
+            margin: 0 10px;
+            width: 56px;
+            white-space: nowrap;
+        }
+    }
+}

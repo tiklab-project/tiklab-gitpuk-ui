@@ -1,0 +1,147 @@
+.survey{
+  height: 100%;
+  overflow: auto;
+  .survey-style{
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+    .survey-new-commit-style{
+      background-color: var(--thoughtware-gray-600);
+      margin-top: 10px;
+      padding: 0 15px;
+      .survey-commit-tab{
+        display: flex;
+        place-content: space-between;
+        align-items: center;
+        padding: 10px ;
+        gap: 15px;
+        position: relative;
+        .survey-commit-left{
+          display: flex;
+          gap: 15px;
+          align-items: center;
+          .survey-commit-icon{
+            width: 32px;
+            height: 32px;
+            border-radius: 32px;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+          }
+          .survey-commit-message{
+            cursor: pointer;
+            line-height: 25px;
+          }
+          .survey-commit-desc{
+            line-height: 25px;
+            color: var(--thoughtware-merge-text-gray);
+          }
+        }
+
+
+        .survey-commit-time{
+          display: flex;
+          gap: 10px;
+        }
+      }
+    }
+    .survey-statistics-commit-style{
+      .survey-statistics-content{
+        display: flex;
+        width: 100%;
+        gap: 10px;
+        .statistics-work-trend {
+          border-radius: 4px;
+          background-color: var(--thoughtware-gray-600);
+          flex: 1;
+          padding: 20px;
+        }
+      }
+    }
+
+    .survey-statistics-merge-style{
+      .survey-statistics-content{
+        display: flex;
+        width: 100%;
+        gap: 10px;
+        .statistics-work-trend {
+          border-radius: 4px;
+          background-color: var(--thoughtware-gray-600);
+          flex: 1;
+          padding: 20px;
+        }
+      }
+    }
+
+    .survey-todo-style{
+      .survey-todo-tab {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        .todo-tab-item {
+          flex: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 100px;
+          border-radius: 4px;
+          margin-top: 10px;
+          line-height: 35px;
+          cursor: pointer;
+          padding: var(--thoughtware-padding);
+          background-color: var(--thoughtware-gray-600);
+          gap: 10px;
+          .todo-tab-item-num{
+            font-weight: var(--thoughtware-font-weight-bold);
+            padding-bottom: 10px;
+          }
+        }
+      }
+      .status-item {
+        cursor: pointer;
+      }
+    }
+
+    .survey-title {
+      height: 40px;
+      line-height: 40px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+}
+
+
+.survey-commit-tab:nth-child(4n+1) {
+  .survey-commit-icon {
+    background-color: #cadbf3;
+  }
+}
+
+.survey-commit-tab:nth-child(4n+2) {
+  .survey-commit-icon {
+    background-color: #deedd7;
+  }
+}
+
+.survey-commit-tab:nth-child(4n+3) {
+  .survey-commit-icon {
+    background-color: #ffebee;
+  }
+}
+
+.survey-commit-tab:nth-child(4n+4) {
+  .survey-commit-icon {
+    background-color: #e8eaf6;
+  }
+}
+.no-data{
+  padding-top: 10px;
+  text-align: center;
+  color: #666666;
+  /* min-height: 100px;*/
+}

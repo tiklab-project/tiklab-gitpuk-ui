@@ -1,47 +1,15 @@
 import React from "react";
 import {
-    BarsOutlined,
-    GroupOutlined,
     MenuOutlined,
     ProjectOutlined,
-    TeamOutlined,
 } from "@ant-design/icons";
 
-// 用户与部门路由
-export const departmentRouters =[
-    {
-        id: "1",
-        title: "用户与部门",
-        icon: <TeamOutlined/>,
-        children: [
-            {
-                id: "/setting/org",
-                title: "部门",
-                purviewCode: "orga",
-            },
-            {
-                id: "/setting/user",
-                title: "Users",
-                purviewCode: "user",
-            },
-            {
-                id: "/setting/userGroup",
-                title: "用户组",
-                purviewCode: "user_group",
-            },
-            {
-                id: "/setting/directory",
-                title: "用户目录",
-                purviewCode: "user_dir",
-            },
-        ]
-    }
-]
+
 
 // 基础数据路由
 export const templateRouter = [
     {
-        id:"6",
+        id:"16",
         title:"基础数据",
         icon:<ProjectOutlined />,
         children:[

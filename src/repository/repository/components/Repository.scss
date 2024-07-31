@@ -1,17 +1,18 @@
 .repository {
-    height: 100%;
-    overflow: auto;
     &-top{
         display: flex;
         justify-content: space-between;
         align-items: center;
         margin-bottom: 10px;
     }
-    &-type{
+    .repository-filter{
          display: flex;
          align-items: center;
          justify-content: space-between;
-         padding-bottom: 10px;
+
+        .input-icon{
+            font-size: var(--thoughtware-input-icon-15);
+        }
     }
     &-tables{
         .repository-tables-name{

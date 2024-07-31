@@ -97,7 +97,7 @@ const RemoteCompile = (props) => {
             bodyStyle={{padding:0}}
         >
             <div className='remote-add-up'>
-                新建秘钥
+                创建连接
             </div>
             <div className='remote-add-content'>
                 <Form
@@ -125,8 +125,8 @@ const RemoteCompile = (props) => {
                                     label: '账号密码',
                                 },
                                 {
-                                    value: 'ssh',
-                                    label: 'ssh',
+                                    value: 'token',
+                                    label: '个人令牌',
                                 }]}
                             />
                     </Form.Item>
@@ -140,8 +140,8 @@ const RemoteCompile = (props) => {
                                     <Input placeholder={"请输入密码"}/>
                                 </Form.Item>
                             </>:
-                            <Form.Item label={'ssh密钥'} name='secretKey' rules={[{required:true,message:`密钥不能为空`}]}>
-                                <Input placeholder={"请输入ssh密钥"}/>
+                            <Form.Item label={'个人令牌'} name='secretKey' rules={[{required:true,message:`密钥不能为空`}]}>
+                                <Input placeholder={"请输入个人令牌"}/>
                             </Form.Item>
                     }
                 </Form>

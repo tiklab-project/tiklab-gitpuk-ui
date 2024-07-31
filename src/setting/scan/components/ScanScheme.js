@@ -26,21 +26,16 @@ import Omit from "../../../common/omit/Omit";
 import ScanPlayStore from "../../../repository/scan/store/ScanPlayStore";
 import ScanSchemeSetting from "./ScanSchemeSetting";
 const { TextArea } = Input;
-
+import {PrivilegeButton} from 'thoughtware-privilege-ui';
 const ScanScheme = (props) => {
 
-    const {findScanSchemePage,deleteScanScheme,createScanScheme,createScanSchemeRuleSet,
+    const {findScanSchemeList,deleteScanScheme,createScanScheme,createScanSchemeRuleSet,
         updateScanScheme,createScanSchemeSonar, findScanSchemeSonarList,updateScanSchemeSonar,fresh}=ScanSchemeStore
     const {findScanRuleSetNotScheme}=scanRuleSetStore
     const {findScanSchemeRuleSetList,deleteScanSchemeRuleSet}=ScanSchemeRuleStore
     const {findScanPlayList}=ScanPlayStore
 
-
     const [scanSchemeList,setScanSchemeList]=useState([])   //扫描方案列表
-    const [currentPage,setCurrentPage]=useState(1)
-    const [totalPage,setTotalPage]=useState()
-    const [pageSize]=useState(15)
-
     const [editVisible,setEditVisible] = useState(false)    //编辑扫描方案弹窗状态
     const [drawerVisible,setDrawerVisible]=useState(false)  //扫描方案右侧抽屉状态
     const [scanSonar,setScanSonar]=useState('')             //扫描方案和sonar关系数据
@@ -57,21 +52,20 @@ const ScanScheme = (props) => {
 
 
     useEffect(()=>{
-        getScanSchemePage(currentPage);
+        getScanSchemePage();
     },[fresh])
 
     //分页查询扫描方案
-    const getScanSchemePage = (currentPage) => {
-        findScanSchemePage({pageParam:{currentPage:currentPage, pageSize:pageSize}}).then(res=>{
+    const getScanSchemePage = () => {
+        findScanSchemeList({}).then(res=>{
             if (res.code===0){
-                setScanSchemeList(res.data.dataList)
-                setTotalPage(res.data.totalPage)
+                setScanSchemeList(res.data)
                 if (scheme){
                     getScanRuleSetBySchemeId(scheme)
                 }else {
-                    if (res.data.dataList.length>0){
-                        setScheme(res.data.dataList[0])
-                        getScanRuleSetBySchemeId(res.data.dataList[0])
+                    if (res.data.length>0){
+                        setScheme(res.data[0])
+                        getScanRuleSetBySchemeId(res.data[0])
                     }
                 }
 
@@ -101,8 +95,13 @@ const ScanScheme = (props) => {
         setPageType("scheme")
         setScheme(value)
         getScanRuleSetBySchemeId(value)
+
+        if (tab==='setting'&&value.scanWay==='rule'){
+            setTableType("rule")
+        }
     }
 
+    //切换右侧内容 类型
     const setTableType = (value) => {
         setTab(value)
     }
@@ -190,23 +189,29 @@ const ScanScheme = (props) => {
      */
     const categoryAct = (value) => {
         return (
-            <div className={'category-action'}>
-                <div  className={"category-action-right"}>
-                    <Dropdown overlay={()=>moreMenu(value)} className={'category-action-more'}>
-                        <EllipsisOutlined />
-                    </Dropdown>
+            <PrivilegeButton  code={"gittok_scan_scheme"} key={'gittok_scan_scheme'} >
+                <div className={'category-action'}>
+                    <div  className={"category-action-right"}>
+                        <Dropdown overlay={()=>moreMenu(value)} className={'category-action-more'}>
+                            <EllipsisOutlined />
+                        </Dropdown>
+                    </div>
                 </div>
-            </div>
+             </PrivilegeButton>
         )
     }
     return(
         <div className='scanScheme'>
             <div className='scheme-left-style'>
                 <div className='scan-title-nav'>
+
                     <div className='scan-title'>扫描方案</div>
-                    <div className='scan-icon'  onClick={()=> setEditVisible(true)}>
-                        <PlusOutlined style={{fontSize:17,cursor:"pointer"}}/>
-                    </div>
+                    <PrivilegeButton  code={"gittok_scan_scheme"} key={'gittok_scan_scheme'} >
+                        <div className='scan-icon'  onClick={()=> setEditVisible(true)}>
+                            <PlusOutlined style={{fontSize:17,cursor:"pointer"}}/>
+                        </div>
+                    </PrivilegeButton>
+
                 </div>
                 {
                     scanSchemeList.length>0&&
@@ -218,7 +223,8 @@ const ScanScheme = (props) => {
                                           <Omit value={item.schemeName} maxWidth={800}/>
                                       </div>
                                   </div>
-                                  {categoryAct(item)}
+
+                                          {item.category!==1&&categoryAct(item)}
                             </div>
                         )
                     })
@@ -236,23 +242,27 @@ const ScanScheme = (props) => {
                                 </div>
                             </div>
 
-                            <div className='tab-style'>
-                                <div className={`${tab==='rule'&& ' choose-tab-nav '}  tab-nav`} onClick={()=>setTableType("rule")}>扫描规则</div>
-                                <div className={`${tab==='play'&& ' choose-tab-nav '}  tab-nav`} onClick={()=>setTableType("play")}>关联计划</div>
-                                {
-                                    scheme.scanWay!=='rule'&&
-                                    <div className={`${tab==='setting'&& ' choose-tab-nav '}  tab-nav`} onClick={()=>setTableType("setting")}>设置</div>
-                                }
-                            </div>
-                            <div className='add-rule-style'>
-                                {
-                                    scheme.scanWay==='rule'&&tab==='rule'&&
-                                    <Btn
-                                        type={'primary'}
-                                        title={'添加规则'}
-                                        onClick={()=> OpenDrawer(true)}
-                                    />
-                                }
+                            <div className='tab-data-style'>
+                                <div className='tab-style'>
+                                    <div className={`${tab==='rule'&& ' choose-tab-nav '}  tab-nav`} onClick={()=>setTableType("rule")}>扫描规则</div>
+                                    <div className={`${tab==='play'&& ' choose-tab-nav '}  tab-nav`} onClick={()=>setTableType("play")}>关联计划</div>
+                                    {
+                                        scheme.scanWay!=='rule'&&
+                                        <div className={`${tab==='setting'&& ' choose-tab-nav '}  tab-nav`} onClick={()=>setTableType("setting")}>设置</div>
+                                    }
+                                </div>
+                                <PrivilegeButton  code={"gittok_scan_scheme"} key={'gittok_scan_scheme'} >
+                                    <div className='add-rule-style'>
+                                        {
+                                            scheme.scanWay==='rule'&&tab==='rule'&&
+                                            <Btn
+                                                type={'primary'}
+                                                title={'添加规则'}
+                                                onClick={()=> OpenDrawer(true)}
+                                            />
+                                        }
+                                    </div>
+                                </PrivilegeButton>
                             </div>
 
                             <div className='tab-data xcode'>

@@ -76,12 +76,12 @@ const BranchAdd = props =>{
                         label={'分支名称'}
                         name={'branchName'}
                         rules={[
-                               {required:true,message:''},
+                               {required:true,message:'名称不能为空'},
                                ({ getFieldValue }) => ({
                                    validator(rule,value) {
-                                       if(!value || value.trim() === ''){
+                                     /*  if(!value || value.trim() === ''){
                                            return Promise.reject('名称不能为空');
-                                       }
+                                       }*/
                                        let nameArray = []
                                        if(branchList){
                                            nameArray = branchList && branchList.map(item=>item.branchName)
@@ -93,7 +93,7 @@ const BranchAdd = props =>{
                                    },
                                }),
                            ]}
-                    ><Input/>
+                    ><Input  placeholder={"输入分支名称"}/>
                     </Form.Item>
                     <Form.Item
                         label={'分支来源'}
@@ -102,8 +102,8 @@ const BranchAdd = props =>{
                     >
                         <Select>
                             {
-                                branchList && branchList.map(item=>{
-                                    return <Select.Option value={item.branchName} key={item.branchName}>{item.branchName}</Select.Option>
+                                branchList && branchList.map((item,index)=>{
+                                    return <Select.Option value={item.branchName} key={index}>{item.branchName}</Select.Option>
                                 })
                             }
                         </Select>

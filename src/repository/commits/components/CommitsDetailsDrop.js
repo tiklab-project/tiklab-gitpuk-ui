@@ -47,8 +47,8 @@ const CommitsDetailsDrop = props => {
         <div className='commits-diff-drop-title'>
             <div className='commits-diff-drop-title-input'>
                 <Input
-                    placeholder={'名称'}
-                    prefix={<SearchOutlined/>}
+                    placeholder={'搜索名称'}
+                    prefix={<SearchOutlined className='input-icon'/>}
                     onChange={changDropList}
                 />
             </div>
@@ -71,7 +71,7 @@ const CommitsDetailsDrop = props => {
                         </div>
                     })
                         :
-                    <EmptyText title={'没有查询到数据'}/>
+                        <EmptyText title={"没有查询到数据"}/>
                 }
             </div>
         </div>

@@ -46,7 +46,7 @@ export class TimeTaskStore  {
         param.append('id',id)
         const res = await Axios.post("/timeTask/deleteTimeTask",param)
         if (res.code===0){
-            debugger
+            
             this.refresh= !this.refresh
         }
         return res

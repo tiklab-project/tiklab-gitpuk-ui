@@ -29,7 +29,23 @@
                     }
                 }
             }
-
+            .repository-add-init{
+                display: flex;
+                gap: 10px;
+                flex-direction: column;
+                .repository-add-init-error{
+                    color: #ff4d4f;
+                }
+            }
+            .repository-add-git{
+                display: flex;
+                gap: 10px;
+                flex-direction: column;
+                padding: 10px 20px;
+            }
+            .repository-add-button{
+                padding-top: 10px;
+            }
         }
     }
 }
@@ -62,3 +78,5 @@
  .rpy-add .ant-form-item-label > label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::after {
      display: none!important;
  }
+
+

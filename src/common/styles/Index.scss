@@ -4,9 +4,130 @@ ul li{
     list-style: none;
 }
 
-.xcode .ant-form{
+.antd-custom,.ant-modal,.ant-drawer{
     .ant-form-item{
-        margin-bottom: 10px;
+        margin-bottom: 20px !important;
+    }
+    .ant-form-item-label>label {
+        color: #666;
+        font-size: 13px;
+        font-weight: 500;
+    }
+    .ant-form-item-label>label.ant-form-item-required:not(.ant-form-item-required-mark-optional):after {
+        display: inline-block;
+        margin-left: 4px;
+        color: #ff4d4f;
+        font-size: 14px;
+        font-family: SimSun,sans-serif;
+        line-height: 1;
+        content: "*";
+    }
+    .ant-form-item-label>label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
+        display: none !important;
+        content: "" !important;
+    }
+    .ant-form-item-explain{
+        font-size: 13px !important;
+    }
+    .ant-form-item-explain-error{
+        min-height: 20px !important;
+        height: 20px !important;
+    }
+    .ant-steps-item-process>.ant-steps-item-container>.ant-steps-item-icon{
+        background-color: var(--thoughtware-blue);
+    }
+    .ant-steps-item-finish .ant-steps-item-icon{
+        border-color: var(--thoughtware-blue);
+    }
+    .ant-steps-item-finish .ant-steps-finish-icon{
+        color: var(--thoughtware-blue);
+    }
+    .ant-steps-item-finish>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-title:after{
+        background-color: var(--thoughtware-blue);
+    }
+    .ant-table-thead > tr > th:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before {
+        position: static;
+    }
+    .ant-table-thead>tr>th{
+        background: #ffffff;
+        padding: 8px;
+        font-size: 13px;
+        color: #777;
+        font-weight: 600;
+    }
+    .ant-table-tbody>tr>td{
+        border: none;
+        padding: 8px;
+    }
+    .ant-table{
+        border-bottom: 1px solid #f0f0f0;;
+    }
+    .ant-transfer-list{
+        background: #ffffff;
+        border: none;
+    }
+    .ant-transfer-list-search-action{
+        top:22px
+    }
+    .ant-transfer-list-header-dropdown{
+        display: none;
+    }
+    .ant-transfer-list-header{
+        border: none;
+    }
+    .ant-modal-footer{
+        border:none;
+    }
+    .ant-empty-image{
+        margin-bottom: 0;
+        .ant-empty-img-default{
+            width: 100px;
+        }
+    }
+    .ant-empty-description{
+        font-size: 13px;
+        color: #999;
+        padding-bottom: 8px;
+    }
+    .icon {
+        width: 16px;
+        height: 16px;
+        vertical-align: -0.15em;
+        fill: currentColor;
+        overflow: hidden;
+    }
+
+
+
+}
+
+
+
+.xcode .ant-steps-item-process>.ant-steps-item-container>.ant-steps-item-icon{
+    background-color: var(--thoughtware-blue);
+}
+
+.xcode .ant-steps-item-finish .ant-steps-item-icon{
+    border-color: var(--thoughtware-blue);
+}
+
+.xcode .ant-steps-item-finish .ant-steps-finish-icon{
+    color: var(--thoughtware-blue);
+}
+
+.xcode .ant-steps-item-finish>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-title:after{
+    background-color: var(--thoughtware-blue);
+}
+
+/*ant-form 样式修改*/
+.xcode .ant-form{
+    .ant-form-item-label>label {
+        color: #666;
+        font-size: 13px;
+        font-weight: 500;
+    }
+    .ant-form-item{
+        margin-bottom: 18px;
     }
     .ant-form-item-label>:not(.ant-form-item-required):after{
         display: none;
@@ -32,36 +153,27 @@ ul li{
     }
 }
 
-.xcode .ant-steps-item-process>.ant-steps-item-container>.ant-steps-item-icon{
-    background-color: var(--thoughtware-blue);
-}
 
-.xcode .ant-steps-item-finish .ant-steps-item-icon{
-    border-color: var(--thoughtware-blue);
-}
-
-.xcode .ant-steps-item-finish .ant-steps-finish-icon{
-    color: var(--thoughtware-blue);
-}
-
-.xcode .ant-steps-item-finish>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-title:after{
-    background-color: var(--thoughtware-blue);
-}
-
+/*ant-table 样式修改*/
 .xcode .ant-table-thead>tr>th{
     background: #ffffff;
     padding: 8px;
+    color: #666;
+    font-size: 13px;
+    font-weight: 600;
 }
-
 .xcode .ant-table-tbody>tr>td{
     border: none;
-    padding: 8px;
+    padding: 8px ;
 }
 
-.xcode .ant-table-thead > tr > th:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before {
-    position: static;
-
+/*antd 下拉框样式修改*/
+.drop-down .ant-select-selector{
+    background-color: #f7f7f7!important;
+    border:none !important;
 }
+
+
 
 .xcode .ant-transfer-list{
     background: #ffffff;
@@ -131,31 +243,17 @@ ul li{
     }
 }
 
-.xcode-setting-with{
-    margin: auto;
-    max-width: 75%;
-    min-width: 1000px;
-    padding: var(--thoughtware-padding);
+.gittok-width{
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    padding: 20px 30px;
+    min-width: 700px;
+   /* .ant-col{
+        min-width: 1280px;
+    }*/
 }
 
-.xcode-repository-width{
-    margin: auto;
-    max-width: 75%;
-    min-width: 1080px;
-    padding: var(--thoughtware-padding);
-}
-.xcode-repository-width-setting{
-    margin: auto;
-    max-width: 1280px;
-    min-width: 980px;
-    padding: var(--thoughtware-padding);
-}
-.xcode-home-limited-870{
-    margin: auto;
-    max-width: 870px;
-    min-width: 768px;
-    padding: var(--thoughtware-padding);
-}
 
 ::-webkit-scrollbar {
     /* 滚动条宽度， width：对应竖滚动条的宽度  height：对应横滚动条的高度*/
@@ -178,13 +276,26 @@ ul li{
 :root {
     --thoughtware-white: #fff;   /* 主色调白*/
     --thoughtware-black: #000;   /*主色调黑 */
-    --thoughtware-blue: #5D70EA;   /* 主色调蓝*/
+    --thoughtware-blue: #0d66e4;   /* 主色调蓝*/
     --thoughtware-gree: #4cbb17 ;   /* 主色调蓝*/
     --thoughtware-gray-200: #ececec;  /*border 的边线 */
     --thoughtware-gray-300: #EDF0F5;  /*hover颜色 */
     --thoughtware-gray-400: #e3e8f0;  /*左侧导航 选中颜色 */
     --thoughtware-gray-500: #999; /* 文字次级颜色灰色调*/
+    --thoughtware-gray-600: #fafbfc;
     --thoughtware-gray: #f7f8fa;  /* 主色调灰 左侧导航*/
+    --thoughtware-gray-color: #efefef;  /*主色调灰 左侧一级导航*/
+    --thoughtware-red-700:#ffccc7;
+    --thoughtware-red-600: #fff2f0;
+    --thoughtware-red:#FF0000;
+    --thoughtware-merge-back-gree:#d6fedb;
+    --thoughtware-merge-text-gree:#55a532;
+    --thoughtware-merge-back-gray:#EBECF0;
+    --thoughtware-merge-text-gray:#999999;
+    --thoughtware-merge-back-red:rgb(254, 210, 210);;
+    --thoughtware-merge-text-red:rgb(202, 22, 40);;
+    --thoughtware-left-nav:#fafbfc;  /* 左侧导航背景*/
+
 
     --thoughtware-padding: 20px;  /*页面边距 */
     --thoughtware-padding-resove: -20px; /* 页面边距*/
@@ -207,6 +318,9 @@ ul li{
     --thoughtware-icon-size-32: 32px;
     --thoughtware-icon-size-45: 45px;
 
+    --thoughtware-input-icon-15: 15px;
+    --thoughtware-input-icon-16: 16px;
+
     --xcode-sider-color: #efefef;
     --xcode-select-color: #e3e8f0;
     --xcode-hover-color: #edf0f5;
@@ -218,8 +332,10 @@ ul li{
     --git-action-color:var(--thoughtware-gray-400); /*选中*/
 
     --gittork-table-top:10px;
-    --gittork-data-top-20:20px;
+    --gittok-data-top-20:20px;
     --gittork-data-top-30:30px
+
+
 }
 .text-color:hover{
     color: #1890ff;

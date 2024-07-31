@@ -14,9 +14,10 @@ import TimeTaskStore from "../store/TimeTaskStore";
 import TimeTaskPop from "../../../common/timetask/TimeTaskPop";
 import DeleteExec from "../../../common/delete/DeleteExec";
 import {observer} from "mobx-react";
+import {PrivilegeProjectButton} from 'thoughtware-privilege-ui';
 const ScanSetting = (props) => {
 
-    const {scanPlayId}=props
+    const {scanPlayId,rpyId}=props
     const {createTimeTask,findTimeTaskList,deleteTimeTask,refresh}=TimeTaskStore
 
     const [timeVisible,setTimeVisible]=useState(false)
@@ -65,7 +66,9 @@ const ScanSetting = (props) => {
             width:'10%',
             render: (text, record) => {
                 return(
-                    <DeleteExec value={record} deleteData={deleteTimeTask} title={"确认删除"}/>
+                    <PrivilegeProjectButton code={"rpy_scan_manage"} domainId={rpyId}>
+                        <DeleteExec value={record} deleteData={deleteTimeTask} title={"确认删除"}/>
+                     </PrivilegeProjectButton>
                 )
             }
         },
@@ -77,7 +80,9 @@ const ScanSetting = (props) => {
         <Fragment>
             <div className='scan-tab-desc' >
                 <div className='scan-tab-desc-num'>定时任务：{timedTaskList.length}</div>
-                <Btn  title={'添加'} onClick={()=> setTimeVisible(true)}/>
+                <PrivilegeProjectButton code={"rpy_scan_manage"} domainId={rpyId}>
+                    <Btn  title={'添加'} onClick={()=> setTimeVisible(true)}/>
+                </PrivilegeProjectButton >
             </div>
             <Table
                 columns={columns}

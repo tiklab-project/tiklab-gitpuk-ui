@@ -9,7 +9,7 @@
 import React,{useState,useEffect} from 'react';
 import BreadcrumbContent from "../../../common/breadcrumb/Breadcrumb";
 import Btn from "../../../common/btn/Btn";
-import {Popconfirm, Table, Tooltip} from "antd";
+import {Col, Popconfirm, Table, Tooltip} from "antd";
 import EmptyText from "../../../common/emptyText/EmptyText";
 import {DeleteOutlined} from "@ant-design/icons";
 import ScanRuleStore from "../store/scanRuleStore";
@@ -34,6 +34,8 @@ const ScanRuleDetails = (props) => {
     const [currentPage,setCurrentPage]=useState(1)
     const [totalPage,setTotalPage]=useState()
     const [pageSize]=useState(15)
+    const [totalRecord,setTotalRecord]=useState()
+
 
     useEffect(()=>{
         getScanRulePage(currentPage);
@@ -83,7 +85,7 @@ const ScanRuleDetails = (props) => {
             render:(text)=>text===1&&<div className='text-red'>严重</div>|| text===2&&<div className='text-yellow'>警告</div>
                 ||text===3&&<div className='text-blue'>建议</div>
         },
-        {
+       /* {
             title:'操作',
             dataIndex: 'action',
             key: 'action',
@@ -103,7 +105,7 @@ const ScanRuleDetails = (props) => {
                     </Popconfirm>
                 </Tooltip>
             )
-        }
+        }*/
     ]
     //打开规则详情
     const openRuleDetails = (value) => {
@@ -118,6 +120,7 @@ const ScanRuleDetails = (props) => {
             if(res.code===0){
                 setScanRuleList(res.data.dataList)
                 setTotalPage(res.data.totalPage)
+                setTotalRecord(res.data.totalRecord)
             }
         })
     }
@@ -131,16 +134,26 @@ const ScanRuleDetails = (props) => {
         setCurrentPage(value)
         getScanRulePage(value)
     }
+
+    //刷新查询
+    const refreshFind = () => {
+        getScanRulePage(currentPage)
+    }
     return(
-        <div className='ruleDetails'>
-            <div className='xcode-repository-width xcode'>
+        <div className='xcode gittok-width ruleDetails'>
+            <Col sm={{ span: "24" }}
+                 md={{ span: "24" }}
+                 lg={{ span: "24" }}
+                 xl={{ span: "20", offset: "2" }}
+                 xxl={{ span: "18", offset: "3" }}
+            >
                 <div className='ruleDetails-up'>
                     <BreadcrumbContent firstItem={scanRuleSet?.ruleSetName} goBack={goBack}/>
-                    <Btn
+                 {/*   <Btn
                         type={'primary'}
                         title={'创建规则'}
                         onClick={()=> setEditVisible(true)}
-                    />
+                    />*/}
                 </div>
                 <div className='ruleDetails-table'>
                     <Table
@@ -152,8 +165,13 @@ const ScanRuleDetails = (props) => {
                         locale={{emptyText: <EmptyText title={'暂无扫描规则'}/>}}
                     />
                 </div>
-                <Page pageCurrent={currentPage} changPage={changPage} totalPage={totalPage}/>
-            </div>
+                <Page pageCurrent={currentPage}
+                      changPage={changPage}
+                      totalPage={totalPage}
+                      totalRecord={totalRecord}
+                      refresh={refreshFind}
+                />
+            </Col>
             <ScanRuleDetailsEditPop editVisible={editVisible} setEditVisible={setEditVisible} createScanRule={createScanRule} scanRuleSetId={params.ruleSetId}/>
             <ScanRuleDetailsDrawer visible={DrawerVisible} setVisible={setDrawerVisible} scanRule={scanRule}
                                    scanRuleSet={scanRuleSet} problemLevel={scanRule?.problemLevel}/>

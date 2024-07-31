@@ -7,6 +7,7 @@
  */
 import React from "react";
 import {Dropdown, Menu, Modal} from "antd";
+import './DeleteExec.scss'
 const { confirm } = Modal;
 import {EllipsisOutlined, ExclamationCircleOutlined} from "@ant-design/icons";
 
@@ -18,7 +19,7 @@ const DeleteExec = (props) => {
      */
      const DeletePullDown=(value) => (
         <Menu>
-            <Menu.Item onClick={DeletePop}>
+            <Menu.Item onClick={DeletePop} className="delete-exec">
                 删除
             </Menu.Item>
         </Menu>
@@ -45,16 +46,22 @@ const DeleteExec = (props) => {
 
     //删除操作
     const execDelete = () => {
-        deleteData(value.id)
+        switch (type){
+            case "tag":deleteData(value)
+               break
+            default: deleteData(value.id)
+                break
+        }
     }
 
 
     return(
         <Dropdown   overlay={()=>DeletePullDown(value)}
-                    placement="bottom"
+                    placement="bottomRight"
                     trigger={['click']}
+                    getPopupContainer={e => e.parentElement}
         >
-            <EllipsisOutlined style={{fontSize:18}} />
+            <EllipsisOutlined style={{fontSize:18}}/>
         </Dropdown>
     )
 }

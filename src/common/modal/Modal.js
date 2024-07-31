@@ -33,6 +33,7 @@ const Modals = props => {
             bodyStyle={{padding:0}}
             className="xcode"
             {...res}
+
         >
             <div className='xcode-modal'>
                 <div className='xcode-modal-up'>

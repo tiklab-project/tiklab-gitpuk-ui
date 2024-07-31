@@ -1,0 +1,50 @@
+.verify-basic-drop-title{
+  box-shadow: 0 4px 8px -2px #091e4240, 0 0 1px #091e424f;
+  border-radius: 4px;
+  background-color: #ffffff;
+  width: 180px;
+  .verify-basic-drop-title-input{
+    padding: 8px;
+  }
+  .verify-basic-drop-title-content{
+    max-height: 300px;
+    overflow-y: auto;
+    padding-bottom: 10px;
+  }
+  .title-nav-color{
+    cursor:not-allowed;
+    background:  #f4f4f4;
+    padding: 8px 15px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+  }
+
+  .verify-basic-drop-title-item{
+    padding: 8px 15px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    &:hover{
+      cursor: pointer;
+      background: var(--xcode-hover-color);
+    }
+  }
+
+  .verify-basic-title-item-title{
+    display: inline-block;
+    overflow: hidden;
+    width: 100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    vertical-align: middle;
+    .item-title-nav{
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+  .verify-basic-title-item-add{
+    color: var(--thoughtware-gree);
+  }
+}

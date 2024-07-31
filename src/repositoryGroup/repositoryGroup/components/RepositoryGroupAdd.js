@@ -7,9 +7,10 @@ import BreadcrumbContent from '../../../common/breadcrumb/Breadcrumb';
 import RepositoryPower from '../../../repository/repository/components/RepositoryPower';
 import './RepositoryGroupAdd.scss';
 import groupStore from '../store/RepositoryGroupStore'
+import {Loading} from "../../../common/loading/Loading";
 const RepositoryGroupAdd = props =>{
 
-    const {createGroup,findAllGroup,groupList} = groupStore
+    const {isLoading,createGroup,findAllGroup,groupList} = groupStore
 
     const [form] = Form.useForm()
     const [powerType,setPowerType] = useState("public")
@@ -26,8 +27,9 @@ const RepositoryGroupAdd = props =>{
     const onOk =()  => {
         form.validateFields().then((values) => {
             createGroup({...values,rules:powerType}).then(res=>{
-                props.history.push(`/group/${values.name}/repository`)
-             /*   res.code===0 && props.history.push(`/group/${value.name}/survey`)*/
+                if (res.code===0){
+                    props.history.push(`/group/${values.name}/repository`)
+                }
             })
         })
     }
@@ -69,7 +71,7 @@ const RepositoryGroupAdd = props =>{
                                 }),
                             ]}
                         >
-                            <Input style={{background:'#fff'}}/>
+                            <Input style={{background:'#fff',width:500}} placeholder={"输入仓库组名称"}/>
                         </Form.Item>
                         <RepositoryPower
                             powerType={powerType}
@@ -84,6 +86,9 @@ const RepositoryGroupAdd = props =>{
                     <Btn onClick={onOk} type={'primary'} title={'确认'}/>
                 </div>
             </div>
+                {
+                isLoading && <Loading/>
+            }
         </div>
     )
 }

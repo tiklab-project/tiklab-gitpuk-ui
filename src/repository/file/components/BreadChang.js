@@ -10,7 +10,7 @@ import './BreadChang.scss';
  */
 const BreadChang = props => {
 
-    const {repositoryInfo,type,branch,fileAddress,match} = props
+    const {repositoryInfo,type,branch,fileAddress,match,setData} = props
 
     const webUrl = `${match.params.namespace}/${match.params.name}`
     /**
@@ -34,7 +34,7 @@ const BreadChang = props => {
     const renderCodeBread = name => {
         // 截取路由字符串，分割成数组
         const bread = name[1] && name[1].split('/')
-        return bread && bread.map((item,index)=>{
+         return bread && bread.map((item,index)=>{
             return  index>0 &&
                 <Fragment key={index}>
                     <div className='bread-item' onClick={()=>breadJump(bread,index)}>{item}</div>
@@ -55,6 +55,7 @@ const BreadChang = props => {
                 {...props}
                 repositoryInfo={repositoryInfo}
                 type={'code'}
+                setData={setData}
             />
             <div className='code-bread'>
                 <div className='bread-item'

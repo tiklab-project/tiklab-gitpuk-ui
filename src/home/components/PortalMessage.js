@@ -121,6 +121,7 @@ const PortalMessage = props =>{
 
     //关闭消息抽屉
     const closeMsg = () => {
+        setCurrentPage(1)
         setVisible(false)
         setMessageList([])
     }

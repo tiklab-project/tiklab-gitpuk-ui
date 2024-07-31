@@ -9,15 +9,16 @@ import React, {useState,useEffect} from "react";
 import "./EnvExec.scss"
 import BreadcrumbContent from "../../../common/breadcrumb/Breadcrumb";
 import Btn from "../../../common/btn/Btn";
-import {DeleteOutlined, PlusOutlined} from "@ant-design/icons";
+import {DeleteOutlined, PlusOutlined, StopOutlined} from "@ant-design/icons";
 
 import {inject, observer} from "mobx-react";
-import {Popconfirm, Table, Tooltip} from "antd";
+import {Col, Popconfirm, Table, Tooltip} from "antd";
 import EmptyText from "../../../common/emptyText/EmptyText";
 import ScanEnvironmentEditPop from "./ScanEnvironmentEditPop";
 import scanEnvStore from "../store/ScanEnvStore";
 import deployStore from "../store/DeployStore";
-
+import DeleteExec from "../../../common/delete/DeleteExec";
+import {PrivilegeButton} from 'thoughtware-privilege-ui';
 const ScanEnvironment = (props) => {
     const {deployEnvList,findDeployEnvList,deleteDeployEnv,deleteDeployServer,findDeployServerList,deployServerList,fresh} = scanEnvStore
     const {deployFresh} = deployStore
@@ -26,8 +27,7 @@ const ScanEnvironment = (props) => {
     const [tab,setTab]=useState('maven')
 
     useEffect(()=>{
-
-        findDeployEnvList();
+        findDeployEnvList("maven");
         findDeployServerList("sonar")
     },[fresh,deployFresh])
 
@@ -59,20 +59,15 @@ const ScanEnvironment = (props) => {
             width:'5%',
             key: 'action',
             render:(text,record)=>(
-                <Tooltip title={"删除"}>
-                    <Popconfirm
-                        placement="topRight"
-                        title="你确定删除吗"
-                        onConfirm={()=>deleteDeployEnv(record.id)}
-                        okText="确定"
-                        cancelText="取消"
-                    >
-                        <span style={{cursor:"pointer"}}>
-                            <DeleteOutlined />
-                        </span>
-                    </Popconfirm>
-                </Tooltip>
-            )
+                <div>
+                    {
+                        record.category===2?
+                            <PrivilegeButton  code={"gittok_scan_scheme"} key={'gittok_scan_scheme'} >
+                                <DeleteExec value={record} deleteData={deleteDeployEnv} title={"确认删除"}/>
+                            </PrivilegeButton> :
+                            <StopOutlined disabled/>
+                    }
+                </div>)
         }
     ]
 
@@ -111,37 +106,32 @@ const ScanEnvironment = (props) => {
             key: 'action',
             width:'5%',
             render:(text,record)=>(
-                <Tooltip title={"删除"}>
-                    <Popconfirm
-                        placement="topRight"
-                        title="你确定删除吗"
-                        onConfirm={()=>deleteDeployServer(record.id)}
-                        okText="确定"
-                        cancelText="取消"
-                    >
-                        <span style={{cursor:"pointer"}}>
-                            <DeleteOutlined />
-                        </span>
-                    </Popconfirm>
-                </Tooltip>
-            )
-        }
-    ]
+                <DeleteExec value={record} deleteData={deleteDeployServer} title={"确认删除"}/>
+            )}]
+
 
     const setTableType = (value) => {
         setTab(value)
     }
+
     return(
-        <div className='dev-deploy'>
-            <div className='xcode-setting-with xcode'>
+        <div className='xcode gittok-width dev-deploy'>
+            <Col sm={{ span: "24" }}
+                 md={{ span: "24" }}
+                 lg={{ span: "24" }}
+                 xl={{ span: "20", offset: "2" }}
+                 xxl={{ span: "18", offset: "3" }}
+            >
                 <div className='dev-deploy-up'>
                     <BreadcrumbContent firstItem={'扫描环境'}/>
-                    <Btn
-                        type={'primary'}
-                        title={'添加配置'}
-                      /*  icon={<PlusOutlined/>}*/
-                        onClick={()=> setAddVisible(true)}
-                    />
+                    <PrivilegeButton  code={"gittok_scan_scheme"} key={'gittok_scan_scheme'} >
+                        <Btn
+                            type={'primary'}
+                            title={'添加配置'}
+                            /*  icon={<PlusOutlined/>}*/
+                            onClick={()=> setAddVisible(true)}
+                        />
+                    </PrivilegeButton>
                 </div>
                 <div className='tab-style'>
                     <div className={`${tab==='maven'&& ' choose-tab-nav '}  tab-nav`} onClick={()=>setTableType("maven")}>maven</div>
@@ -169,8 +159,9 @@ const ScanEnvironment = (props) => {
                     }
 
                 </div>
-                <ScanEnvironmentEditPop addVisible={addVisible} setAddVisible={setAddVisible}/>
-            </div>
+            </Col>
+
+            <ScanEnvironmentEditPop addVisible={addVisible} setAddVisible={setAddVisible}/>
         </div>
     )
 }

@@ -6,9 +6,10 @@
 .xcode-listname-icon{
     display: inline-block;
     width: var(--thoughtware-icon-size-32);
+    min-width: var(--thoughtware-icon-size-32);
     height: var(--thoughtware-icon-size-32);
     line-height: var(--thoughtware-icon-size-32);
-    margin-right: 10px;
+    margin-right: 5px;
     border-radius: 4px;
     text-align: center;
     color: black;

@@ -1,27 +1,66 @@
-import {Axios as serviceLoc} from 'thoughtware-core-ui'
-import axios from 'axios'
+/*
+ * @Descripttion:
+ * @version: 1.0.0
+ * @Author: limingliang
+ * @Date: 2020-12-18 16:05:16
+ * @LastEditors: limingliang
+ * @LastEditTime: 2022-04-22 09:33:56
+ */
 
-const BASE_URL = 'http://192.168.10.100:8080'
-const service = axios.create({
-    baseURL: BASE_URL,
+import axios from "axios";
+
+import {Axios as service} from "thoughtware-core-ui";
+import {message} from "antd";
+
+const Service = (url, data) => {
+    return service.request({
+        url: url,
+        method: "post",
+        data: data
+    }).then(res=>{
+        if (res.code!==0){
+            message.info(res.msg)
+        }
+        return res
+    })
+}
+
+const ServiceGet = (url, data) => {
+    return service.request({
+        url: url,
+        method: "get",
+        data: data
+    })
+}
+const serviceLoc = axios.create({
+    // baseURL: '/devapi',
     timeout: 5000
 });
 // 请求拦截
-
-service.interceptors.request.use(function (config) {
+serviceLoc.interceptors.request.use(function (config) {
     // 在发送请求之前做些什么
     return config;
 }, function (error) {
     // 对请求错误做些什么
     return Promise.reject(error);
 });
+
 // 响应拦截
-service.interceptors.response.use(function (response) {
+serviceLoc.interceptors.response.use(function (response) {
+    debugger
     // 对响应数据做点什么
     return response;
 }, function (error) {
+    debugger
     // 对响应错误做点什么
     return Promise.reject(error);
 })
 
-export {service,serviceLoc};
+const ServiceLocal = (url, data) => {
+    return serviceLoc.request({
+        url: url,
+        method: "post",
+        data: data
+    })
+}
+export {service,serviceLoc, Service, ServiceLocal, ServiceGet};

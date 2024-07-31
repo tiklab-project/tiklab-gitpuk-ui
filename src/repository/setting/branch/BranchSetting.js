@@ -6,7 +6,7 @@
  * @update: 2023-08-24 14:30
  */
 import React,{useState,useEffect} from 'react';
-import {Modal, Form, Input, Select, Button, Table, Space, Switch, Tooltip} from 'antd';
+import {Modal, Form, Input, Select, Button, Table, Space, Switch, Tooltip, Col} from 'antd';
 import "./BranchSetting.scss"
 import BreadcrumbContent from "../../../common/breadcrumb/Breadcrumb";
 import branchStore from "../../branch/store/BranchStore";
@@ -35,15 +35,17 @@ const BranchSetting = (props) => {
     const branch = setBranch(urlInfo,repositoryInfo && repositoryInfo)
 
     const [branchData,setBranchData]=useState()
-    const [branchRuleList,setBranchRuleList]=useState([])
 
     const [expandedTree,setExpandedTree] = useState([])  // 树的展开与闭合
 
 
     useEffect(()=>{
         // 获取全部分支
-        repositoryInfo.name && findAllBranch(repositoryInfo.rpyId)
-        setBranchData(branch)
+         findAllBranch(repositoryInfo.rpyId).then(res=>{
+            if(res.code===0&&res.data.length>0){
+                setBranchData(branch)
+            }
+        })
     },[repositoryInfo.name])
 
     const columns = [
@@ -91,7 +93,6 @@ const BranchSetting = (props) => {
     //选择分支
     const choiceBranch = (value) => {
         setBranchData(value)
-
     }
 
     const cutBranch =async () => {
@@ -159,10 +160,10 @@ const BranchSetting = (props) => {
             icon:   <BranchesOutlined style={{fontSize:16}} />,
             enCode:'house_update',
             content: <div className='branch-setting-mode'>
-                    <div className='mode-title'>默认分子</div>
+                    <div className='mode-title'>默认分支</div>
                     <div className='mode-desc'>默认分支被视为代码库中的基本分支，是所有 clone、代码提交和合并请求的目标分支</div>
                     <div >
-                        <Select style={{width:300}}  defaultValue={branch}   allowClear onChange={choiceBranch}>
+                        <Select style={{width:200}}  defaultValue={branchData}   allowClear onChange={choiceBranch} placeholder='分支'>
                             {
                                 branchList.length&&branchList.map(item=>{
                                         return(
@@ -183,7 +184,7 @@ const BranchSetting = (props) => {
                 </div>
         },
 
-        {
+      /*  {
             key:3,
             title:'分支规则',
             desc: '分支规则',
@@ -226,82 +227,28 @@ const BranchSetting = (props) => {
 
                     </div>
                 </div>
-        }
+        }*/
     ]
 
     return(
-        <div className='branch-setting'>
-            <div className='xcode-repository-width-setting xcode'>
-                <BreadcrumbContent firstItem={'BranchSetting'}/>
-                <div className='border-margin'>
-                    <div className='branch-setting-li'>
-                        {
-                            lis.map((item,index)=> lisItem(item,index) )
-                        }
-                    </div>
-                </div>
-
-
-                {/*<div className='branch-setting-mode'>
-                    <div className='mode-title'>默认分子</div>
-                    <div className='mode-desc'>默认分支被视为代码库中的基本分支，是所有 clone、代码提交和合并请求的目标分支</div>
-                    <div style={{display:'flex'}}>
-                        <Select style={{width:300}}  defaultValue={branch}   allowClear onChange={choiceBranch}>
+        <div className='drop-down  xcode gittok-width branch-setting'>
+            <Col
+                sm={{ span: "24" }}
+                md={{ span: "24" }}
+                lg={{ span: "24" }}
+                xl={{ span: "20", offset: "2" }}
+                xxl={{ span: "18", offset: "3" }}
+                >
+                    <BreadcrumbContent firstItem={'BranchSetting'}/>
+                    <div className='border-margin'>
+                        <div className='branch-setting-li'>
                             {
-                                branchList.length&&branchList.map(item=>{
-                                        return(
-                                            <Select.Option key={item.branchName} value={item.branchName}>{item.branchName}</Select.Option>
-                                        )
-                                    }
-                                )
-                            }
-                        </Select>
-                        <div style={{marginLeft:30}}>
-                            {
-                                branchData===branch?
-                                    <Button type="primary" disabled>更新</Button>:
-                                    <Button type="primary" onClick={cutBranch}>更新</Button>
+                                lis.map((item,index)=> lisItem(item,index) )
                             }
                         </div>
                     </div>
-                </div>
-                <div className='branch-setting-rule'>
-                    <div className='rule-justify'>
-                        <div className='rule-title'>保护分支规则</div>
+             </Col>
 
-                        {  branchRuleList.length?
-                            <Button type="primary" >添加分支规则</Button>
-                            :null
-                        }
-
-                    </div>
-                    <div className='rule-desc'>可限制允许推送与合并保护分支的角色和用户,创建合并请求并邀请其他成员评审代码</div>
-                    <div style={{marginTop:10}}>
-                        {
-                            branchRuleList.length?
-                                <Table
-                                    bordered={false}
-                                    columns={columns}
-                                    dataSource={branchRuleList}
-                                    rowKey={record=>record.groupId}
-                                    pagination={false}
-                                    locale={{emptyText: <EmptyText title={'暂无分支规则'}/>}}
-                                />:
-                                <div>
-                                    <EmptyText type={"branchSetting"} />
-                                    <div className='rule-text'>
-                                        没有设置规则
-                                        <span className='rule-text-color' disabled>
-                                            添加分支规则
-                                        </span>
-                                    </div>
-                                </div>
-
-                        }
-
-                    </div>
-                </div>*/}
-            </div>
         </div>
     )
 }

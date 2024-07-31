@@ -1,6 +1,6 @@
 {
     "name": "thoughtware-gittok-ui",
-    "version": "1.0.2",
+    "version": "1.0.0",
     "description": "thoughtware gittok",
     "main": "es/src/ui.js",
     "module": "es/src/ui.js",
@@ -8,7 +8,7 @@
         "es"
     ],
     "scripts": {
-        "gittok-ce-start": "cross-env NODE_ENV=development CUSTOM_ENV=local webpack-dev-server --progress --config webpack.dev.js",
+        "gittok-start": "cross-env NODE_ENV=development CUSTOM_ENV=local webpack-dev-server --progress --config webpack.dev.js",
         "dev": "cross-env NODE_ENV=dev CUSTOM_ENV=dev webpack-dev-server --progress  --config webpack.dev.js --open",
         "build": "rimraf es/* && ./node_modules/.bin/babel src --copy-files --extensions .js --out-dir es/module && ncp ./src/ui.js es/index.js && ncp README.md es/README.md",
         "build:dev": "npm run build:dev:esm && npm run build:dev:cjs && npm run build:umd && npm run build:css",
@@ -27,7 +27,7 @@
     "author": "",
     "license": "ISC",
     "publishConfig": {
-        "registry": "http://192.168.10.9:8080/repository/npm-hosted"
+        "registry": "http://172.13.1.24:8080/repository/npm-hosted"
     },
     "devDependencies": {
         "@babel/cli": "^7.12.1",
@@ -78,12 +78,12 @@
         "json-server": "^0.16.3",
         "mini-css-extract-plugin": "^1.3.1",
         "mockjs": "^1.1.0",
-        "monaco-editor-locales-plugin": "^0.0.3",
+        "monaco-editor-locales-plugin": "0.0.3",
         "monaco-editor-webpack-plugin": "^5.0.0",
         "ncp": "^2.0.0",
         "node-forge": "*",
-        "nodemon": "^2.0.6",
         "node-sass": "^5.0.0",
+        "nodemon": "^2.0.6",
         "optimize-css-assets-webpack-plugin": "^5.0.4",
         "package-check-version": "^1.0.1",
         "postcss": "^8.1.7",
@@ -129,8 +129,10 @@
         "antd": "^4.15.2",
         "axios": "^0.21.0",
         "classnames": "^2.2.6",
+        "dayjs": "^1.11.10",
         "echarts": "^5.3.3",
         "highlight.js": "^11.7.0",
+        "i": "^0.3.7",
         "i18next": "^19.8.4",
         "i18next-browser-languagedetector": "^6.0.1",
         "i18next-http-backend": "^1.0.21",
@@ -139,6 +141,7 @@
         "mobx-react": "^6.2.2",
         "moment": "^2.29.4",
         "monaco-editor": "^0.30.1",
+        "npm": "^10.5.2",
         "react": "^17.0.2",
         "react-diff-viewer": "^3.1.1",
         "react-dom": "^17.0.2",
@@ -159,7 +162,7 @@
         "thoughtware-plugin-manager-ui": "^1.0.2",
         "thoughtware-privilege-ui": "^1.0.2",
         "thoughtware-security-ui": "^1.0.2",
-        "thoughtware-todotask-ui": "^1.0.2",
+        "thoughtware-slate-ui": "^1.0.2",
         "thoughtware-user-ui": "^1.0.2"
     },
     "peerDependencies": {
@@ -177,13 +180,13 @@
         "mobx": "^5.15.4",
         "mobx-react": "^6.2.2",
         "moment": "^2.29.4",
-        "monaco-editor": "^0.30.1",
         "postcss-loader": "^4.0.4",
         "react": "^17.0.2",
         "react-diff-viewer": "^3.1.1",
         "react-dom": "^17.0.2",
         "react-i18next": "^11.7.3",
         "react-monaco-editor": "^0.45.0",
+        "monaco-editor": "^0.30.1",
         "react-router": "^5.2.0",
         "react-router-config": "^5.1.1",
         "react-router-dom": "^5.2.0",

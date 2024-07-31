@@ -6,7 +6,8 @@ import Btn from '../../../../common/btn/Btn';
 
 const AccessKeysAdd = props =>{
 
-    const {addVisible,setAddVisible} = props
+    const {addVisible,setAddVisible,createAuth,rpyId} = props
+
 
     const [form] = Form.useForm()
     const [height,setHeight] = useState(0)
@@ -23,30 +24,20 @@ const AccessKeysAdd = props =>{
     }
 
     const onOk = () =>{
-
+        form.validateFields().then((values) => {
+            createAuth( {...values,type:'private',repository:{rpyId:rpyId}})
+            setAddVisible(false)
+        })
     }
 
     const modalFooter = (
         <>
-            <Btn
-                onClick={()=>setAddVisible(false)}
-                title={"取消"}
-                isMar={true}
-            />
-            <Btn
-                onClick={() => {
-                    form
-                        .validateFields()
-                        .then((values) => {
-                            form.resetFields()
-                            onOk(values)
-                        })
-                }}
-                title={"确定"}
-                type={"primary"}
-            />
+            <Btn onClick={()=>setAddVisible(false)} title={'取消'} isMar={true}/>
+            <Btn onClick={onOk} title={'确定'} type={'primary'}/>
         </>
     )
+
+
 
     return (
         <Modal
@@ -72,12 +63,12 @@ const AccessKeysAdd = props =>{
                     autoComplete="off"
                     initialValues={{'2':2}}
                 >
-                    <Form.Item label={'标题'} name={'1'}
+                    <Form.Item label={'标题'} name={'title'}
                                rules={[{required:true,message:`标题不能为空`}]}
                     >
                         <Input />
                     </Form.Item>
-                    <Form.Item label={'秘钥'} name={'3'}>
+                    <Form.Item label={'公钥'} name={'value'}>
                         <Input.TextArea/>
                     </Form.Item>
                 </Form>

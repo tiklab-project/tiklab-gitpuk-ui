@@ -1,15 +1,18 @@
 import React,{useEffect,useState} from 'react';
-import {DownOutlined,UpOutlined} from '@ant-design/icons';
+import {DownOutlined, ExportOutlined, UpOutlined} from '@ant-design/icons';
 import {PrivilegeButton,SystemNav} from 'thoughtware-privilege-ui';
-import {departmentRouters,templateRouter} from "./SettingRouters";
 import {renderRoutes} from 'react-router-config';
 import {useTranslation} from 'react-i18next';
 import {inject, observer} from "mobx-react";
 import './SettingContent.scss';
+import {getUser,getVersionInfo} from "thoughtware-core-ui";
+import UpgradePopup from "../../common/upgrade/UpgradePopup";
+import member from "../../assets/images/img/member.png";
+import goBack from "../../assets/images/img/goBack.png";
 
 const SettingContent= props =>  {
 
-    const {route,isDepartment,applicationRouters,systemRoleStore} = props
+    const {route,isDepartment,applicationRouters,systemRoleStore,templateRouter,setNavLevel} = props
     const {systemPermissions}=systemRoleStore
 
     const {t} = useTranslation()
@@ -17,28 +20,36 @@ const SettingContent= props =>  {
     const path = props.location.pathname
     const [selectKey,setSelectKey] = useState(path)
     const [expandedTree,setExpandedTree] = useState([''])  // 树的展开与闭合
+    const [authConfig,setAuthConfig]=useState(null)
 
+    const [upgradeVisible,setUpgradeVisible]=useState(false)
 
     useEffect(()=>{
         if (path.startsWith("/setting/scanRule")){
             setSelectKey("/setting/scanRuleSet")
         }else {
-            setSelectKey(path)
+            if (path.startsWith("/setting/power/repository")){
+                setSelectKey("/setting/power/user")
+            }else {
+                setSelectKey(path)
+            }
         }
 
+        const authConfig=localStorage.getItem('authConfig')
+        setAuthConfig(JSON.parse(authConfig))
     },[path])
 
     // 菜单
     let menus = () => {
         try{
             if(isDepartment && devProduction){
-                return [...departmentRouters,...applicationRouters]
+                return [...applicationRouters]
             }
-          /*  if(!isDepartment && devProduction){
+            if(!isDepartment && devProduction){
                 return [...applicationRouters,...templateRouter]
-            }*/
+            }
             if(isDepartment && !devProduction){
-                return [...departmentRouters,...applicationRouters]
+                return [...applicationRouters]
             }
             else {
                 return [...applicationRouters]
@@ -48,32 +59,58 @@ const SettingContent= props =>  {
         }
     }
 
-    const select = data =>{
-        props.history.push(data.id)
+    //跳转
+    const skip = data =>{
+        const value=data.id;
+        if (value.endsWith("orga")||value.endsWith("user")||value.endsWith("userGroup")||value.endsWith("dir")){
+            //统一登陆
+            if (!authConfig.authType) {
+                const a =value.substring(value.lastIndexOf("/"));
+                window.open(`${authConfig.authUrl}/#/setting${a}`)
+            }else {
+                props.history.push(data.id)
+            }
+        }else {
+            props.history.push(data.id)
+        }
     }
 
     const isExpandedTree = key => {
         return expandedTree.some(item => item ===key)
     }
 
+    //导航栏数的展开关闭
     const setOpenOrClose = key => {
-        if (isExpandedTree(key)) {
-            setExpandedTree(expandedTree.filter(item => item !== key))
-        } else {
-            setExpandedTree(expandedTree.concat(key))
+        if (key==="3"&&(getVersionInfo().expired&&getVersionInfo().release!==3)){
+            setUpgradeVisible(true)
+        }else {
+            if (isExpandedTree(key)) {
+                setExpandedTree(expandedTree.filter(item => item !== key))
+            } else {
+                setExpandedTree(expandedTree.concat(key))
+            }
         }
+
     }
 
     const renderMenu = (data,deep)=> {
         return (
             <PrivilegeButton key={data.id} code={data.purviewCode} {...props}>
-                <li style={{cursor:'pointer',paddingLeft:`${deep*20+20}`}}
+                <li style={{cursor:'pointer',paddingLeft:`${deep*20+25}`}}
                     className={`system-aside-li system-aside-second ${data.id=== selectKey ? 'system-aside-select' :null}`}
-                    onClick={()=>select(data)}
+                    onClick={()=>skip(data)}
                     key={data.id}
                 >
-                    <span className='sys-content-icon'>{data.icon}</span>
-                    <span>{t(data.title)}</span>
+                    <div className='nav-style'>
+                        <span className='sys-content-icon'>{data.icon}</span>
+                        <span className='nav-style-title'>{t(data.title)}</span>
+                        {!authConfig?.authType&&(data.id.endsWith("orga")||data.id.endsWith("user")||
+                                data.id.endsWith("userGroup")||data.id.endsWith("dir"))&&
+                            <span>
+                                <ExportOutlined  />
+                            </span>
+                        }
+                        </div>
                 </li>
             </PrivilegeButton>
         )
@@ -82,13 +119,16 @@ const SettingContent= props =>  {
     const subMenu = (item,deep)=> {
         return (
             <li key={item.id} className='system-aside-li'>
-                <div className='system-aside-item system-aside-first'
-                     style={{paddingLeft: `${deep * 20 + 20}`}}
+                <div className='system-aside-item system-aside-first '
+                     style={{paddingLeft: `${deep * 20 + 30}`}}
                      onClick={()=>setOpenOrClose(item.id)}
                 >
-                    <span>
-                        <span className='sys-content-icon'>{item.icon}</span>
+                    <span className='sys-content-tab-style'>
+                        <div className='sys-content-icon'>{item.icon}</div>
                         <span className='system-aside-title'>{t(item.title)}</span>
+                        {item.id==="3"&&(getVersionInfo().expired&&getVersionInfo().release!==3)&&
+                            <img  src={member}  style={{width:18,height:18}}/>
+                        }
                     </span>
                     <div className='system-aside-item-icon'>
                         {
@@ -119,7 +159,11 @@ const SettingContent= props =>  {
         const isPromise = item.children.some(list=> systemPermissions.includes(list.purviewCode))
         return isPromise && subMenu(item,deep)
     }
-
+    //跳转首页
+    const backHome = () => {
+        setNavLevel(1)
+        props.history.push(`/repository`)
+    }
     return (
         <SystemNav
             {...props}
@@ -127,10 +171,15 @@ const SettingContent= props =>  {
             setExpandedTree={setExpandedTree} // 树的展开和闭合(非必传)
             applicationRouters={applicationRouters} // 菜单
             outerPath={"/setting"} // 系统设置Layout路径
-            notFoundPath={"/setting/org"}  //找不到页面路径
+            noAccessPath={"/noaccess"} //没有资源访问权限页面的路由参数
         >
             <div className='system'>
                 <div className='system-aside'>
+                    <div className='system-aside-title-nav'>
+                        <img src={goBack} className='system-aside-icon' onClick={backHome}/>
+                        <div className='system-aside-title-text'>设置</div>
+                    </div>
+
                     <ul className='system-aside-top' style={{padding:0}}>
                         {
                             menus().map(firstItem => {
@@ -140,12 +189,15 @@ const SettingContent= props =>  {
                         }
                     </ul>
                 </div>
-                <div className='system-content'>
+                <div className='system-content antd-custom'>
                     {renderRoutes(route.routes)}
                 </div>
             </div>
+            <UpgradePopup visible={upgradeVisible}
+                          setVisible={setUpgradeVisible}
+                          title={'代码扫描配置'}
+                          desc={"如需配置代码扫描，请购买企业版Licence"}/>
         </SystemNav>
-
     )
 
 }

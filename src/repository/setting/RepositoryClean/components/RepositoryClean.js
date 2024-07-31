@@ -7,7 +7,7 @@
 import React ,{useEffect,useState}from 'react';
 import "./RepositoryClean.scss"
 import BreadcrumbContent from "../../../../common/breadcrumb/Breadcrumb";
-import {InputNumber, message, Popconfirm, Space, Table, Tooltip} from "antd";
+import {Col, InputNumber, message, Popconfirm, Space, Table, Tooltip} from "antd";
 import {SpinLoading} from "../../../../common/loading/Loading";
 import EmptyText from "../../../../common/emptyText/EmptyText";
 import RepositoryCleanStore from "../store/RepositoryCleanStore";
@@ -82,7 +82,12 @@ const RepositoryClean = (props) => {
         }else {
             message.error('只能为整数')
         }
-
+        /*findLargeFile({repositoryId:repository.rpyId,fileSize:fileSize}).then(res=>{
+            if (res.code===0&&res.data==='OK'){
+                findFileTime(repository)
+                setExecState(true)
+            }
+        })*/
 
     }
 
@@ -201,65 +206,73 @@ const RepositoryClean = (props) => {
     }
 
     return(
-        <div className='xcode-setting-with xcode'>
-            <BreadcrumbContent firstItem={'仓库清理'}/>
-            <div className='clean'>
-                <div className='clean-condition-style'>
-                    <div className='clean-condition-title'>仓库名称:</div>
-                    <div className='clean-condition-data'>{repository?.name}</div>
-                </div>
-                <div className='clean-condition-style clean-condition-height'>
-                    <div className='clean-condition-title'>仓库大小:</div>
-                    <div className='clean-condition-data'>
-                        {repository?.rpySize}
+        /*<div className='xcode-setting-with repository-setting-width xcode'>*/
+         <div className='xcode gittok-width '>
+            <Col
+                sm={{ span: "24" }}
+                md={{ span: "24" }}
+                lg={{ span: "24" }}
+                xl={{ span: "20", offset: "2" }}
+                xxl={{ span: "18", offset: "3" }}
+            >
+                <BreadcrumbContent firstItem={'仓库清理'}/>
+                <div className='clean'>
+                    <div className='clean-condition-style'>
+                        <div className='clean-condition-title'>仓库名称:</div>
+                        <div className='clean-condition-data'>{repository?.name}</div>
                     </div>
-                </div>
-                <div className='clean-condition-style'>
-
-                    <div className='clean-condition-title'>筛选条件:</div>
-                    <div className='clean-condition-data'>
-                        <span>大于</span>
-                        <span className='clean-condition-desc'>
-                              <InputNumber min={1}  value={fileSize} onChange={cutChangeSize} />
-                        </span>
-                        <span>M</span>
-                    </div>
-                    {
-                        execState?
-                            <Btn   type={'primary'} title={'加载中'} />:
-                            <Btn onClick={()=>findLargeFileList(repository)} type={'primary'} title={'查询'}/>
-                    }
-                </div>
-                {
-                    choiceFileList.length>0&&
-                    <div className='clean-style'>
-                        <div className='clean-num'>清除数：{choiceFileList.length}</div>
-                        <div onClick={cleanLarge}>
-                            <Btn  type={'common'} title={'生成清理命令'}/>
+                    <div className='clean-condition-style clean-condition-height'>
+                        <div className='clean-condition-title'>仓库大小:</div>
+                        <div className='clean-condition-data'>
+                            {repository?.rpySize}
                         </div>
                     </div>
-                }
-                <div className={`${choiceFileList.length>0?'clean-table-5':"clean-table-20"}`}>
-                    <Table
-                        rowSelection={{
-                            type: 'checkbox',
-                            selectedRowKeys:choiceFileList,
-                            onChange: (selectedRowKeys) => {
-                                setChoiceFileList(selectedRowKeys);
-                            },
-                        }}
-                        bordered={false}
-                        columns={columns}
-                        dataSource={fileList}
-                        rowKey={record=>record.fileName}
-                        pagination={false}
-                        onChange={onChange}
-                        locale={{emptyText: isLoading ?
-                                <SpinLoading type="table"/>: <EmptyText title={"没有文件"}/>}}
-                    />
+                    <div className='clean-condition-style'>
+
+                        <div className='clean-condition-title'>筛选条件:</div>
+                        <div className='clean-condition-data'>
+                            <span>大于</span>
+                            <span className='clean-condition-desc'>
+                              <InputNumber min={1}  value={fileSize} onChange={cutChangeSize} />
+                        </span>
+                            <span>M</span>
+                        </div>
+                        {
+                            execState?
+                                <Btn   type={'primary'} title={'加载中'} />:
+                                <Btn onClick={()=>findLargeFileList(repository)} type={'primary'} title={'查询'}/>
+                        }
+                    </div>
+                    {
+                        choiceFileList.length>0&&
+                        <div className='clean-style'>
+                            <div className='clean-num'>清除数：{choiceFileList.length}</div>
+                            <div onClick={cleanLarge}>
+                                <Btn  type={'common'} title={'生成清理命令'}/>
+                            </div>
+                        </div>
+                    }
+                    <div className={`${choiceFileList.length>0?'clean-table-5':"clean-table-20"}`}>
+                        <Table
+                            rowSelection={{
+                                type: 'checkbox',
+                                selectedRowKeys:choiceFileList,
+                                onChange: (selectedRowKeys) => {
+                                    setChoiceFileList(selectedRowKeys);
+                                },
+                            }}
+                            bordered={false}
+                            columns={columns}
+                            dataSource={fileList}
+                            rowKey={record=>record.fileName}
+                            pagination={false}
+                            onChange={onChange}
+                            locale={{emptyText: isLoading ?
+                                    <SpinLoading type="table"/>: <EmptyText title={"没有文件"}/>}}
+                        />
+                    </div>
                 </div>
-            </div>
-           {/* <CleanLogDrawer visible={visible} setVisible={setVisible} resultData={resultData}/>*/}
+            </Col>
             <CleanOrderDrawer visible={visible} setVisible={setVisible} repository={repository}
                               choiceFileList={choiceFileList} execCleanFile={execCleanFile}/>
         </div>

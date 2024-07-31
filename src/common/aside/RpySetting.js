@@ -22,15 +22,15 @@ const RpySetting = props =>{
     },[path])
 
     const navContent = item =>{
-        return  <div key={item.to}
-                     className={`setting-aside-item ${nav===item.to?'setting-aside-select':''} `}
-                     onClick={()=>props.history.push(item.to)}
+        return  <div key={item.id}
+                     className={`setting-aside-item ${nav===item.id?'setting-aside-select':''} `}
+                     onClick={()=>props.history.push(item.id)}
                 ><span className='setting-aside-item-title'>{t(item.title)}</span>
                 </div>
     }
 
     const renderRouter = item => {
-        return  <PrivilegeProjectButton key={item.to} code={item.purviewCode} domainId={domainId}>
+        return  <PrivilegeProjectButton key={item.id} code={item.purviewCode} domainId={domainId}>
                     {navContent(item)}
                 </PrivilegeProjectButton>
     }
@@ -40,6 +40,8 @@ const RpySetting = props =>{
             {...props}
             domainId={domainId}
             projectRouters={secondRouter}
+            noAccessPath={"/noaccess"}  //找不到页面路径
+            pathkey={'id'}
            // outerPath={`/repository/${domainId}/set`}
         >
             <div className='xcode-setting'>

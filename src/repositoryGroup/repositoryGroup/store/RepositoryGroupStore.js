@@ -16,6 +16,10 @@ export class GroupStore {
     @observable
     groupInfo = ''
 
+    // 加载
+    @observable
+    isLoading = false
+
     /**
      * 设置单个仓库组信息
      * @param value
@@ -41,17 +45,18 @@ export class GroupStore {
      */
     @action
     createGroup = async values =>{
-        const data = await Axios.post('/rpyGroup/createGroup',{
+       this.isLoading = true
+       const data=  await Axios.post('/rpyGroup/createGroup',{
             ...values,
             user:{id:getUser().userId}
         })
-        if(data.code===0){
-            message.info('创建成功',0.5)
-        }
-        else {
-            message.info(data.msg)
-        }
-        return data
+       if(data.code===0){
+           message.info('创建成功',0.5)
+       }else{
+           message.info(data.msg)
+       }
+        this.isLoading = false
+       return data
     }
 
     /**
@@ -61,9 +66,11 @@ export class GroupStore {
      */
     @action
     deleteGroup = async value =>{
+        this.isLoading = true
         const param=new FormData()
         param.append("groupId",value)
         const data = await Axios.post('/rpyGroup/deleteGroup',param)
+        this.isLoading = false
         return data
     }
 
@@ -74,10 +81,12 @@ export class GroupStore {
      */
     @action
     updateGroup = async values =>{
+        this.isLoading = true
         const data = await Axios.post('/rpyGroup/updateGroup',values)
         if(data.code===0){
             message.success('更新成功')
         }
+        this.isLoading = false
         return data
     }
 

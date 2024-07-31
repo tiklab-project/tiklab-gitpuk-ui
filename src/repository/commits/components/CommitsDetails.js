@@ -1,5 +1,5 @@
 import React,{useEffect,useState} from 'react';
-import {Tooltip,Dropdown} from 'antd';
+import {Tooltip, Dropdown, Col} from 'antd';
 import {CopyOutlined,CaretDownOutlined,CaretRightOutlined,ArrowRightOutlined} from '@ant-design/icons';
 import {inject,observer} from 'mobx-react';
 import BreadcrumbContent from '../../../common/breadcrumb/Breadcrumb';
@@ -7,10 +7,10 @@ import Btn from '../../../common/btn/Btn';
 import {SpinLoading} from '../../../common/loading/Loading';
 import {copy} from '../../../common/client/Client';
 import CommitsDetailsDrop from './CommitsDetailsDrop';
-import CommitsDetailsDiff from './CommitsDetailsDiff';
 import {commitU4} from "../../file/components/Common";
 import './CommitsDetails.scss';
 import commitsStore from "../store/CommitsStore"
+import DetailsDiff from "../../../common/diffData/DetailsDiff";
 /**
  * 提交详情
  * @param props
@@ -22,7 +22,7 @@ const CommitsDetails = props =>{
     const {repositoryStore,match,setPageType} = props
 
     const {repositoryInfo} = repositoryStore
-    const {findCommitFileDiffList,findCommitFileDiff,findCommitLineFile,commitDiff,setCommitDiff,findLikeCommitDiffFileList,diffDropList} = commitsStore
+    const {findDiffFileByCommitId,findCommitFileDiff,findCommitLineFile,commitDiff,setCommitDiff,findLikeCommitDiffFileList,diffDropList} = commitsStore
 
     const webUrl = `${match.params.namespace}/${match.params.name}`
     const commitId = match.params.commitsId
@@ -57,9 +57,9 @@ const CommitsDetails = props =>{
      * 查询提交文件
      */
     const findCommitDate = (number) => {
-        findCommitFileDiffList({
+        findDiffFileByCommitId({
             rpyId:repositoryInfo.rpyId,
-            branch:commitId,
+            commitId:commitId,
             findCommitId:true,
             number:number
         }).then(res=>{
@@ -109,7 +109,7 @@ const CommitsDetails = props =>{
     const changDropList = e  => {
         findLikeCommitDiffFileList({
             rpyId:repositoryInfo.rpyId,
-            branch:commitId,
+            commitId:commitId,
             findCommitId:true,
             likePath:e.target.value
         })
@@ -148,8 +148,8 @@ const CommitsDetails = props =>{
             // 获取文件内容
             findCommitFileDiff({
                 rpyId:repositoryInfo.rpyId,
-                branch:commitId,
-                findCommitId:true,
+                originCommitId:commitDiff.parentCommitIds[0],
+                commitId:commitId,
                 filePath:path
             }).then(res=>{
                 if(res.code===0){
@@ -207,6 +207,7 @@ const CommitsDetails = props =>{
             oldStn:oldStn,
             newStn:newStn,
             direction:index > 0 ? 'down':'up',
+            queryType:"commit",
         }).then(res=>{
             if(res.code===0){
                 let arr = []
@@ -251,7 +252,11 @@ const CommitsDetails = props =>{
                         }
                     </div>
                     <div className='item-head-file'>
-                        <span className='item-title-title'> { filePath(item) } </span>
+                        <span className='item-title-title'> {
+                            <Tooltip placement="top" title={filePath(item)} >
+                                { filePath(item) }
+                            </Tooltip>
+                        } </span>
                         {
                             item.type!=='MODIFY' &&
                             <span className='item-title-type'>
@@ -267,7 +272,7 @@ const CommitsDetails = props =>{
                 <div className='item-content' style={isExpandedTree(filePath(item))?{display:'block'}:{display:'none'}}>
                     {
                         expandVisible===filePath(item)? <SpinLoading type='list'/> :
-                        <CommitsDetailsDiff content={item} expand={expand} />
+                        <DetailsDiff content={item} expand={expand} />
                     }
                 </div>
             </div>
@@ -275,65 +280,72 @@ const CommitsDetails = props =>{
     }
 
     return (
-        <div className='commitsDetails' id='commits_contrast'  onScroll={handleScroll}>
-            <div className='commitsDetails-content xcode-repository-width xcode'>
-                <BreadcrumbContent firstItem={commitDiff && commitDiff.commitMessage}  goBack={()=>props.history.go(-1)}/>
-                <div className='commitsDetails-head'>
-                    <div className='commitsDetails-head-left'>
-                        <div className='head-title-icon'>
-                            <span className='head-title'>提交 {commitId.substring(0,8)}</span>
-                            <Tooltip title={'复制'}>
-                                <span className='head-icon' onClick={()=>copy(commitId)}><CopyOutlined /></span>
-                            </Tooltip>
-                        </div>
-                        <div className='head-divider' />
-                        <div className='head-user-time'>
-                            <span className='head-time'>{commitDiff && commitDiff.commitTime}来自</span>
-                            <span className='head-user'>{commitDiff && commitDiff.commitUser}</span>
-                        </div>
-                    </div>
-                    <div className='commitsDetails-head-right'>
-                        <Btn type={'common'} title={'查看文件'} onClick={()=>findFile('tree')}/>
-                    </div>
-                </div>
-                <div className='commitsDetails-contrast'>
-                    <div className='commitsDetails-contrast-content'>
-                        <div className='contrast-title'>
-                        </div>
-                        <div className='contrast-affected'>
-                            <div className='contrast-affected-opt'>
-                                <Dropdown
-                                    overlay={<CommitsDetailsDrop
-                                        diffDropList={diffDropList}
-                                        changFile={changFile}
-                                        changDropList={changDropList}
-                                        setDropDownVisible={setDropDownVisible}
-                                    />}
-                                    trigger={['click']}
-                                    placement={'bottomLeft'}
-                                    visible={dropDownVisible}
-                                    onVisibleChange={visible=>setDropDownVisible(visible)}
-                                >
-                                    <span>文件变更 <CaretDownOutlined/></span>
-                                </Dropdown>
+        <div className='xcode gittok-width commitsDetails' id='commits_contrast'  onScroll={handleScroll}>
+            <Col sm={{ span: "24" }}
+                 md={{ span: "24" }}
+                 lg={{ span: "24" }}
+                 xl={{ span: "20", offset: "2" }}
+                 xxl={{ span: "18", offset: "3" }}
+            >
+                <div className='commitsDetails-content  '>
+                    <BreadcrumbContent firstItem={commitDiff && commitDiff.commitMessage}  goBack={()=>props.history.go(-1)}/>
+                    <div className='commitsDetails-head'>
+                        <div className='commitsDetails-head-left'>
+                            <div className='head-title-icon'>
+                                <span className='head-title'>提交 {commitId.substring(0,8)}</span>
+                                <Tooltip title={'复制'}>
+                                    <span className='head-icon' onClick={()=>copy(commitId)}><CopyOutlined /></span>
+                                </Tooltip>
                             </div>
-                            <div style={{paddingLeft:20}}> {commitDiffList && commitDiffList.length}文件被修改</div>
-                            （ <div className='contrast-affected-num'>
+                            <div className='head-divider' />
+                            <div className='head-user-time'>
+                                <span className='head-time'>{commitDiff && commitDiff.commitTime}来自</span>
+                                <span className='head-user'>{commitDiff && commitDiff.commitUser}</span>
+                            </div>
+                        </div>
+                        <div className='commitsDetails-head-right'>
+                            <Btn type={'common'} title={'查看文件'} onClick={()=>findFile('tree')}/>
+                        </div>
+                    </div>
+                    <div className='commitsDetails-contrast'>
+                        <div className='commitsDetails-contrast-content'>
+                            <div className='contrast-title'>
+                            </div>
+                            <div className='contrast-affected'>
+                                <div className='contrast-affected-opt'>
+                                    <Dropdown
+                                        overlay={<CommitsDetailsDrop
+                                            diffDropList={diffDropList}
+                                            changFile={changFile}
+                                            changDropList={changDropList}
+                                            setDropDownVisible={setDropDownVisible}
+                                        />}
+                                        trigger={['click']}
+                                        placement={'bottomLeft'}
+                                        visible={dropDownVisible}
+                                        onVisibleChange={visible=>setDropDownVisible(visible)}
+                                    >
+                                        <span>文件变更 <CaretDownOutlined/></span>
+                                    </Dropdown>
+                                </div>
+                                <div style={{paddingLeft:20}}> {commitDiffList && commitDiffList.length}文件被修改</div>
+                                （ <div className='contrast-affected-num'>
                                 增加行
                                 <span className='num-add'>+{commitDiff && commitDiff.addLine}</span>
                                 减少行
                                 <span className='num-reduce'>-{commitDiff && commitDiff.deleteLine}</span>
                             </div> ）
-                        </div>
-                        <div className='contrast-content'>
-                            {
-                                isLoading ? <SpinLoading type='table'/> :
-                                commitDiffList && commitDiffList.map((item,index)=>renderDiffData(item,index))
-                            }
+                            </div>
+                            <div className='contrast-content'>
+                                {
+                                    isLoading ? <SpinLoading type='table'/> :
+                                        commitDiffList && commitDiffList.map((item,index)=>renderDiffData(item,index))
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </Col>
         </div>
     )
 }

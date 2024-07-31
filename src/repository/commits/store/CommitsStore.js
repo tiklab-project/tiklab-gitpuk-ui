@@ -71,6 +71,43 @@ export class CommitsStore{
         return data
     }
 
+
+
+    /**
+     * 获取两个分支不同的提交记录
+     * @param value
+     * @returns {Promise<*>}
+     */
+    @action
+    findCommitDiffBranch = async value =>{
+        const data = await Axios.post('/commit/findCommitDiffBranch',value)
+        return data
+    }
+
+    /**
+     * 获取两个分支不同的提交文件
+     * @param value
+     * @returns {Promise<*>}
+     */
+    @action
+    findDiffFileByBranchs = async value =>{
+        const data = await Axios.post('/commit/findDiffFileByBranchs',value)
+        return data
+    }
+
+    /**
+     * 获取两个分支不同的提交文件的详情
+     * @param value
+     * @returns {Promise<*>}
+     */
+    @action
+    findDiffBranchFileDetails = async value =>{
+        const data = await Axios.post('/commit/findDiffBranchFileDetails',value)
+        return data
+    }
+
+
+
     /**
      * 获取分支z最新提交信息
      * @param value
@@ -86,13 +123,13 @@ export class CommitsStore{
     }
 
     /**
-     * 获取提交信息diff文件
+     * 通过提交commitId 查询与父级的差异文件
      * @param value
      * @returns {Promise<*>}
      */
     @action
-    findCommitFileDiffList = async value =>{
-        const data = await Axios.post('/commit/findCommitFileDiffList',value)
+    findDiffFileByCommitId = async value =>{
+        const data = await Axios.post('/commit/findDiffFileByCommitId',value)
         if(data.code===0){
             this.commitDiff = data.data && data.data
             this.diffDropList = data.data && data.data.diffList
@@ -135,6 +172,55 @@ export class CommitsStore{
     }
 
     /**
+     * 通过分支查询差异提交和差异文件统计 (创建合并分支使用)
+     * @param value
+     * @returns {Promise<*>}
+     */
+    @action
+    findStatisticsByBranchs = async value =>{
+        const data = await Axios.post('/commit/findStatisticsByBranchs',value)
+        return data
+    }
+
+    /**
+     * 通过合并请求id查询差异提交和差异文件统计
+     * @param value
+     * @returns {Promise<*>}
+     */
+    @action
+    findStatisticsByMergeId = async mergeId =>{
+        const param=new FormData()
+        param.append('mergeId',mergeId)
+        const data = await Axios.post('/commit/findStatisticsByMergeId',param)
+        return data
+    }
+
+    /**
+     * 通过合并分支id 查询差异提交
+     * @param value
+     */
+    @action
+    findDiffCommitByMergeId = async mergeId =>{
+        const param=new FormData()
+        param.append('mergeId',mergeId)
+        const data = await Axios.post('/commit/findDiffCommitByMergeId',param)
+        return data
+    }
+
+    /**
+     * 通过合并分支id 查询差异文件
+     * @param value
+     */
+    @action
+    findDiffFileByMergeId = async mergeId =>{
+        const param=new FormData()
+        param.append('mergeId',mergeId)
+        const data = await Axios.post('/commit/findDiffFileByMergeId',param)
+        return data
+    }
+
+
+    /**
      * 查询仓库下面的成员
      * @param value
      * @returns {Promise<*>}
@@ -147,6 +233,22 @@ export class CommitsStore{
         }
         return data
     }
+
+
+
+    /**
+     * 查询仓库的提交用户
+     * @param value
+     */
+    @action
+    findCommitUserList = async repositoryId =>{
+        const param=new FormData()
+        param.append('repositoryId',repositoryId)
+        const data = await Axios.post('/commit/findCommitUserList',param)
+        return data
+    }
+
+
 }
 
 const commitsStore=new CommitsStore()

@@ -2,13 +2,14 @@
     .edit-content{
         display: flex;
         flex-direction: column;
+        height: 100%;
         &-head{
             margin: var(--thoughtware-padding-item) 0;
             font-size: 13px;
             font-weight: var(--thoughtware-font-weight-bold);
         }
         &-title{
-            margin-bottom: var(--thoughtware-padding-item);
+            margin: var(--thoughtware-padding-item) 0;
             .edit-title{
                 &:not(:last-child){
                     margin-right: 10px;
@@ -22,6 +23,7 @@
         &-editor{
             display: flex;
             flex-direction: column;
+            flex: 1;
             .edit-editor-title{
                 background-color: #f4f4f4;
                 padding: 8px 16px;
@@ -39,15 +41,19 @@
             .edit-editor-content{
                 flex: 1;
                 width: 100%;
-                border-left: 1px solid #d9d9d9;
+
+                border-left:1px solid #d9d9d9;
                 border-right: 1px solid #d9d9d9;
+                border-bottom: 1px solid #d9d9d9;
             }
         }
         &-msg{
             margin-top: var(--thoughtware-padding-item);
         }
         &-btn{
-            margin-top: 5px;
+            margin: 15px 0 5px 0;
+            display: flex;
+            gap: 10px;
         }
     }
 }

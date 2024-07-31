@@ -23,6 +23,7 @@ const ScanReqList = (props) => {
     const [scanIssuesList,setScanIssuesList]=useState([])
     const [currentPage,setCurrentPage]=useState(1)
     const [totalPage,setTotalPage]=useState()
+    const [totalRecord,setTotalRecord]=useState()
     const [pageSize]=useState(15)
 
     const [drawerVisible,setDrawerVisible]=useState(false)  //抽屉弹窗状态
@@ -76,11 +77,10 @@ const ScanReqList = (props) => {
     const findScanIssues = (currentPage) => {
         findRecordInstancePageByPlay({scanPlayId:scanPlay?.id,scanRecordId:scanRecord.id,
             pageParam:{currentPage:currentPage, pageSize:pageSize}}).then(res=>{
-
             if (res.code===0){
-
                 setScanIssuesList(res.data.dataList)
                 setTotalPage(res.data.totalPage)
+                setTotalRecord(res.data.totalRecord)
             }
         })
     }
@@ -89,6 +89,13 @@ const ScanReqList = (props) => {
         setCurrentPage(value)
         findScanIssues(value)
     }
+
+    //刷新查询
+    const refreshFind = () => {
+        findScanIssues(currentPage)
+    }
+
+
     //打开右侧抽屉
     const openReqDrawer = (record) => {
         setReqDetails(record);
@@ -117,7 +124,12 @@ const ScanReqList = (props) => {
                 pagination={false}
                 className='scan-tab-top'
             />
-            <Page totalPage={totalPage} pageCurrent={currentPage} changPage={handleChange}/>
+            <Page totalPage={totalPage}
+                  pageCurrent={currentPage}
+                  changPage={handleChange}
+                  totalRecord={totalRecord}
+                  refresh={refreshFind}
+            />
             <ScanReqDrawer visible={drawerVisible} setVisible={setDrawerVisible} issuesDetails={issuesDetails} reqDetails={reqDetails}
                            scanWay={scanPlay?.scanScheme?.scanWay} blobFile={blobFile}
             />

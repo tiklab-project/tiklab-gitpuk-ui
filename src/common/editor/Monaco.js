@@ -1,9 +1,10 @@
 import React,{useEffect,useRef,useState} from 'react';
 import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
+import "./Minaco.scss"
 import 'monaco-editor/esm/vs/basic-languages/monaco.contribution';
 
 // highlight 语言
-const languages = blobFile => {
+export const languages = blobFile => {
     if(blobFile){
         switch (blobFile.fileType) {
             case 'md':
@@ -27,19 +28,18 @@ const languages = blobFile => {
  * @returns {JSX.Element}
  * @constructor
  */
-const MonacoBlob = props =>{
-
+export const MonacoBlob = props =>{
     const {blobFile} = props
 
     const monacoEditorRef = useRef()
     const monacoEditorDomRef = useRef()
 
     useEffect(() => {
-        newMonaco()
-        return () => {
-            monacoEditorRef.current.dispose() // 卸载编辑器
-            monacoEditorRef.current = undefined
-        }
+         newMonaco()
+         return () => {
+             monacoEditorRef.current.dispose() // 卸载编辑器
+             monacoEditorRef.current = undefined
+         }
     }, [monacoEditorRef.current])
 
     const newMonaco = () => {
@@ -49,12 +49,14 @@ const MonacoBlob = props =>{
                 language: languages(blobFile), // 编辑器类型支持
                 minimap: { enabled: false }, // 小地图
                 automaticLayout: true, // 自动布局,
-                codeLens: true,
+                codeLens: false,
                 colorDecorators: true,
                 roundedSelection:false,
                 contextmenu: false,
                 quickSuggestions:false,
-                readOnly: true, //是否只读
+                cursorBlinking: 'Solid',
+                readOnly: {isRedoing:true}, //是否只读
+                readonly :{isUndoing: true},
                 formatOnPaste: false,
                 overviewRulerBorder: false, // 滚动条的边框
                 scrollBeyondLastLine: false,
@@ -74,28 +76,25 @@ const MonacoBlob = props =>{
  * @returns {JSX.Element}
  * @constructor
  */
-const MonacoEdit = props =>{
+export const MonacoEdit = props =>{
 
-    const {setEditPosition,blobFile,previewValue,setPreviewValue} = props
+    const {setEditPosition,blobFile,previewValue,setEditPreviewValue} = props
 
     const monacoEditorRef = useRef()
     const monacoEditorDomRef = useRef()
 
-    const [value,setValue] = useState('')
 
     useEffect(() => {
-        newMonaco()
-        setValue(previewValue && previewValue)
+        newMonaco(previewValue)
         return () => {
             monacoEditorRef.current.dispose() // 卸载编辑器
-            monacoEditorRef.current = undefined
         }
-    }, [monacoEditorRef.current])
+    }, [previewValue])
 
-    const newMonaco = () => {
+    const newMonaco = (previewValue) => {
         try {
             monacoEditorRef.current = monaco.editor.create(monacoEditorDomRef.current, {
-                value: value && value,
+                value: previewValue,
                 language: languages(blobFile), // 编辑器类型支持
                 minimap: { enabled: false }, // 小地图
                 automaticLayout: true, // 自动布局,
@@ -104,6 +103,7 @@ const MonacoEdit = props =>{
                 contextmenu: false,
                 quickSuggestions:false,
                 readOnly: false, //是否只读
+                cursorBlinking: 'Solid',
                 formatOnPaste: true,
                 overviewRulerBorder: false, // 滚动条的边框
                 scrollBeyondLastLine: false,
@@ -114,18 +114,22 @@ const MonacoEdit = props =>{
                 try {
                     let newValue = monacoEditorRef.current.getValue()
                     let position = monacoEditorRef.current.getPosition()
-                    setPreviewValue(newValue)
+                    setEditPreviewValue(newValue)
                     setEditPosition(position)
                 } catch {}
             })
 
+
         } catch {}
     }
 
+
     return (
-        <div ref={monacoEditorDomRef} style={{height:400}}/>
+        <div ref={monacoEditorDomRef}   style={{height:'calc(100% - 20px)'}}/>
     )
 }
+
+
 
 /**
  * file文件对比（edit--preview）
@@ -133,7 +137,7 @@ const MonacoEdit = props =>{
  * @returns {JSX.Element}
  * @constructor
  */
-const MonacoPreview = props => {
+export const MonacoPreview = props => {
 
     const {newValue,blobFile,renderOverviewRuler,editPosition} = props
 
@@ -176,9 +180,65 @@ const MonacoPreview = props => {
 
 
     return (
-        <div ref={monacoEditorDomRef} style={{height:400}}/>
+        <div ref={monacoEditorDomRef} style={{height:'calc(100% - 20px)'}}/>
     )
 }
 
-export {MonacoBlob, MonacoEdit, MonacoPreview}
+
+/**
+ * 分支合并文件冲突解决
+ * @param props
+ * @returns {JSX.Element}
+ * @constructor
+ */
+export const MonacoEditMerge = props =>{
+
+    const {setEditPosition,blobFile,previewValue,setPreviewValue} = props
+
+    const monacoEditorRef = useRef()
+    const monacoEditorDomRef = useRef()
+
+    const [value,setValue] = useState('')
+    useEffect(() => {
+        newMonaco(previewValue)
+        return () => {
+            monacoEditorRef.current.dispose() // 卸载编辑器
+            monacoEditorRef.current = undefined
+        }
+    }, [monacoEditorRef.current,previewValue])
+
+    const newMonaco = (previewValue) => {
+        try {
+            monacoEditorRef.current = monaco.editor.create(monacoEditorDomRef.current, {
+                value: previewValue,
+                language: languages(blobFile), // 编辑器类型支持
+                minimap: { enabled: false }, // 小地图
+                automaticLayout: true, // 自动布局,
+                codeLens: true,
+                colorDecorators: true,
+                contextmenu: false,
+                quickSuggestions:false,
+                readOnly: false, //是否只读
+                formatOnPaste: true,
+                overviewRulerBorder: false, // 滚动条的边框
+                scrollBeyondLastLine: false,
+                theme: 'vs', // 主题
+            })
+            // onDidChangeModelContent，方法产生的监听需要在组件销毁的时候dispose下
+            monacoEditorRef.current.onDidChangeModelContent(e => {
+                try {
+                    let newValue = monacoEditorRef.current.getValue()
+                    let position = monacoEditorRef.current.getPosition()
+                    setPreviewValue(newValue)
+                    setEditPosition(position)
+                } catch {}
+            })
+
+        } catch {}
+    }
+
+    return (
+        <div ref={monacoEditorDomRef} style={{height:630}}/>
+    )
+}
 

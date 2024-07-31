@@ -15,7 +15,8 @@
             display: flex;
             height: var(--xcode-head-height);
             width: 100px;
-            margin: 0 20px;
+            margin: 0 30px;
+            cursor: pointer;
             img{
                 width: 100%;
                 height: 100%;
@@ -28,7 +29,7 @@
             justify-items: flex-end;
             align-items: center;
             height: 100%;
-            padding-left: 20px;
+            padding-left: 30px;
             &-text{
                 display: flex;
                 flex-direction: row;
@@ -42,6 +43,9 @@
             &-search-wrap{
                 position: relative;
                 width: 100%;
+            }
+            .frame-header-right-text{
+                margin-left: 20px;
             }
         }
         &-user,&-message{
@@ -74,26 +78,45 @@
                 display: flex;
                 flex-direction: row;
                 flex-shrink: 0;
+                gap: 24px;
               /*  color: #ffffff;*/
                 & > div{
                     cursor: pointer;
-                    margin-right: 10px;
+                  /*  margin-right: 10px;*/
                     height: 48px;
                     line-height: 48px;
-                    padding: 0 10px;
-                    &:not(:last-child){
+                    /*padding: 0 10px;*/
+               /*     &:not(:last-child){
                         margin-right: var(--thoughtware-padding-item);
-                    }
+                    }*/
                 }
             }
             &-active{
-              /*  background: rgba(255, 255, 255, 0.4);*/
                 border-bottom:2px solid #0063FF;
+                color: #0063FF;
+                font-weight: 500;
+            }
+            &-active-item {
+                cursor: pointer;
+                overflow: hidden;
+                height: 48px;
+                line-height: 48px;
+                flex-shrink: 0;
+                span {
+                    padding: 5px;
+                }
+            }
+            &-active-item:hover {
+                span {
+                    background: #E1EDFF;
+                    border-radius: 3px;
+                    color: var(--thoughtware-blue);
+                }
             }
         }
     }
     &-content{
-        height: var(--xcode-content-height);
+      /*  height: var(--xcode-content-height);*/
     }
 }
 
@@ -188,5 +211,6 @@
 .text{
    /* color: #f6f6f6;*/
     font-size: 19px;
-    margin-top: 10px;
+    margin-top: 9px;
+    font-weight: 500;
 }

@@ -12,45 +12,46 @@ const RepositorySetting = props =>{
     // 设置
     const secondRouter = [
         {
-            to:`/repository/${webUrl}/setting/info`,
+            id:`/repository/${webUrl}/setting/info`,
             title:`RepositoryInfo`,
         },
         {
-            to:`/repository/${webUrl}/setting/member`,
+            id:`/repository/${webUrl}/setting/member`,
             title:`Member`,
-            purviewCode: "xcode_user",
+            purviewCode: "rpy_user",
         },
         {
-            to:`/repository/${webUrl}/setting/role`,
+            id:`/repository/${webUrl}/setting/role`,
             title:`Privilege`,
-            purviewCode: "xcode_project_shiro",
+            purviewCode: "rpy_authority",
         },
         {
-            to:`/repository/${webUrl}/setting/branch`,
+            id:`/repository/${webUrl}/setting/branch`,
             title:`BranchSetting`,
+            purviewCode: "rpy_branch_setting",
         },
         {
-            to:`/repository/${webUrl}/setting/pushRule`,
+            id:`/repository/${webUrl}/setting/pushRule`,
             title:`Push_rules`,
 
         },
         {
-            to:`/repository/${webUrl}/setting/keys`,
+            id:`/repository/${webUrl}/setting/keys`,
             title:`Access_keys`,
         },
         {
-            to:`/repository/${webUrl}/setting/hooks`,
+            id:`/repository/${webUrl}/setting/hooks`,
             title:'WebHooks',
         },
         {
-            to:`/repository/${webUrl}/setting/clean`,
+            id:`/repository/${webUrl}/setting/clean`,
             title:'仓库清理',
-            /*purviewCode: "xcode_mirror",*/
+            purviewCode: "rpy_clean",
         },
         {
-            to:`/repository/${webUrl}/setting/remote`,
+            id:`/repository/${webUrl}/setting/remote`,
             title:'仓库镜像',
-            purviewCode: "xcode_mirror",
+            purviewCode: "rpy_mirror",
         },
     ]
 

@@ -1,0 +1,262 @@
+.verify-basic{
+  display: flex;
+  gap: 50px;
+  width: 100%;
+  .verify-basic-left{
+    width:80%;
+    .verify-basic-pass{
+    border: 1px solid var(--thoughtware-merge-back-gree);
+    background-color: var(--thoughtware-merge-back-gree);
+    padding: 15px;
+    color: var(--thoughtware-merge-text-gree);
+  }
+    .verify-basic-clash{
+      display: flex;
+      background: #ffefe3;
+      border: 1px solid #ffefe3;
+      padding: 15px;
+      justify-content: space-between;
+      .clash-left{
+        color: #ed9011;
+      }
+      .clash-right{
+        display: flex;
+        gap: 20px;
+        color: #6e6e6e ;
+        cursor: pointer;
+      }
+    }
+    .verify-basic-style{
+      margin-top: 20px;
+      .verify-basic-border{
+        border: 1px solid var( --thoughtware-gray-300);
+        .verify-basic-tile{
+          display: flex;
+          justify-content: space-between;
+          padding: var(--thoughtware-padding-item);
+          .basic-tile-right{
+
+            .basic-tile-right-icon{
+              display: flex;
+              gap: 10px;
+              cursor: pointer;
+            }
+          }
+
+
+        }
+      }
+    }
+
+    .verify-basic-log{
+      padding: var(--thoughtware-padding-item);
+      .basic-log-title{
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        position: relative;
+        .basic-log-left{
+          width: 40px;
+          padding-right: var(--thoughtware-padding-item);
+          display: -webkit-box;
+          display: -webkit-flex;
+          display: -ms-flexbox;
+          display: flex;
+          -webkit-box-orient: vertical;
+          -webkit-box-direction: normal;
+          -webkit-flex-direction: column;
+          -ms-flex-direction: column;
+          flex-direction: column;
+          .log-left-icon{
+            font-size: 17px;
+            color: #999999;
+          }
+          .log-left-line{
+            -webkit-box-flex: 1;
+            -webkit-flex: 1;
+            -ms-flex: 1;
+            flex: 1;
+            margin-top: 6px;
+            margin-left: 8px;
+            width: 1px;
+            background: #e5e5e5;
+            background: var(--gray-03,#e5e5e5);
+          }
+        }
+
+
+        .basic-log-right{
+          -webkit-box-flex: 1;
+          -webkit-flex: 1;
+          -ms-flex: 1;
+          flex: 1;
+          max-width: calc(100% - 40px);
+          .right-data-nav{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            .right-title{
+              display: flex;
+              flex-direction: row;
+              .title-user{
+                padding: 0 5px;
+                font-size: 16px;
+              }
+              .title-desc{
+                font-size: 14px;
+                padding-left: 14px;
+              }
+            }
+            .right-time{
+              font-size: 13px;
+              color: var(--thoughtware-gray-500);
+            }
+          }
+          .right-desc{
+            text-align: left;
+            font-size: 14px;
+            color: #262626;
+            display: inline-block;
+            width: 100%;
+            outline: none;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-bottom: var(--thoughtware-padding-item);
+            padding: 4px 0;
+            .right-desc-btn{
+              margin-top: 10px;
+              text-align: right;
+            }
+            .right-desc-content{
+              padding: 8px 0;
+              &:hover{
+                background: var(--xcode-hover-color);
+              }
+            }
+          }
+        }
+      }
+      .verify-basic-comment{
+        margin: 6px 0 6px 15px;
+        display: flex;
+        gap: 12px;
+        flex-direction: column;
+        .verify-basic-comment-nav{
+          align-items: center;
+          .basic-comment-title{
+            display: flex;
+            align-items: center;
+            .comment-title-user{
+              padding: 0 7px;
+              font-size: 16px;
+            }
+            .comment-title-time{
+              padding: 0 5px;
+              color: #999999;
+
+            }
+
+          }
+          .basic-comment-data{
+            margin: 6px 0 0 29px;
+          }
+          .comment-reply-user{
+            color: #1890ff;
+          }
+        }
+        .comment-title-icon{
+          display: none;
+          color: #999999;
+          padding-left: 20px;
+          .comment-title-icon-left{
+            padding-left: 5px;
+          }
+        }
+
+        .verify-basic-comment-nav:hover .comment-title-icon{
+          display: block;
+          right: 10px;
+          top: 0;
+          height: 100%;
+
+        }
+        .reply-icon:hover{
+          color: #002140;
+          cursor: pointer;
+        }
+
+      }
+      .commit-view-input{
+        display: flex;
+        gap: 10px;
+        margin: 20px 0 20px 20px;
+        .commit-view-border{
+          flex: 1;
+          .view-input-btn{
+            margin-top: 10px;
+            text-align: right;
+          }
+        }
+      }
+    }
+  }
+
+  .verify-basic-right{
+    display: flex;
+    gap: 25px;
+    flex-direction: column;
+    width:20%;
+    .verify-basic-right-nav{
+      display: flex;
+      gap: 6px;
+      flex-direction: column;
+      .right-nav-text{
+        padding-left: 5px;
+      }
+      .right-nav-icon{
+        padding-right: 5px;
+      }
+      .right-nav-title{
+        color: #999999;
+      }
+      .right-nav-style{
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .auditor-nav-style{
+        padding: 5px 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+        cursor: pointer;
+        &:hover{
+          background: var(--xcode-hover-color);
+          border-radius: 3px;
+        }
+        .auditor-nav-icon{
+          color: #ff0000;
+        }
+      }
+      .auditor-nav-style:hover .category-action{
+        display: block;
+        position: absolute;
+        right: 10px;
+        top: 0;
+        height: 100%;
+      }
+      .category-action{
+        display: none;
+        padding-top: 9px;
+        cursor: pointer;
+      }
+    }
+  }
+
+}
+.tile-right-nav{
+  padding: 0 10px;
+}

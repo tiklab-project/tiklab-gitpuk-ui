@@ -43,15 +43,12 @@
                     cursor: pointer;
                 }
                 .contrast-affected-num{
-                    .num-title,.num-add{
-                        padding-right: 5px;
-                    }
                     .num-add{
+                        padding-right: 5px;
                         color: var(--thoughtware-gree);
                     }
                     .num-reduce{
                         color: #ff0000;
-
                     }
                 }
             }
@@ -100,70 +97,7 @@
     }
 }
 
-.diff-file{
-    .diff-line{
-        line-height: 20px;
-    }
-    .diff-line td{
-        vertical-align: initial;
-    }
-    .diff-line-num{
-        width: 1%;
-        min-width: 36px;
-        font-size: 12px;
-        margin: 0;
-        text-align: right;
-        padding: 0 5px;
-        color: #999;
-        white-space: nowrap;
-    }
-    .diff-line-code{
-        padding: 3px 3px 3px 32px;
-        font-family: Consolas,Courier,monospace;
-        position: relative;
-        white-space: pre-wrap;
-        word-break: break-word;
-    }
-    .diff-add .diff-line-num{
-        background-color: #d6fedb;
-    }
-    .diff-delete .diff-line-num{
-        background-color: #fadde0;
-    }
-    .diff-expand .diff-line-double-num{
-        width: 1%;
-        min-width: 72px;
-        text-align: center;
-        cursor: pointer;
-        background-color: #d8ecff;
-        white-space: nowrap;
-    }
-    .diff-expand .diff-line-code{
-        background-color: #f1f8ff;
-        color: var(--thoughtware-gray-500);
-    }
-    .diff-add .diff-line-code{
-        background-color: #e6ffed;
-        &:before{
-            content: '+';
-            position: absolute;
-            left: 0.5em
-        }
-    }
-    .diff-delete .diff-line-code{
-        background-color: #feedf0;
-        &:before{
-            content: '-';
-            position: absolute;
-            left: 0.5em
-        }
-    }
-    .diff-expand-normal{
-        .diff-line-num,.diff-line-code{
-            background-color: #f7f7f7;
-        }
-    }
-}
+
 
 .commits-diff-drop-title{
     box-shadow: 0 4px 8px -2px #091e4240, 0 0 1px #091e424f;
@@ -172,6 +106,9 @@
     width: 500px;
     .commits-diff-drop-title-input{
         padding: 8px;
+        .input-icon{
+            font-size: var(--thoughtware-input-icon-15);
+        }
     }
     .commits-diff-drop-title-content{
         max-height: 300px;

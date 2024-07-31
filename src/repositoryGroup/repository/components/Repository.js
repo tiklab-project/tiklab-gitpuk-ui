@@ -3,13 +3,12 @@ import {inject,observer} from 'mobx-react';
 import Btn from '../../../common/btn/Btn';
 import BreadcrumbContent from '../../../common/breadcrumb/Breadcrumb';
 import RepositoryTable from '../../../repository/repository/components/RepositoryTable';
-import Listicon from '../../../common/list/Listicon';
 import './Repository.scss';
 import groupStore from "../../repositoryGroup/store/RepositoryGroupStore"
 import {getUser} from "thoughtware-core-ui";
-import {Input} from "antd";
+import {Col, Input} from "antd";
 import {SearchOutlined} from "@ant-design/icons";
-
+import {PrivilegeProjectButton} from 'thoughtware-privilege-ui';
 const Repository = props =>{
     const {match}=props
     const groupName = match.params.name
@@ -28,7 +27,7 @@ const Repository = props =>{
 
     //查询仓库的名称
     const [repositoryName,setRepositoryName]=useState()
-
+    const [sort,setSort]=useState(null)
 
     useEffect( ()=>{
         findRpyPage()
@@ -36,7 +35,7 @@ const Repository = props =>{
 
 
     //分页查询仓库
-    const findRpyPage = (currentPage,sort) => {
+    const findRpyPage = (currentPage,sort,repositoryName) => {
         setIsLoading(true)
         findGroupRepository({pageParam:{currentPage:currentPage, pageSize:pageSize},
             userId:getUser().userId,
@@ -55,16 +54,17 @@ const Repository = props =>{
 
 
     const onChange = (pagination, filters, sorter, extra) => {
+        setSort(sorter.order)
         //降序
         if (sorter.order==='descend'){
-            findRpyPage (currentPage,"desc")
+            findRpyPage (currentPage,"desc",repositoryName)
         }
         //升序
         if (sorter.order==='ascend'){
-            findRpyPage (currentPage,"asc")
+            findRpyPage (currentPage,"asc",repositoryName)
         }
         if (!sorter.order){
-            findRpyPage (currentPage)
+            findRpyPage (currentPage,null,repositoryName)
         }
     }
 
@@ -75,6 +75,10 @@ const Repository = props =>{
     const onChangeSearch = (e) => {
         const value=e.target.value
         setRepositoryName(value)
+        if (value===''){
+             setCurrentPage(1)
+            findRpyPage(1,sort)
+        }
     }
     /**
      * 搜索仓库
@@ -82,7 +86,7 @@ const Repository = props =>{
      */
     const onSearch =async () => {
 
-        await findRpyPage(1)
+        await findRpyPage(1,sort,repositoryName)
     }
 
     /**
@@ -90,28 +94,34 @@ const Repository = props =>{
      */
     const changPage =async (value) => {
         setCurrentPage(value)
-        await findRpyPage(value)
+        await findRpyPage(value,sort,repositoryName)
     }
 
     return (
-        <div className='group-repository'>
-            <div className=' xcode-repository-width xcode'>
+        <div className='xcode gittok-width group-repository'>
+            <Col sm={{ span: "24" }}
+                 md={{ span: "24" }}
+                 lg={{ span: "24" }}
+                 xl={{ span: "20", offset: "2" }}
+                 xxl={{ span: "18", offset: "3" }}
+            >
                 <div className='group-repository-head'>
                     <BreadcrumbContent firstItem={'Repository'} />
-                    <div className='head-right'>
-                        <Btn
-                            type={'primary'}
-                            title={'新建仓库'}
-                           /* icon={<PlusOutlined/>}*/
-                            onClick={()=>props.history.push(`/repository/new?type=${groupName}`)}
-                        />
-                    </div>
+                    <PrivilegeProjectButton code={"rpy_group_rpy_add"} domainId={groupInfo && groupInfo.groupId}>
+                        <div className='head-right'>
+                            <Btn
+                                type={'primary'}
+                                title={'新建仓库'}
+                                /* icon={<PlusOutlined/>}*/
+                                onClick={()=>props.history.push(`/repository/new?group=${groupName}`)}
+                            />
+                        </div>
+                    </PrivilegeProjectButton>
                 </div>
-
                 <div>
                     <Input
                         allowClear
-                        placeholder='仓库名称'
+                        placeholder='搜索仓库名称'
                         onChange={onChangeSearch}
                         onPressEnter={onSearch}
                         prefix={<SearchOutlined />}
@@ -127,9 +137,10 @@ const Repository = props =>{
                         totalPage={totalPage}
                         currentPage={currentPage}
                         onChange={onChange}
+                        type={'group'}
                     />
                 </div>
-            </div>
+            </Col>
         </div>
     )
 }

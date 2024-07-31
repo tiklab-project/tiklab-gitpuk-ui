@@ -1,5 +1,5 @@
 import React, {useEffect,useState,useRef,} from "react";
-import {Input,Dropdown} from "antd";
+import {Input, Dropdown, Col} from "antd";
 import {
     SearchOutlined,
     PlusOutlined,
@@ -18,6 +18,7 @@ import {SpinLoading} from "../../../common/loading/Loading";
 import fileStore from '../store/FileStore';
 import "./File.scss";
 import tagStore from "../../tag/store/TagStore";
+import FolderCreatePop from "./FolderCreatePop";
 
 const File = props =>{
 
@@ -34,13 +35,21 @@ const File = props =>{
     const fileAddress = setFileAddress(location,webUrl+"/tree/"+urlInfo)
 
 
-
     //文本框搜索
     const [searInput,setSearInput] = useState(false)
-
     //加载
     const [isLoading,setIsLoading] = useState(true)
 
+    //选择的代码类型 分支、tag、commit
+    const [data,setData]=useState(null)
+
+    const [triggerVisible,setTriggerVisible] = useState(false)
+    //文件夹弹窗状态
+    const [folderVisible,setFolderVisible]=useState(false)
+
+    useEffect(()=>{
+        setData({type:'branch',value:branch})
+    },[])
     useEffect(async ()=>{
         if(repositoryInfo.name){
             // 获取文件，同时监听路由变化
@@ -94,12 +103,11 @@ const File = props =>{
      * @param record
      */
     const goFileChild = record => {
-
         props.history.push(`/repository/${webUrl}${record.path}`)
     }
 
     /**
-     * 跳转到上一个文件路由
+     * 跳转到上一个文件路由0
      * @param fileParent
      */
     const goFileParent = fileParent => {
@@ -140,10 +148,17 @@ const File = props =>{
         // props.history.push(`/ide/${repositoryInfo.name}`)
     }
 
+    //打开创建文件夹的弹窗
+    const openFolderPop = () => {
+        setFolderVisible(true)
+        setTriggerVisible(false)
+    }
+
+
     const addFileMenu = (
         <div className="file-add-menu">
             <div className="file-add-item">新建文件</div>
-            <div className="file-add-item">新建文件夹</div>
+            <div className="file-add-item" onClick={openFolderPop}>新建文件夹</div>
             <div className="file-add-item">上传文件</div>
         </div>
     )
@@ -178,72 +193,94 @@ const File = props =>{
     }
 
     return(
-        <div className="code">
-            <div className="code-content xcode-repository-width xcode">
-                <BreadcrumbContent firstItem={"Code"}/>
-                <div className="code-content-head">
-                    <BreadChang
-                        {...props}
-                        repositoryInfo={repositoryInfo}
-                        branch={urlInfo}
-                        fileAddress={fileAddress}
-                        type={"tree"}
-                    />
-                    <div className="code-head-right">
+        <div className="xcode code gittok-width">
+            <Col sm={{ span: "24" }}
+                 md={{ span: "24" }}
+                 lg={{ span: "24" }}
+                 xl={{ span: "20", offset: "2" }}
+                 xxl={{ span: "18", offset: "3" }}
+            >
+                <div className="code-content">
+                    <BreadcrumbContent firstItem={"Code"}/>
+                    <div className="code-content-head">
+                        <BreadChang
+                            {...props}
+                            repositoryInfo={repositoryInfo}
+                            branch={urlInfo}
+                            fileAddress={fileAddress}
+                            type={"tree"}
+                            setData={setData}
+                        />
+                        <div className="code-head-right">
+                            {
+                                searInput ?
+                                    <div className="code-search-input">
+                                        <Input
+                                            ref={searValue}
+                                            placeholder="文件名称"
+                                            // onChange={onChangeSearch}
+                                            prefix={<SearchOutlined />}
+                                            onBlur={()=>setSearInput(false)}
+                                            style={{width:200}}
+                                        />
+                                    </div>
+                                    :
+                                    <div className="code-search">
+                                        <SearchOutlined onClick={()=>setSearInput(true)}/>
+                                    </div>
+                            }
+                            <div className="code-file-add">
+                                {
+                                    data&&data.type==='branch'?
+                                        <Dropdown overlay={addFileMenu}
+                                                  trigger={["click"]}
+                                                  placement={"bottomCenter"}
+                                                  open={triggerVisible}
+                                                  onOpenChange={visible=>setTriggerVisible(visible)}
+                                        >
+                                            <PlusOutlined/>
+                                        </Dropdown>:
+                                        <PlusOutlined/>
+                                }
+                            </div>
+                            <div className="code-desc">
+                                <Btn title={"WEB IDE"} onClick={()=>goWebIde()}/>
+                            </div>
+                            <div className="code-clone">
+                                <Clone cloneAddress={cloneAddress} data={data} repositoryInfo={repositoryInfo}/>
+                            </div>
+                        </div>
+                    </div>
+                    <RecentSubmitMsg {...props} latelyBranchCommit={latelyBranchCommit} repositoryInfo={repositoryInfo} webUrl={webUrl}/>
+                    <div className="code-content-tables">
+                        <div className="code-data-item">
+                            <div className="code-item-fileName">名称</div>
+                            <div className="code-item-commitMessage">提交信息</div>
+                            <div className="code-item-commitTime">提交时间</div>
+                        </div>
                         {
-                            searInput ?
-                                <div className="code-search-input">
-                                    <Input
-                                        ref={searValue}
-                                        placeholder="文件名称"
-                                        // onChange={onChangeSearch}
-                                        prefix={<SearchOutlined />}
-                                        onBlur={()=>setSearInput(false)}
-                                        style={{width:200}}
-                                    />
-                                </div>
-                                :
-                                <div className="code-search">
-                                    <SearchOutlined onClick={()=>setSearInput(true)}/>
-                                </div>
+                            fileAddress[1] &&
+                            <div className="code-data-item" onClick={()=>goFileParent(codeTreeData[0].fileParent)}>
+                                <svg className="icon" aria-hidden="true">
+                                    <use xlinkHref={`#icon-fanhui`}/>
+                                </svg>
+                            </div>
                         }
-                        <div className="code-file-add">
-                            <Dropdown overlay={addFileMenu} trigger={["click"]} placement={"bottomCenter"}>
-                                <PlusOutlined/>
-                            </Dropdown>
-                        </div>
-                        <div className="code-desc">
-                            <Btn title={"WEB IDE"} onClick={()=>goWebIde()}/>
-                        </div>
-                        <div className="code-clone">
-                            <Clone cloneAddress={cloneAddress}/>
-                        </div>
+                        {
+                            isLoading ? <SpinLoading type="table"/> :
+                                (codeTreeData && codeTreeData.length > 0) ?
+                                    codeTreeData.map(item=>renderCode(item))
+                                    :
+                                    <EmptyText title={"暂无文件"}/>
+                        }
                     </div>
                 </div>
-                <RecentSubmitMsg {...props} latelyBranchCommit={latelyBranchCommit} repositoryInfo={repositoryInfo} webUrl={webUrl}/>
-                <div className="code-content-tables">
-                    <div className="code-data-item">
-                        <div className="code-item-fileName">名称</div>
-                        <div className="code-item-commitMessage">提交信息</div>
-                        <div className="code-item-commitTime">提交时间</div>
-                    </div>
-                    {
-                        fileAddress[1] &&
-                        <div className="code-data-item" onClick={()=>goFileParent(codeTreeData[0].fileParent)}>
-                            <svg className="icon" aria-hidden="true">
-                                <use xlinkHref={`#icon-fanhui`}/>
-                            </svg>
-                        </div>
-                    }
-                    {
-                        isLoading ? <SpinLoading type="table"/> :
-                            (codeTreeData && codeTreeData.length > 0) ?
-                            codeTreeData.map(item=>renderCode(item))
-                            :
-                            <EmptyText title={"暂无文件"}/>
-                    }
-                </div>
-            </div>
+            </Col>
+            <FolderCreatePop {...props} folderVisible={folderVisible}
+                             setFolderVisible={setFolderVisible}
+                             repositoryInfo={repositoryInfo}
+                             data={data}
+            />
         </div>
     )
 }

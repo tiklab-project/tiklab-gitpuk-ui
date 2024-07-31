@@ -1,5 +1,7 @@
 import React from 'react';
 import MergeContent from '../../merge/components/Merge';
+import {inject, observer} from "mobx-react";
+import branchStore from "../branch/store/BranchStore";
 
 /**
  * 仓库合并请求
@@ -8,8 +10,14 @@ import MergeContent from '../../merge/components/Merge';
  * @constructor
  */
 const Merge = props =>{
+    const {match} = props
 
-    return <MergeContent/>
+    const webUrl = `${match.params.namespace}/${match.params.name}`
+
+
+    return <MergeContent {...props}
+                         webUrl={webUrl}
+                        />
 
 }
 

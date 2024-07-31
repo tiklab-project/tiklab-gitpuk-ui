@@ -14,6 +14,7 @@ import ScanSchemeRuleStore from "../store/ScanSchemeRuleStore";
 import {observer, Observer} from "mobx-react";
 import Page from "../../../common/page/Page";
 import ScanRuleDetailsDrawer from "./ScanRuleDetailsDrawer";
+import {PrivilegeButton} from 'thoughtware-privilege-ui';
 import {
     CheckCircleOutlined,
     CloseCircleOutlined,
@@ -30,6 +31,7 @@ const ScanSchemeRule = (props) => {
     const [currentPage,setCurrentPage]=useState(1)
     const [totalPage,setTotalPage]=useState()
     const [pageSize]=useState(15)
+    const [totalRecord,setTotalRecord]=useState()
 
     const [ruleIds,setRuleIds]=useState([])
 
@@ -52,7 +54,9 @@ const ScanSchemeRule = (props) => {
             key: 'ruleName',
             width:'30%',
             ellipsis:true,
-            render:(text,record)=><div className='text-color' onClick={()=>openRuleDetails(record)}>{text}</div>
+            render:(text,record)=><div className='text-color' onClick={()=>openRuleDetails(record)}>
+                <span>{text}</span>
+            </div>
         },
 
         {
@@ -86,43 +90,45 @@ const ScanSchemeRule = (props) => {
             width:'10%',
             render:(text,record)=>{
                 return(
-                    <div className='table-icon-style'>
-                        <Tooltip title='编辑'>
+                    <PrivilegeButton  code={"gittok_scan_scheme"} key={'gittok_scan_scheme'} >
+                        <div className='table-icon-style'>
+                            <Tooltip title='编辑'>
                             <span className='icon-style' onClick={()=>opeEditPop(record)}>
                                 <EditOutlined />
                             </span>
-                        </Tooltip>
-                        {
-                            record.isDisable===0?
-                                <Tooltip title={"停用"}>
-                                    <Popconfirm
-                                        placement="topRight"
-                                        title="停用后，运行当前检测方案时将不再执行对应规则"
-                                        onConfirm={()=>updateScanSchemeRule({...record,isDisable:1})}
-                                        okText="确定"
-                                        cancelText="取消"
-                                    >
+                            </Tooltip>
+                            {
+                                record.isDisable===0?
+                                    <Tooltip title={"停用"}>
+                                        <Popconfirm
+                                            placement="topRight"
+                                            title="停用后，运行当前检测方案时将不再执行对应规则"
+                                            onConfirm={()=>updateScanSchemeRule({...record,isDisable:1})}
+                                            okText="确定"
+                                            cancelText="取消"
+                                        >
                                 <span className='icon-style'>
                                     <CloseCircleOutlined />
                                 </span>
-                                    </Popconfirm>
-                                </Tooltip>:
-                                <Tooltip title={"启用"}>
-                                    <Popconfirm
-                                        placement="topRight"
-                                        title="是否启用"
-                                        onConfirm={()=>updateScanSchemeRule({...record,isDisable:0})}
-                                        okText="确定"
-                                        cancelText="取消"
-                                    >
+                                        </Popconfirm>
+                                    </Tooltip>:
+                                    <Tooltip title={"启用"}>
+                                        <Popconfirm
+                                            placement="topRight"
+                                            title="是否启用"
+                                            onConfirm={()=>updateScanSchemeRule({...record,isDisable:0})}
+                                            okText="确定"
+                                            cancelText="取消"
+                                        >
                                         <span className='icon-style'>
                                             <CheckCircleOutlined />
                                         </span>
-                                    </Popconfirm>
-                                </Tooltip>
-                        }
+                                        </Popconfirm>
+                                    </Tooltip>
+                            }
 
-                    </div>
+                        </div>
+                    </PrivilegeButton >
                 )
             }
         }
@@ -133,7 +139,9 @@ const ScanSchemeRule = (props) => {
             pageParam:{currentPage:currentPage, pageSize:pageSize}}).then(res=>{
             if (res.code==0){
                 setSchemeRuleList(res.data.dataList)
+
                 setTotalPage(res.data.totalPage)
+                setTotalRecord(res.data.totalRecord)
             }
         })
     }
@@ -153,6 +161,10 @@ const ScanSchemeRule = (props) => {
     const changPage = (value) => {
         setCurrentPage(value)
         getScanRulePage(value)
+    }
+    //刷新查询
+    const refreshFind = () => {
+        getScanRulePage(currentPage)
     }
 
     //打开编辑弹窗
@@ -176,7 +188,12 @@ const ScanSchemeRule = (props) => {
                     columns={columns}
                     pagination={false}
                 />
-                <Page pageCurrent={currentPage} changPage={changPage} totalPage={totalPage}/>
+                <Page pageCurrent={currentPage}
+                      changPage={changPage}
+                      totalPage={totalPage}
+                      totalRecord={totalRecord}
+                      refresh={refreshFind}
+                />
             </div>
             <ScanRuleDetailsDrawer visible={DrawerVisible} setVisible={setDrawerVisible} scanRule={schemeRule?.scanRule}
                                    scanRuleSet={schemeRuleSet?.scanRuleSet} problemLevel={schemeRule?.problemLevel}/>

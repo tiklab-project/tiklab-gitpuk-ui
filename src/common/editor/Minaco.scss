@@ -3,3 +3,10 @@
   height: 858px;
   --codelens-font-features_ee1f61: "liga" off, "calt" off;
 }
+
+.edit-monaco{
+  flex: 1;
+  min-height: 400px;
+  max-height: 550px;
+  height: auto;
+}

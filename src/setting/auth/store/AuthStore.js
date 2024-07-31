@@ -19,15 +19,33 @@ export class AuthStore {
      */
     @action
     createAuth = async value =>{
-        const data = await Axios.post('/auth/createAuth',{
+        const data = await Axios.post('/authSsh/createAuthSsh',{
             ...value,
             user:{id:getUser().userId}
         })
         if(data.code===0){
             message.info('创建成功',0.5)
             this.fresh = !this.fresh
+        }else {
+            message.error(data.msg)
         }
         return data
+    }
+
+    /**
+     * 更新认证
+     * @param value
+     * @returns {Promise<*>}
+     */
+    @action
+    updateAuthSsh = async value =>{
+        const data = await Axios.post('/authSsh/updateAuthSsh',value)
+        if(data.code===0){
+            message.info('更新成功',0.5)
+            this.fresh = !this.fresh
+        }else {
+            message.error(data.msg)
+        }
     }
 
     /**
@@ -38,8 +56,8 @@ export class AuthStore {
     @action
     deleteAuth = async value =>{
         const param = new FormData()
-        param.append('authId',value)
-        const data = await Axios.post('/auth/deleteAuth',param)
+        param.append('id',value)
+        const data = await Axios.post('/authSsh/deleteAuthSsh',param)
         if(data.code===0){
             message.info('删除成功',0.5)
             this.fresh = !this.fresh
@@ -53,12 +71,11 @@ export class AuthStore {
      * @returns {Promise<*>}
      */
     @action
-    findUserAuth = async value =>{
-        const data = await Axios.post('/auth/findUserAuth')
+    findAuthSshList = async value =>{
+        const data = await Axios.post('/authSsh/findAuthSshList',value)
         if(data.code===0){
             this.keysList = data.data && data.data
-        }
-        else {
+        } else {
             this.keysList = []
         }
         return data
@@ -71,9 +88,9 @@ export class AuthStore {
      */
     @action
     findOneAuth = async value =>{
-        const data = await Axios.post('/auth/findOneAuth',value)
-        if(data.code===0){
-        }
+        const param=new FormData()
+        param.append("id",value)
+        const data = await Axios.post('/authSsh/findOneAuthSsh',param)
         return data
     }
 

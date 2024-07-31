@@ -40,8 +40,10 @@ const findType = urlInfo =>{
  */
 const setBranch = (branch,repositoryInfo) =>{
     const bra = branch ? branch :repositoryInfo.defaultBranch
-    const braName = bra.endsWith(tagU4)? bra.substring(0,bra.length-tagU4.length):bra
-    return braName.endsWith(commitU4) ? braName.substring(0,braName.length-commitU4.length):braName
+    if(bra&&bra!=='null'){
+        const braName = bra.endsWith(tagU4)? bra.substring(0,bra.length-tagU4.length):bra
+        return braName.endsWith(commitU4) ? braName.substring(0,braName.length-commitU4.length):braName
+    }
 }
 
 /**
@@ -54,4 +56,11 @@ const setFileAddress = (location,data) =>{
     return interceptUrl(location.pathname,data)
 }
 
+
+
+
+
 export {setFileAddress,setBranch,findCommitId,commitU4,findType}
+
+
+

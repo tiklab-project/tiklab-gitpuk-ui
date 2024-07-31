@@ -19,6 +19,8 @@ const ScanSchemePlay = (props) => {
     const [currentPage,setCurrentPage]=useState(1)
     const [totalPage,setTotalPage]=useState()
     const [pageSize]=useState(15)
+    const [totalRecord,setTotalRecord]=useState()
+
 
     useEffect(()=>{
         getScanPlayPage(currentPage);
@@ -52,7 +54,7 @@ const ScanSchemePlay = (props) => {
     ]
     //跳转扫描计划
     const gotScanPlay = (value) => {
-        
+
         props.history.push(`/repository/${value.repository.address}/scanRecord/${value.id}`)
     }
     //分页查询关联的扫描计划
@@ -60,7 +62,9 @@ const ScanSchemePlay = (props) => {
         findScanPlayPage({scanSchemeId:scanSchemeId,pageParam:{currentPage:currentPage, pageSize:pageSize}}).then(res=>{
             if (res.code===0){
                 setScanPlayList(res.data.dataList)
+
                 setTotalPage(res.data.totalPage)
+                setTotalRecord(res.data.totalRecord)
             }
         })
     }
@@ -69,7 +73,10 @@ const ScanSchemePlay = (props) => {
         setCurrentPage(value)
         getScanPlayPage(value)
     }
-
+    //刷新查询
+    const refreshFind = () => {
+        getScanPlayPage(currentPage)
+    }
     return(
         <Fragment>
             <Table
@@ -81,7 +88,12 @@ const ScanSchemePlay = (props) => {
                 pagination={false}
                 locale={{emptyText: <EmptyText title={'暂无关联任务'}/>}}
             />
-            <Page pageCurrent={currentPage} changPage={changPage} totalPage={totalPage}/>
+            <Page pageCurrent={currentPage}
+                  changPage={changPage}
+                  totalPage={totalPage}
+                  totalRecord={totalRecord}
+                  refresh={refreshFind}
+            />
         </Fragment>
     )
 }

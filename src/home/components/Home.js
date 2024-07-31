@@ -2,7 +2,7 @@ import React from "react";
 import {UserVerify} from "thoughtware-eam-ui";
 import {connect} from "thoughtware-plugin-core-ui";
 import Portal from "./Portal";
-import {AppLink} from "thoughtware-licence-ui";
+import {AppLink,HelpLink,AvatarLink} from "thoughtware-licence-ui";
 /**
  * 首页入口
  * @param props
@@ -10,8 +10,12 @@ import {AppLink} from "thoughtware-licence-ui";
  * @constructor
  */
 const Home = props => {
-    return <Portal{...props} AppLink={<AppLink/>}
-    />
+    return <Portal
+            {...props}
+            AppLink={<AppLink/>}
+            HelpLink={<HelpLink/>}
+            AvatarLink={<AvatarLink {...props}/>}
+            />
 }
 
 function mapStateToProps(state) {

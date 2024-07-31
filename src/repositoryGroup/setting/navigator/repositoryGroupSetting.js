@@ -11,16 +11,18 @@ const RepositoryGroupSetting = props =>{
 
     const secondRouter = [
         {
-            to:`/group/${groupName}/setting/info`,
+            id:`/group/${groupName}/setting/info`,
             title:`Setting`,
         },
         {
-            to:`/group/${groupName}/setting/member`,
+            id:`/group/${groupName}/setting/member`,
             title:`Member`,
+            purviewCode: "rpy_group_user",
         },
         {
-            to:`/group/${groupName}/setting/role`,
+            id:`/group/${groupName}/setting/role`,
             title:`Privilege`,
+            purviewCode: "rpy_group_authority",
         }
     ]
 

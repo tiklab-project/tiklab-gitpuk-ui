@@ -1,12 +1,18 @@
 import React from 'react';
-import {Switch} from 'antd';
+import {Col, Switch} from 'antd';
 import BreadcrumbContent from '../../../../common/breadcrumb/Breadcrumb';
 import './PushRule.scss';
 
 const PushRule = props => {
     return (
-        <div className='push-rule'>
-            <div className='push-rule-content xcode-repository-width-setting xcode'>
+        <div className='xcode gittok-width push-rule'>
+            <Col
+                sm={{ span: "24" }}
+                md={{ span: "24" }}
+                lg={{ span: "24" }}
+                xl={{ span: "20", offset: "2" }}
+                xxl={{ span: "18", offset: "3" }}
+            >
                 <BreadcrumbContent firstItem={'Push_rules'}/>
                 <div className='push-rule-mode'>
                     <div className='mode-title'>推送评审模式</div>
@@ -20,7 +26,8 @@ const PushRule = props => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </Col>
+
         </div>
     )
 }

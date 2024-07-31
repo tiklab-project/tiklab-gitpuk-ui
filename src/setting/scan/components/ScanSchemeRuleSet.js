@@ -12,6 +12,7 @@ import "./ScanSchemeRuleSet.scss"
 import {Popconfirm, Table, Tooltip} from "antd";
 import Omit from "../../../common/omit/Omit";
 import {DeleteOutlined} from "@ant-design/icons";
+import {PrivilegeButton} from 'thoughtware-privilege-ui';
 const ScanSchemeRuleSet = (props) => {
     const {scheme,scanSchemeRuleSetList,goSchemeRule,deleteScanSchemeRuleSet}=props
 
@@ -41,25 +42,27 @@ const ScanSchemeRuleSet = (props) => {
                                     </div>
                                 </div>
                             </div>
+                            <PrivilegeButton  code={"gittok_scan_scheme"} key={'gittok_scan_scheme'} >
+                                <div className='delete-icon'>
+                                    <Popconfirm
+                                        placement="bottomRight"
+                                        title="移除规则包"
+                                        description={"变更将影响关联该方案的扫描结果"}
+                                        okText='确定'
+                                        cancelText='取消'
+                                        onConfirm={()=>deleteScanSchemeRuleSet(item.id)}
+                                    >
+                                        <DeleteOutlined />
+                                    </Popconfirm>
+                                </div>
+                            </PrivilegeButton>
 
-                            <div className='delete-icon'>
-                                <Popconfirm
-                                    placement="bottomRight"
-                                    title="移除规则包"
-                                    description={"变更将影响关联该方案的扫描结果"}
-                                    okText='确定'
-                                    cancelText='取消'
-                                    onConfirm={()=>deleteScanSchemeRuleSet(item.id)}
-                                >
-                                    <DeleteOutlined />
-                                </Popconfirm>
-                            </div>
                         </div>
                     )
                 }):
                 <Fragment>
                     <div  className='scanSchemeRuleSet-style'>
-                        <div  className='border-style' onClick={()=>cuteBorder(item)}>
+                        <div  className='border-style'>
                             <div className='border-data-style border-style-disabled'>
                                 <div className='data-title'>sonar规则包</div>
                                 <div className='data-desc'>

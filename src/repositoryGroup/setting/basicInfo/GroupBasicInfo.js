@@ -1,5 +1,5 @@
 import React,{useState,useEffect,Fragment} from 'react';
-import {Modal,Form, Input} from 'antd';
+import {Modal, Form, Input, Col} from 'antd';
 import {
     ExclamationCircleOutlined,
     DeleteOutlined,
@@ -7,13 +7,14 @@ import {
     RightOutlined,
     EditOutlined
 } from '@ant-design/icons'
-import {PrivilegeProjectButton} from 'thoughtware-privilege-ui';
 import {inject,observer} from 'mobx-react';
 import Btn from '../../../common/btn/Btn';
 import BreadcrumbContent from '../../../common/breadcrumb/Breadcrumb';
 import RepositoryPower from '../../../repository/repository/components/RepositoryPower';
 import './GroupBasicInfo.scss';
 import groupStore from "../../repositoryGroup/store/RepositoryGroupStore"
+import GroupDeletePop from "./GroupDeletePop";
+import {PrivilegeProjectButton} from 'thoughtware-privilege-ui';
 const GroupBasicInfo = props =>{
     const {repositoryStore}=props
     const {findRepositoryList}=repositoryStore
@@ -23,6 +24,8 @@ const GroupBasicInfo = props =>{
     const [powerType,setPowerType] = useState("")  //  仓库权限类型
 
     const [repositoryList,setRepositoryList]=useState([])  //制品库下面的仓库
+
+    const [deleteVisible,setDeleteVisible]=useState(false)  //删除弹窗状态
 
 
     useEffect(()=>{
@@ -35,13 +38,9 @@ const GroupBasicInfo = props =>{
 
             findRepositoryList({groupId:groupInfo.groupId
             }).then(res=>{
-                
                 res.code===0&&setRepositoryList(res.data)
             })
         }
-
-
-
     },[groupInfo])
 
     const onConfirm = () =>{
@@ -91,6 +90,7 @@ const GroupBasicInfo = props =>{
                     form={form}
                     autoComplete='off'
                     layout='vertical'
+                    name='name'
                     initialValues={{name:groupInfo?.name,remarks:groupInfo?.remarks}}
                 >
                     <Form.Item label='仓库组名称' name='name'
@@ -111,18 +111,21 @@ const GroupBasicInfo = props =>{
                         isMar={true}
                         onClick={()=>setOpenOrClose(1)}
                     />
-                    <Btn
-                        type={'primary'}
-                        title={'确定'}
-                        onClick={() => {
-                            form
-                                .validateFields()
-                                .then((values) => {
-                                    onOk(values)
+                    <PrivilegeProjectButton code={"rpy_group_update"} domainId={groupInfo && groupInfo.groupId}>
+                        <Btn
+                            type={'primary'}
+                            title={'确定'}
+                            onClick={() => {
+                                form
+                                    .validateFields()
+                                    .then((values) => {
+                                        onOk(values)
 
-                                })
-                        }}
-                    />
+                                    })
+                            }}
+                        />
+                    </PrivilegeProjectButton>
+
                 </div>
             </div>
         },
@@ -138,7 +141,7 @@ const GroupBasicInfo = props =>{
                     repositoryList.length>0?
                         <Fragment>
                             <div style={{color:'#ff0000',paddingBottom:5,fontSize:13}}>
-                                该仓库组存在仓库，请先移出仓库
+                                仓库组存在仓库，请先移出仓库
                             </div>
                             <Btn title={'取消'} isMar={true} onClick={()=>setOpenOrClose(2)}/>
                             <Btn type={'disabled'} title={'删除'}/>
@@ -148,7 +151,9 @@ const GroupBasicInfo = props =>{
                                 此操作无法恢复！请慎重操作！
                             </div>
                             <Btn title={'取消'} isMar={true} onClick={()=>setOpenOrClose(2)}/>
-                            <Btn onClick={onConfirm} type={'dangerous'} title={'删除'}/>
+                            <PrivilegeProjectButton code={"rpy_group_delete"} domainId={groupInfo && groupInfo.groupId}>
+                                <Btn onClick={()=>setDeleteVisible(true)} type={'dangerous'} title={'删除'}/>
+                            </PrivilegeProjectButton>
                         </Fragment>
                 }
             </div>
@@ -202,24 +207,33 @@ const GroupBasicInfo = props =>{
         </div>
     }
 
-    const renderLisItem = item => {
-        return  <PrivilegeProjectButton code={item.enCode} key={item.key} domainId={houseId}>
-            {lisItem(item)}
-        </PrivilegeProjectButton>
-    }
 
     return(
-        <div className='groupSetting xcode-repository-width-setting xcode'>
-            <div className='groupSetting-up'>
-                <BreadcrumbContent firstItem={'Setting'}/>
-            </div>
-            <div className='groupSetting-content'>
-                <div className='groupSetting-ul'>
-                    {
-                        lis.map(item=> lisItem(item) )
-                    }
+        <div className='groupSetting gittok-width xcode'>
+            <Col
+                sm={{ span: "24" }}
+                md={{ span: "24" }}
+                lg={{ span: "24" }}
+                xl={{ span: "20", offset: "2" }}
+                xxl={{ span: "18", offset: "3" }}
+            >
+                <div className='groupSetting-up'>
+                    <BreadcrumbContent firstItem={'Setting'}/>
                 </div>
-            </div>
+                <div className='groupSetting-content'>
+                    <div className='groupSetting-ul'>
+                        {
+                            lis.map(item=> lisItem(item) )
+                        }
+                    </div>
+                </div>
+            </Col>
+            <GroupDeletePop {...props}
+                            deleteVisible={deleteVisible}
+                            group={groupInfo}
+                            setDeleteVisible={setDeleteVisible}
+                            deleteGroup={deleteGroup}
+            />
         </div>
     )
 }

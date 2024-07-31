@@ -7,7 +7,7 @@
  */
 import React, {useState,useEffect} from "react";
 import BreadcrumbContent from "../../../common/breadcrumb/Breadcrumb";
-import {Button, Space, Table, Tooltip} from "antd";
+import {Button, Col, Space, Table, Tooltip} from "antd";
 import EmptyText from "../../../common/emptyText/EmptyText";
 import Listicon from "../../../common/list/Listicon";
 import {CloseCircleOutlined, LockOutlined, SettingOutlined, StopOutlined, UnlockOutlined} from "@ant-design/icons";
@@ -25,6 +25,7 @@ const UserRpyList = (props) => {
 
     const [currentPage,setCurrentPage]=useState(1)
     const [totalPage,setTotalPage]=useState()
+    const [totalRecord,setTotalRecord]=useState()
 
     const [isLoading,setIsLoading]=useState(false)
     const [repositoryList,setRepositoryList]=useState([])
@@ -48,8 +49,10 @@ const UserRpyList = (props) => {
         setIsLoading(false)
         if (res.code===0){
             setRepositoryList(res.data?.dataList)
+
             setTotalPage(res.data.totalPage)
             setCurrentPage(res.data.currentPage)
+            setTotalRecord(res.data.totalRecord)
         }
     }
 
@@ -59,7 +62,7 @@ const UserRpyList = (props) => {
             title: '仓库名称',
             dataIndex: 'name',
             key: 'name',
-            width:'50%',
+            width:'35%',
             ellipsis:true,
             render:(text,record)=>{
                 return (
@@ -68,12 +71,40 @@ const UserRpyList = (props) => {
                         <div className='name-text'>
                             <div className='name-text-title'>
                                 <span className='name-text-name'>{ record?.address.substring(0, record?.address.indexOf("/",1))+"/"+record.name}</span>
-                                <span className='name-text-lock'>{record.rules==='private'?<LockOutlined/>:<UnlockOutlined />}</span>
                             </div>
                         </div>
                     </div>
                 )
             }
+        },
+        {
+            title: '可见范围',
+            dataIndex: 'rules',
+            key: 'rules',
+            width:'15%',
+            ellipsis:true,
+            render:(text,record)=>{
+                return (
+                    <div>
+                        {text==='private'?
+                            <div style={{gap:5 , display:"flex"}}>
+                                <LockOutlined/>
+                                <span>私有</span>
+                            </div>:
+                            <div style={{gap:5 , display:"flex"}}>
+                                <UnlockOutlined />
+                                <span>公开</span>
+                            </div>
+                        }
+                    </div>
+                )}
+        },
+        {
+            title: '角色',
+            dataIndex: 'role',
+            key: 'user',
+            width:'20%',
+            ellipsis:true,
         },
 
         {
@@ -84,13 +115,7 @@ const UserRpyList = (props) => {
             ellipsis:true,
             render:text => text?text:'暂无更新'
         },
-        {
-            title: '权限',
-            dataIndex: 'role',
-            key: 'user',
-            width:'20%',
-            ellipsis:true,
-        },
+
         {
             title: '操作',
             dataIndex: 'action',
@@ -135,7 +160,13 @@ const UserRpyList = (props) => {
      * 分页
      */
     const changPage =async (value) => {
+        setCurrentPage(value)
         await findRpyPage(value)
+    }
+
+    //刷新查询
+    const refreshFind = () => {
+        findRpyPage(currentPage)
     }
 
     //用户用权限仓库
@@ -150,8 +181,13 @@ const UserRpyList = (props) => {
 
     }
     return(
-        <div className='user-rpy'>
-            <div className='xcode-setting-with xcode'>
+        <div className='xcode gittok-width user-rpy'>
+            <Col sm={{ span: "24" }}
+                 md={{ span: "24" }}
+                 lg={{ span: "24" }}
+                 xl={{ span: "20", offset: "2" }}
+                 xxl={{ span: "18", offset: "3" }}
+            >
                 <BreadcrumbContent firstItem={'用户'} secondItem={'仓库'} goBack={goBack}/>
                 <div className='user-rpy-table'>
                     <Table
@@ -163,12 +199,14 @@ const UserRpyList = (props) => {
                         locale={{emptyText: isLoading ?
                                 <SpinLoading type="table"/>: <EmptyText title={"没有仓库"}/>}}
                     />
-                    {
-                        (totalPage>1)?
-                            <Page pageCurrent={currentPage} changPage={changPage} totalPage={totalPage}/>:null
-                    }
+                    <Page pageCurrent={currentPage}
+                          changPage={changPage}
+                          totalPage={totalPage}
+                          totalRecord={totalRecord}
+                          refresh={refreshFind}
+                    />
                 </div>
-            </div>
+            </Col>
         </div>
     )
 }

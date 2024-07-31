@@ -1,25 +1,32 @@
 import React from 'react';
 import {Redirect} from 'react-router-dom';
 import AsyncComponent from './common/lazy/SyncComponent';
+import NotFoundContent from "./setting/not/NotFoundContent";
+import NoAccessContent from "./setting/not/NoAccessContent";
 
 const Home=AsyncComponent(()=>import('./home/components/Home'))
 
 const Login=AsyncComponent(()=>import('./login/login'))
 const Logout=AsyncComponent(()=>import('./login/Logout'))
-const Wechat=AsyncComponent(()=>import('./login/Wechat'))
 const ExcludeProductUser=AsyncComponent(()=>import('./login/ExcludeProductUser'))
-const NotFound=AsyncComponent(()=>import('./login/error'))
+const error=AsyncComponent(()=>import('./login/error'))
 
 /**
  * 首页
  */
 const Homepage=AsyncComponent(()=>import('./home/components/HomePage'))
+const TodoPageList=AsyncComponent(()=>import('./home/components/TodoPageList'))
 
 const WEBIDE=AsyncComponent(()=>import('./WEBIDE/components/WebIde'))
 
 /**
  * 仓库
  */
+
+//概览
+const Survey=AsyncComponent(()=>import('./repository/survey/components/Survey'))
+
+
 const Repository=AsyncComponent(()=>import('./repository/repository/components/Repository'))
 const RepositoryAdd=AsyncComponent(()=>import('./repository/repository/components/RepositoryAdd'))
 const RepositoryAside=AsyncComponent(()=>import('./repository/navigator/RepositoryAside'))
@@ -28,23 +35,26 @@ const Blob=AsyncComponent(()=>import('./repository/file/components/Blob'))
 const Edit=AsyncComponent(()=>import('./repository/file/components/Edit'))
 const Branch=AsyncComponent(()=>import('./repository/branch/components/Branch'))
 const Tag=AsyncComponent(()=>import('./repository/tag/components/Tag'))
-const RepositoryMerge=AsyncComponent(()=>import('./repository/merge/Merge'))
+
 const Commits=AsyncComponent(()=>import('./repository/commits/components/Commits'))
 const CommitsDetails=AsyncComponent(()=>import('./repository/commits/components/CommitsDetails'))
 const Issue=AsyncComponent(()=>import('./repository/issue/components/Issue'))
 const Pipeline=AsyncComponent(()=>import('./repository/pipeline/components/Pipeline'))
-const Statistics=AsyncComponent(()=>import('./repository/statistics/components/Statistics'))
-const SonarQube=AsyncComponent(()=>import('./repository/detection/components/SonarQube'))
+
 const notRepository=AsyncComponent(()=>import('./repository/repository/components/404'))
 const RepositoryToLead=AsyncComponent(()=>import('./repository/tolead/components/RepositoryToLead'))
-const ThirdInfo=AsyncComponent(()=>import('./repository/tolead/components/ThirdInfo'))
 const thirdList=AsyncComponent(()=>import('./repository/tolead/components/RepositoryThirdList'))
 
-//代码扫描
-const ScanPlay=AsyncComponent(()=>import('./repository/scan/components/ScanPlay'))
-const ScanRecord=AsyncComponent(()=>import('./repository/scan/components/ScanRecord'))
-const ScanDetails=AsyncComponent(()=>import('./repository/scan/components/ScanDetails'))
+//合并分支
+const RepositoryMerge=AsyncComponent(()=>import('./repository/merge/Merge'))
+const MergeAdd=AsyncComponent(()=>import('./merge/components/MergeAdd'))
+const MergeAddVerify=AsyncComponent(()=>import('./merge/components/MergeAddVerify'))
+const MergeClashEdit=AsyncComponent(()=>import('./merge/components/MergeClashEdit'))
 
+//统计
+const StatisticsNav=AsyncComponent(()=>import('./repository/statistics/components/StatisticsNav'))
+const StatisticsCommit=AsyncComponent(()=>import('./repository/statistics/components/StatisticsCommit'))
+const StatisticsCode=AsyncComponent(()=>import('./repository/statistics/components/StatisticsCode'))
 
 /*仓库设置*/
 const BranchSetting=AsyncComponent(()=>import('./repository/setting/branch/BranchSetting'))
@@ -76,6 +86,7 @@ const RepositoryGroupRole=AsyncComponent(()=>import('./repositoryGroup/setting/u
 /**
  * 系统设置
  */
+const SettingHome=AsyncComponent(()=>import('./setting/home/components/SettingHome'))
 const Setting=AsyncComponent(()=>import('./setting/navigator/Setting'))
 
 const Auth=AsyncComponent(()=>import('./setting/auth/components/Auth'))
@@ -93,6 +104,8 @@ const MessageNoticeTrue=AsyncComponent(()=>import('./setting/message/MessageNoti
 
 //备份 恢复
 const BackupRecoveryContent=AsyncComponent(()=>import('./setting/backups/BackupRecoveryContent'))
+
+
 
 
 //已经提交过代码的仓库列表
@@ -127,14 +140,6 @@ const sysRoleTrue=AsyncComponent(()=>import('./setting/user/SystemRoleTrue'))
 const ProjectRole=AsyncComponent(()=>import('./setting/user/ProjectRole'))
 const ProjectFeature=AsyncComponent(()=>import('./setting/user/ProjectFeature'))
 
-//扫描方案
-const ScanScheme=AsyncComponent(()=>import('./setting/scan/components/ScanScheme'))
-const ScanRule=AsyncComponent(()=>import('./setting/scan/components/ScanRule'))
-const ScanRuleDetails=AsyncComponent(()=>import('./setting/scan/components/ScanRuleDetails'))
-
-//扫描环境
-const EnvServer=AsyncComponent(()=>import('./setting/scan/components/ScanEnvironment'))
-
 //资源监控
 const Resources =AsyncComponent(()=>import('./setting/resources/components/Resources'))
 const routers = [
@@ -151,25 +156,35 @@ const routers = [
         exact:true,
         component:ExcludeProductUser,
     },
-    {
-        path: '/project',
-        exact:true,
-        component:Wechat,
-    },
 
+    {
+        exact: true,
+        path: '/404',
+        render: props => <NotFoundContent {...props} homePath={'/'}/>
+    },
+    {
+        exact: true,
+        path: '/noaccess',
+        render: props => <NotFoundContent {...props} homePath={'/'} type='noaccess'/>
+    },
+    {
+        path: '/',
+        exact:true,
+        render:()=><Redirect to={'/home'}/>,
+    },
     {
         path:'/',
         component:Home,
         routes:[
             {
-                path: '/',
-                exact:true,
-                render:()=><Redirect to={'/home'}/>,
-            },
-            {
                 path:'/home',
                 exact:true,
                 component:Homepage,
+            },
+            {
+                path:'/home/todoList',
+                exact:true,
+                component:TodoPageList,
             },
             {
                 path:'/ide/*',
@@ -191,11 +206,6 @@ const routers = [
                 component:RepositoryToLead,
             },
             {
-                path:'/repository/lead/info/:type',
-                exact:true,
-                component:ThirdInfo,
-            },
-            {
                 path:'/repository/lead/thirdList/:authId',
                 exact:true,
                 component:thirdList,
@@ -214,6 +224,11 @@ const routers = [
                 path:'/repository/:namespace/:name',
                 component:RepositoryAside,
                 routes:[
+                    {
+                        path:'/repository/:namespace/:name/survey',
+                        exact: true,
+                        component:Survey,
+                    },
                     {
                         path:'/repository/:namespace/:name',
                         exact: true,
@@ -254,20 +269,27 @@ const routers = [
                         component:RepositoryMerge,
                     },
                     {
+                        path:'/repository/:namespace/:name/mergeAdd',
+                        exact:true,
+                        component:MergeAdd,
+                    },
+                    {
+                        path:'/repository/:namespace/:name/mergeAdd/:mergeId',
+                        exact:true,
+                        component:MergeAddVerify,
+                    },
+                    {
+                        path:'/repository/:namespace/:name/mergeClashEdit/:mergeId',
+                        exact:true,
+                        component:MergeClashEdit,
+                    },
+                    {
                         path:'/repository/:namespace/:name/commits/:branch',
                         component:Commits,
                     },
                     {
                         path:'/repository/:namespace/:name/commit/:commitsId',
                         component:CommitsDetails,
-                    },
-                    {
-                        path:'/repository/:namespace/:name/statistics',
-                        component: Statistics
-                    },
-                    {
-                        path:'/repository/:namespace/:name/sonarQube',
-                        component:SonarQube
                     },
 
                     {
@@ -278,18 +300,19 @@ const routers = [
                         path:'/repository/:namespace/:name/pipeline',
                         component: Pipeline
                     },
-
                     {
-                        path:'/repository/:namespace/:name/scanPlay',
-                        component: ScanPlay
-                    },
-                    {
-                        path:'/repository/:namespace/:name/scanRecord/:playId',
-                        component: ScanRecord
-                    },
-                    {
-                        path:'/repository/:namespace/:name/scanDetails/:recordId',
-                        component: ScanDetails
+                        path: '/repository/:namespace/:name/statistics',
+                        component: StatisticsNav,
+                        routes:[
+                            {
+                                path:'/repository/:namespace/:name/statistics/commit',
+                                component: StatisticsCommit
+                            },
+                            {
+                                path:'/repository/:namespace/:name/statistics/code',
+                                component: StatisticsCode
+                            },
+                        ]
                     },
                     {
                         path:'/repository/:namespace/:name/setting',
@@ -335,10 +358,6 @@ const routers = [
 
                         ]
                     },
-                    /*   {
-                           path:'/repository/:namespace/:name/!*',
-                           render:()=><Redirect to={'/error'}/>,
-                       }*/
                 ]
             },
             {
@@ -391,7 +410,10 @@ const routers = [
                 path:'/setting',
                 component: Setting,
                 routes: [
-
+                    {
+                        path: '/setting/home',
+                        component: SettingHome,
+                    },
                     {
                         path: '/setting/auth',
                         component: Auth,
@@ -449,7 +471,7 @@ const routers = [
                         component: LogType,
                     },
                     {
-                        path: '/setting/org',
+                        path: '/setting/orga',
                         component: Orga,
                     },
                     {
@@ -457,7 +479,7 @@ const routers = [
                         component: UserGroup,
                     },
                     {
-                        path: '/setting/directory',
+                        path: '/setting/dir',
                         component: Directory,
                     },
                     {
@@ -497,7 +519,7 @@ const routers = [
                         component: CommitRepository,
                     },
                     {
-                        path:'/setting/power/user',
+                        path:'/setting/userpower',
                         component: PowerUserList,
                     },
                     {
@@ -517,22 +539,6 @@ const routers = [
                         component: AuthContent,
                     },
                     {
-                        path: '/setting/scanScheme',
-                        component: ScanScheme,
-                    },
-                    {
-                        path: '/setting/scanRuleSet',
-                        component: ScanRule,
-                    },
-                    {
-                        path: '/setting/scanRule/:ruleSetId',
-                        component: ScanRuleDetails,
-                    },
-                    {
-                        path: '/setting/scanEnv',
-                        component: EnvServer,
-                    },
-                    {
                         path:'/setting/resources',
                         component: Resources,
                     },
@@ -540,29 +546,17 @@ const routers = [
             },
             {
                 path:'/error',
-                component:NotFound,
+                component:error,
             },
             {
                 path:'/:namespace/:name/404',
                 component:notRepository
             },
-            /*  {
-                  path:'/!*',
-                  render:()=><Redirect to={'/error'}/>,
-              }*/
-        ]
+        ],
+
     },
 
-    {
-        path:'/',
-        component: Home,
-        exact: true,
-        render:()=><Redirect to='/index'/>,
-    },
- /*   {
-        path: '*',
-        render:()=><Redirect to='/error'/>,
-    },*/
+
 ]
 
 export default routers

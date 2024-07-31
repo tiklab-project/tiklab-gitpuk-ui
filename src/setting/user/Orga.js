@@ -9,7 +9,7 @@ import {Orga} from "thoughtware-user-ui";
  */
 const OrgaContent = props=>{
 
-    return <Orga {...props} bgroup={"gittok"}/>
+    return <Orga {...props} bgroup={"gittok"} />
 
 }
 

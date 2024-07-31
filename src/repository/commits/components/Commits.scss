@@ -1,23 +1,24 @@
 .commits{
     height: 100%;
     overflow: auto;
-    &-head{
+    .commits-filter{
         display: flex;
         justify-content: flex-start;
         align-items: center;
         margin: var(--thoughtware-padding-item) 0;
-        .commits-head-left{
+        .commits-filter-left{
             flex: 1;
             display: flex;
             flex-direction: row;
             align-items: center;
         }
-        .commits-head-right{
+        .commits-filter-right{
             display: flex;
             flex-direction: row;
             align-items: center;
-            .commits-user{
-                margin-right: var(--thoughtware-padding-item);
+            gap: 20px;
+            .input-icon{
+                font-size: var(--thoughtware-input-icon-15);
             }
         }
     }

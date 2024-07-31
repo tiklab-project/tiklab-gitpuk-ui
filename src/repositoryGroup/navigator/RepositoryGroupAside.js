@@ -3,23 +3,25 @@ import {useTranslation} from 'react-i18next';
 import {PullRequestOutlined, BankOutlined} from '@ant-design/icons';
 import Aside from '../../common/aside/Aside';
 import groupStore from "../repositoryGroup/store/RepositoryGroupStore"
-import {observer} from "mobx-react";
+import {inject, observer} from "mobx-react";
 import {getUser} from "thoughtware-core-ui";
 const RepositoryGroupAside= props =>{
 
-    const {match}=props
+    const {match,systemRoleStore,repositoryStore}=props
     const groupName = match.params.name
-
+    const {getInitProjectPermissions} = systemRoleStore
+    const {setNavLevel} = repositoryStore
     const {findGroupByName,groupInfo,setGroupInfo,findRepositoryGroupPage} = groupStore
+
 
     const [groupList,setGroupList]=useState([])
 
     const {t} = useTranslation()
 
     useEffect(()=>{
+        setNavLevel(2)
         // 初始化仓库组
         findGroupByName(groupName).then(res=>{
-            
             if (res.code===0){
                 if (res.data){
                     setGroupInfo(res.data)
@@ -31,14 +33,14 @@ const RepositoryGroupAside= props =>{
                             setGroupList(a)
                         }
                     })
+                    // 获取项目权限
+                    getInitProjectPermissions(getUser().userId,res.data.groupId,res.data?.rules==='public')
                 }else {
                     //仓库组不存在
                     props.history.push(`/group`)
                 }
-
             }
         })
-
     },[groupName])
 
     // 侧边第一栏导航
@@ -49,15 +51,15 @@ const RepositoryGroupAside= props =>{
             icon:<CreditCardOutlined />,
         },*/
         {
-            to:`/group/${groupName}/repository`,
+            id:`/group/${groupName}/repository`,
             title:`${t('Repository')}`,
             icon: <BankOutlined />,
         },
-        {
-            to:`/group/${groupName}/merge_requests`,
+      /*  {
+            id:`/group/${groupName}/merge_requests`,
             title: `${t('Merge Requests')}`,
             icon: <PullRequestOutlined />,
-        },
+        },*/
     ]
 
     return  <Aside
@@ -67,11 +69,9 @@ const RepositoryGroupAside= props =>{
                 info={groupInfo}
                 repositoryAddress={groupName}
                 asideType={'group'}
-
+                setNavLevel={setNavLevel}
             />
 
 }
 
-export default observer(RepositoryGroupAside)
-
-
+export default inject('systemRoleStore','repositoryStore')(observer(RepositoryGroupAside))

@@ -1,5 +1,5 @@
 import React,{Fragment} from 'react';
-import {LeftOutlined,RightOutlined} from '@ant-design/icons';
+import {LeftOutlined, RightOutlined, SyncOutlined} from '@ant-design/icons';
 import './Page.scss';
 
 /**
@@ -10,7 +10,9 @@ import './Page.scss';
  */
 const Page = props =>{
 
-    const {pageCurrent,changPage,totalPage} = props
+    const {pageCurrent,changPage,totalPage,totalRecord,refresh} = props
+
+
     const renderRightOut = () =>{
         if(pageCurrent===totalPage ){
             return(
@@ -31,17 +33,20 @@ const Page = props =>{
             {
                 (totalPage>1)?
                     <Fragment>
+                        <span className='xcode-page-padding'>{`共${totalRecord}条`}</span>
                         <span
                             className={`${pageCurrent===1?'xcode-page-ban':'xcode-page-allow'} xcode-page-icon`}
                             onClick={()=>pageCurrent===1? null :changPage(pageCurrent - 1)}
                         >
                             <LeftOutlined/>
                         </span>
-                        <span className='xcode-page-current'>{`第${pageCurrent}页`}</span>
+                        <span className='xcode-page-current'>{`${pageCurrent}`}</span>
                         <span className='xcode-page-icon'>/</span>
-                        <span>{`共${totalPage}页`}</span>
+                        <span>{`${totalPage}`}</span>
                         { renderRightOut() }
-                    </Fragment>:null
+                        <span className='xcode-page-padding xcode-page-allow'><SyncOutlined onClick={refresh}/></span>
+                    </Fragment>
+                    :null
             }
         </div>
         )

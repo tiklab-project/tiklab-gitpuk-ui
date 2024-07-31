@@ -1,59 +1,34 @@
 .statistics{
     height: 100%;
-    overflow: auto;
-    background: var(--xcode-backdrop-color);
-    &-head{
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        margin: var(--thoughtware-padding-item) 0;
-        .head-item{
-            flex: 1;
-            padding: 0 var(--thoughtware-padding-item);
-            background: #ffffff;
-            border-radius: 4px;
-            .head-item-content{
-                display: flex;
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-                height: 100px;
-                min-width: 100px;
-            }
-            &:not(:last-child){
-                margin-right: var(--thoughtware-padding-item);
-            }
-        }
+
+    .ant-form-item {
+        padding: 15px 0;
     }
-    &-census{
-        padding: 10px;
-        background: #ffffff;
-        border-radius: 4px;
-        .statistics-census-head{
+
+
+    .statistics-work-content {
+        padding: 15px  0;
+        .statistics-work-table {
+            padding: 15px 0;
+        }
+        .statistics-work-text {
             display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: center;
-            .title-user{
-                display: flex;
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-                .title-user-avatar{
-                    padding-right: 10px;
-                }
-                .title-user-name{
-                    .num{
-                        font-size: 13px;
-                        color: var(--thoughtware-gray-500);
-                    }
-                }
+            gap: 15px;
+            .statistics-work-text-add {
+                color: var(--thoughtware-gree);
             }
-            .title-branch{
-                font-size: 13px;
-                color: var(--thoughtware-gray-500);
+            .statistics-work-text-delete {
+                color: #ff0000;
             }
+
+        }
+        .statistics-work-text-nav {
+            padding: 10px 0;
+            font-size:14px;
+            font-weight: 500;
+        }
+        .statistics-work-bar {
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
         }
     }
 }

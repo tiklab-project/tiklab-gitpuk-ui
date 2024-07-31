@@ -31,7 +31,7 @@ const ScanReqDrawer = (props) => {
         setVisible(false)
     }
 
-    debugger
+    
 
     return(
         <Drawer

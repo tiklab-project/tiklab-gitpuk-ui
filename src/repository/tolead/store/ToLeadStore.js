@@ -7,6 +7,7 @@ export class ToLeadStore{
     @observable
     leadRecordList=[]
 
+    @observable refresh=false
     /**
      * 创建第三方仓库认证信息
      * @param value
@@ -15,6 +16,9 @@ export class ToLeadStore{
     @action
     createImportAuth = async value =>{
         const data = await Axios.post('/leadAuth/createLeadAuth',value)
+        if(data.code===0){
+            this.refresh=!this.refresh
+        }
         return data
     }
 
@@ -28,6 +32,19 @@ export class ToLeadStore{
         const param=new FormData()
         param.append("id",value)
         const data = await Axios.post('/leadAuth/deleteLeadAuth',param)
+        return data
+    }
+
+    /**
+     * 通过ID 查询认证信息
+     * @param value
+     * @returns {Promise<*>}
+     */
+    @action
+    findLeadAuth = async value =>{
+        const param=new FormData()
+        param.append('id',value)
+        const data = await Axios.post('/leadAuth/findLeadAuth',param)
         return data
     }
 
@@ -75,7 +92,7 @@ export class ToLeadStore{
     @action
     findToLeadResult = async value =>{
         const param=new FormData()
-        param.append("thirdRepositoryId",value)
+        param.append("key",value)
         const data = await Axios.post('/toLead/findToLeadResult',param)
         return data
     }

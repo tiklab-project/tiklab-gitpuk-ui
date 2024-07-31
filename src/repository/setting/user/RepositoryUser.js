@@ -19,7 +19,7 @@ const RepositoryUser =(props)  => {
         findRepositoryByAddress(webUrl)
     },[])
     return (
-        <div >
+        <div className={"xcode"}>
             <DomainUser
                 {...props}
                 domainId={repositoryInfo.rpyId}

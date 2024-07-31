@@ -24,14 +24,11 @@ const TimeTaskPop = (props) => {
     //添加扫描制品
     const onOk = () => {
         form.validateFields().then(async values => {
-
-            debugger
             createTimeTask({scanPlayId:scanPlayId,taskType:taskType,taskWay:taskWay,
                 instanceData:{execTime:values.execTime && values.execTime.format("HH:mm"),dataList:taskDataList}}).then(res=>{
                     res.code===0&&cancel()
             })
         })
-
     }
 
 

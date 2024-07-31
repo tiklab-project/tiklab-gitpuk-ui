@@ -1,11 +1,26 @@
-import {store as xcodeStore} from "./store";
+import {store as gittokStore} from "./store";
 import App from "./app";
+import Routers from "./routes";
 import Portal from "./home/components/Portal";
 import SettingContent from "./setting/navigator/SettingContent";
 
 import AsyncComponent from "./common/lazy/SyncComponent";
+//语言
 import xcodeZh from "./common/language/zh.json"
-import Breadcrumb from "./common/breadcrumb/Breadcrumb"
+
+//公共组件
+const Breadcrumb=AsyncComponent(()=>import('./common/breadcrumb/Breadcrumb'))
+const DeleteExec=AsyncComponent(()=>import('./common/delete/DeleteExec'))
+const Btn=AsyncComponent(()=>import('./common/btn/Btn'))
+const UserIcon=AsyncComponent(()=>import('./common/list/UserIcon'))
+const Listicon=AsyncComponent(()=>import('./common/list/Listicon'))
+const Modal=AsyncComponent(()=>import('./common/modal/Modal'))
+const Omit=AsyncComponent(()=>import('./common/omit/Omit'))
+const Page=AsyncComponent(()=>import('./common/page/Page'))
+const TimeTaskPop=AsyncComponent(()=>import('./common/timetask/TimeTaskPop'))
+const EmptyText=AsyncComponent(()=>import('./common/emptyText/EmptyText'))
+const DownSelect=AsyncComponent(()=>import('./common/downSelect/DownSelect'))
+
 
 const ExcludeProductUser=AsyncComponent(()=>import('./login/ExcludeProductUser'))
 
@@ -13,6 +28,7 @@ const ExcludeProductUser=AsyncComponent(()=>import('./login/ExcludeProductUser')
  * 首页
  */
 const Homepage=AsyncComponent(()=>import('./home/components/HomePage'))
+const TodoPageList=AsyncComponent(()=>import('./home/components/TodoPageList'))
 
 const WEBIDE=AsyncComponent(()=>import('./WEBIDE/components/WebIde'))
 
@@ -28,12 +44,11 @@ const Blob=AsyncComponent(()=>import('./repository/file/components/Blob'))
 const Edit=AsyncComponent(()=>import('./repository/file/components/Edit'))
 const Branch=AsyncComponent(()=>import('./repository/branch/components/Branch'))
 const Tag=AsyncComponent(()=>import('./repository/tag/components/Tag'))
-const RepositoryMerge=AsyncComponent(()=>import('./repository/merge/Merge'))
 const Commits=AsyncComponent(()=>import('./repository/commits/components/Commits'))
 const CommitsDetails=AsyncComponent(()=>import('./repository/commits/components/CommitsDetails'))
 const Issue=AsyncComponent(()=>import('./repository/issue/components/Issue'))
 const Pipeline=AsyncComponent(()=>import('./repository/pipeline/components/Pipeline'))
-const Statistics=AsyncComponent(()=>import('./repository/statistics/components/Statistics'))
+const Statistics=AsyncComponent(()=>import('./repository/statistics/components/StatisticsCommit'))
 const RepositoryDetailsSet=AsyncComponent(()=>import('./repository/setting/navigator/RepositorySetting'))
 const RepositoryBasicInfo=AsyncComponent(()=>import('./repository/setting/basicInfo/RepositoryBasicInfo'))
 const PushRule=AsyncComponent(()=>import('./repository/setting/pushRule/components/PushRule'))
@@ -42,13 +57,17 @@ const WebHooks=AsyncComponent(()=>import('./repository/setting/webHooks/componen
 const RepositoryRole=AsyncComponent(()=>import('./repository/setting/user/RepositoryRole'))
 const RepositoryUser=AsyncComponent(()=>import('./repository/setting/user/RepositoryUser'))
 const BranchSetting=AsyncComponent(()=>import('./repository/setting/branch/BranchSetting'))
-const SonarQube=AsyncComponent(()=>import('./repository/detection/components/SonarQube'))
 const NotRepository=AsyncComponent(()=>import('./repository/repository/components/404'))
-const NotFound=AsyncComponent(()=>import('./login/error'))
+const error=AsyncComponent(()=>import('./login/error'))
 const RemoteList=AsyncComponent(()=>import('./repository/setting/remote/components/RemoteList'))
 const RepositoryToLead=AsyncComponent(()=>import('./repository/tolead/components/RepositoryToLead'))
 const RepositoryThirdList=AsyncComponent(()=>import('./repository/tolead/components/RepositoryThirdList'))
-const ThirdInfo=AsyncComponent(()=>import('./repository/tolead/components/ThirdInfo'))
+
+//合并分支
+const RepositoryMerge=AsyncComponent(()=>import('./repository/merge/Merge'))
+const MergeAdd=AsyncComponent(()=>import('./merge/components/MergeAdd'))
+const MergeAddVerify=AsyncComponent(()=>import('./merge/components/MergeAddVerify'))
+const MergeClashEdit=AsyncComponent(()=>import('./merge/components/MergeClashEdit'))
 
 //代码扫描
 const ScanPlay=AsyncComponent(()=>import('./repository/scan/components/ScanPlay'))
@@ -78,6 +97,7 @@ const RepositoryGroupRole=AsyncComponent(()=>import("./repositoryGroup/setting/u
 /**
  * 系统设置
  */
+const SettingHome=AsyncComponent(()=>import('./setting/home/components/SettingHome'))
 const Setting=AsyncComponent(()=>import('./setting/navigator/Setting'))
 
 const Auth=AsyncComponent(()=>import('./setting/auth/components/Auth'))
@@ -92,10 +112,6 @@ const MessageSendType=AsyncComponent(()=>import('./setting/message/MessageSendTy
 const MessageSendTypeTrue=AsyncComponent(()=>import('./setting/message/MessageSendTypeTrue'))
 const MessageNotice=AsyncComponent(()=>import('./setting/message/MessageNotice'))
 const MessageNoticeTrue=AsyncComponent(()=>import('./setting/message/MessageNoticeTrue'))
-
-//deploy
-const EnvDeploy=AsyncComponent(()=>import('./setting/deploy/components/EnvDeploy'))
-const ServerDeploy=AsyncComponent(()=>import('./setting/deploy/components/ServerDeploy'))
 
 
 //备份 恢复
@@ -140,10 +156,24 @@ const UserRpyList=AsyncComponent(()=>import('./setting/repository/components/Use
 const Resources =AsyncComponent(()=>import('./setting/resources/components/Resources'))
 
 export {
-    Breadcrumb,
+    Routers,
     xcodeZh,
+
+    Breadcrumb,
+    DeleteExec,
+    Btn,
+    UserIcon,
+    Listicon,
+    Modal,
+    Omit,
+    Page,
+    TimeTaskPop,
+    EmptyText,
+    DownSelect,
+
     App,
      Homepage,
+    TodoPageList,
      WEBIDE,
      Repository,
      RepositoryAdd,
@@ -154,6 +184,9 @@ export {
      Branch,
      Tag,
      RepositoryMerge,
+    MergeAdd,
+    MergeAddVerify,
+    MergeClashEdit,
      Commits,
      CommitsDetails,
      Issue,
@@ -167,13 +200,11 @@ export {
     RepositoryRole,
     RepositoryUser,
     BranchSetting,
-    SonarQube,
     NotRepository,
-    NotFound,
+    error,
     RemoteList,
     RepositoryToLead,
     RepositoryThirdList,
-    ThirdInfo,
     RepositoryGroup,
     RepositoryGroupAdd,
     RepositoryGroupDetails,
@@ -184,6 +215,7 @@ export {
     GroupBasic,
     RepositoryGroupUser,
     RepositoryGroupRole,
+    SettingHome,
     Setting,
     Auth,
     Plugin,
@@ -193,8 +225,6 @@ export {
     MessageSendTypeTrue,
     MessageNotice,
     MessageNoticeTrue,
-    EnvDeploy,
-    ServerDeploy,
 
     BackupRecoveryContent,
     MyLog,
@@ -221,7 +251,7 @@ export {
 
     SettingContent,
     Portal,
-    xcodeStore,
+    gittokStore,
     ExcludeProductUser,
     CommitRepository,
 
@@ -232,7 +262,6 @@ export {
     ScanRule,
     ScanRuleDetails,
     EnvServer,
-
     PowerUserList,
     UserRpyList,
     Resources,

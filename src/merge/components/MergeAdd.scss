@@ -1,0 +1,209 @@
+
+.merge-add{
+  .merge-add-content {
+    /*  display: flex;
+      justify-content: space-between;*/
+    align-items: center;
+    margin-bottom: 10px;
+    .merge-add-select {
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 30px;
+
+      .merge-add-select-nav {
+        display: flex;
+        gap: 5px;
+        flex-direction: column;
+      }
+
+      .merge-add-select-input {
+        border: 1px solid #e5e5e5;
+        display: flex;
+        gap: 10px;
+        width: 500px;
+
+        .merge-add-select-title {
+          background: var(--thoughtware-gray-400);
+          padding: 5px 10px;
+          border-right: 1px solid var(--thoughtware-gray-400);;
+        }
+
+        .merge-add-select-icon {
+          flex: 1;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 5px 10px;
+        }
+      }
+    }
+    .commit-info-error {
+      display: flex;
+      align-items: center;
+      margin: var(--thoughtware-padding-item) 0;
+      padding: 12px;
+      gap: 10px;
+      background: #F8FFFF;
+      border: 1px solid #e3e9ed;
+      .commit-info-error-icon {
+        color: #02a7f0;
+        font-size: large;
+      }
+      .commit-info-error-nav {
+        display: flex;
+        gap: 10px;
+        .commit-info-error-text {
+          color: var(--thoughtware-blue);
+          cursor: pointer;
+        }
+      }
+    }
+    .commit-info-margin {
+      margin-top: 100px;
+    }
+
+    .commit-info-clash{
+      display: flex;
+      align-items: center;
+      margin: var(--thoughtware-padding-item) 0;
+      padding: 12px;
+      gap: 10px;
+      background: #ffefe3;
+      border: 1px solid #ffefe3;
+      .commit-info-clash-icon{
+        color: #ed9011;
+        font-size: large;
+      }
+      .commit-info-clash-text{
+        color: #6e6e6e ;
+      }
+    }
+  }
+}
+.merge-add-table{
+  margin-top: 20px;
+  .commit-info{
+    .commit-info-item-title{
+      background: #f7f7f7;
+      border-bottom: 1px solid #f0f0f0;
+      font-size: 14px;
+      padding: 6px var(--thoughtware-padding-item);
+      font-weight: 500;
+      .title-time{
+        padding-right: 5px;
+      }
+    }
+    .commits-info-item-content{
+      .info-item{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 8px var(--thoughtware-padding-item);
+        .info-item-icon{
+          margin-right: var(--thoughtware-padding-item);
+        }
+        .info-item-msg{
+          margin-right: var(--thoughtware-padding-item);
+          flex: 1;
+          .info-item-title{
+            font-weight: var(--thoughtware-font-weight-bold);
+            .title-commitMsg:hover{
+              cursor: pointer;
+              text-decoration: underline;
+            }
+          }
+          .title-item-desc{
+            font-size: 13px;
+            color: var(--thoughtware-gray-500);
+            .desc-user{
+              padding-right: 5px;
+            }
+          }
+        }
+        .title-item-ident{
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          .ident-title,.ident-copy,.ident-folder{
+            background-color: #fafafa;
+            border: 1px solid #e5e5e5;
+          }
+          .ident-title{
+            border-bottom-left-radius: 4px;
+            border-top-left-radius: 4px;
+            height: 36px;
+            padding: 0 10px;
+            min-width: 80px;
+            font-size: 13px;
+            font-weight: 500;
+            .ident-title-id{
+              align-items: center;
+              padding-top:6px
+            }
+          }
+          .ident-copy,.ident-folder{
+            padding: 10px;
+            border-left: none;
+            cursor: pointer;
+          }
+          .ident-folder{
+            border-bottom-right-radius: 4px;
+            border-top-right-radius: 4px;
+          }
+        }
+      }
+    }
+  }
+}
+.file-info {
+  .file-info-title {
+    display: flex;
+    gap: 10px;
+    .num-title,.num-add{
+      padding-right: 5px;
+    }
+    .num-add{
+      color: var(--thoughtware-gree);
+    }
+    .num-reduce{
+      color: #ff0000;
+    }
+  }
+  .file-info-content {
+    padding-top: 10px;
+
+    .file-info-head {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      padding: 8px;
+      .file-info-head-icon {
+        margin-right: 8px;
+        cursor: pointer;
+      }
+      .file-info-head-file{
+        flex: 1;
+        .file-info-head-title{
+          display: inline-block;
+          vertical-align: middle;
+          max-width: 570px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          -o-text-overflow: ellipsis;
+          font-weight: 500;
+          padding-right: 8px;
+        }
+        .file-info-title-type{
+          font-size: var(--thoughtware-font-13);
+          color: var(--thoughtware-gray-500);
+          padding-right: 8px;
+        }
+        .file-info-title-icon{
+          cursor: pointer;
+        }
+      }
+    }
+  }}

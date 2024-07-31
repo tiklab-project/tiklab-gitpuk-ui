@@ -1,10 +1,13 @@
 .branch{
     .branch-content{
-        &-top,&-type{
+        &-top,&-filter{
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding-bottom: 10px;
+            .input-icon{
+                font-size: var(--thoughtware-input-icon-15);
+            }
         }
         &-tables{
             .branch-tables-item{
@@ -20,7 +23,7 @@
                     margin-right: 10px;
                 }
                 .branch-tables-commit{
-                    width: 130px;
+                    width: 200px;
                     text-align: center;
                     position: relative;
                     .commit-num-left{
@@ -70,15 +73,41 @@
                 .branch-tables-action{
                     display: flex;
                     flex-direction: row;
+
                     .branch-tables-combine,.branch-tables-compare,.branch-tables-download{
                         background: #f4f4f4;
                         cursor: pointer;
                         margin-right: 8px;
                         border-radius: 4px;
+                        width: 100px;
+                        text-align: center;
                     }
                     .branch-tables-combine,.branch-tables-compare{
                         padding: 6px;
                     }
+                    .open-merge{
+                        .open-merge-icon{
+                            color: #55a532;
+                            font-size: 18px;
+                        }
+
+                        display: flex;
+                        gap: 10px;
+                        justify-content: center;
+                        align-items: center;
+                    }
+
+                    .close-merge{
+                        .close-merge-icon{
+                            color: #ff4d4f;
+                            font-size: 18px;
+                        }
+                        display: flex;
+                        gap: 10px;
+                        justify-content: center;
+                        align-items: center;
+                    }
+
                     .branch-tables-download{
                         padding: 8px 6px;
                     }

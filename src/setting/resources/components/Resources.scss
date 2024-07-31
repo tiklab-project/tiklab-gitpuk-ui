@@ -1,4 +1,11 @@
 .resources{
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    padding: 20px 30px;
+    .ant-col{
+        min-width: 500px;
+    }
     .resources-data{
         padding-top: 10px;
         .resources-data-item{
@@ -19,6 +26,9 @@
                 color: var(--thoughtware-blue);
                 cursor: pointer;
             }
+        }
+        .min-width{
+            min-width: 576px;
         }
     }
 }

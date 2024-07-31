@@ -26,7 +26,7 @@ export class ScanPlayStore  {
         const param=new FormData()
         param.append("id",id)
         const res = await Axios.post("/scanPlay/findScanPlay",param)
-        
+
         if (res.code===0){
             this.scanPlay=res.data
         }
@@ -51,7 +51,10 @@ export class ScanPlayStore  {
     @action
     updateScanPlay=async (param)=>{
         const res = await Axios.post("/scanPlay/updateScanPlay",param)
-        this.refresh=!this.refresh
+        if (res.code===0){
+            message.info("更新成功",1)
+            this.refresh=!this.refresh
+        }
         return res
     }
 

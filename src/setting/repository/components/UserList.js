@@ -7,7 +7,7 @@
  */
 import React, {useState,useEffect} from "react";
 import BreadcrumbContent from "../../../common/breadcrumb/Breadcrumb";
-import {Table} from "antd";
+import {Col, Table} from "antd";
 import EmptyText from "../../../common/emptyText/EmptyText";
 import Listicon from "../../../common/list/Listicon";
 import XcodeUserStore from "../store/XcodeUserStore";
@@ -29,8 +29,8 @@ const UserList = (props) => {
     const columns = [
         {
             title: '用户名',
-            dataIndex: 'userName',
-            key: 'userName',
+            dataIndex: 'nickName',
+            key: 'nickName',
             width:'40%',
             ellipsis:true,
             render:(text,record)=>{
@@ -45,23 +45,24 @@ const UserList = (props) => {
                             <div style={{paddingLeft:10}}>
                                 <div className='user-tag'>{ "管理员"}</div>
                             </div>
-
                         }
                     </div>
                 )
             }
         },
         {
-            title: '仓库',
+            title: '用户',
+            dataIndex: 'userName',
+            key: 'userName',
+            width:'40%',
+            ellipsis:true,
+        },
+        {
+            title: '仓库数',
             dataIndex: 'repositoryNum',
             key: 'repositoryNum',
             width:'20%',
             ellipsis:true,
-            render:(text,record)=>{
-                return(
-                    <div onClick={()=>goRpyList(record.userId)}>{text}</div>
-                )
-            }
         },
     ]
 
@@ -71,8 +72,13 @@ const UserList = (props) => {
     }
 
     return(
-        <div className='user-list'>
-            <div className='xcode-setting-with xcode'>
+        <div className='xcode gittok-width user-list'>
+            <Col sm={{ span: "24" }}
+                 md={{ span: "24" }}
+                 lg={{ span: "24" }}
+                 xl={{ span: "20", offset: "2" }}
+                 xxl={{ span: "18", offset: "3" }}
+            >
                 <BreadcrumbContent firstItem={'用户仓库'}/>
 
                 <div className='user-list-table'>
@@ -85,7 +91,8 @@ const UserList = (props) => {
                         locale={{emptyText: <EmptyText title={'暂无推送的仓库'}/>}}
                     />
                 </div>
-            </div>
+            </Col>
+
         </div>
     )
 }

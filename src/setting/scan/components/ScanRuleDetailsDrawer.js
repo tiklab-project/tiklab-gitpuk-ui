@@ -1,5 +1,5 @@
 /**
- * @name: ScanRuleDetailsDrawer
+ * @name: ScanRuleListDrawer
  * @author: limingliang
  * @date: 2023-11-08 14:30
  * @description：扫描规则右侧弹窗

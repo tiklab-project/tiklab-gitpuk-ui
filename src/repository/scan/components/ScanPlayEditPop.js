@@ -18,9 +18,9 @@ const ScanPlayEditPop = (props) => {
 
     const [form] = Form.useForm()
     const {editVisible,setEditVisible,repositoryId,scanPlay,setScanPlay,editType,setLogVisible,setLogScanRecord,
-        setMultiState,setAddPlayId}=props
+        setMultiState}=props
     const {codeScanExec,findScanState}=codeScanStore
-    const {findScanPlayPage,createScanPlay,updateScanPlay,deleteScanPlay,refresh}=scanPlayStore
+    const {createScanPlay,updateScanPlay}=scanPlayStore
 
     const {findAllBranch,branchList} = branchStore
     const {findAllScanScheme,scanSchemeList} = scanSchemeStore
@@ -58,18 +58,17 @@ const ScanPlayEditPop = (props) => {
                 createScanPlay({playName:values.playName,repository:{rpyId:repositoryId},branch:branch,scanScheme:{id:scheme}}).then(res=>{
                     if (res.code===0){
                         cancel()
-                        setLogVisible(true)
-                        setAddPlayId(res.data)
-                        codeScanExec(res.data).then(scanCode=>{
+                        //setLogVisible(true)
+                      /*  codeScanExec(res.data).then(scanCode=>{
                             if (scanCode.code===0&&scanCode.data==='ok'){
                                 setMultiState(true)
                                 scanLibraryTime(res.data)
                             }
-                        })
+                        })*/
                     }
                 })
             }else {
-                updateScanPlay({...scanPlay,playName:values.playName}).then(res=>{
+                updateScanPlay({...scanPlay,playName:values.playName,branch:branch,scanScheme:{id:scheme}}).then(res=>{
                     res.code===0&&cancel()
                 })
             }
@@ -85,10 +84,12 @@ const ScanPlayEditPop = (props) => {
                     if (res.data.scanResult==='success'){
                         message.success('扫描成功',1)
                         clearInterval(timer)
+                        setMultiState(false)
                     }
                     if (res.data.scanResult==='fail'){
                         message.error('扫描失败',1)
                         clearInterval(timer)
+                        setMultiState(false)
                     }
                 }else {
                     clearInterval(timer)
@@ -113,7 +114,7 @@ const ScanPlayEditPop = (props) => {
     const modalFooter = (
         <>
             <Btn onClick={cancel} title={'取消'} isMar={true}/>
-            <Btn onClick={onOk} title={editType==='add'?'新建并执行':'修改'} type={'primary'}/>
+            <Btn onClick={onOk} title={editType==='add'?'保存':'修改'} type={'primary'}/>
         </>
     )
 
@@ -125,7 +126,7 @@ const ScanPlayEditPop = (props) => {
             footer={modalFooter}
             destroyOnClose={true}
             width={500}
-            title={editType==='add'?"添加计划":'修改计划'}
+            title={editType==='add'?"添加扫描计划":'修改扫描计划'}
         >
             <Form form={form}
                   layout='vertical'
@@ -133,7 +134,7 @@ const ScanPlayEditPop = (props) => {
                 <Form.Item
                     label={'计划名称'}
                     name={'playName'}
-                    rules={[{required:true,message:'计划名称不能为空'}]}
+                    rules={[{required:true,message:'扫描计划名称不能为空'}]}
                 >
                     <Input  placeholder={"计划名称"}/>
                 </Form.Item>
@@ -169,6 +170,8 @@ const ScanPlayEditPop = (props) => {
                         }
                     </Select>
                 </Form.Item>
+
+
             </Form>
         </Modals>
     )

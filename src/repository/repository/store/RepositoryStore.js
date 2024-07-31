@@ -38,6 +38,14 @@ export class RepositoryStore {
     @observable
     repositoryPath=''
 
+    //导航等级
+    @observable navLevel=1
+
+    @action
+    setNavLevel = value =>{
+        this.navLevel = value
+    }
+
     /**
      * 设置仓库信息
      * @param value
@@ -66,8 +74,7 @@ export class RepositoryStore {
         this.isLoading = true
         return new Promise(((resolve, reject) => {
             Axios.post('/rpy/createRpy',{
-                ...values,
-                user:{id:getUser().userId}
+                ...values
             }).then(res=>{
                 if(res.code===0){
                     message.info('创建成功',1)
@@ -105,6 +112,20 @@ export class RepositoryStore {
     }
 
     /**
+     * 重置仓库
+     * @param value
+     * @returns {Promise<unknown>}
+     */
+    @action
+    resetRepository=async  value=>{
+        const param = new FormData()
+        param.append('rpyId',value)
+        const data = await Axios.post('/rpy/resetRepository',param)
+        return data;
+
+    }
+
+    /**
      * 根据仓库路径删除仓库
      * @param value
      * @returns {Promise<unknown>}
@@ -115,6 +136,7 @@ export class RepositoryStore {
         const param = new FormData()
         param.append('address',value)
         const data = await Axios.post('/rpy/deleteRpyByAddress',param)
+        this.isLoading = false
         return data;
 
     }
@@ -157,6 +179,7 @@ export class RepositoryStore {
         param.append('id',value)
         const data = await Axios.post('/rpy/findRepository',param)
         if(data.code===0){
+
             this.repositoryInfo = data.data && data.data
         }
         return data
@@ -311,7 +334,6 @@ export class RepositoryStore {
         const data = await Axios.post('/rpy/findRepositoryAuth',param)
         return data
     }
-
 
 }
 

@@ -12,6 +12,7 @@ import {CloseOutlined} from "@ant-design/icons";
 import "./ScanSchemeDrawer.scss"
 import Omit from "../../../common/omit/Omit";
 import Btn from "../../../common/btn/Btn";
+import EmptyText from "../../../common/emptyText/EmptyText";
 const ScanSchemeDrawer = (props) => {
     const {visible,setVisible,notSchemeRuleSet,scanScheme,createScanSchemeRuleSet}=props
 
@@ -72,24 +73,29 @@ const ScanSchemeDrawer = (props) => {
                     <div>选择规则包 </div>
                     <div className='scheme-drawer-dec'>(可多选) </div>
                 </div>
-                <div className='scheme-drawer-border-style'>
-                    {
-                        notSchemeRuleSet&&notSchemeRuleSet.length>0&&notSchemeRuleSet.map(item=>{
-                            return(
-                                <div className={`${choiceRuleSet.filter(value=>value===item.id).length>0?"choice-scheme-drawer-border":"scheme-drawer-border"}`} onClick={()=>choiceBorder(item)}>
-                                    <div className='data-title'>{item.ruleSetName}</div>
-                                    <Tooltip placement="top" title={item.describe} >
-                                        <div className='data-desc'>
-                                            <Omit value={item.describe} maxWidth={300}/>
+                {
+                    (notSchemeRuleSet&&notSchemeRuleSet.length>0)?
+                        <div className='scheme-drawer-border-style'>
+                            {
+                                notSchemeRuleSet.map(item=>{
+                                    return(
+                                        <div className={`${choiceRuleSet.filter(value=>value===item.id).length>0?"choice-scheme-drawer-border":"scheme-drawer-border"}`} onClick={()=>choiceBorder(item)}>
+                                            <div className='data-title'>{item.ruleSetName}</div>
+                                            <Tooltip placement="top" title={item.describe} >
+                                                <div className='data-desc'>
+                                                    <Omit value={item.describe} maxWidth={300}/>
+                                                </div>
+                                            </Tooltip>
                                         </div>
-                                    </Tooltip>
-                                </div>
-                            )
-                        })
-                    }
-                </div>
+                                    )
+                                })
+                            }
+                        </div>:
+                        <div style={{paddingTop:20}}>
+                            <EmptyText text={"选择需要合并的分支后，可查看两个分支之间的差异"}/>
+                        </div>
+                }
             </div>
-
         </Drawer>
     )
 }

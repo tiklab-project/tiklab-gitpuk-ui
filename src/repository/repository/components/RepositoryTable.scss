@@ -1,9 +1,20 @@
 .repository-tables{
+    padding-top: var(--thoughtware-padding);
     .repository-tables-name{
         display: flex;
         flex-direction: row;
         align-items: center;
         cursor: pointer;
+        .official-text-name{
+            cursor: pointer;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            width: 300px;
+            font-weight: var(--thoughtware-font-weight-bold);
+        }
+
+
     }
     .name-icon{
         margin-right: 5px;
@@ -11,6 +22,7 @@
     .name-text{
         flex: 1;
         .name-text-name{
+            flex: 1;
             font-weight: var(--thoughtware-font-weight-bold);
             &:hover{
                 text-decoration: underline;
@@ -36,6 +48,7 @@
             font-size: var(--thoughtware-font-13);
         }
     }
+
     .repository-tables-set{
         cursor: pointer;
         .actions-se{
@@ -45,13 +58,7 @@
             color: var(--thoughtware-blue);
         }
     }
-    .repository-tables-collect{
-        cursor: pointer;
-        .icon{
-            width: 19px !important;
-            height: 19px !important;
-        }
-    }
+
     .imgs{
         width: 24px;
         height: 24px;
@@ -70,5 +77,24 @@
         display: flex;
         gap: 6px;
         align-items:center;
+
     }
+
+    .table-nav{
+        display: flex;
+        gap: 13px;
+        align-items: center;
+        .repository-tables-collect{
+            cursor: pointer;
+            .tables-collect-icon{
+                font-weight: 1!important;
+                font-size: 17px;
+            }
+            .tables-collect-icon{
+
+            }
+        }
+    }
+
+
 }

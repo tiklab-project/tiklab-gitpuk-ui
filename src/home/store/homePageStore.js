@@ -43,6 +43,30 @@ class HomePageStore {
         return data
     }
 
+    /**
+     *成员id, 项目id
+     * @param {待办} value
+     * @returns
+     */
+    @action
+    findTodoPage = async (currentPage,status) => {
+        const param={
+            pageParam: {
+                pageSize: 10,
+                currentPage: currentPage
+            },
+            orderParams: [{
+                name: "createtime",
+                orderType: "desc"
+            }],
+            bgroup: "gittok",
+            assignUserId:getUser().userId,
+            status:status
+        }
+        const data = await Axios.post("/todo/findtodopage", param);
+        debugger
+        return data;
+    }
 
 }
 

@@ -44,7 +44,7 @@
       width: 50px;
       font-size: 24px;
       .category-action-more {
-        width: 60px;
+        width: 80px;
         display: flex;
         justify-content: space-around;
       }
@@ -79,6 +79,8 @@
       margin: 10px 0;
       color: #94979a;
     }
+
+
     .tab-style{
       display: flex;
       gap: 18px;
@@ -94,6 +96,13 @@
         margin-top: 10px;
       }
     }
+
+    .tab-data-style{
+      align-items: end;
+      display: flex;
+      justify-content: space-between;
+    }
+
     .tab-data{
       margin-top: 13px;
     }

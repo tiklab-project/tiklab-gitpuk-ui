@@ -1,4 +1,8 @@
 .houseReDel{
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    padding: 20px 30px;
     .houseReDel-up{
         padding-bottom: var(--thoughtware-padding-item);
     }
@@ -54,21 +58,29 @@
             display: none;
         }
     }
-    .repository-path{
-        display: flex;
-        .path-tips{
-            flex: 1;
-            .ant-form-item-label,.ant-form-item-explain{
-                margin-left: -335px;
-            }
-        }
-    }
-    .test{
-
-      width: auto;
 
 
-    }
 }
 
 
+.repository-add-path{
+    display: flex;
+    .path-tips{
+        flex: 1;
+        .ant-form-item-label{
+            margin-left: -506px;
+        }
+    }
+}
+.rpy-add .ant-form-item-label > label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::after {
+    display: none!important;
+}
+.must:after{
+    display: inline-block;
+    margin-right: 4px;
+    color: #ff4d4f;
+    font-size: 14px;
+    font-family: SimSun, sans-serif;
+    line-height: 1;
+    content: "*";
+}

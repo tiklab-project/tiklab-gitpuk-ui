@@ -7,7 +7,7 @@
  */
 import React,{useState,useEffect} from 'react';
 import {inject,observer} from 'mobx-react';
-import {Input,Select,Tooltip} from 'antd';
+import {Col, Input, Select, Tooltip} from 'antd';
 import {CopyOutlined,FolderOpenOutlined,SearchOutlined} from '@ant-design/icons';
 import {copy} from "../../../common/client/Client";
 import BreadcrumbContent from "../../../common/breadcrumb/Breadcrumb";
@@ -17,17 +17,21 @@ import {commitU4,setBranch,findCommitId} from '../../file/components/Common';
 import BranchSelect from '../../file/components/BranchSelect';
 import './Commits.scss';
 import commitsStore from "../store/CommitsStore"
+import fileStore from "../../file/store/FileStore";
+import branchStore from "../../branch/store/BranchStore";
 const Commits = props =>{
 
     const {repositoryStore,match,location} = props
     const webUrl = `${match.params.namespace}/${match.params.name}`
     const {repositoryInfo} = repositoryStore
     const {findBranchCommit,commitsList,setCommitsList,findDmUserList,userList,setCommitsQueryData,queryData} = commitsStore
+    const {findAllBranch,branchList} = branchStore
 
     const urlInfo = match.params.branch
     const branch = setBranch(urlInfo,repositoryInfo)
 
-    // 初始化加载状态
+
+    // 初始化加载状态findDmUserList
     const [isLoading,setIsLoading] = useState(true)
 
     // 没有更多提交信息
@@ -37,24 +41,30 @@ const Commits = props =>{
     const [findNumber,setFindNumber] = useState(false)
 
     const [commitName,setCommitName]=useState('')  //提交名称
-    const [commitUser,setCommitUser]=useState('all')  //选择的提交用户
+    const [commitUser,setCommitUser]=useState()  //选择的提交用户
+
+    const [branchData,setBranchData]=useState(null)  //分支数据
 
     useEffect(()=>{
         if(repositoryInfo.name){
+            findCommitsList({commitInfo:queryData.commitName})
             if (queryData){
                 setCommitName(queryData.commitName)
                 setCommitUser(queryData.commitUser)
-                findCommitsList({commitInfo:queryData.commitName})
+
             }else {
                 setCommitName('')
                 // 获取提交信息
                 findCommitsList()
             }
             //查询用户信息
-            findDmUserList({domainId:repositoryInfo.rpyId})
+            ({domainId:repositoryInfo.rpyId})
+
+            findAllBranch(repositoryInfo.rpyId)
         }
         return ()=>setCommitsList()
     },[repositoryInfo.name,location.pathname])
+
 
 
     /**
@@ -76,7 +86,11 @@ const Commits = props =>{
 
     //输入搜索的提交信息
     const onChangeSearch =async (e) => {
-        setCommitName(e.target.value)
+        const value=e.target.value
+        setCommitName(value)
+        if (value===''){
+            findCommitsList({})
+        }
     }
     //输入搜索
     const onSearch =async () => {
@@ -116,7 +130,6 @@ const Commits = props =>{
         }else {
             findCommitsList({commitUser:value})
         }
-
     }
 
     /**
@@ -193,61 +206,67 @@ const Commits = props =>{
     }
 
     return (
-        <div className='commits' id='xcode-commits' onScroll={handleScroll}>
-            <div className='commits-content xcode-repository-width'>
-                <BreadcrumbContent firstItem={'Commits'}/>
-                <div className='commits-head'>
-                    <div className='commits-head-left'>
-                        <BranchSelect
-                            {...props}
-                            repositoryInfo={repositoryInfo}
-                            type={'commit'}
-                        />
-                    </div>
-                    <div className='commits-head-right'>
-                        <div className='commits-user'>
-                            <Select  value={commitUser} onChange={value=>changCommitsUser(value)} style={{minWidth:100}}>
+        <div className='gittok-width commits drop-down' id='xcode-commits' onScroll={handleScroll}>
+            <Col sm={{ span: "24" }}
+                 md={{ span: "24" }}
+                 lg={{ span: "24" }}
+                 xl={{ span: "20", offset: "2" }}
+                 xxl={{ span: "18", offset: "3" }}
+            >
+                <div className='commits-content'>
+                    <BreadcrumbContent firstItem={'Commits'}/>
+                    <div className='commits-filter'>
+                        <div className='commits-filter-left'>
+                            <BranchSelect
+                                {...props}
+                                repositoryInfo={repositoryInfo}
+                                type={'commit'}
+                                setData={setBranchData}
+                            />
+                        </div>
+                        <div className='commits-filter-right'>
+
+                            <Input
+                                allowClear
+                                placeholder='搜索提交信息'
+                                value={commitName}
+                                onChange={onChangeSearch}
+                                onPressEnter={onSearch}
+                                prefix={<SearchOutlined className='input-icon'/>}
+                                style={{ width: 200 }}
+                            />
+                            <Select  value={commitUser} onChange={value=>changCommitsUser(value)} style={{minWidth:150}} placeholder='用户'>
                                 <Select.Option value={"all"}>{"所有"}</Select.Option>
                                 {
                                     userList.map(item=>{
                                         return(
-                                            <Select.Option value={item.user.name}>{item.user.name}</Select.Option>
+                                            <Select.Option key={item.id} value={item.user.name}>{item.user.name}</Select.Option>
                                         )
                                     })
                                 }
-
-                                {/* <Select.Option value={'root'}>root</Select.Option>*/}
                             </Select>
                         </div>
-                        <div className='commits-input'>
-                            <Input
-                                allowClear
-                                placeholder='提交信息'
-                                value={commitName}
-                                onChange={onChangeSearch}
-                                onPressEnter={onSearch}
-                                prefix={<SearchOutlined />}
-                                style={{ width: 200 }}
-                            />
-                        </div>
+                    </div>
+                    <div className='commits-msg'>
+                        {
+                            isLoading ? <SpinLoading type='table'/> :
+                                commitsList && commitsList.length > 0 ?
+                                    commitsList.map((group,groupIndex)=>renderCommitsData(group,groupIndex))
+                                    :
+                                    <div style={{paddingTop:50}}>
+                                        <EmptyText title={"暂无提交信息"}/>
+                                    </div>
+
+                        }
+                        {
+                            findNumber && <SpinLoading type='table' size='large'/>
+                        }
+                        {
+                            !hasData && <div style={{textAlign:'center',paddingTop:30,color:'#999'}}>没有更多了</div>
+                        }
                     </div>
                 </div>
-                <div className='commits-msg'>
-                    {
-                        isLoading ? <SpinLoading type='table'/> :
-                            commitsList && commitsList.length > 0 ?
-                                commitsList.map((group,groupIndex)=>renderCommitsData(group,groupIndex))
-                                :
-                                <EmptyText title={'暂无提交信息'}/>
-                    }
-                    {
-                        findNumber && <SpinLoading type='table' size='large'/>
-                    }
-                    {
-                        !hasData && <div style={{textAlign:'center',paddingTop:30,color:'#999'}}>没有更多了</div>
-                    }
-                </div>
-            </div>
+            </Col>
         </div>
 
     )

@@ -1,14 +1,14 @@
 import React,{useState,useEffect} from 'react';
 import {PlusOutlined,SearchOutlined} from '@ant-design/icons';
 import {inject,observer} from 'mobx-react';
-import {Dropdown, Input} from 'antd';
+import {Col, Dropdown, Input} from 'antd';
 import BreadcrumbContent from '../../../common/breadcrumb/Breadcrumb';
 import Btn from '../../../common/btn/Btn';
 import Tabs from '../../../common/tabs/Tabs';
 import RepositoryTable from "./RepositoryTable";
 import './Repository.scss';
 import {getUser} from "thoughtware-core-ui";
-
+import {PrivilegeButton} from 'thoughtware-privilege-ui';
 const Repository = props => {
 
     const {repositoryStore} = props
@@ -24,6 +24,7 @@ const Repository = props => {
 
     const [currentPage,setCurrentPage]=useState(1)
     const [totalPage,setTotalPage]=useState()
+    const [totalRecord,setTotalRecord]=useState()
     const [pageSize]=useState(15)
 
     const [isLoading,setIsLoading]=useState(false)
@@ -34,22 +35,23 @@ const Repository = props => {
        await findRpyPage(1,repositoryType)
     },[])
 
+    //分页查询仓库列表
     const findRpyPage =async (currentPage,repositoryType,sort) => {
          setIsLoading(true)
        findRepositoryPage({ pageParam:{currentPage:currentPage,pageSize:pageSize},
                userId:getUser().userId,
-               name:repositoryName,
+               name: repositoryName,
                findType:repositoryType,
                sort:sort
            }).then(res=>{
+           setIsLoading(false)
                if (res.code===0){
-                   setIsLoading(false)
                    setRepositoryList(res.data?.dataList)
                    setTotalPage(res.data.totalPage)
                    setCurrentPage(res.data.currentPage)
+                   setTotalRecord(res.data.totalRecord)
                }
        })
-
     }
 
     /**
@@ -69,6 +71,24 @@ const Repository = props => {
     const onChangeSearch = (e) => {
         const value=e.target.value
          setRepositoryName(value)
+        if (value===''){
+            setCurrentPage(1)
+            setIsLoading(true)
+            findRepositoryPage({
+                pageParam: {currentPage: 1, pageSize: pageSize},
+                userId: getUser().userId,
+                findType: repositoryType,
+                sort: sort
+            }).then(res=>{
+                setIsLoading(false)
+                if (res.code===0){
+                    setRepositoryList(res.data?.dataList)
+
+                    setTotalPage(res.data.totalPage)
+                    setCurrentPage(res.data.currentPage)
+                    setTotalRecord(res.data.totalRecord)
+                }})
+        }
     }
 
     /**
@@ -76,7 +96,6 @@ const Repository = props => {
      * @returns {Promise<void>}
      */
     const onSearch =async () => {
-
         await findRpyPage(1,repositoryType,sort)
     }
 
@@ -88,8 +107,18 @@ const Repository = props => {
         await findRpyPage(value,repositoryType,sort)
     }
 
-    const onChange = (pagination, filters, sorter, extra) => {
+    //刷新查询
+    const refreshFind = () => {
+        findRpyPage(currentPage,repositoryType,sort)
+    }
 
+
+    const getRpyData = () => {
+        findRpyPage(currentPage,repositoryType,sort)
+    }
+
+    //排序
+    const onChange = (pagination, filters, sorter, extra) => {
         //降序
         if (sorter.order==='descend'){
             setSort("desc")
@@ -126,52 +155,62 @@ const Repository = props => {
     ]
 
     return(
-        <div className='repository'>
-            <div className=' xcode-repository-width xcode'>
+        <div className='repository gittok-width xcode'>
+            <Col sm={{ span: "24" }}
+                md={{ span: "24" }}
+                lg={{ span: "24" }}
+                xl={{ span: "20", offset: "2" }}
+                xxl={{ span: "18", offset: "3" }}
+            >
                 <div className='repository-top'>
                     <BreadcrumbContent firstItem={'Repository'}/>
-                    <Dropdown  menu={{items}} >
-                        <div className='add-button' >
+
+                    <PrivilegeButton  code={"gittok_rpy_add"} key={'gittok_rpy_add'} >
+                        <Dropdown  menu={{items}}  trigger={['click']} getPopupContainer={e => e.parentElement}>
                             <Btn
                                 type={'primary'}
                                 title={'创建仓库'}
-                               /* icon={<PlusOutlined/>}*/
+                                /* icon={<PlusOutlined/>}*/
                             />
-                        </div>
-                    </Dropdown>
+                        </Dropdown>
+                    </PrivilegeButton>
                 </div>
-                <div className='repository-type'>
+                <div className='repository-filter'>
                     <Tabs
                         type={repositoryType}
                         tabLis={[
                             {id:"viewable", title:'所有仓库'},
                             {id:"oneself", title:'我的仓库'},
-                         /*   {id:3, title:'我收藏的'}*/
+                            {id:"collect", title:'我的收藏'}
                         ]}
                         onClick={clickType}
                     />
-                    <div className='repository-type-input'>
-                        <Input
-                            allowClear
-                            placeholder='仓库名称'
-                            onChange={onChangeSearch}
-                            onPressEnter={onSearch}
-                            prefix={<SearchOutlined />}
-                            style={{ width: 200 }}
-                        />
-                    </div>
+                    <Input
+                        allowClear
+                        placeholder='搜索仓库名称'
+                        onChange={onChangeSearch}
+                        onPressEnter={onSearch}
+                        prefix={<SearchOutlined className='input-icon'/>}
+                        style={{ width: 200 }}
+                    />
                 </div>
                 <RepositoryTable
                     {...props}
                     isLoading={isLoading}
                     repositoryList={repositoryList}
+                    getRpyData={getRpyData}
                     createOpenRecord={createOpenRecord}
                     changPage={changPage}
                     totalPage={totalPage}
                     currentPage={currentPage}
+                    totalRecord={totalRecord}
+                    tab={repositoryType}
                     onChange={onChange}
+                    type={"repository"}
+                    refreshFind={refreshFind}
                 />
-            </div>
+            </Col>
+
         </div>
     )
 }

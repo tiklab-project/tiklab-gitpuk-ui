@@ -5,7 +5,7 @@ import {
     LockOutlined,
     SearchOutlined, UnlockOutlined
 } from '@ant-design/icons';
-import {Table, Tooltip, Space, Input} from 'antd';
+import {Table, Tooltip, Space, Input, Col} from 'antd';
 import BreadcrumbContent from '../../../common/breadcrumb/Breadcrumb';
 import Btn from '../../../common/btn/Btn';
 import Tabs from '../../../common/tabs/Tabs';
@@ -18,7 +18,7 @@ import {getUser} from "thoughtware-core-ui";
 import {SpinLoading} from "../../../common/loading/Loading";
 import Page from "../../../common/page/Page";
 import UserIcon from "../../../common/list/UserIcon";
-
+import {PrivilegeButton} from 'thoughtware-privilege-ui';
 const RepositoryGroup = props => {
 
     const {findRepositoryGroupPage} = groupStore
@@ -30,6 +30,7 @@ const RepositoryGroup = props => {
 
     const [currentPage,setCurrentPage]=useState(1)
     const [totalPage,setTotalPage]=useState()
+    const [totalRecord,setTotalRecord]=useState()
 
     //查询仓库的名称
     const [groupName,setGroupName]=useState()
@@ -41,24 +42,25 @@ const RepositoryGroup = props => {
         await findGroupPage(1,groupType)
     },[])
 
-    const findGroupPage =async (currentPage,repositoryType) => {
+    const findGroupPage =async (currentPage,repositoryType,name) => {
         const param={
             pageParam:{
                 currentPage:currentPage,
                 pageSize:10
             },
             userId:getUser().userId,
-            name:groupName,
+            name:name,
             findType:repositoryType
         }
-
         setIsLoading(true)
         const res=await findRepositoryGroupPage(param)
         setIsLoading(false)
         if (res.code===0){
             setGroupList(res.data?.dataList)
+
             setTotalPage(res.data.totalPage)
             setCurrentPage(res.data.currentPage)
+            setTotalRecord(res.data.totalRecord)
         }
     }
 
@@ -89,13 +91,27 @@ const RepositoryGroup = props => {
     const onChangeSearch = (e) => {
         const value=e.target.value
         setGroupName(value)
+        if (value===''){
+            findGroupPage(1,groupType)
+        }
+    }
+
+    const onSearch = () => {
+        findGroupPage(1,groupType,groupName)
     }
 
     /**
      * 分页
      */
     const changPage =async (value) => {
-        await findGroupPage(value,groupType)
+        setCurrentPage(value)
+        await findGroupPage(value,groupType,groupName)
+    }
+
+
+    //刷新查询
+    const refreshFind = () => {
+        findGroupPage(currentPage,groupType,groupName)
     }
 
     const columns = [
@@ -158,14 +174,6 @@ const RepositoryGroup = props => {
             width:'15%0%',
             ellipsis:true,
         },
-  /*      {
-            title: '更新',
-            dataIndex: 'update',
-            key: 'update',
-            width:'30%',
-            ellipsis:true,
-            render:text => text?text:'暂无更新'
-        },*/
         {
             title: '操作',
             dataIndex: 'action',
@@ -180,20 +188,6 @@ const RepositoryGroup = props => {
                                 <SettingOutlined className='actions-se'/>
                             </span>
                         </Tooltip>
-                       {/* <Tooltip title='收藏'>
-                            <span className='repository-group-tables-collect'>
-                            {
-                                record.collect === 1 ?
-                                    <svg className='icon' aria-hidden='true'>
-                                        <use xlinkHref={`#icon-xingxing1`} />
-                                    </svg>
-                                    :
-                                    <svg className='icon' aria-hidden='true'>
-                                        <use xlinkHref={`#icon-xingxing-kong`} />
-                                    </svg>
-                            }
-                            </span>
-                        </Tooltip>*/}
                     </Space>
                 )
             }
@@ -201,51 +195,65 @@ const RepositoryGroup = props => {
     ]
 
     return(
-        <div className='repository-group'>
-            <div className='repository-group-content xcode-repository-width xcode'>
-                <div className='repository-group-top'>
-                    <BreadcrumbContent firstItem={'Repository_group'}/>
-                    <Btn
-                        type={'primary'}
-                        title={'新建仓库组'}
-                       /* icon={<PlusOutlined/>}*/
-                        onClick={()=>props.history.push('/group/new')}
-                    />
-                </div>
-                <div className='repository-group-type'>
-                    <Tabs
-                        type={groupType}
-                        tabLis={[
-                            {id:"viewable", title:'所有仓库组'},
-                            {id:"oneself", title:'我的仓库组'},
-                            /*   {id:3, title:'我收藏的'}*/
-                        ]}
-                        onClick={clickType}
-                    />
-                    <div className='repository-group-type-input'>
-                        <Input
-                            allowClear
-                            placeholder='仓库组名称'
-                             onChange={onChangeSearch}
-                            prefix={<SearchOutlined />}
-                            style={{ width: 200 }}
+        <div className='xcode gittok-width repository-group'>
+            <Col sm={{ span: "24" }}
+                 md={{ span: "24" }}
+                 lg={{ span: "24" }}
+                 xl={{ span: "20", offset: "2" }}
+                 xxl={{ span: "18", offset: "3" }}
+            >
+                <div className='repository-group-content  '>
+                    <div className='repository-group-top'>
+                        <BreadcrumbContent firstItem={'Repository_group'}/>
+                        <PrivilegeButton  code={"gittok_rpy_group_add"} key={'gittok_rpy_group_add'} >
+                            <Btn
+                                type={'primary'}
+                                title={'新建仓库组'}
+                                /* icon={<PlusOutlined/>}*/
+                                onClick={()=>props.history.push('/group/new')}
+                            />
+                        </PrivilegeButton>
+                    </div>
+                    <div className='repository-group-type'>
+                        <Tabs
+                            type={groupType}
+                            tabLis={[
+                                {id:"viewable", title:'所有仓库组'},
+                                {id:"oneself", title:'我的仓库组'},
+                            ]}
+                            onClick={clickType}
+                        />
+                        <div className='repository-group-type-input'>
+                            <Input
+                                allowClear
+                                placeholder='搜索仓库组名称'
+                                onChange={onChangeSearch}
+                                onPressEnter={onSearch}
+                                prefix={<SearchOutlined />}
+                                style={{ width: 200 }}
+                            />
+                        </div>
+                    </div>
+                    <div className='repository-group-tables'>
+                        <Table
+                            bordered={false}
+                            columns={columns}
+                            isLoading={isLoading}
+                            dataSource={groupList}
+                            rowKey={record=>record.groupId}
+                            pagination={false}
+                            locale={{emptyText: isLoading ?
+                                    <SpinLoading type="table"/>:  <EmptyText title={"暂无仓库组数据"}/>}}
+                        />
+                        <Page pageCurrent={currentPage}
+                              changPage={changPage}
+                              totalPage={totalPage}
+                              totalRecord={totalRecord}
+                              refresh={refreshFind}
                         />
                     </div>
                 </div>
-                <div className='repository-group-tables'>
-                    <Table
-                        bordered={false}
-                        columns={columns}
-                        isLoading={isLoading}
-                        dataSource={groupList}
-                        rowKey={record=>record.groupId}
-                        pagination={false}
-                        locale={{emptyText: isLoading ?
-                                <SpinLoading type="table"/>: <EmptyText title={"没有仓库"}/>}}
-                    />
-                    <Page pageCurrent={currentPage} changPage={changPage} totalPage={totalPage}/>
-                </div>
-            </div>
+            </Col>
         </div>
     )
 }

@@ -11,10 +11,10 @@ import "./ScanRecord.scss"
 import BreadcrumbContent from "../../../common/breadcrumb/Breadcrumb";
 import Btn from "../../../common/btn/Btn";
 import ScanPlayStore from "../store/ScanPlayStore";
-import {observer} from "mobx-react";
+import {inject, observer} from "mobx-react";
 import ScanSurvey from "./ScanSurvey";
 import scanRecordStore from "../store/ScanRecordStore"
-import {Table, message, Empty, Tooltip, Popconfirm} from "antd";
+import {Table, message, Empty, Tooltip, Popconfirm, Col} from "antd";
 import codeScanStore from "../store/CodeScanStore";
 import success from "../../../assets/images/img/success.png";
 import fail from "../../../assets/images/img/fail.png";
@@ -24,12 +24,14 @@ import ScanLogDrawer from "./ScanLogDrawer";
 import UserIcon from "../../../common/list/UserIcon";
 import ScanSetting from "./ScanSetting";
 import DeleteExec from "../../../common/delete/DeleteExec";
+import {PrivilegeProjectButton} from 'thoughtware-privilege-ui';
 const ScanRecord= (props) => {
-    const {match:{params}} = props;
+    const {repositoryStore,match:{params}} = props;
     const {findScanPlay,scanPlay}=ScanPlayStore
     const {findScanRecordPage,deleteScanRecord,refresh}=scanRecordStore
     const {codeScanExec,findScanState}=codeScanStore
     const {findScanSchemeSonarList}=ScanSchemeStore
+    const {repositoryInfo} = repositoryStore
 
     const [scanRecordList,setScanRecordList]=useState([])
     const [tableType,setTableType]=useState('history')
@@ -50,7 +52,7 @@ const ScanRecord= (props) => {
 
 
     useEffect(async () => {
-        await findScanPlay(params.playId)
+         findScanPlay(params.playId)
         findScanRecord(currentPage)
     }, [exeState,refresh]);
     const recordColumns =[
@@ -58,7 +60,7 @@ const ScanRecord= (props) => {
             title: '报告编号',
             dataIndex: 'scanObject',
             key:"name",
-            width:'20%',
+            width:'15%',
             render: (text,record) =>{
                 return(
                     <div className='text-color' onClick={()=>goScanResult(record)}>{text?.substring(0,8)}</div>
@@ -94,7 +96,7 @@ const ScanRecord= (props) => {
             title: '触发信息',
             dataIndex: 'scanWay',
             key:"scanWay",
-            width:'20%',
+            width:'25%',
             render:(text,record)=>{
                 return(
                     <div style={{display:"flex" ,alignItems:"center"}}>
@@ -129,7 +131,9 @@ const ScanRecord= (props) => {
                         <Tooltip title='日志'>
                             <FileTextOutlined style={{cursor:"pointer",fontSize:15}} onClick={()=>openLog(record)}/>
                         </Tooltip>
-                        <DeleteExec value={record} deleteData={deleteScanRecord} title={"确认删除"}/>
+                        <PrivilegeProjectButton code={"rpy_scan_manage"} domainId={repositoryInfo && repositoryInfo.rpyId}>
+                            <DeleteExec value={record} deleteData={deleteScanRecord} title={"确认删除"}/>
+                         </PrivilegeProjectButton>
                     </div>
                 )
             }
@@ -230,91 +234,69 @@ const ScanRecord= (props) => {
     }
 
     return(
-        <div className='scanRecord xcode-repository-width  xcode'>
-            <div className='scanRecord-top'>
-                <BreadcrumbContent firstItem={scanPlay?.playName} goBack={goBack}/>
-            </div>
-            <div className='scan-play-style'>
-                {
-                    scanPlay&&
-                    <div className='scan-play-desc'>
-                        <div>分支：{`${scanPlay.repository?.name} / ${scanPlay.branch}`}</div>
-                        <div>扫描方式: {scanPlay.scanScheme.scanWay==='sonar'?"sonar扫描":"规则包扫描"}</div>
-                        <div>最近扫描：{`${scanPlay.userName} 扫描于${scanPlay.latScanTime}`}</div>
+        <div className='xcode  gittok-width   scanRecord'>
+            <Col sm={{ span: "24" }}
+                 md={{ span: "24" }}
+                 lg={{ span: "24" }}
+                 xl={{ span: "20", offset: "2" }}
+                 xxl={{ span: "18", offset: "3" }}
+            >
+                <div className='scanRecord-top'>
+                    <BreadcrumbContent firstItem={scanPlay?.playName} goBack={goBack}/>
+                </div>
+                <div className='scan-play-style'>
+                    {
+                        scanPlay&&
+                        <div className='scan-play-desc'>
+                            <div>分支：{`${scanPlay.repository?.name} / ${scanPlay.branch}`}</div>
+                            <div>扫描方式: {scanPlay.scanScheme.scanWay==='sonar'?"sonar扫描":"规则包扫描"}</div>
+                            <div>最近扫描：{`${scanPlay.userName} 扫描于${scanPlay.latScanTime}`}</div>
+                        </div>
+                    }
+                    <PrivilegeProjectButton code={"rpy_scan_manage"} domainId={repositoryInfo && repositoryInfo.rpyId}>
+                        <div className='scan-but-style'>
+                            {
+                                multiState?
+                                    <Btn   type={'primary'} title={'加载中'} />:
+                                    <Btn   type={'primary'} title={'扫描'} onClick={excMultiScan}/>
+                            }
+                        </div>
+                    </PrivilegeProjectButton>
+
+                </div>
+
+                <div className='scan-data-style'>
+                    <div className='scan-tab-style'>
+                        <div className={`${tableType==='history'&&' choose-scanRecord-type'}`} onClick={()=>cuteTab("history")}>扫描报告</div>
+                        <div className={`${tableType==='setting'&&' choose-scanRecord-type'}`} onClick={()=>cuteTab("setting")}>触发设置</div>
                     </div>
-                }
-                <div className='scan-but-style'>
+
                     {
-                        multiState?
-                            <Btn   type={'primary'} title={'加载中'} />:
-                            <Btn   type={'primary'} title={'扫描'} onClick={excMultiScan}/>
+                        tableType === 'history' &&
+                        <Fragment>
+                            <div className='scan-tab-desc'>
+                                <div className='scan-tab-desc-num'>报告数：{totalRecord}</div>
+                                <Btn  type={'disabled'} title={'导出'}/>
+                            </div>
+                            <div  className='tab-top'>
+                                <Table
+                                    columns={recordColumns}
+                                    dataSource={scanRecordList}
+                                    rowKey={record=>record.id}
+                                    pagination={false}
+                                />
+                            </div>
+                        </Fragment>||
+                        tableType === 'setting' &&
+                        <ScanSetting scanPlayId={params.playId} rpyId={repositoryInfo.rpyId}/>
                     }
                 </div>
-            </div>
+            </Col>
 
 
-            <div className='scan-data-style'>
-                <div className='scan-tab-style'>
-                    <div className={`${tableType==='history'&&' choose-scanRecord-type'}`} onClick={()=>cuteTab("history")}>扫描报告</div>
-                    <div className={`${tableType==='setting'&&' choose-scanRecord-type'}`} onClick={()=>cuteTab("setting")}>触发设置</div>
-                </div>
-
-                {
-                    tableType === 'history' &&
-                    <Fragment>
-                        <div className='scan-tab-desc'>
-                            <div className='scan-tab-desc-num'>报告数：{totalRecord}</div>
-                            <Btn  type={'disabled'} title={'导出'}/>
-                        </div>
-                        <div  className='tab-top'>
-                            <Table
-                                columns={recordColumns}
-                                dataSource={scanRecordList}
-                                rowKey={record=>record.id}
-                                pagination={false}
-
-                            />
-                        </div>
-                    </Fragment>||
-                    tableType === 'setting' &&
-                    <ScanSetting scanPlayId={params.playId}/>
-                }
-
-
-                {/*  <div className='scan-tab-style'>
-                    <div className={`${tableType==='survey'&&' choose-scanRecord-type'}`} onClick={()=>cuteTab("survey")}>问题概览</div>
-
-                    <div className={`${tableType==='trouble'&&' choose-scanRecord-type'}`} onClick={()=>cuteTab("trouble")}>问题列表</div>
-
-                    <div className={`${tableType==='history'&&' choose-scanRecord-type'}`} onClick={()=>cuteTab("history")}>扫描报告</div>
-                </div>
-                <div className='scan-data-desc'>
-                    {
-                        tableType==='survey' &&
-                        <ScanSurvey scanRecord={scanRecord}/>||
-                        tableType==='trouble' && (
-                            scanRecordList.length>0?
-                                <ScanReqList scanPlay={scanPlay} scanRecord={scanRecord} />:
-                                <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
-                        )
-                        ||
-                        tableType==='history'&&
-                        <div>
-                            <Table
-                                columns={recordColumns}
-                                dataSource={scanRecordList}
-                                rowKey={record=>record.id}
-                                pagination={false}
-                                className='scan-tab-top'
-                            />
-                            <Page pageCurrent={currentPage} changPage={changPage} totalPage={totalPage}/>
-                        </div>
-                    }
-                </div>*/}
-            </div>
             <ScanLogDrawer visible={logVisible} setVisible={setLogVisible} scanRecord={logScanRecord}/>
         </div>
     )
 
 }
-export default observer(ScanRecord)
+export default inject('repositoryStore')(observer(ScanRecord))

@@ -21,24 +21,28 @@ const App = ({allStore,routes}) => {
     })
 
     useEffect(() => {
-        pluginLoader(routes,resources,i18n).then(res => {
+        pluginLoader(routes,resources,i18n,fetchMethod,{'titit':'title'}).then(res => {
             setPluginData(res)
             setVisible(false)
         })
+        return;
     }, [])
 
     if (visible) return <div>加载中</div>
 
     return (
-        <PluginProvider store={initPluginData}>
-            <Provider {...allStore}>
-                <ConfigProvider locale={zhCN}>
-                    <HashRouter >
-                        { renderRoutes(initPluginData.routes) }
-                    </HashRouter>
-                </ConfigProvider>
-            </Provider>
-        </PluginProvider>
+
+            <PluginProvider store={initPluginData} >
+                <Provider {...allStore}>
+                    <ConfigProvider locale={zhCN}>
+                        <HashRouter >
+                            { renderRoutes(initPluginData.routes) }
+                        </HashRouter>
+                    </ConfigProvider>
+                </Provider>
+            </PluginProvider>
+
+
     )
 }
 

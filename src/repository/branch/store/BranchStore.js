@@ -39,6 +39,7 @@ export class BranchStore{
         if(data.code===0){
             this.branchList = data.data && data.data
         }
+        return data
     }
 
 

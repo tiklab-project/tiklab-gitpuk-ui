@@ -11,6 +11,7 @@ const LoginContent = props => {
     return   <Login
                 {...props}
                 loginGoRouter="/"
+                bgroup={'hadess'}
                 /* vaildUserAuthRouter={"/no-auth"}*/
             />
 }

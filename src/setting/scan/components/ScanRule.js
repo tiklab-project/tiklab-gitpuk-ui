@@ -10,7 +10,7 @@ import React,{useState,useEffect} from 'react';
 import "./ScanRule.scss"
 import BreadcrumbContent from "../../../common/breadcrumb/Breadcrumb";
 import Btn from "../../../common/btn/Btn";
-import {Popconfirm, Table, Tooltip} from "antd";
+import {Col, Popconfirm, Table, Tooltip} from "antd";
 import EmptyText from "../../../common/emptyText/EmptyText";
 import {DeleteOutlined} from "@ant-design/icons";
 import {observer} from "mobx-react";
@@ -54,10 +54,10 @@ const ScanRule = (props) => {
             title: '描述',
             dataIndex: 'describe',
             key: 'describe',
-            width:'20%',
+            width:'40%',
             ellipsis:true,
         },
-        {
+     /*   {
             title:'操作',
             dataIndex: 'action',
             key: 'action',
@@ -77,7 +77,7 @@ const ScanRule = (props) => {
                     </Popconfirm>
                 </Tooltip>
             )
-        }
+        }*/
     ]
 
     const openRuleSetDetails = (value) => {
@@ -85,15 +85,20 @@ const ScanRule = (props) => {
     }
 
     return(
-        <div className='scanRule'>
-            <div className='xcode-setting-with xcode'>
+        <div className='xcode gittok-width scanRule'>
+            <Col sm={{ span: "24" }}
+                 md={{ span: "24" }}
+                 lg={{ span: "24" }}
+                 xl={{ span: "20", offset: "2" }}
+                 xxl={{ span: "18", offset: "3" }}
+            >
                 <div className='scanRule-up'>
-                    <BreadcrumbContent firstItem={"扫描规则"}/>
-                    <Btn
+                    <BreadcrumbContent firstItem={"扫描规则集"}/>
+                   {/* <Btn
                         type={'primary'}
                         title={'创建规则集'}
                         onClick={()=> setEditVisible(true)}
-                    />
+                    />*/}
                 </div>
                 <div className='scanRule-table'>
                     <Table
@@ -105,7 +110,8 @@ const ScanRule = (props) => {
                         locale={{emptyText: <EmptyText title={'暂无扫描规则集'}/>}}
                     />
                 </div>
-            </div>
+            </Col>
+
             <ScanRuleSetEditPop editVisible={editVisible} setEditVisible={setEditVisible} createScanRuleSet={createScanRuleSet}/>
         </div>
     )

@@ -66,22 +66,75 @@
     }
   }
 
-  .scanDetails-fail{
+  .scanDetails-result{
     display: flex;
     font-size: 14px;
     font-weight: bold;
     margin: 20px 0 0 15px ;
     .fail-result{
       color: red;
+      font-size: 25px;
+      font-weight: bold;
+      width: 35px;
+    }
+    .success-result{
+      color: #55a532;
+      font-size: 25px;
+      font-weight: bold;
+      width: 35px;
     }
   }
+  .scanDetails-result-desc{
+    margin: 10px 0 0 15px ;
+    color: #999999;
+    align-items: center;
+  }
   .fail-log-style{
-    margin: 20px 0 0 15px ;
+    margin: 10px 0 0 15px ;
     .fail-log{
       font-size: 14px;
       font-weight: bold;
     }
     .scan-log-bottom{
+      height: 200px;
+      display: flex;
+      flex-direction: row;
+      padding-top: 10px;
+      .scan-detail-log{
+        flex: 1;
+        overflow: auto;
+        border-radius: 4px;
+        padding: 10px;
+        background: #f6f6f6;
+        word-wrap: break-word;
+        white-space: pre-wrap;
+        .bottom-log{
+          color: #fff;
+          padding: 10px;
+          word-wrap: break-word;
+          white-space: pre-wrap;
+        }
+        .bottom-log-item:not(:last-child){
+          margin-bottom: 50px;
+        }
+        .bottom-log-had{
+          display: flex;
+          justify-content:space-between;
+          margin-bottom: 10px;
+          .bottom-log-had-text{
+            font-weight: bold;
+            font-size: 14px;
+          }
+          .bottom-log-had-text1{
+            color: #1890ff;
+            font-size: 14px;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+
+ /*   .scan-log-bottom{
       height: calc(100% - 83px);
       display: flex;
       flex-direction: row;
@@ -105,7 +158,7 @@
           margin-bottom: 50px;
         }
       }
-    }
+    }*/
   }
 }
 

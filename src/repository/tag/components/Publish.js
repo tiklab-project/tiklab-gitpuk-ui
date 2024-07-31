@@ -1,5 +1,5 @@
 import React from 'react';
-import {Divider} from 'antd';
+import {Col, Divider} from 'antd';
 import {
     TagOutlined,
     SubnodeOutlined,
@@ -63,8 +63,13 @@ const Publish = props =>{
     const goBack = () =>setPublishDetails(false)
 
     return (
-        <div className='publish'>
-            <div className='publish xcode-repository-width xcode'>
+        <div className='xcode gittok-width publish'>
+            <Col sm={{ span: "24" }}
+                 md={{ span: "24" }}
+                 lg={{ span: "24" }}
+                 xl={{ span: "20", offset: "2" }}
+                 xxl={{ span: "18", offset: "3" }}
+            >
                 <div className='publish-top'>
                     <BreadcrumbContent firstItem={'发行版详情'} goBack={goBack}/>
                     <div className='publish-top-btn'>
@@ -105,7 +110,7 @@ const Publish = props =>{
                         }
                     </div>
                 </div>
-            </div>
+            </Col>
         </div>
     )
 }

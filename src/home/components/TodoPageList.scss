@@ -1,0 +1,22 @@
+.todo-page{
+    background: var(--xcode-backdrop-color);
+    .todo-page-data {
+        border-radius: 4px;
+        padding: 10px;
+
+        background: #fff;
+        flex: 1;
+        margin-bottom: 15px;
+        .todo-page-title{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            .todo-select {
+                width: 200px;
+            }
+        }
+        .todo-page-border{
+            padding-top: 10px;
+        }
+    }
+}

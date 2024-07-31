@@ -1,135 +1,111 @@
-import React,{useState,useEffect} from 'react';
-import {Table,Tooltip,Popconfirm} from 'antd';
-import {PlusOutlined,DeleteOutlined,EyeOutlined} from '@ant-design/icons';
-import {inject,observer} from 'mobx-react';
-import BreadcrumbContent from "../../../common/breadcrumb/Breadcrumb";
-import Btn from '../../../common/btn/Btn';
-import EmptyText from '../../../common/emptyText/EmptyText';
-import AuthAdd from './AuthAdd';
-import AuthDetail from './AuthDetail';
-import './Auth.scss';
-import authStore from "../store/AuthStore"
 /**
  * 密钥
  * @param props
  * @returns {JSX.Element}
  * @constructor
  */
+
+import React,{useState,useEffect} from 'react';
+import {Col} from 'antd';
+import {EditOutlined, KeyOutlined} from '@ant-design/icons';
+import {inject,observer} from 'mobx-react';
+import BreadcrumbContent from "../../../common/breadcrumb/Breadcrumb";
+import Btn from '../../../common/btn/Btn';
+import AuthAdd from './AuthAdd';
+import './Auth.scss';
+import authStore from "../store/AuthStore"
+import DeleteExec from "../../../common/delete/DeleteExec";
+import {getUser} from "thoughtware-core-ui";
+import EmptyText from "../../../common/emptyText/EmptyText";
+
+
 const Auth = props => {
 
-    const {createAuth,deleteAuth,findUserAuth,keysList,fresh} = authStore
+    const {createAuth,updateAuthSsh,deleteAuth,findAuthSshList,keysList,fresh} = authStore
 
     const [addVisible,setAddVisible] = useState(false)
-    const [detailVisible,setDetailsVisible] = useState(false)
-    const [formValue,setFormValue] = useState(null)
+
+    const [authData,setAuthData]=useState(null)
+    const [title,setTitle]=useState(null)
 
     useEffect(()=>{
         // 初始化密钥
-        findUserAuth()
+        findAuthSshList({userId:getUser().userId})
     },[fresh])
 
-    /**
-     * 查看密钥
-     * @param record
-     */
-    const seeAuth = record => {
-        setFormValue(record)
-        setDetailsVisible(true)
+    //打开编辑
+    const openCompile = (value) => {
+        setAuthData(value)
+        setAddVisible(true)
+        setTitle("更新密钥")
     }
 
-    /**
-     * 删除密钥
-     * @param record
-     */
-    const delAuth = record => {
-        deleteAuth(record.authId)
+    const openAddPop = () => {
+        setAddVisible(true)
+        setTitle("添加密钥")
     }
-
-    const columns = [
-        {
-            title: '标题',
-            dataIndex: 'title',
-            key: 'title',
-            width:'15%',
-            ellipsis:true,
-            render:(text,record) => (
-                <span className='sys-keys-table-title' onClick={()=>seeAuth(record)}>{text}</span>
-            )
-        },
-        {
-            title: '上次使用',
-            dataIndex: 'userTime',
-            key: 'userTime',
-            width:'15%',
-            ellipsis:true,
-            render:text => text ? text:'暂无使用'
-        },
-        {
-            title: '公钥',
-            dataIndex: 'value',
-            key: 'value',
-            width:'60%',
-            ellipsis:true,
-        },
-        {
-            title:'操作',
-            dataIndex: 'action',
-            key: 'action',
-            render:(text,record)=>(
-                <Tooltip title={"删除"}>
-                    <Popconfirm
-                        placement="topRight"
-                        title="你确定删除吗"
-                        onConfirm={()=>delAuth(record)}
-                        okText="确定"
-                        cancelText="取消"
-                    >
-                        <span style={{cursor:"pointer"}}>
-                            <DeleteOutlined />
-                        </span>
-                    </Popconfirm>
-                </Tooltip>
-            )
-        }
-    ]
-
-    if(detailVisible){
-        return  <AuthDetail
-                    formValue={formValue}
-                    setDetailsVisible={setDetailsVisible}
-                />
-    }
-
+    const dateFormat = 'YYYY-MM-DD';
     return (
-        <div className='sys-keys'>
-            <div className='sys-keys-content xcode-repository-width xcode'>
-                <div className='sys-keys-up'>
-                    <BreadcrumbContent firstItem={'Keys'}/>
-                    <Btn
-                        type={'primary'}
-                        title={'新建密钥'}
-                        icon={<PlusOutlined/>}
-                        onClick={()=> setAddVisible(true)}
-                    />
-                    <AuthAdd
-                        addVisible={addVisible}
-                        setAddVisible={setAddVisible}
-                        createAuth={createAuth}
-                        keysList={keysList}
-                    />
+        <div className='xcode gittok-width sys-keys'>
+            <Col sm={{ span: "24" }}
+                 md={{ span: "24" }}
+                 lg={{ span: "24" }}
+                 xl={{ span: "20", offset: "2" }}
+                 xxl={{ span: "18", offset: "3" }}
+            >
+                <div className='sys-keys-content '>
+                    <div className='sys-keys-up'>
+                        <BreadcrumbContent firstItem={'Keys'}/>
+                        <Btn
+                            type={'primary'}
+                            title={'添加密钥'}
+                          /*  icon={<PlusOutlined/>}*/
+                            onClick={openAddPop}
+                        />
+
+                    </div>
+                    <div className='sys-keys-ill'>在添加过 SSH 公钥后，您可以使用 SSH 协议访问，推送代码</div>
+                    <div className='sys-keys-table'>
+                        {
+                            keysList&&keysList.length>0?keysList.map((item,index)=>{
+                                return(
+                                    <div key={index} className='sys-keys-nav'>
+                                        <div className='sys-keys-data'>
+                                            <div className='sys-keys-data-icon'><KeyOutlined /></div>
+                                            <div >
+                                                <div className='sys-keys-data-title'>
+                                                    <div className='sys-keys-data-title-text'>{item.title}</div>
+                                                    <div>{item.fingerprint}</div>
+                                                </div>
+                                                <div className='sys-keys-data-desc'>
+                                                    <span>{`最近使用时间：${item.userTime?item.userTime:'暂无使用'}`}</span>
+                                                    <span>{`创建时间：${item.createTime}`}</span>
+                                                    <span>{`过期时间：${(item.expireTime&&item.expireTime!=="0") ?item.expireTime:"永久有效"}`}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className='sys-keys-icon'>
+                                            <EditOutlined  onClick={()=>openCompile(item)}/>
+                                            <DeleteExec value={item} deleteData={deleteAuth} title={"确认删除"}/>
+                                        </div>
+                                    </div>
+                                )
+                            }):
+                                <EmptyText title={'暂无公钥'}/>
+                        }
+                    </div>
                 </div>
-                <div className='sys-keys-ill'>使用SSH公钥可以让你在你的电脑和 Xcode 通讯的时候使用安全连接（Git的Remote要使用SSH地址）</div>
-                <div>
-                    <Table
-                        bordered={false}
-                        columns={columns}
-                        dataSource={keysList}
-                        rowKey={record=>record.authId}
-                        pagination={false}
-                        locale={{emptyText: <EmptyText title={'暂无公钥'}/>}}
-                    />
-                </div>
-            </div>
+                <AuthAdd
+                    addVisible={addVisible}
+                    setAddVisible={setAddVisible}
+                    createAuth={createAuth}
+                    updateAuthSsh={updateAuthSsh}
+                    keysList={keysList}
+                    authData={authData}
+                    setAuthData={setAuthData}
+                    andTitle={title}
+                />
+            </Col>
         </div>
     )
 }

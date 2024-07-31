@@ -9,12 +9,13 @@ import React,{useState,useEffect} from 'react';
 import './Remote.scss';
 import BreadcrumbContent from "../../../../common/breadcrumb/Breadcrumb";
 import Btn from "../../../../common/btn/Btn";
-import {Dropdown, Space, Switch, Table, Tooltip,message} from "antd";
+import {Dropdown, Space, Switch, Table, Tooltip, message, Col} from "antd";
 import EmptyText from "../../../../common/emptyText/EmptyText";
 import remoteStore from "../store/RemoteStore"
 import {DeleteOutlined, EditOutlined, EllipsisOutlined, LoadingOutlined, PlayCircleOutlined} from "@ant-design/icons";
 import RemoteCompile from "./RemoteCompile";
 import {inject, observer} from "mobx-react";
+import DeleteExec from "../../../../common/delete/DeleteExec";
 const RemoteList = (props) => {
     const {match,repositoryStore}=props
 
@@ -72,9 +73,9 @@ const RemoteList = (props) => {
                         <Tooltip title='编辑'>
                             <EditOutlined onClick={()=>updateRemote(record)} />
                         </Tooltip>
-                        <Tooltip title='删除'>
+                      {/*  <Tooltip title='删除'>
                             <DeleteOutlined  onClick={()=>deleteRemoteInfo(record.id)} className='remote-icon'/>
-                        </Tooltip>
+                        </Tooltip>*/}
                         {
                             (stateInfo&&stateInfo[0]?.state)?
                                 <LoadingOutlined  className='remote-icon'/> :
@@ -82,6 +83,7 @@ const RemoteList = (props) => {
                                     <PlayCircleOutlined className='remote-icon' onClick={()=>sendOneRemote(record)}/>
                                 </Tooltip>
                         }
+                        <DeleteExec value={record} deleteData={deleteRemoteInfo} title={"确认删除"}/>
                     </Space>
                 )
             }
@@ -150,38 +152,44 @@ const RemoteList = (props) => {
         setExecState(newArray)
     }
     return(
-       <div className='remote'>
-            <div className='xcode-repository-width-setting xcode'>
-                <div className='remote-up'>
-                    <BreadcrumbContent firstItem={'RemoteInfo'}/>
-                    <Btn
-                        type={'primary'}
-                        title={'添加镜像信息'}
-                        onClick={()=>setAddVisible(true)}
-                    />
-                </div>
-                <div className='remote-illustrate'>
-                    <div>
-                       配置信息,向其他仓库推送仓库信息(支持gitlab、gitee)
-                    </div>
-                </div>
-                <Table
-                    bordered={false}
-                    columns={columns}
-                    dataSource={remoteInfoList}
-                    rowKey={record=>record.groupId}
-                    pagination={false}
-                    locale={{emptyText: <EmptyText title={'暂无配置'}/>}}
-                />
-               <RemoteCompile
-                   open={addVisible}
-                   setOpen={closeVisible}
-                   createRemoteInfo={createRemoteInfo}
-                   updateRemoteInfo={updateRemoteInfo}
-                   rpyId={repositoryInfo.rpyId}
-                   remoteInfo={remoteInfo}
+       <div className='xcode gittok-width remote'>
+           <Col
+               sm={{ span: "24" }}
+               md={{ span: "24" }}
+               lg={{ span: "24" }}
+               xl={{ span: "20", offset: "2" }}
+               xxl={{ span: "18", offset: "3" }}
+           >
+               <div className='remote-up'>
+                   <BreadcrumbContent firstItem={'RemoteInfo'}/>
+                   <Btn
+                       type={'primary'}
+                       title={'添加镜像信息'}
+                       onClick={()=>setAddVisible(true)}
+                   />
+               </div>
+               <div className='remote-illustrate'>
+                   <div>
+                       配置信息,向其他仓库推送仓库信息(支持gitlab、gitee、github 注：github仅支持个人令牌校验)
+                   </div>
+               </div>
+               <Table
+                   bordered={false}
+                   columns={columns}
+                   dataSource={remoteInfoList}
+                   rowKey={record=>record.groupId}
+                   pagination={false}
+                   locale={{emptyText: <EmptyText title={'暂无配置'}/>}}
                />
-            </div>
+           </Col>
+           <RemoteCompile
+               open={addVisible}
+               setOpen={closeVisible}
+               createRemoteInfo={createRemoteInfo}
+               updateRemoteInfo={updateRemoteInfo}
+               rpyId={repositoryInfo.rpyId}
+               remoteInfo={remoteInfo}
+           />
        </div>
     )
 }

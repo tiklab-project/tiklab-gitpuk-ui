@@ -1,6 +1,12 @@
 import React,{useState,useEffect} from 'react';
-import {PlusOutlined,SearchOutlined,DownOutlined,BranchesOutlined} from '@ant-design/icons';
-import {Input,Tooltip,Popconfirm} from 'antd';
+import {
+    PlusOutlined,
+    SearchOutlined,
+    BranchesOutlined,
+    EllipsisOutlined,
+    ExclamationCircleOutlined, PullRequestOutlined
+} from '@ant-design/icons';
+import {Input, Tooltip, Popconfirm, Col, Dropdown, Menu, Modal} from 'antd';
 import {inject,observer} from 'mobx-react';
 import BreadcrumbContent from '../../../common/breadcrumb/Breadcrumb';
 import Btn from '../../../common/btn/Btn';
@@ -9,6 +15,9 @@ import EmptyText from '../../../common/emptyText/EmptyText';
 import BranchAdd from './BranchAdd';
 import './Branch.scss';
 import branchStore from "../store/BranchStore"
+import {getUser} from "thoughtware-core-ui";
+import {PrivilegeProjectButton} from 'thoughtware-privilege-ui';
+const { confirm } = Modal;
 /**
  * 分支页面
  * @param props
@@ -22,6 +31,7 @@ const Branch = props =>{
     const {repositoryInfo} = repositoryStore
     const {createBranch,branchList,fresh,deleteBranch,findBranchList} = branchStore
 
+    const userId=getUser().userId
     const [branchType,setBranchType] = useState("all")
     const [addVisible,setAddVisible] = useState(false)
     const [branchName,setBranchName]=useState('')   //搜索的分支名字
@@ -43,9 +53,10 @@ const Branch = props =>{
         setBranchName(null)
         setBranchType(item.id)
         if (item.id!=='all'){
-            findBranchList({rpyId:repositoryInfo.rpyId,state:item.id})
+            findBranchList({rpyId:repositoryInfo.rpyId,state:item.id,userId:userId})
+        }else {
+            findBranchList({rpyId:repositoryInfo.rpyId})
         }
-
     }
 
     /**
@@ -69,13 +80,84 @@ const Branch = props =>{
 
    //输入搜索的分支名字
    const onChangeSearch = (e) => {
-       setBranchName(e.target.value)
+       const value=e.target.value
+       setBranchName(value)
+       if (value===''){
+           findBranchList({rpyId:repositoryInfo.rpyId})
+       }
    }
     //名字搜索分支
    const onSearch =async () => {
        setBranchType('all')
        findBranchList({rpyId:repositoryInfo.rpyId,name:branchName})
    }
+
+   //跳转合并请求详情
+   const goMergeDetails = (mergeId) => {
+       props.history.push(`/repository/${webUrl}/mergeAdd/${mergeId}`)
+   }
+   //跳转创建合并添加界面
+   const goMergeAdd = (branchName) => {
+       props.history.push(`/repository/${webUrl}/mergeAdd?source_branch=${branchName}`)
+   }
+
+
+
+    //删除弹窗
+    const  DeletePop = (value) =>{
+        confirm({
+            title: `确认删除分支 ${value.branchName}`,
+            icon: <ExclamationCircleOutlined />,
+            content: '',
+            okText: '确认',
+            okType: 'danger',
+            cancelText: '取消',
+            onOk() {
+              delBranch(value)
+            },
+            onCancel() {
+            },
+        });
+    }
+
+    /**
+     * 操作下拉
+     */
+    const execPullDown=(value) => (
+        <Menu>
+            <Menu.Item  style={{width:120}}>
+                比较
+            </Menu.Item>
+            <Menu.Item>
+                下载分支
+            </Menu.Item>
+            {
+                value.defaultBranch &&
+                <PrivilegeProjectButton code={"rpy_branch_delete"} domainId={repositoryInfo && repositoryInfo.rpyId}>
+                    <Menu.Item onClick={()=>DeletePop(value)} disabled={true}>
+                        <Tooltip placement="top" title={'默认分支不能被删除'} >
+                            删除
+                        </Tooltip>
+                    </Menu.Item>
+                </PrivilegeProjectButton > ||
+                value?.mergeRequest?.mergeState===1&&
+                <PrivilegeProjectButton code={"rpy_branch_delete"} domainId={repositoryInfo && repositoryInfo.rpyId}>
+                    <Menu.Item onClick={()=>DeletePop(value)} disabled={true}>
+                        <Tooltip placement="top" title={'存在开启的合并请求'} >
+                            删除
+                        </Tooltip>
+                    </Menu.Item>
+                </PrivilegeProjectButton > ||
+                (!value.defaultBranch && !value?.mergeRequest?.mergeState!==1)&&
+                <PrivilegeProjectButton code={"rpy_branch_delete"} domainId={repositoryInfo && repositoryInfo.rpyId}>
+                    <Menu.Item onClick={()=>DeletePop(value)}>
+                        删除
+                    </Menu.Item>
+                </PrivilegeProjectButton >
+            }
+        </Menu>
+    );
+
 
    // 渲染分支列表
     const renderData = item => {
@@ -100,16 +182,40 @@ const Branch = props =>{
                     </div>
                 </div>
                 <div className='branch-tables-commit'>
-                    <Tooltip title={'超前master0个提交，滞后13个提交'}>
-                        <span className='commit-num-left'>13</span>
-                        <span className='commit-num-right'>0</span>
+                    <Tooltip title={`比默认分支滞后${item.lagNum}个提交，超前${item.advanceNum}个提交`}>
+                        <span className='commit-num-left'>{item.lagNum}</span>
+                        <span className='commit-num-right'>{item.advanceNum}</span>
                     </Tooltip>
                 </div>
                 <div className='branch-tables-action'>
-                    <Tooltip title='合并请求'>
-                        <div className='branch-tables-combine'>合并请求</div>
-                    </Tooltip>
-                    <Tooltip title='对比'>
+                    {
+                        item.mergeRequest?
+                            <div>
+                                {
+                                    item.mergeRequest.mergeState===1&&
+                                    <div className='branch-tables-combine open-merge' onClick={()=>goMergeDetails(item.mergeRequest.id)}>
+                                        <div className='open-merge-icon'><PullRequestOutlined/></div>
+                                        <div>已开启</div>
+                                    </div>||
+                                    item.mergeRequest.mergeState===3&&
+                                    <div className='branch-tables-combine close-merge' onClick={()=>goMergeDetails(item.mergeRequest.id)}>
+                                        <div className='close-merge-icon'><PullRequestOutlined/></div>
+                                        <div>已关闭</div>
+                                    </div>
+                                }
+                            </div>
+                            :
+                            <div className='branch-tables-combine' onClick={()=>goMergeAdd(item.branchName)}>创建合并请求</div>
+                    }
+                    <Dropdown    overlay={()=>execPullDown(item)}
+                                placement="bottomRight"
+                                trigger={['click']}
+                                 getPopupContainer={e => e.parentElement}
+                    >
+                        <EllipsisOutlined style={{fontSize:20}}/>
+                    </Dropdown>
+
+             {/*       <Tooltip title='对比'>
                         <div className='branch-tables-compare'>对比</div>
                     </Tooltip>
                     <Tooltip title='下载'>
@@ -142,62 +248,71 @@ const Branch = props =>{
                                 </div>
                             </Popconfirm>
                         </Tooltip>
-                    }
+                    }*/}
                 </div>
             </div>
         )
     }
 
     return(
-        <div className='branch'>
-            <div className='branch-content xcode-repository-width xcode'>
-                <div className='branch-content-top'>
-                    <BreadcrumbContent firstItem={'Branch'}/>
-                    <Btn
-                        type={'primary'}
-                        title={'新建分支'}
-                        icon={<PlusOutlined/>}
-                        onClick={()=>setAddVisible(true)}
-                    />
-                    <BranchAdd
-                        createBranch={createBranch}
-                        branchList={branchList}
-                        repositoryInfo={repositoryInfo}
-                        addVisible={addVisible}
-                        setAddVisible={setAddVisible}
-                    />
-                </div>
-                <div className='branch-content-type'>
-                    <Tabs
-                        type={branchType}
-                        tabLis={ [
-                            {id:'all', title:'所有分支'},
-                            {id:'active', title:'活跃分支'},
-                            {id:'noActive', title:'非活跃分支'}
-                        ]}
-                        onClick={clickBranchType}
-                    />
-                    <div className='branch-type-input'>
+        <div className='xcode gittok-width branch'>
+            <Col sm={{ span: "24" }}
+                 md={{ span: "24" }}
+                 lg={{ span: "24" }}
+                 xl={{ span: "20", offset: "2" }}
+                 xxl={{ span: "18", offset: "3" }}
+            >
+                <div className='branch-content  '>
+                    <div className='branch-content-top'>
+                        <BreadcrumbContent firstItem={'Branch'}/>
+                        <PrivilegeProjectButton code={"rpy_branch_add"} domainId={repositoryInfo && repositoryInfo.rpyId}>
+                            <Btn
+                                type={'primary'}
+                                title={'新建分支'}
+                                icon={<PlusOutlined/>}
+                                onClick={()=>setAddVisible(true)}
+                            />
+                        </PrivilegeProjectButton>
+                        <BranchAdd
+                            createBranch={createBranch}
+                            branchList={branchList}
+                            repositoryInfo={repositoryInfo}
+                            addVisible={addVisible}
+                            setAddVisible={setAddVisible}
+                        />
+                    </div>
+                    <div className='branch-content-filter'>
+                        <Tabs
+                            type={branchType}
+                            tabLis={ [
+                                {id:'all', title:'所有'},
+                                {id:'oneself', title:'我的'},
+                                {id:'active', title:'活跃'},
+                                {id:'noActive', title:'非活跃'}
+
+                            ]}
+                            onClick={clickBranchType}
+                        />
                         <Input
                             allowClear
                             value={branchName}
-                            placeholder='分支名称'
+                            placeholder='搜索分支名称'
                             onChange={onChangeSearch}
                             onPressEnter={onSearch}
-                            prefix={<SearchOutlined />}
+                            prefix={<SearchOutlined className='input-icon'/>}
                             style={{ width: 200 }}
                         />
                     </div>
+                    <div className='branch-content-tables'>
+                        {
+                            branchList && branchList.length > 0 ?
+                                branchList.map(item=> renderData(item) )
+                                :
+                                <EmptyText title={'暂无分支'}/>
+                        }
+                    </div>
                 </div>
-                <div className='branch-content-tables'>
-                    {
-                        branchList && branchList.length > 0 ?
-                        branchList.map(item=> renderData(item) )
-                        :
-                        <EmptyText title={'暂无分支'}/>
-                    }
-                </div>
-            </div>
+            </Col>
         </div>
     )
 }

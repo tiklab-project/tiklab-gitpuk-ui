@@ -5,17 +5,19 @@
  * @constructor
  */
 import React, {useState, useEffect, useRef} from 'react';
-import {Select} from 'antd';
+import {Input, Select} from 'antd';
 import EmptyText from '../../../common/emptyText/EmptyText';
 import {findCommitId, setBranch} from './Common';
 import './BranchSelect.scss';
 import branchStore from "../../branch/store/BranchStore"
 import tagStore from "../../tag/store/TagStore";
 import Omit from "../../../common/omit/Omit";
+import {observer} from "mobx-react";
+import {SearchOutlined} from "@ant-design/icons";
 
 const BranchSelect = props => {
 
-    const {repositoryInfo,type,match} = props
+    const {repositoryInfo,type,match,setData} = props
     const webUrl = `${match.params.namespace}/${match.params.name}`
 
     const {findAllBranch,branchList} = branchStore
@@ -24,17 +26,21 @@ const BranchSelect = props => {
     const selectRef = useRef(null); // Select 组件的引用
     const [selectValue,setSelectValue]=useState()
 
-
-
     const urlInfo = match.params.branch
     const branch = setBranch(urlInfo,repositoryInfo && repositoryInfo)
 
     useEffect(()=>{
         // 获取全部分支
-        repositoryInfo.name && findAllBranch(repositoryInfo.rpyId)
+        repositoryInfo.name&& findAllBranch(repositoryInfo.rpyId)
 
         repositoryInfo.name&& findTag(repositoryInfo.rpyId)
+
     },[repositoryInfo.name])
+
+
+    const changDropList = () => {
+
+    }
 
     /**
      * 路由跳转
@@ -44,49 +50,37 @@ const BranchSelect = props => {
     const changBranch = (value,valueType) => {
         switch (valueType){
             case 'branch':
+                setData({type:valueType,value:value.branchName})
                 setSelectValue(value.branchName)
                 type==='commit'&&props.history.push(`/repository/${webUrl}/commits/${value.branchName}`)
                 type==='code'&&props.history.push(`/repository/${webUrl}/tree/${value.branchName}`)
                 selectRef.current.blur(); // 关闭弹窗时使选择框失去焦点，从而关闭弹窗
                 break
             case 'tag':
+                setData({type:valueType,value:value.tagName})
                 setSelectValue(value.tagName)
                 type==='commit'&&props.history.push(`/repository/${webUrl}/commits/${value.tagName}`)
                 type==='code'&&props.history.push(`/repository/${webUrl}/tree/${value.tagName}tag`)
                 selectRef.current.blur(); // 关闭弹窗时使选择框失去焦点，从而关闭弹窗
                 break
             case 'commit':
-                setSelectValue(value)
-                type==='commit'&&props.history.push(`/repository/${webUrl}/commits/${value}`)
-                type==='code'&&props.history.push(`/repository/${webUrl}/tree/${value}commit_id`)
+                setData({type:valueType,value:value.tagName})
+                setSelectValue(value.tagName)
+                type==='commit'&&props.history.push(`/repository/${webUrl}/commits/${value.tagName}`)
+                type==='code'&&props.history.push(`/repository/${webUrl}/tree/${value.tagName}commit_id`)
                 selectRef.current.blur(); // 关闭弹窗时使选择框失去焦点，从而关闭弹窗
                 break
+
         }
-
-        /*switch (type) {
-            case 'commit':
-                valueType==='branch'&& props.history.push(`/repository/${webUrl}/commits/${value.branchName}`)
-                valueType==='tag' &&props.history.push(`/repository/${webUrl}/commits/${value.tagName}`)
-                valueType==='commit' &&props.history.push(`/repository/${webUrl}/commits/${value}`)
-                selectRef.current.blur(); // 关闭弹窗时使选择框失去焦点，从而关闭弹窗
-                break
-            case 'code':
-                valueType==='branch'&&props.history.push(`/repository/${webUrl}/tree/${value.branchName}`)
-                valueType==='tag' &&props.history.push(`/repository/${webUrl}/tree/${value.tagName}commit_id`)
-                valueType=='commit'&&props.history.push(`/repository/${webUrl}/tree/${value}commit_id`)
-                selectRef.current.blur(); // 关闭弹窗时使选择框失去焦点，从而关闭弹窗
-                break
-        }*/
     }
-
-
-
     return (
-        <div className='branch-select'>
+        <div className='drop-down branch-select'>
+
             <Select
                 ref={selectRef}
                 showSearch
-                defaultValue={branch}
+                placeholder='分支'
+                defaultValue={(branch&&branch!=="0")?branch:null}
                 value={selectValue}
                 notFoundContent={<EmptyText/>}
                 filterOption={(input, option) =>
@@ -94,7 +88,10 @@ const BranchSelect = props => {
                 }
                 dropdownRender={menu=>(
                     <div className='xcode-branch-select'>
-                        <div className='branchSelect-title'>分支</div>
+                        {
+                            type!=='commit'&&
+                            <div className='branchSelect-title'>分支</div>
+                        }
                         {
                             branchList && branchList.map(item=>{
                                 return(
@@ -136,4 +133,4 @@ const BranchSelect = props => {
     )
 }
 
-export default BranchSelect
+export default observer(BranchSelect)

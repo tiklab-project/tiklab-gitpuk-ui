@@ -20,13 +20,13 @@ const RepositoryRole = props =>{
     },[])
 
     return (
-
-        <DomainRole
-            {...props}
-            domainId={repositoryInfo.rpyId}
-            bgroup = {"gittok"}
-        />
-
+        <div className='xcode'>
+            <DomainRole
+                {...props}
+                domainId={repositoryInfo.rpyId}
+                bgroup = {"gittok"}
+            />
+        </div>
 
     )
 

@@ -9,6 +9,13 @@
   &-table{
     margin-top: 20px;
   }
+  .third-table-style{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+
   &-operate{
     cursor: pointer;
     color: #1890ff;

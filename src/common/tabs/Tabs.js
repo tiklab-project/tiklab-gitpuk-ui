@@ -11,6 +11,7 @@ const Tabs = props =>{
 
     const {tabLis,type,onClick} = props
 
+
     return (
         <div className='xcode-tabs'>
             {

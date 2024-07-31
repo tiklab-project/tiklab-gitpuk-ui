@@ -10,7 +10,7 @@ import commitsStore from "../../commits/store/CommitsStore";
 
 const TagAdd = props =>{
 
-    const {addTagVisible,setAddTagVisible,branchList,repositoryInfo,findTags} = props
+    const {addTagVisible,setAddTagVisible,branchList,repositoryInfo,findTags,tagList} = props
     const {createTag}=tagStore
     const {findLatelyBranchCommit,commit} = commitsStore
 
@@ -26,14 +26,14 @@ const TagAdd = props =>{
         }
     },[height])
 
-    
     useEffect(()=>{
         if (branchList.length>0){
             const tag=branchList.filter(item=>item.defaultBranch===true)
             setBranch(tag[0].branchName)
+
+            findLatelyBranchCommit({rpyId:repositoryInfo.rpyId,branch:tag[0].branchName,findCommitId:false})
         }
-        findLatelyBranchCommit({rpyId:repositoryInfo.rpyId,branch:branch,findCommitId:false})
-    },[])
+    },[branchList])
 
 
     window.onresize=() =>{
@@ -56,6 +56,7 @@ const TagAdd = props =>{
     //切换分支
     const changBranch = (value) => {
         setBranch(value)
+        findLatelyBranchCommit({rpyId:repositoryInfo.rpyId,branch:value,findCommitId:false})
     }
 
     //输入tagName
@@ -109,16 +110,30 @@ const TagAdd = props =>{
                     <Form.Item
                         label={'标签名称'}
                         name='tagName'
-                        rules={[{required:true,message:`分支名称不能为空`}]}
+                        rules={[{required:true,message:`分支名称不能为空`},
+                            ({ getFieldValue }) => ({
+                                validator(rule,value) {
+                                    let nameArray = []
+                                    if(tagList){
+                                        nameArray = tagList && tagList.map(item=>item.tagName)
+                                    }
+                                    if (nameArray.includes(value)) {
+                                        return Promise.reject('名称已经存在');
+                                    }
+                                    return Promise.resolve()
+                                }
+                            })
+                        ]
+                    }
                     >
-                        <Input  onChange={inputTagName} value={tagName}/>
+                        <Input  onChange={inputTagName} value={tagName}  placeholder={"输入标签名称"}/>
                     </Form.Item>
                     <Form.Item label={'分支来源'}>
                         <Select onChange={value=>changBranch(value)} value={branch}>
                             {
-                                branchList&&branchList.map(item=>{
+                                branchList&&branchList.map((item,index)=>{
                                     return(
-                                        <Select.Option key={item.branchId} value={item.branchName}>{item.branchName}</Select.Option>
+                                        <Select.Option key={index} value={item.branchName}>{item.branchName}</Select.Option>
                                     )
                                 })
                             }

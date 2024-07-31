@@ -1,13 +1,13 @@
 import React,{useEffect,useState} from 'react';
-import {Input,Tooltip,Popconfirm} from 'antd';
+import {Input, Tooltip, Popconfirm, Col} from 'antd';
 import {
+    DownloadOutlined,
     PlusOutlined,
     SearchOutlined,
     TagOutlined
 } from '@ant-design/icons';
 import BreadcrumbContent from '../../../common/breadcrumb/Breadcrumb';
 import Btn from '../../../common/btn/Btn';
-import Tabs from '../../../common/tabs/Tabs';
 import Publish from './Publish';
 import TagAdd from './TagAdd';
 import PublishAdd from './PublishAdd';
@@ -15,8 +15,10 @@ import './Tag.scss';
 import branchStore from "../../branch/store/BranchStore";
 import {inject, observer} from "mobx-react";
 import tagStore from "../store/TagStore";
+import {PrivilegeProjectButton} from 'thoughtware-privilege-ui';
 import Omit from "../../../common/omit/Omit";
 import EmptyText from "../../../common/emptyText/EmptyText";
+import DeleteExec from "../../../common/delete/DeleteExec";
 const lis = [{id:1, title:'标签'},{id:2, title:'发行版'}]
 const Tag = props =>{
 
@@ -40,22 +42,7 @@ const Tag = props =>{
     //查询标签
     const findTags = () => {
         findTag(repositoryInfo.rpyId).then(res=>
-        res.code===0&&setAddTagVisible(false)
-        )
-    }
-
-    const clickType = item => {
-        setTagType(item.id)
-    }
-
-
-    const goDetails = (text,record) => {
-        switch (tagType) {
-            case 1:
-                break
-            case 2:
-                setPublishDetails(true)
-        }
+        res.code===0&&setAddTagVisible(false))
     }
 
 
@@ -81,110 +68,138 @@ const Tag = props =>{
         props.history.push(`/repository/${webUrl}/commit/${value.commitId}`)
     }
 
+    //输入搜索的分支名字
+    const onChangeSearch = (e) => {
+        const value=e.target.value
+        setBranchName(value)
+        if (value===''){
+            findBranchList({rpyId:repositoryInfo.rpyId})
+        }
+    }
+
+    //名字搜索分支
+    const onSearch =async () => {
+        setBranchType('all')
+        findBranchList({rpyId:repositoryInfo.rpyId,name:branchName})
+    }
+
     return(
-        <div className='tag'>
-            <div className='tag-content xcode-repository-width xcode'>
-                <div className='tag-top'>
-                    <BreadcrumbContent firstItem={'Tag'}/>
-                    {
-                        tagType===1?
-                            <Btn
-                                type={'primary'}
-                                title={'新建标签'}
-                                icon={<PlusOutlined/>}
-                                onClick={()=>setAddTagVisible(true)}
-                            />
-                            :
-                            <Btn
-                                type={'primary'}
-                                title={'新建发行版'}
-                                icon={<PlusOutlined/>}
-                                onClick={()=>setAddPublishVisible(true)}
-                            />
-                    }
-                    <TagAdd addTagVisible={addTagVisible} setAddTagVisible={setAddTagVisible} branchList={branchList} repositoryInfo={repositoryInfo}
-                            findTags={findTags}
-                    />
-                    <PublishAdd addPublishVisible={addPublishVisible} setAddPublishVisible={setAddPublishVisible}/>
-                </div>
-                <div className='tag-type'>
-                    <Tabs
+        <div className='xcode gittok-width tag'>
+            <Col sm={{ span: "24" }}
+                 md={{ span: "24" }}
+                 lg={{ span: "24" }}
+                 xl={{ span: "20", offset: "2" }}
+                 xxl={{ span: "18", offset: "3" }}
+            >
+                <div className='tag-content  '>
+                    <div className='tag-top'>
+                        <BreadcrumbContent firstItem={'Tag'}/>
+                        {
+                            tagType===1?
+                                <PrivilegeProjectButton code={"rpy_tag_add"} domainId={repositoryInfo && repositoryInfo.rpyId}>
+                                    <Btn
+                                        type={'primary'}
+                                        title={'新建标签'}
+                                        icon={<PlusOutlined/>}
+                                        onClick={()=>setAddTagVisible(true)}
+                                    />
+                                </PrivilegeProjectButton > :
+                                <Btn
+                                    type={'primary'}
+                                    title={'新建发行版'}
+                                    icon={<PlusOutlined/>}
+                                    onClick={()=>setAddPublishVisible(true)}
+                                />
+                        }
+                        <TagAdd addTagVisible={addTagVisible}
+                                setAddTagVisible={setAddTagVisible}
+                                branchList={branchList}
+                                tagList={tagList}
+                                repositoryInfo={repositoryInfo}
+                                findTags={findTags}
+                        />
+                        <PublishAdd addPublishVisible={addPublishVisible} setAddPublishVisible={setAddPublishVisible}/>
+                    </div>
+                    <div className='tag-filter'>
+                        {/*   <Tabs
                         type={tagType}
                         tabLis={lis}
                         onClick={clickType}
-                    />
-                    <div className='tag-type-input'>
+                    />*/}
                         <Input
                             allowClear
-                            placeholder='标签名称'
-                            // onChange={onChangeSearch}
-                            prefix={<SearchOutlined />}
+                            placeholder='搜索标签名称'
+                             onChange={onChangeSearch}
+                            onPressEnter={onSearch}
+                            prefix={<SearchOutlined className='input-icon'/>}
                             style={{ width: 200 }}
                         />
                     </div>
-                </div>
-                <div className='tag-tables'>
-                    {
-                        tagList.length>0?tagList.map(item=>{
-                            return(
-                                <div className='tag-tables-style'>
-                                    <div className=''>
-                                        <div className='tag-tables-item'>
-                                            <div style={{paddingTop:5}}>
-                                                <TagOutlined />
-                                            </div>
-                                            <div className='tag-tables-name'>
-                                                <div className='tag-tables-name-cursor' onClick={()=>goFile(item)}>
-                                                    {item.tagName}
+                    <div className='tag-tables'>
+                        {
+                            tagList.length>0?tagList.map(item=>{
+                                    return(
+                                        <div className='tag-tables-style'>
+                                            <div className=''>
+                                                <div className='tag-tables-item'>
+                                                    <div style={{paddingTop:5}}>
+                                                        <TagOutlined />
+                                                    </div>
+                                                    <div className='tag-tables-name'>
+                                                        <div className='tag-tables-name-cursor' onClick={()=>goFile(item)}>
+                                                            {item.tagName}
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div className='tag-tables-item tag-tables-item-top'>
-                                            <div className='tag-tables-commitId'>
-                                                <div className='tag-tables-commitId-cursor' onClick={()=>goCommit(item)}>
-                                                    <Omit value={item.commitId} maxWidth={"69px"} />
-                                                </div>
+                                                <div className='tag-tables-item tag-tables-item-top'>
+                                                    <div className='tag-tables-commitId'>
+                                                        <div className='tag-tables-commitId-cursor' onClick={()=>goCommit(item)}>
+                                                            <Omit value={item.commitId} maxWidth={"69px"} />
+                                                        </div>
 
-                                            </div>
-                                            <div>{item.commitDesc}</div>
-                                            <div>{item.timeDiffer}</div>
-                                        </div>
-                                    </div>
-                                    <div className='tag-tables-action'>
-                                        <Tooltip title='下载'>
-                                            <div className='tag-tables-download'>
-                                                <svg className='icon' aria-hidden='true'>
-                                                    <use xlinkHref='#icon-xiazai'/>
-                                                </svg>
-                                            </div>
-                                        </Tooltip>
-                                        <Tooltip title='删除'>
-                                            <Popconfirm
-                                                title="你确定删除吗"
-                                                onConfirm={()=>delTag(item)}
-                                                okText="确定"
-                                                cancelText="取消"
-                                                placement="topRight"
-                                            >
-                                                <div className='tag-tables-del'>
-                                                    <svg className="icon" aria-hidden="true">
-                                                        <use xlinkHref="#icon-delete"/>
-                                                    </svg>
+                                                    </div>
+                                                    <div>{item.commitDesc}</div>
+                                                    <div>{item.timeDiffer}</div>
                                                 </div>
-                                            </Popconfirm>
-                                        </Tooltip>
-                                    </div>
+                                            </div>
+                                            <div className='tag-tables-action'>
+                                                <Tooltip title='下载'>
+                                                    <div className='tag-tables-download'>
+                                                        <svg className='icon' aria-hidden='true'>
+                                                            <use xlinkHref='#icon-xiazai'/>
+                                                        </svg>
+                                                    </div>
+                                                </Tooltip>
+                                                <PrivilegeProjectButton code={"rpy_tag_delete"} domainId={repositoryInfo && repositoryInfo.rpyId}>
+                                                    <DeleteExec value={item} deleteData={delTag} title={"确认删除"} type={'tag'}/>
+                                                </PrivilegeProjectButton>
+                                              {/*  <Tooltip title='删除'>
+                                                    <Popconfirm
+                                                        title="你确定删除吗"
+                                                        onConfirm={()=>delTag(item)}
+                                                        okText="确定"
+                                                        cancelText="取消"
+                                                        placement="topRight"
+                                                    >
+                                                        <div className='tag-tables-del'>
+                                                            <svg className="icon" aria-hidden="true">
+                                                                <use xlinkHref="#icon-delete"/>
+                                                            </svg>
+                                                        </div>
+                                                    </Popconfirm>
+                                                </Tooltip>*/}
+                                            </div>
+                                        </div>
+
+                                    )
+                                }):
+                                <div style={{marginTop:30}}>
+                                    <EmptyText title={'暂无标签'}     />
                                 </div>
 
-                            )
-                        }):
-                            <div style={{marginTop:30}}>
-                                <EmptyText title={'暂无标签'}     />
-                            </div>
+                        }
 
-                    }
-
-               {/*     <Table
+                        {/*     <Table
                         bordered={false}
                         columns={tagType===1?columnsTag:columnsPublish}
                         dataSource={[]}
@@ -192,8 +207,9 @@ const Tag = props =>{
                         pagination={false}
                         locale={{emptyText: <EmptyText title={tagType===1?'暂无标签':'暂无发行版'}/>}}
                     />*/}
+                    </div>
                 </div>
-            </div>
+            </Col>
         </div>
     )
 }

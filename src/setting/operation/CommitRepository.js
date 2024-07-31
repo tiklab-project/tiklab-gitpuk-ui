@@ -9,7 +9,7 @@
 import React, {useState,useEffect} from "react";
 import "./CommitRepository.scss"
 import BreadcrumbContent from "../../common/breadcrumb/Breadcrumb";
-import { Table} from "antd";
+import {Col, Table} from "antd";
 import EmptyText from "../../common/emptyText/EmptyText";
 import { LockOutlined, UnlockOutlined} from "@ant-design/icons";
 import Listicon from "../../common/list/Listicon";
@@ -71,24 +71,32 @@ const CommitRepository = (props) => {
     }
 
     return(
-        <div className='repository'>
-            <div className='xcode-repository-width xcode'>
-                <div className='backups-up'>
-                    <BreadcrumbContent firstItem={'推送仓库'}/>
+        <div className='xcode gittok-width repository'>
+            <Col
+                sm={{ span: 24 }}
+                xs={{ span: 24 }}
+                md={{ span: 24 }}
+                lg={{ span: "16", offset: "4" }}
+                xl={{ span: "14", offset: "5" }}
+            >
+                <div style={{minWidth:576}}>
+                    <div className='backups-up'>
+                        <BreadcrumbContent firstItem={'推送仓库'}/>
+                    </div>
+
+                    <div className='repository-table'>
+                        <Table
+                            bordered={false}
+                            columns={columns}
+                            dataSource={repositoryList}
+                            rowKey={record=>record.id}
+                            pagination={false}
+                            locale={{emptyText: <EmptyText title={'暂无推送的仓库'}/>}}
+                        />
+                    </div>
                 </div>
 
-                <div className='repository-table'>
-                    <Table
-                        bordered={false}
-                        columns={columns}
-                        dataSource={repositoryList}
-                        rowKey={record=>record.id}
-                        pagination={false}
-                        locale={{emptyText: <EmptyText title={'暂无推送的仓库'}/>}}
-                    />
-                </div>
-            </div>
-
+            </Col>
         </div>
     )
 

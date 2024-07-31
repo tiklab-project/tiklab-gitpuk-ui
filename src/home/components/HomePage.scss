@@ -1,8 +1,5 @@
 .homePage{
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background: var(--xcode-backdrop-color);
+   /* background: var(--xcode-backdrop-color);*/
     &-content{
         &-top,&-center,&-bottom{
             display: flex;
@@ -183,56 +180,42 @@
                 }
             }
         }
-        .newCommit{
-            border-radius: 4px;
-            padding: 10px;
+
+
+
+        .home-todo{
             background: #fff;
-            flex: 1;
-            margin-bottom: 15px;
-            .newCommit-cursor:hover{
-                background-color: #f6f6f6;
-            }
-            .newCommit-lab{
-                margin-top: 12px;
-                cursor: pointer;
+            padding: 10px;
+            min-height: 50px;
+            border-radius: 4px;
+
+            .home-todo-tab {
                 display: flex;
-                place-content: space-between;
-                align-items: center;
-                height: 50px;
-                padding: 0 10px;
-                .newCommit-lab-style{
+                justify-content: space-between;
+                gap: 20px;
+                .todo-tab-item {
+                    flex: 1;
                     display: flex;
                     align-items: center;
-                }
-
-                .newCommit-text-sym{
-                   padding: 0 5px;
-                }
-                .newCommit-text-name{
-
-                }
-                .newCommit-time{
-                   color:#9b9b9b;
-                }
-                .newCommit-desc{
-                    size: 2px;
-                    font-size: 4px;
+                    justify-content: center;
+                    height: 100px;
+                    border-radius: 4px;
+                    margin-top: 10px;
+                    line-height: 35px;
+                    cursor: pointer;
+                    padding: var(--thoughtware-padding);
+                    background-color: var(--thoughtware-gray-600);
+                    gap: 10px;
+                    .todo-tab-item-num{
+                        font-weight: var(--thoughtware-font-weight-bold);
+                        /*padding-bottom: 10px;*/
+                    }
                 }
             }
-            .text-desc{
-                display: flex;
-                gap: 5px;
-                font-size: 13px;
-                color: var(--thoughtware-gray-500);
+            .status-item {
+                cursor: pointer;
             }
-        }
 
-
-        .home-pull{
-            background: #fff;
-            padding: 10px;
-            min-height: 450px;
-            border-radius: 4px;
         }
         .agency{
             flex: 1;
@@ -311,5 +294,90 @@
         }
 
     }
+
+
+    .home-page-statistics{
+        padding: 10px;
+        flex: 1;
+        margin-bottom: 15px;
+
+        .home-page-statistics-find{
+            display: flex;
+            justify-content: space-between;
+        }
+        .statistics-content{
+            display: flex;
+            width: 100%;
+            gap: 6px;
+            margin-top: 10px;
+            .statistics-work-trend {
+                border-radius: 4px;
+                background-color: var(--thoughtware-gray-600);
+                flex: 1;
+                padding: 20px;
+            }
+        }
+    }
+
+    .newCommit{
+        border-radius: 4px;
+        padding: 10px;
+        background: #fff;
+        flex: 1;
+        margin-bottom: 15px;
+        .newCommit-lab{
+            margin-top: 12px;
+            cursor: pointer;
+            display: flex;
+            place-content: space-between;
+            align-items: center;
+            height: 50px;
+            padding: 0 10px;
+            &:hover{
+                background-color: #f6f6f6;
+            }
+            .newCommit-lab-style{
+                display: flex;
+                align-items: center;
+            }
+
+            .newCommit-text-sym{
+                padding: 0 5px;
+            }
+            .newCommit-text-name{
+
+            }
+            .newCommit-time{
+                color:#9b9b9b;
+            }
+            .newCommit-desc{
+                size: 2px;
+                font-size: 4px;
+            }
+        }
+        .text-desc{
+            display: flex;
+            gap: 5px;
+            font-size: 13px;
+            color: var(--thoughtware-gray-500);
+        }
+
+
+    }
+
+    .no-data{
+        padding-top: 10px;
+        text-align: center;
+        color: #666666;
+        /* min-height: 100px;*/
+    }
+    .omit-text{
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        max-width: 140px;
+    }
 }
+
+
 
