@@ -1,7 +1,13 @@
 import React,{useState,useEffect} from 'react';
 import {renderRoutes} from 'react-router-config';
-import {Dropdown, Tooltip} from 'antd';
-import {CaretDownOutlined, MenuUnfoldOutlined, SettingOutlined} from '@ant-design/icons';
+import {Dropdown, Layout, Tooltip} from 'antd';
+import {
+    BarChartOutlined,
+    CaretDownOutlined, CaretLeftOutlined,
+    CaretRightOutlined, HomeOutlined,
+    MenuUnfoldOutlined,
+    SettingOutlined
+} from '@ant-design/icons';
 import {useTranslation} from 'react-i18next';
 import {Loading} from '../loading/Loading';
 import {interceptUrl} from '../client/Client';
@@ -9,10 +15,11 @@ import AsideMenu from './AsideMenu';
 import Listicon from '../list/Listicon';
 import './Aside.scss';
 import UpgradePopup from "../upgrade/UpgradePopup"
-import {getUser,getVersionInfo} from "thoughtware-core-ui";
-import goBack from "../../assets/images/img/goBack.png"
-import {inject, observer} from "mobx-react";
+import {getUser, getVersionInfo, productWhiteImg} from "thoughtware-core-ui";
 import MoreMeu from "./MoreMeu";
+
+import NavigationImage from "../image/NavigationImage";
+const {Sider} = Layout;
 /**
  * 左侧路由（二级标题）
  * @param props
@@ -21,10 +28,12 @@ import MoreMeu from "./MoreMeu";
  */
 const Aside = props => {
 
-    const {location,route,firstRouters,list,info,asideType,repositoryAddress,setNavLevel} = props
+    const {location,route,firstRouters,list,info,asideType,repositoryAddress,setNavLevel,setFoldState} = props
     let path = location.pathname
     const {t} = useTranslation()
     const isSide = localStorage.getItem('isSide')
+
+    const [theme, setTheme] = useState(localStorage.getItem("theme") ? localStorage.getItem("theme") : "gray");
     const [nav,setNav] = useState('')
     const [normalOrScrum,setNormalOrScrum] = useState('normal')
     const [isLoading,setIsLoading] = useState(false)
@@ -35,7 +44,16 @@ const Aside = props => {
     const [morePath, setMorePath] = useState()
     const [projectRouter, setProjectRouter] = useState([]);
     const [menuNum,setMenuNum]=useState()
+    //导航折叠状态
+    const [collapsed, setCollapsed] = useState(true);
 
+    const [themeClass, setThemeClass] = useState("theme-gray")
+
+    useEffect(()=>{
+        //查询主题
+        getThemeClass(theme)
+
+    },[])
 
     useEffect(()=>{
         // 侧边栏 -- 展开/收起
@@ -64,6 +82,7 @@ const Aside = props => {
             // 组件销毁时移除监听事件
             window.removeEventListener('resize', resizeUpdate);
         }
+
     }, [firstRouters])
 
 
@@ -87,6 +106,28 @@ const Aside = props => {
         setMenuNum(num)
     };
 
+    const getThemeClass = (theme) => {
+        let name
+        switch (theme) {
+            case "black":
+                name = "theme-black";
+                break;
+            case "gray":
+                name = "theme-gray";
+                break;
+            case "blue":
+                name = "theme-blue";
+                break;
+            default:
+                name = "theme-gray";
+                break;
+
+        }
+
+        setThemeClass(name)
+        setTheme(theme)
+        return name;
+    }
 
 
     const renderType = pathType =>{
@@ -95,21 +136,21 @@ const Aside = props => {
             return path
         }
         switch (pathType) {
-            case 'tree':
+            case 'code':
             case 'blob':
             case 'edit':
-                return path
+                return path+'/code'
             case 'statistics':
                 return `${path}/statistics/commit`
             case 'commit':
-                return `${path}/commits/${info && info.defaultBranch}`
+                return `${path}/commits`
             case 'scanRecord':
                 return `${path}/scanPlay`
             case 'scanDetails':
                 return `${path}/scanPlay`
 
             case 'commits':
-                return `${path}/commits/${(info && info.defaultBranch)?info.defaultBranch:0}`
+                return `${path}/commits`
             case 'mergeAdd':
                 return `${path}/merge_requests`
             default:
@@ -119,16 +160,11 @@ const Aside = props => {
     }
 
     /**
-     * 侧边栏收起||展开
+     * 点击折叠或展开菜单
      */
-    const setMenuFold = () =>{
-        if(normalOrScrum==='scrum') {
-            setNormalOrScrum('normal')
-            localStorage.setItem('isSide', 'normal')
-            return
-        }
-        setNormalOrScrum('scrum')
-        localStorage.setItem('isSide','scrum')
+    const toggleCollapsed = () => {
+        setCollapsed(!collapsed)
+        setFoldState(!collapsed)
     }
 
     /**
@@ -147,12 +183,27 @@ const Aside = props => {
     // 渲染左侧一级菜单
     const renderTaskRouter = item => {
 
-        return  <div  key={item.id}
-                      className={`${normalOrScrum}-aside-item ${nav===item.id ? `${normalOrScrum}-aside-select`:''}`}
-                      onClick={()=> goPage(item)}
-                >
-                    <div className={`${normalOrScrum}-aside-item-icon`}>{item.icon}</div>
-                    <div className={`${normalOrScrum}-aside-item-title`}>{t(item.title)}</div>
+        return  <div  key={item.id} className={`${nav===item.id&&' tab-link-active'} tab-link `} onClick={()=> goPage(item)}>
+                        {
+                            collapsed ?
+                                <div className='table-close-nav'>
+                                    <div className='rpy-nav-icon'>{item.icon}</div>
+                                    <div>{t(item.title)}</div>
+                                </div> :
+                                <div className='table-open-nav'>
+                                    {
+                                        item.title==="代码扫描"?
+                                            <div className='open-icon-style'>
+                                                <BarChartOutlined className='rpy-nav-icon'/>
+                                            </div> :
+                                            <div className='open-icon-style'>{item.icon}</div>
+                                    }
+                                    <div>{t(item.title)}</div>
+                                    {
+                                        ( item.title==="代码扫描"&&getVersionInfo().expired)&& <div className='open-icon-vip'>{item.icon}</div>
+                                    }
+                                </div>
+                        }
                 </div>
     }
 
@@ -172,69 +223,124 @@ const Aside = props => {
     }
 
     return (
-        <div className='xcode-layout'>
-            <div className={`${normalOrScrum}-aside`}>
-            <div  className={`${normalOrScrum}-aside-up`}>
-                <Dropdown
-                    overlay={<AsideMenu
-                        {...props}
-                        list={list}
-                        info={info}
-                        asideType={asideType}
-                        setIsLoading={setIsLoading}
-                        setTriggerVisible={setTriggerVisible}
-                    />}
-                    trigger={['click']}
-                    visible={triggerVisible}
-                    onVisibleChange={visible=>setTriggerVisible(visible)}
-                    overlayClassName={`aside-dropdown-${normalOrScrum} aside-dropdown`}
-                >
-                    <div className={`${normalOrScrum}-aside_chang`} onClick={(e)=>e.preventDefault()}>
-                        <Tooltip placement="right" title={info?.name} >
-                            <div>  <Listicon text={info?.name} colors={info?.color}/></div>
-                        </Tooltip >
-
-                        {
-                            normalOrScrum === 'scrum' &&
-                            <span className='dropdowns_name'>{info?.name}</span>
-                        }
-                        <span><CaretDownOutlined /></span>
-                    </div>
-                </Dropdown>
+        <Layout className='rpy-nav'>
+            <Sider trigger={null} collapsible collapsed={collapsed}  collapsedWidth="75" width="200" className={`${themeClass} rpy-nav-style`}>
                 <div>
+                    <div  className={`${collapsed?"rpy-close-nav-repository":'rpy-open-nav-repository'}`}>
+                        <Dropdown
+                            overlay={<AsideMenu
+                                {...props}
+                                list={list}
+                                info={info}
+                                asideType={asideType}
+                                setIsLoading={setIsLoading}
+                                setTriggerVisible={setTriggerVisible}
+                            />}
+                            trigger={['click']}
+                            visible={triggerVisible}
+                            onVisibleChange={visible=>setTriggerVisible(visible)}
+                            overlayClassName={` aside-dropdown ${collapsed?" aside-dropdown-close":" aside-dropdown-open"}`}
+                        >
+                            {
 
+                                    collapsed?
+                                        <div className={`repository-nav`} onClick={(e)=>e.preventDefault()}>
+                                            <Tooltip placement="right" title={info?.name} >
+                                                <div>  <Listicon text={info?.name}
+                                                                 colors={info?.color}
+                                                                 type={"common"}
+                                                /></div>
+                                            </Tooltip >
+                                            <CaretDownOutlined  className='repository-nav-icon'/>
+                                        </div>:
+                                        <div className='repository-nav' >
+                                            <div>
+                                                <Listicon text={info.name}
+                                                          colors={info?.color}
+                                                          type={"closeNav"}
+                                                />
+                                            </div>
+                                            <div className='repository-open-nav-name'>{info.name}</div>
+                                            <div><CaretDownOutlined  className='repository-nav-icon'/></div>
+                                        </div>
+                            }
+
+                        </Dropdown>
+
+                    </div>
                     <div className='go-back-style'>
-                        <div className='nav-go-back' onClick={backHome}>
-                            <img src={goBack} className='nav-go-back-icon'/>
-                            <div>返回首页</div>
-                        </div>
+                        {
+                            collapsed?
+                                <div className='nav-go-close-back tab-link' onClick={backHome}>
+                                     <HomeOutlined className='rpy-nav-icon'/>
+                                    <div>返回首页</div>
+                                </div>:
+                                <div className='nav-go-open-back tab-link' onClick={backHome}>
+                                    <div className='nav-go-back-left'>
+                                        <div className='nav-go-back-icon'>
+                                            <HomeOutlined className='rpy-nav-icon'/>
+                                        </div>
+                                        <div>返回首页</div>
+                                    </div>
+                                </div>
+                        }
+                    </div>
+                    {
+                        projectRouter.map(item=>renderTaskRouter(item))
+                    }
+                    {(menuNum<8&&asideType==='repository') &&
+                        <MoreMeu {...props}
+                                 moreMenu={moreMenu}
+                                 morePath={morePath}
+                                 nav={nav}
+                                 setUpgradeVisible={setUpgradeVisible}
+                                 collapsed={collapsed}
+                                 theme={theme}
+                        />}
+
+                </div>
+                <div className="rpy-nav-setting" onClick={()=>goSys()}>
+                    {
+                        collapsed?
+                            <div className='nav-close-setting-place tab-link'>
+                                <SettingOutlined className='close-iconfont'/>
+                            </div>:
+                            <div className='nav-open-setting-place tab-link'>
+                                <div className='open-icon-setting-style'>
+                                    <SettingOutlined className={`open-iconfont`}/>
+                                </div>
+                                <div>{t('Setting')}</div>
+                            </div>
+                    }
+
+                </div>
+
+                <div className="menu-box-right-border" >
+                    <div className={"menu-box-isexpanded"} onClick={toggleCollapsed}>
+                        {
+                            collapsed ?
+                                <CaretRightOutlined  className='first-menu-expend-icon'/>
+                                : <CaretLeftOutlined className='first-menu-expend-icon'/>
+                        }
                     </div>
                 </div>
-
+            </Sider>
+            <Layout>
                 {
-                    projectRouter.map(item=>renderTaskRouter(item))
+                    isLoading ? <Loading/> :
+                        <div className='rpy-nav-content'>
+                            {renderRoutes(route.routes)}
+                        </div>
                 }
-                {menuNum<8 && <MoreMeu {...props} moreMenu={moreMenu} morePath={morePath} nav={nav} setUpgradeVisible={setUpgradeVisible} />}
-            </div>
 
-                <div className={`${normalOrScrum}-aside-item`} onClick={()=>goSys()}>
-                    <div className={`${normalOrScrum}-aside-item-icon`}><SettingOutlined/></div>
-                    <div className={`${normalOrScrum}-aside-item-title`}>{t('Setting')}</div>
-                </div>
-            </div>
-            {
-                isLoading ? <Loading/> :
-                <div className='xcode-layout-content'>
-                    {renderRoutes(route.routes)}
-                </div>
-            }
+            </Layout>
 
             <UpgradePopup visible={upgradeVisible}
                           setVisible={setUpgradeVisible}
                           title={'代码扫描'}
                           desc={'如需使用代码扫描，请购买企业版Licence'}
             />
-        </div>
+        </Layout>
     )
 }
 

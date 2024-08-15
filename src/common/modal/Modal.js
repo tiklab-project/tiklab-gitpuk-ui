@@ -26,7 +26,6 @@ const Modals = props => {
     window.onresize=() =>{
         setHeight(autoHeight())
     }
-
     return (
         <Modal
             style={{height:height,top:70}}

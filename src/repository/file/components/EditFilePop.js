@@ -33,7 +33,7 @@ const EditFilePop = (props) => {
                     commitMessage:values.commitMessage,
                 }).then(res=>{
                     if (res.code==0){
-                        props.history.push(`/repository/${webUrl}/tree/${branch}`)
+                        props.history.push(`/repository/${webUrl}/code/${branch}`)
                     }
                 })
             }

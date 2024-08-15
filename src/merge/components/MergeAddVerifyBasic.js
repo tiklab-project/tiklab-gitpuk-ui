@@ -11,7 +11,7 @@ import {
     CloseCircleOutlined, CommentOutlined, DeleteOutlined, ExclamationCircleOutlined, FormOutlined, MessageOutlined,
     PlusCircleOutlined, UpOutlined, CloseOutlined, UserAddOutlined, UserDeleteOutlined,PlusSquareOutlined,MinusSquareOutlined
 } from "@ant-design/icons";
-import {Dropdown, Input, Modal} from "antd";
+import {Dropdown, Input, Menu, Modal} from "antd";
 import Btn from "../../common/btn/Btn";
 import Profile from "../../common/profile/Profile";
 import {getUser} from "thoughtware-core-ui";
@@ -54,7 +54,6 @@ const MergeAddVerifyBasic = (props) => {
         })
 
     },[])
-    debugger
     //@ 人
     const getReplyUser = (key) => {
         const user=replyUserList.filter(replyUser=>replyUser.key===key);
@@ -337,27 +336,20 @@ const MergeAddVerifyBasic = (props) => {
         </div>
     )
 
-    //查询的item
-    const items=[
-        {
-            key: 'all',
-            label: (
+    const items = (
+        <Menu>
+            <Menu.Item>
                 <div className='tile-right-nav'  onClick={()=>cutCondition("all")}>
                     全部动态
                 </div>
-            ),
-        },
-        {
-            key: 'exec',
-            label: (
+            </Menu.Item>
+            <Menu.Item>
                 <div className='tile-right-nav' onClick={()=>cutCondition("exec")}>
                     操作历史
                 </div>
-            ),
-        },
-    ]
-
-
+            </Menu.Item>
+        </Menu>
+    );
     return(
         <div className='verify-basic'>
             <div className='verify-basic-left'>
@@ -379,11 +371,12 @@ const MergeAddVerifyBasic = (props) => {
                 }
 
                 <div className='verify-basic-style'>
+                    {/*menu={{items, selectedKeys: [findConditionType]}}*/}
                     <div className='verify-basic-border'>
                         <div className='verify-basic-tile'>
                             <div className='basic-tile-left'>最新动态</div>
                             <div className='basic-tile-right'>
-                                <Dropdown     menu={{items, selectedKeys: [findConditionType]}}  trigger={['click']}    placement={'bottomRight'} >
+                                <Dropdown overlay={items}      trigger={['click']}    placement={'bottomRight'} >
                                     <div className='basic-tile-right-icon' >
                                         <div>{findConditionType==='all'?'全部动态':'操作历史'}</div>
                                         <UpOutlined />

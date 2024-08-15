@@ -3,6 +3,7 @@ import "./DyncmicTimeAxis.scss";
 import DynamicListItem from "./DynamicItem";
 import {observer} from "mobx-react";
 import noData from "../../../assets/images/img/noData.png";
+import EmptyText from "../../../common/emptyText/EmptyText";
 const DyncmicTimeAxis = (props) => {
     const { logList } = props;
     console.info("logList",logList)
@@ -31,11 +32,12 @@ const DyncmicTimeAxis = (props) => {
                                 item.children.map((dyncmicItem, dyncmicIndex) => {
                                     return <div className={`dyncmic-timeaxis-item ${index === logList.length - 1 && dyncmicIndex === item.children.length - 1 ? "" : "dyncmic-showtimeaxis-item"}`}>
 
-                                        <div className="dyncmic-timeaxis-item-time">{dyncmicItem.createTime.slice(10, 16)}</div>
 
+                                        <div className="dyncmic-timeaxis-item-time">{dyncmicItem.createTime.slice(10, 16)}</div>
                                         <div className="dynamic-user-icon">{dyncmicItem.user.nickname.slice(0, 1)}</div>
 
                                         <DynamicListItem content={dyncmicItem.data} type={dyncmicItem.actionType.name}/>
+
                                         {/*<svg className="img-25" aria-hidden="true">
                                         <use xlinkHref={`#icon-${getIconName(dyncmicItem.actionType.id)}`}></use>
                                     </svg>*/}
@@ -47,8 +49,7 @@ const DyncmicTimeAxis = (props) => {
                 }
             </div>:
             <div className='no-data'>
-                <img  src={noData}  style={{width:40,height:40}}/>
-                <div>暂无动态</div>
+                <EmptyText title={"暂无动态"}/>
             </div>
         }
     </div>

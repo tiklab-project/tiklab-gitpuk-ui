@@ -15,6 +15,7 @@ const RepositoryGroupAside= props =>{
 
 
     const [groupList,setGroupList]=useState([])
+    const [foldState,setFoldState]=useState()
 
     const {t} = useTranslation()
 
@@ -53,7 +54,7 @@ const RepositoryGroupAside= props =>{
         {
             id:`/group/${groupName}/repository`,
             title:`${t('Repository')}`,
-            icon: <BankOutlined />,
+            icon: <BankOutlined  className={`${foldState?'close-iconfont':'open-iconfont'}`}/>,
         },
       /*  {
             id:`/group/${groupName}/merge_requests`,
@@ -70,6 +71,7 @@ const RepositoryGroupAside= props =>{
                 repositoryAddress={groupName}
                 asideType={'group'}
                 setNavLevel={setNavLevel}
+                setFoldState={setFoldState}
             />
 
 }

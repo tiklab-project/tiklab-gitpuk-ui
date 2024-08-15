@@ -9,7 +9,6 @@ import React, {useState,useEffect} from "react";
 import BreadcrumbContent from "../../../common/breadcrumb/Breadcrumb";
 import {Col, Table} from "antd";
 import EmptyText from "../../../common/emptyText/EmptyText";
-import Listicon from "../../../common/list/Listicon";
 import XcodeUserStore from "../store/XcodeUserStore";
 import {observer} from "mobx-react";
 import "./UserList.scss"

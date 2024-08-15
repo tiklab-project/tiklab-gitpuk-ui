@@ -46,7 +46,6 @@ const Edit = props =>{
 
     // 编辑文件弹窗状态
     const [editFileVisible,setEditFileVisible]=useState(false)
-    debugger
 
     if(findCommitId(urlInfo)){
         props.history.go(-1)
@@ -84,7 +83,7 @@ const Edit = props =>{
         //     fileContent:previewValue,
         //     ...value
         // }).then(res=>{
-        //     res.code===0 && props.history.push(`/${webUrl}/tree/${urlInfo}`)
+        //     res.code===0 && props.history.push(`/${webUrl}/code/${urlInfo}`)
         // })
     }
 
@@ -96,7 +95,6 @@ const Edit = props =>{
 
     //更新文件
     const updateFile = (commitMessage) => {
-        debugger
         updateBareFile({
             branch:branch,
             repositoryId:repositoryInfo.rpyId,
@@ -125,7 +123,7 @@ const Edit = props =>{
                    {/* <div className='edit-content-head'>编辑文件</div>*/}
                     <div className='edit-content-title'>
                         <span className='edit-title'
-                              onClick={()=>props.history.push(`/repository/${webUrl}/tree/${branch}`)}
+                              onClick={()=>props.history.push(`/repository/${webUrl}/code/${branch}`)}
                         >{repositoryInfo.name}</span>
                             <span className='edit-title'>/</span>
                             <span className='edit-title'>

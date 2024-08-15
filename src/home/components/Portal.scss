@@ -1,4 +1,4 @@
-.frame{
+.gittok-portal{
     height: 100vh;
     overflow: hidden;
     &-header{
@@ -116,98 +116,13 @@
         }
     }
     &-content{
-      /*  height: var(--xcode-content-height);*/
+       /* height: var(--xcode-content-height);*/
     }
 }
-
-.header-outMenu,.header-helpMenu,.outMenu-lan-menu{
-    box-shadow: 0 4px 8px -2px #091e4240, 0 0 1px #091e424f;
-    border-radius: 4px;
-    background: #ffffff;
-    .header-dropdown-icon{
-        font-size: var(--thoughtware-icon-size-16);
-        padding-right: 10px;
-    }
+.portals-content{
+    background: var(--thoughtware-white);
+    height: var(--xcode-content-height);
 }
-
-.header-outMenu{
-    width: 240px;
-    .header-outMenu-top{
-        padding: 10px;
-        .outMenu-out{
-            display: flex;
-            align-items: center;
-            &-info{
-                padding-left: 15px;
-                overflow: hidden;
-                white-space: nowrap;
-                text-overflow: ellipsis;
-            }
-            &-name{
-                font-size: 15px;
-                width: 100%;
-                overflow: hidden;
-                white-space: nowrap;
-                text-overflow: ellipsis;
-            }
-            &-eamil{
-                font-size: 13px;
-                color: #999999;
-            }
-        }
-    }
-    .header-outMenu-lan{
-        border-top: 1px solid #f4f4f4;
-        .outMenu-lan{
-            padding: 10px;
-            &:hover{
-                background: #f4f4f4;
-                cursor: pointer;
-            }
-        }
-    }
-    .header-outMenu-out{
-        border-top: 1px solid #f4f4f4;
-        .outMenu-out{
-            padding: 10px;
-            border-radius: 0 0 4px 4px;
-            &:hover{
-                background: #f4f4f4;
-                cursor: pointer;
-            }
-        }
-    }
-}
-
-.outMenu-lan-menu{
-    position: absolute;
-    top: -46px;
-    left: -86px;
-    width: 80px;
-    .lan-menu{
-        padding: 10px;
-        border-radius: 0 0 4px 4px;
-        &:hover{
-            background: #f4f4f4;
-            cursor: pointer;
-        }
-    }
-}
-
-.header-helpMenu .header-helpMenu-item{
-    cursor: pointer;
-    padding: 10px;
-    &:hover{
-        background: #f4f4f4;
-    }
-    &:first-child{
-        border-radius: 4px 4px 0 0;
-    }
-    &:last-child{
-        border-radius: 0 0 4px 4px;
-    }
-}
-
 .text{
    /* color: #f6f6f6;*/
     font-size: 19px;

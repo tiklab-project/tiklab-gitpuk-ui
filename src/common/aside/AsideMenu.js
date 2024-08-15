@@ -46,7 +46,7 @@ const AsideMenu = props =>{
                     }
                     break
                 case 'repository':
-                    if(item.rpyId!==info.rpyId) { props.history.push(`/repository/${item.address}/tree`)}
+                    if(item.rpyId!==info.rpyId) { props.history.push(`/repository/${item.address}/code`)}
                     break
             }
             setIsLoading(true)

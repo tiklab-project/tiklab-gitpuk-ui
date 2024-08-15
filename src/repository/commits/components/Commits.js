@@ -19,6 +19,7 @@ import './Commits.scss';
 import commitsStore from "../store/CommitsStore"
 import fileStore from "../../file/store/FileStore";
 import branchStore from "../../branch/store/BranchStore";
+import SearchInput from "../../../common/input/SearchInput";
 const Commits = props =>{
 
     const {repositoryStore,match,location} = props
@@ -43,7 +44,7 @@ const Commits = props =>{
     const [commitName,setCommitName]=useState('')  //提交名称
     const [commitUser,setCommitUser]=useState()  //选择的提交用户
 
-    const [branchData,setBranchData]=useState(null)  //分支数据
+    const [branchData,setBranchData]=useState({type:"branch",value:branch})  //分支数据
 
     useEffect(()=>{
         if(repositoryInfo.name){
@@ -63,7 +64,7 @@ const Commits = props =>{
             findAllBranch(repositoryInfo.rpyId)
         }
         return ()=>setCommitsList()
-    },[repositoryInfo.name,location.pathname])
+    },[repositoryInfo.name,location.pathname,branchData])
 
 
 
@@ -105,7 +106,7 @@ const Commits = props =>{
         findBranchCommit({
             ...data,
             rpyId:repositoryInfo.rpyId,
-            branch:branch,
+            branch:branchData.value,
             findCommitId:findCommitId(urlInfo),
             number:number
         }).then(()=>{
@@ -148,7 +149,7 @@ const Commits = props =>{
      * @param item
      */
     const findFile = item => {
-        props.history.push(`/repository/${webUrl}/tree/${item.commitId+commitU4}`)
+        props.history.push(`/repository/${webUrl}/code/${item.commitId+commitU4}`)
     }
 
     const renderCommits = item => {
@@ -225,16 +226,12 @@ const Commits = props =>{
                             />
                         </div>
                         <div className='commits-filter-right'>
-
-                            <Input
-                                allowClear
+                            <SearchInput
                                 placeholder='搜索提交信息'
-                                value={commitName}
                                 onChange={onChangeSearch}
                                 onPressEnter={onSearch}
-                                prefix={<SearchOutlined className='input-icon'/>}
-                                style={{ width: 200 }}
                             />
+
                             <Select  value={commitUser} onChange={value=>changCommitsUser(value)} style={{minWidth:150}} placeholder='用户'>
                                 <Select.Option value={"all"}>{"所有"}</Select.Option>
                                 {

@@ -25,7 +25,7 @@ const RpySetting = props =>{
         return  <div key={item.id}
                      className={`setting-aside-item ${nav===item.id?'setting-aside-select':''} `}
                      onClick={()=>props.history.push(item.id)}
-                ><span className='setting-aside-item-title'>{t(item.title)}</span>
+                ><span className='setting-nav-text'>{t(item.title)}</span>
                 </div>
     }
 

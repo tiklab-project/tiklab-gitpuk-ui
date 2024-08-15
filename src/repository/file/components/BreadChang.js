@@ -19,7 +19,7 @@ const BreadChang = props => {
      * @param index
      */
     const breadJump = (name,index) =>{
-        let path = `/repository/${webUrl}/tree/${branch}`
+        let path = `/repository/${webUrl}/code/${branch}`
         for (let i = 1;i <= index;i++){
             path = path + '/' + name[i]
         }
@@ -59,7 +59,7 @@ const BreadChang = props => {
             />
             <div className='code-bread'>
                 <div className='bread-item'
-                     onClick={()=>branch && props.history.push(`/repository/${webUrl}/tree/${branch}`)}
+                     onClick={()=>branch && props.history.push(`/repository/${webUrl}/code/${branch}`)}
                 >{repositoryInfo.name}</div>
                 <div className='bread-item'> / </div>
                 { renderCodeBread(fileAddress) }

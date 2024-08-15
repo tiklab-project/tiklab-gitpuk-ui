@@ -120,7 +120,7 @@ const ScanPlayEditPop = (props) => {
 
     return(
         <Modals
-            open={editVisible}
+            visible={editVisible}
             onCancel={cancel}
             closable={false}
             footer={modalFooter}

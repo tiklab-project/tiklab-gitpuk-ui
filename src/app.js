@@ -11,38 +11,14 @@ import "./common/language/I18n";
 import "./index.scss";
 import "./assets/font_icon/iconfont";
 const App = ({allStore,routes}) => {
-
-    const {i18n} = useTranslation();
-    const [visible,setVisible] = useState(true)
-    const [initPluginData,setPluginData] = useState({
-        routes,
-        pluginStore:[],
-        languageStore:[]
-    })
-
-    useEffect(() => {
-        pluginLoader(routes,resources,i18n,fetchMethod,{'titit':'title'}).then(res => {
-            setPluginData(res)
-            setVisible(false)
-        })
-        return;
-    }, [])
-
-    if (visible) return <div>加载中</div>
-
     return (
-
-            <PluginProvider store={initPluginData} >
-                <Provider {...allStore}>
-                    <ConfigProvider locale={zhCN}>
-                        <HashRouter >
-                            { renderRoutes(initPluginData.routes) }
-                        </HashRouter>
-                    </ConfigProvider>
-                </Provider>
-            </PluginProvider>
-
-
+        <Provider {...allStore}>
+            <ConfigProvider locale={zhCN}>
+                <HashRouter>
+                    { renderRoutes(routes) }
+                </HashRouter>
+            </ConfigProvider>
+        </Provider>
     )
 }
 

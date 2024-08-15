@@ -50,7 +50,7 @@ const RepositoryDeletePop  = (props) => {
 
     return(
         <Modals
-            open={deleteVisible}
+            visible={deleteVisible}
             onCancel={cancel}
             closable={false}
             footer={modalFooter}

@@ -6,6 +6,12 @@ import Btn from '../../../common/btn/Btn';
 import Modals from '../../../common/modal/Modal';
 import {QuestionCircleOutlined} from "@ant-design/icons";
 import dayjs from 'dayjs';
+import advancedFormat from 'dayjs/plugin/advancedFormat'
+import customParseFormat from 'dayjs/plugin/customParseFormat'
+import localeData from 'dayjs/plugin/localeData'
+import weekday from 'dayjs/plugin/weekday'
+import weekOfYear from 'dayjs/plugin/weekOfYear'
+import weekYear from 'dayjs/plugin/weekYear'
 const AuthAdd = props =>{
 
     const {addVisible,setAddVisible,createAuth,updateAuthSsh,keysList,authData,setAuthData,andTitle} = props
@@ -21,11 +27,22 @@ const AuthAdd = props =>{
                 title: authData.title,
                 })
             setExpireTime(authData.expireTime)
+
+            /*引入dayjs插件*/
+            dayjs.extend(customParseFormat)
+            dayjs.extend(advancedFormat)
+            dayjs.extend(weekday)
+            dayjs.extend(localeData)
+            dayjs.extend(weekOfYear)
+            dayjs.extend(weekYear)
         }
         setHeight(autoHeight())
         return ()=>{
             window.onresize = null
         }
+
+
+
     },[height,authData,addVisible])
 
     window.onresize=() =>{
@@ -71,7 +88,7 @@ const AuthAdd = props =>{
         </>
     )
 
-    const defaultValue = dayjs('2024-01-01');
+
     return (
         <Modals
             visible={addVisible}
@@ -146,7 +163,7 @@ const AuthAdd = props =>{
                     <div>
                         {
                             ( expireTime&&expireTime!=="0")?
-                                <DatePicker onChange={onChange} defaultValue={defaultValue} />:
+                                <DatePicker onChange={onChange} defaultValue={dayjs(expireTime)} />:
                                 <DatePicker onChange={onChange}/>
                         }
 

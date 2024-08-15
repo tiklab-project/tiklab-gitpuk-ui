@@ -53,7 +53,7 @@ const MergePop = (props) => {
     )
     return(
         <Modals
-            open={visible}
+            visible={visible}
             onCancel={cancel}
             closable={false}
             footer={modalFooter}

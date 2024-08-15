@@ -1,0 +1,22 @@
+.branch-select{
+    min-width: 160px;
+    max-width: 330px;
+    margin-right: var(--thoughtware-padding-item);
+    .ant-select{
+        width: 100% !important;
+    }
+}
+.xcode-branch-select{
+    max-height: 200px;
+    flex: 1;
+    overflow-y: auto;
+    .branchSelect-title{
+        padding: 5px 0 5px 12px;
+        font-size: var(--thoughtware-font-12);
+        color: var(--thoughtware-gray-500);
+    }
+    .branchSelect-commit:hover{
+        background-color: #e7f6ff;
+    }
+}
+

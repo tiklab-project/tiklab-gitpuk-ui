@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from "react";
-import {Dropdown, Badge, Tooltip} from "antd";
+import {Dropdown, Badge, Tooltip, Layout} from "antd";
 import {useTranslation} from "react-i18next";
 import {getUser,productImg,productWhiteImg} from "thoughtware-core-ui";
 import {renderRoutes} from "react-router-config";
@@ -11,7 +11,6 @@ import { PortalDropdown } from "../../common/dropdown/DropdownMenu";
 import PortalMessage from "./PortalMessage";
 import "./Portal.scss";
 import FirstNav from "../../common/navigation/FirstNav"
-import PortalFeature from "./PortalFeature";
 /**
  * header 头部
  * @param props
@@ -20,7 +19,7 @@ import PortalFeature from "./PortalFeature";
  */
 const  Portal = props =>{
 
-    const {location,route,systemRoleStore,repositoryStore,AppLink,HelpLink,AvatarLink} = props
+    const {location,route,systemRoleStore,repositoryStore} = props
 
     const {getSystemPermissions} = systemRoleStore
     const {navLevel,setNavLevel}=repositoryStore
@@ -30,7 +29,6 @@ const  Portal = props =>{
     const [currentLink,setCurrentLink] = useState(path)
     const [visible,setVisible] = useState(false)
     const [unread,setUnread] = useState(0)
-
 
     useEffect(()=>{
         getSystemPermissions(getUser().userId)
@@ -88,19 +86,25 @@ const  Portal = props =>{
         })
     }
 
-    //点击图标跳转首页
-    const goHomePage = () => {
-        props.history.push(`/home`)
-    }
-
     return(
-        <div className='frame'>
+        <Layout className='gittok-portal'>
             {
-                navLevel===1?
-                <FirstNav {...props} HelpLink={HelpLink} AvatarLink={AvatarLink}/>:
-                    renderRoutes(route.routes)
+                navLevel===1&&
+                <FirstNav {...props}/>
             }
-        </div>
+            <Layout>
+                <div className='portals-content'>
+                    {renderRoutes(route.routes)}
+                </div>
+            </Layout>
+        </Layout>
+        /*<div className='frame'>
+            {
+                navLevel===1&&
+                <FirstNav {...props}/>
+            }
+            {renderRoutes(route.routes)}
+        </div>*/
 
        /* <div className="frame">
             <div className="frame-header">

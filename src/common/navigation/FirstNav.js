@@ -7,19 +7,40 @@
 
 import React ,{useEffect,useState}from 'react';
 import "./FirstNav.scss"
-import {CodeOutlined, SettingOutlined} from "@ant-design/icons";
-import {productWhiteImg} from "thoughtware-core-ui";
+import {
+    BellOutlined,
+    CaretLeftOutlined,
+    CaretRightOutlined,
+    CodeOutlined,
+    HomeOutlined,
+    SettingOutlined
+} from "@ant-design/icons";
+import {productImg,productFrameImg,productWhiteImg, productWhitePureImg} from "thoughtware-core-ui";
 import {renderRoutes} from "react-router-config";
 import {useTranslation} from "react-i18next";
 import homePage from "../../assets/images/img/homePage.png"
 import group from "../../assets/images/img/group.png"
 import repository from "../../assets/images/img/repository.png"
-import {Tooltip} from "antd";
-import Header from "../header/Header";
+import {Badge, Layout, Tooltip} from "antd";
+import TopNav from "./TopNav";
+import NavigationImage from "../image/NavigationImage";
+const {Sider} = Layout
 const FirstNav = (props) => {
-    const {location,HelpLink,AvatarLink}=props
+    const {location}=props
     const {i18n,t} = useTranslation()
+
+    const [theme, setTheme] = useState(localStorage.getItem("theme") ? localStorage.getItem("theme") : "default");
     const [navPath,setNavPath]=useState('')   //选中的导航栏路径
+
+    const [themeClass, setThemeClass] = useState("theme-gray")
+    //导航折叠状态
+    const [collapsed, setCollapsed] = useState(true);
+
+
+    useEffect(()=> {
+        getThemeClass(theme)
+        return null;
+    }, [theme])
 
     useEffect(async () => {
 
@@ -28,7 +49,9 @@ const FirstNav = (props) => {
                 setNavPath("/repository")
             }else if (location.pathname.startsWith("/group")){
                 setNavPath("/group")
-            }else {
+            }else if (location.pathname.startsWith("/index")){
+                setNavPath("/index")
+            } else {
                 setNavPath(location.pathname)
             }
 
@@ -36,25 +59,53 @@ const FirstNav = (props) => {
     }, [location.pathname]);
 
 
+    const getThemeClass = (theme) => {
+        let name
+        switch (theme) {
+            case "black":
+                name = "theme-black";
+                break;
+            case "gray":
+                name = "theme-gray";
+                break;
+            case "blue":
+                name = "theme-blue";
+                break;
+            default:
+                name = "theme-gray";
+                break;
+
+        }
+        setThemeClass(name)
+        setTheme(theme)
+        return name;
+    }
 
     let navigation = [
         {
             key: 'home',
-            id:`/home`,
+            id:`/index`,
             title:'home',
-            icon:   <img src={homePage} style={{ width:25,height:25}}/>
+            icon:  <HomeOutlined className={`${collapsed?'close-iconfont':'open-iconfont'}`}/>
         },
         {
             key: 'repository',
             id:`/repository`,
             title:'Repository',
-            icon:   <img src={repository} style={{ width:25,height:25}}/>
+            icon: <NavigationImage theme={theme} icon={"repository"} type={`${collapsed?'close':'open'}`}/>
         },
         {
             key: 'group',
             id:`/group`,
             title:'Repository_group',
-            icon:   <img src={group} style={{ width:24,height:24}}/>
+            icon: <NavigationImage theme={theme} icon={"group"} type={`${collapsed?'close':'open'}`}/>
+
+        },
+        {
+            key: 'setting',
+            id:`/setting/version`,
+            title:'设置',
+            icon:  <SettingOutlined className={`${collapsed?'close-iconfont':'open-iconfont'}`}/>
         },
     ];
 
@@ -73,41 +124,75 @@ const FirstNav = (props) => {
         }
     }
 
-
+    /**
+     * 点击折叠或展开菜单
+     */
+    const toggleCollapsed = () => {
+        setCollapsed(!collapsed)
+    }
     return(
         <div className="fist-nav">
-            <div className='fist-nav-style'>
-                <div>
+            <Sider trigger={null} collapsible collapsed={collapsed}
+                   className={`${themeClass } fist-nav-style`}
+                   collapsedWidth="75"
+                   width="200"
+            >
+                <div className='fist-tab-up'>
                     <div className='fist-nav-icon'>
-                        <img  src={productWhiteImg.sward }  style={{width:22,height:22}}/>
+                        {
+                            collapsed?
+                                <div className='fist-nav-close-icon'>
+                                    {
+                                        theme==='default'?
+                                            <img  src={productImg.sward }  className='icon-size'/>:
+                                            <img  src={productFrameImg.sward }  className='icon-size'/>
+                                    }
+
+                                </div>:
+                                <div className='fist-nav-open-icon'>
+                                    {
+                                        theme==='default'?
+                                            <img  src={productImg.sward }  className='icon-size'/>:
+                                            <img  src={productFrameImg.sward }  className='icon-size'/>
+                                    }
+                                    <div className='icon-text'>GitTok</div>
+                                </div>
+                        }
                     </div>
+
                     {navigation?.map(item=>{
                         return(
-                            <div key={item.key} className={`${navPath===item.id&&' fist-nav-tab-choice'} fist-nav-tab `} onClick={()=>cuteNav(item)} >
-                                <div className='table-nav-place'>
-                                    <div>{item.icon}</div>
-                                    <div> {t(item.title)}</div>
-                                </div>
+                            <div key={item.key} className={`${navPath===item.id&&' tab-link-active'} tab-link `} onClick={()=>cuteNav(item)} >
+                                {
+                                    collapsed?
+                                        <div className='table-close-nav'>
+                                            <div>
+                                                <div>{item.icon}</div>
+                                                <div> {t(item.title)}</div>
+                                            </div>
+                                        </div>:
+                                        <div className='table-open-nav'>
+                                            <div className='open-icon-style'>{item.icon}</div>
+                                            <div> {t(item.title)}</div>
+                                        </div>
+                                }
                             </div>
                         )
                     })}
                 </div>
 
-                <div className={`${navPath==="setting"&&' fist-nav-tab-choice'} fist-nav-setting `}  onClick={cutSetting}>
-                    <div className='table-nav-place'>
-                        <Tooltip title='设置' placement={"left"}>
-                            <SettingOutlined style={{fontSize:20}}/>
-                        </Tooltip >
+                <TopNav {...props} showType={"all"} collapsed={collapsed} setTheme={setTheme} />
+                <div className="menu-box-right-border" >
+                    <div className={"menu-box-isexpanded"} onClick={toggleCollapsed}>
+                        {
+                            collapsed ?
+                                <CaretRightOutlined  className='first-menu-expend-icon'/>
+                                :
+                                <CaretLeftOutlined className='first-menu-expend-icon'/>
+                        }
                     </div>
                 </div>
-            </div>
-
-            <div className='fist-data-tab'>
-                <Header {...props} AvatarLink={AvatarLink} HelpLink={HelpLink} />
-                <div className='fist-data-data'>
-                    {renderRoutes(props.route.routes)}
-                </div>
-            </div>
+            </Sider>
         </div>
     )
 }

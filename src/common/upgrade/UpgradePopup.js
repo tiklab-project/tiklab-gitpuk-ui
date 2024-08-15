@@ -20,7 +20,6 @@ const UpgradePopup = (props) => {
             window.open(`https://thoughtware.cn/account/subscribe/apply/gittok`)
         }
     }
-
     const modalFooter = (
         <>
             <Btn onClick={cancel} title={'取消'} isMar={true}/>
@@ -30,7 +29,7 @@ const UpgradePopup = (props) => {
 
     return(
         <Modals
-            open={visible}
+            visible={visible}
             onCancel={cancel}
             closable={false}
             footer={modalFooter}

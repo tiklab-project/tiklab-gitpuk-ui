@@ -21,7 +21,7 @@ import {observer} from "mobx-react";
 
 
 const PortalMessage = props =>{
-    const {visible,setVisible,unread,setUnread} = props
+    const {visible,setVisible,unread,setUnread,translateX} = props
     const {findMessageItemPage,updateMessageItem,deleteMessageItem}=MessageStore
 
     const [isLoading,setIsLoading] = useState(false)
@@ -140,13 +140,7 @@ const PortalMessage = props =>{
         }
     }
 
-    /**
-     * 判断仓库组||仓库是否还存在
-     * @param id
-     */
-    const isRepository = id =>{
 
-    }
 
 
 
@@ -174,6 +168,7 @@ const PortalMessage = props =>{
                     onClick={()=>goHref(item)}
                 >
                     <div className='message-item-left'>
+
                         <div className='message-item-icon'><MessageOutlined /></div>
                         <div className='message-item-center'>
                             <div className='message-item-user'>
@@ -211,69 +206,67 @@ const PortalMessage = props =>{
         </>
     )
 
-    return(
-        <Drawer
+    return visible &&<Drawer
             closable={false}
-            placement='right'
+            placement='left'
             onClose={closeMsg}
             visible={visible}
             maskStyle={{background:'transparent'}}
-            contentWrapperStyle={{width:450,top:48,height:'calc(100% - 48px)'}}
-            bodyStyle={{padding:0}}
-            className='xcode'
+            contentWrapperStyle={visible?{transform:`translateX(${translateX})`,width:450,height:'calc(100%)'}:{}}
+            className='custom-message'
         >
-            <div className='messageModal'>
-                <div className='messageModal-up'>
-                    <div className='messageModal-up-title'>
-                        <span className='messageModal-up-icon'><BellOutlined/></span>
-                        <span>消息</span>
-                    </div>
-                    <div className='messageModal-up-close' onClick={closeMsg}>
-                        <CloseOutlined />
-                    </div>
+        <div className='messageModal'>
+            <div className='messageModal-up'>
+                <div className='messageModal-up-title'>
+                    <span className='messageModal-up-icon'><BellOutlined/></span>
+                    <span>消息</span>
                 </div>
-                <div className='messageModal-content'>
-                    <div className='messageModal-title'>
-                        {
-                            tabs.map(item=>renderTabs(item))
-                        }
-                    </div>
-                    <div className='messageModal-list'>
-                        {
-                            renderMessageList(messageList)
-                        }
-                        {
-                            currentPage===totalPage&&state==='more'&&
-                            <Divider plain>没有更多了 🤐</Divider>
-                        }
-                        {
-                            totalPage===0&&
-                            <div>
-                                <EmptyText
-                                    title={emptyTitle}
-                                />
-                            </div>
-                        }
-                        {
-                            currentPage<totalPage && !isLoading &&
-                            <div
-                                className='messageModal-more'
-                                onClick={()=>moreMessage()}
-                            >
-                                加载更多...
-                            </div>
-                        }
-                        {
-                            isLoading &&
-                            <div className='messageModal-more'>
-                                <LoadingOutlined/>
-                            </div>
-                        }
-                    </div>
+                <div className='messageModal-up-close' onClick={closeMsg}>
+                    <CloseOutlined />
                 </div>
             </div>
-        </Drawer>
-    )
+            <div className='messageModal-content'>
+                <div className='messageModal-title'>
+                    {
+                        tabs.map(item=>renderTabs(item))
+                    }
+                </div>
+                <div className='messageModal-list'>
+                    {
+                        renderMessageList(messageList)
+                    }
+                    {
+                        currentPage===totalPage&&state==='more'&&
+                        <Divider plain>没有更多了 🤐</Divider>
+                    }
+                    {
+                        totalPage===0&&
+                        <div>
+                            <EmptyText
+                                title={emptyTitle}
+                            />
+                        </div>
+                    }
+                    {
+                        currentPage<totalPage && !isLoading &&
+                        <div
+                            className='messageModal-more'
+                            onClick={()=>moreMessage()}
+                        >
+                            加载更多...
+                        </div>
+                    }
+                    {
+                        isLoading &&
+                        <div className='messageModal-more'>
+                            <LoadingOutlined/>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </Drawer>
+
 }
 
 export default observer(PortalMessage)

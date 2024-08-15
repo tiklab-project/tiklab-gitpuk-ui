@@ -13,7 +13,7 @@
     .dyncmic-timeaxis-content {
         margin-top: 15px;
         .dyncmic-timeaxis-box {
-            
+
             .dyncmic-timeaxis-date {
                 margin-left: 10px;
                 padding: 0 10px;
@@ -60,7 +60,7 @@
                     position: relative;
                 }
 
-                .dyncmic-timeaxis-item-time::before {
+                /*.dyncmic-timeaxis-item-time::before {
                     content: "";
                     display: inline-block;
                     position: absolute;
@@ -70,7 +70,7 @@
                     height: 7px;
                     top: 6px;
                     left: -23px;
-                }
+                }*/
             }
 
             .dyncmic-showtimeaxis-item::before {
@@ -111,13 +111,13 @@
 
     .dyncmic-timeaxis-item:nth-child(4n+3) {
         .dynamic-user-icon {
-            background-color: #ffebee;
+            background-color:#f3caca;
         }
     }
 
     .dyncmic-timeaxis-item:nth-child(4n+4) {
         .dynamic-user-icon {
-            background-color: #e8eaf6;
+            background-color:#e1e1e8;
         }
     }
 }

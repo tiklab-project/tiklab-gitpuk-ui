@@ -156,6 +156,7 @@
         "slate-react": "^0.81.0",
         "thoughtware-core-ui": "^1.0.2",
         "thoughtware-eam-ui": "^1.0.2",
+        "thoughtware-licence-cloud-ui": "^1.0.0",
         "thoughtware-licence-ui": "^1.0.2",
         "thoughtware-message-ui": "^1.0.3",
         "thoughtware-plugin-core-ui": "^1.0.2",

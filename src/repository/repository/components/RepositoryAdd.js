@@ -108,7 +108,7 @@ const RepositoryAdd = props =>{
                 }).then(res=>{
 
                     if(res.code===0){
-                        props.history.push(`/repository/${(group?group.name:address)+"/"+values.address}/tree`)
+                        props.history.push(`/repository/${(group?group.name:address)+"/"+values.address}/code`)
                     }
                     createOpenRecord(res.data)
                 })

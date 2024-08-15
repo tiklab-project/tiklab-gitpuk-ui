@@ -43,7 +43,7 @@ const ScanSchemeEditPop = (props) => {
             })
             if (scanSchemeList){
                const list=scanSchemeList.filter(item=>item.id!==schemeDate.id)
-                
+
                 setVerifyScanSchemeList(list)
             }
         }
@@ -154,7 +154,7 @@ const ScanSchemeEditPop = (props) => {
 
     return(
         <Modals
-            open={editVisible}
+            visible={editVisible}
             onCancel={cancel}
             closable={false}
             footer={modalFooter}

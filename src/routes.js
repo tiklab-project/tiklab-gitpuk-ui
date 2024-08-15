@@ -30,6 +30,7 @@ const Survey=AsyncComponent(()=>import('./repository/survey/components/Survey'))
 const Repository=AsyncComponent(()=>import('./repository/repository/components/Repository'))
 const RepositoryAdd=AsyncComponent(()=>import('./repository/repository/components/RepositoryAdd'))
 const RepositoryAside=AsyncComponent(()=>import('./repository/navigator/RepositoryAside'))
+
 const File=AsyncComponent(()=>import('./repository/file/components/File'))
 const Blob=AsyncComponent(()=>import('./repository/file/components/Blob'))
 const Edit=AsyncComponent(()=>import('./repository/file/components/Edit'))
@@ -170,19 +171,19 @@ const routers = [
     {
         path: '/',
         exact:true,
-        render:()=><Redirect to={'/home'}/>,
+        render:()=><Redirect to={'/index'}/>,
     },
     {
         path:'/',
         component:Home,
         routes:[
             {
-                path:'/home',
+                path:'/index',
                 exact:true,
                 component:Homepage,
             },
             {
-                path:'/home/todoList',
+                path:'/index/todoList',
                 exact:true,
                 component:TodoPageList,
             },
@@ -196,7 +197,7 @@ const routers = [
                 component:Repository,
             },
             {
-                path:'/repository/new',
+                path:'/repository/add',
                 exact:true,
                 component:RepositoryAdd,
             },
@@ -225,9 +226,14 @@ const routers = [
                 component:RepositoryAside,
                 routes:[
                     {
-                        path:'/repository/:namespace/:name/survey',
+                        path:'/repository/:namespace/:name/overview',
                         exact: true,
                         component:Survey,
+                    },
+                    {
+                        path:'/repository/:namespace/:name/code',
+                        exact: true,
+                        component:File,
                     },
                     {
                         path:'/repository/:namespace/:name',
@@ -235,12 +241,12 @@ const routers = [
                         component:File,
                     },
                     {
-                        path:'/repository/:namespace/:name/tree',
+                        path:'/repository/:namespace/:name/code',
                         exact: true,
                         component:File,
                     },
                     {
-                        path:'/repository/:namespace/:name/tree/:branch',
+                        path:'/repository/:namespace/:name/code/:branch',
                         component:File,
                     },
                     {
@@ -264,7 +270,7 @@ const routers = [
                         component:Tag,
                     },
                     {
-                        path:'/repository/:namespace/:name/merge_requests',
+                        path:'/repository/:namespace/:name/mergeRequest',
                         exact:true,
                         component:RepositoryMerge,
                     },
@@ -284,7 +290,7 @@ const routers = [
                         component:MergeClashEdit,
                     },
                     {
-                        path:'/repository/:namespace/:name/commits/:branch',
+                        path:'/repository/:namespace/:name/commits',
                         component:Commits,
                     },
                     {
@@ -340,7 +346,7 @@ const routers = [
                             },
 
                             {
-                                path:'/repository/:namespace/:name/setting/member',
+                                path:'/repository/:namespace/:name/setting/user',
                                 component: RepositoryUser
                             },
                             {

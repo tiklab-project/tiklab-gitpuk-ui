@@ -35,12 +35,18 @@ const RepositoryThirdList = (props) => {
 
     const [toLeadState,setToLeadState]=useState(false)  //导入状态
 
+    //bitBucket 分页向后查询start数
+    const [currentPageStart,setCurrentPageStart]=useState(0)
+    const [nextPageStart,setNextPageStart]=useState(0)
+    const [pageStartList,setPageStartList]=useState([])
+
+
     useEffect( async ()=>{
         findLeadAuth(params.authId).then(res=>{
             setLeanAuth(res.data)
         })
         //获取第三方仓库数据
-        getThirdRepositoryList(currentPage)
+        getThirdRepositoryList(currentPage,nextPageStart)
     },[])
 
 
@@ -105,9 +111,9 @@ const RepositoryThirdList = (props) => {
     ]
 
     //分页获取第三方仓库数据
-    const getThirdRepositoryList = (page) => {
+    const getThirdRepositoryList = (page,nextPageStart) => {
         setIsLoading(true)
-        findThirdRepositoryList(params.authId,page).then(res=>{
+        findThirdRepositoryList({importAuthId:params.authId,page:page,nextPageStart:nextPageStart}).then(res=>{
             setIsLoading(false)
             if (res.code===0){
                 setRepositoryList(res.data?.dataList)
@@ -118,6 +124,12 @@ const RepositoryThirdList = (props) => {
                 setTotalPage(res.data.totalPage)
                 setCurrentPage(res.data.currentPage)
                 setTotalRecord(res.data.totalRecord)
+                if (res.data.totalPage>0){
+                    setCurrentPageStart(res.data.dataList[0].currentPageStart)
+                    setNextPageStart(res.data.dataList[0].nextPageStart)
+                    setPageStartList(res.data.dataList[0].pageStartList)
+                }
+
             }else {
                 if (res.msg.includes("401")){
                     message.error("认证信息无效")
@@ -158,22 +170,12 @@ const RepositoryThirdList = (props) => {
 
     // 导入第三方仓库
     const excToLead =async (record) => {
-        //setRepositoryRows(repositoryRows.filter(key=>key.thirdRepositoryId!==30375669))
         setToLeadState(true)
         toLeadRepository(
             {leadToList:repositoryRows,
                 userId:getUser().userId,
                 importAuthId:params.authId,
-            }
-            /*{repositoryName:record.repositoryName,
-                groupName:record.groupName,
-                repositoryUrl:record.repositoryUrl,
-                httpRepositoryUrl:record.httpRepositoryUrl,
-                thirdRepositoryId:record.thirdRepositoryId,
-                userId:getUser().userId,
-                rule:rule,
-                importAuthId:params.authId
-         }*/).then(record=>{
+            }).then(record=>{
             if (record.code===0&&record.data==="OK"){
                 timeTask(record.thirdRepositoryId)
             }else {
@@ -211,12 +213,19 @@ const RepositoryThirdList = (props) => {
      */
     const changPage =async (value) => {
         setCurrentPage(value)
-        getThirdRepositoryList(value)
-    }
+        if (value>currentPage){
+            getThirdRepositoryList(value,nextPageStart)
+        }else {
+            pageStartList.in
+            let index = pageStartList.findIndex(item => item === currentPageStart);
+            const pageStart=pageStartList[index-1]
+            getThirdRepositoryList(value,pageStart)
 
+        }
+    }
     //刷新查询
     const refreshFind = () => {
-        getThirdRepositoryList(currentPage)
+        getThirdRepositoryList(currentPage,currentPageStart)
     }
 
     // 执行中 修改状态

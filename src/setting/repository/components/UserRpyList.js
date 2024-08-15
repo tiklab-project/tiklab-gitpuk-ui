@@ -67,7 +67,9 @@ const UserRpyList = (props) => {
             render:(text,record)=>{
                 return (
                     <div className='user-rpy-table-name' onClick={()=>goDetails(text,record)}>
-                        <Listicon text={text}/>
+                        <Listicon text={text}
+                                  type={"common"}
+                        />
                         <div className='name-text'>
                             <div className='name-text-title'>
                                 <span className='name-text-name'>{ record?.address.substring(0, record?.address.indexOf("/",1))+"/"+record.name}</span>
@@ -149,7 +151,7 @@ const UserRpyList = (props) => {
      * @param record
      */
     const goDetails = (text,record) => {
-        props.history.push(`/repository/${record.address}/tree`)
+        props.history.push(`/repository/${record.address}/code`)
     }
 
     const goBack = () => {

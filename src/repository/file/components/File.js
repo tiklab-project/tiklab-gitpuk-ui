@@ -32,7 +32,7 @@ const File = props =>{
     const urlInfo = match.params.branch
 
     const branch = setBranch(urlInfo,repositoryInfo)
-    const fileAddress = setFileAddress(location,webUrl+"/tree/"+urlInfo)
+    const fileAddress = setFileAddress(location,webUrl+"/code/"+urlInfo)
 
 
     //文本框搜索
@@ -50,6 +50,7 @@ const File = props =>{
     useEffect(()=>{
         setData({type:'branch',value:branch})
     },[])
+
     useEffect(async ()=>{
         if(repositoryInfo.name){
             // 获取文件，同时监听路由变化
@@ -111,7 +112,7 @@ const File = props =>{
      * @param fileParent
      */
     const goFileParent = fileParent => {
-        props.history.push(`/repository/${webUrl}/tree/${urlInfo}${fileParent}`)
+        props.history.push(`/repository/${webUrl}/code/${urlInfo}${fileParent}`)
     }
 
     /**
@@ -235,7 +236,7 @@ const File = props =>{
                                         <Dropdown overlay={addFileMenu}
                                                   trigger={["click"]}
                                                   placement={"bottomCenter"}
-                                                  open={triggerVisible}
+                                                  visible={triggerVisible}
                                                   onOpenChange={visible=>setTriggerVisible(visible)}
                                         >
                                             <PlusOutlined/>

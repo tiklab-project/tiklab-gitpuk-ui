@@ -37,7 +37,9 @@ const CommitRepository = (props) => {
             render:(text,record)=>{
                 return (
                     <div className='repository-tables-name' onClick={()=>goDetails(record)}>
-                        <Listicon text={text}/>
+                        <Listicon text={text}
+                                  type={"common"}
+                        />
                         <div className='name-text'>
                             <div className='name-text-title'>
                                 <span className='name-text-name'>{ record?.address.substring(0, record?.address.indexOf("/",1))+"/"+record.name}</span>
@@ -67,7 +69,7 @@ const CommitRepository = (props) => {
 
     //跳转详情
     const goDetails =async (record) => {
-        props.history.push(`/repository/${record.address}/tree`)
+        props.history.push(`/repository/${record.address}/code`)
     }
 
     return(

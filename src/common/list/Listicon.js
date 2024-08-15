@@ -8,8 +8,8 @@ import "./Listicon.scss";
  * @returns {JSX.Element}
  * @constructor
  */
-const Listicon = ({text,colors}) => {
-    return  <span className={`xcode-listname-icon ${colors?`xcode-icon-${colors}`:"xcode-icon-1"}`}>
+const Listicon = ({text,colors,type}) => {
+    return  <span className={`xcode-listname-icon ${type}-width ${colors?`xcode-icon-${colors}`:"xcode-icon-1"}`}>
                 {text && text.substring(0,1).toUpperCase()}
             </span>
 

@@ -88,7 +88,7 @@ const RemoteCompile = (props) => {
 
     return(
         <Modal
-            open={open}
+            visible={open}
             onCancel={()=>close(false)}
             footer={modalFooter}
             closable={false}

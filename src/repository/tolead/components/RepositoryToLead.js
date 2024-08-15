@@ -12,6 +12,7 @@ import BreadcrumbContent from "../../../common/breadcrumb/Breadcrumb";
 import gitlab from "../../../assets/images/img/gitlab.png";
 import gitee from "../../../assets/images/img/gitee.png";
 import github from "../../../assets/images/img/github.png";
+import bitbucket from "../../../assets/images/img/bitbucket.png";
 import notice from "../../../assets/images/img/notice.png"
 import link from "../../../assets/images/img/link.png"
 import ToLeadStore from "../store/ToLeadStore"
@@ -71,7 +72,7 @@ const RepositoryToLead = (props) => {
     }
 
     const goDetails = (text,record) => {
-        props.history.push(`/repository/${record.repository.address}/tree`)
+        props.history.push(`/repository/${record.repository.address}/code`)
     }
 
     const columns = [
@@ -138,17 +139,17 @@ const RepositoryToLead = (props) => {
                     <BreadcrumbContent firstItem='导入外部仓库' goBack={goBack}/>
                     <div className='lead-content-title'>仓库导入方式</div>
                     <div className="lead-top">
-                        <div className={`lead-top-border  ${type==='url'&&'lead-border-blue'} lead-border-back `} onClick={()=>openInfo("url")}>
+                      {/*  <div className={`lead-top-border  ${type==='url'&&'lead-border-blue'} lead-border-back `} onClick={()=>openInfo("url")}>
                             <div className='lead-top-border-center' >
                                 <img  src={link}  style={{width:45,height:45}}/>
                             </div>
                             <div  className='lead-top-border-center lead-top-border-top'>URL导入</div>
-                        </div>
-                        <div className={`lead-top-border lead-top-left ${type==='priGitlab'&&'lead-border-blue'} lead-border-back`} onClick={()=>openInfo("priGitlab")}>
+                        </div>*/}
+                        <div className={`lead-top-border ${type==='priGitlab'&&'lead-border-blue'} lead-border-back`} onClick={()=>openInfo("priGitlab")}>
                             <div className='lead-top-border-center'>
                                 <img   src={gitlab}  style={{width:50,height:50}}/>
                             </div>
-                            <div className='lead-top-border-center'>私服 GitLab</div>
+                            <div className='lead-top-border-center'>私有 GitLab</div>
                         </div>
                         <div className={`lead-top-border lead-top-left ${type==='gitlab'&&'lead-border-blue'} lead-border-back`} onClick={()=>openInfo("gitlab")}>
                             <div className='lead-top-border-center'>
@@ -167,6 +168,12 @@ const RepositoryToLead = (props) => {
                                 <img  src={github}  style={{width:43,height:43}}/>
                             </div>
                             <div  className='lead-top-border-center lead-top-border-top'>GitHub</div>
+                        </div>
+                        <div className={`lead-top-border lead-top-left ${type==='bitbucket'&&'lead-border-blue'} lead-border-back`} onClick={()=>openInfo("priBitbucket")}>
+                            <div className='lead-top-border-center'>
+                                <img  src={bitbucket}  style={{width:41,height:41}}/>
+                            </div>
+                            <div  className='lead-top-border-center lead-top-border-top'>私有bitbucket</div>
                         </div>
                     </div>
                     {

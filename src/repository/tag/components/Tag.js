@@ -19,6 +19,7 @@ import {PrivilegeProjectButton} from 'thoughtware-privilege-ui';
 import Omit from "../../../common/omit/Omit";
 import EmptyText from "../../../common/emptyText/EmptyText";
 import DeleteExec from "../../../common/delete/DeleteExec";
+import SearchInput from "../../../common/input/SearchInput";
 const lis = [{id:1, title:'标签'},{id:2, title:'发行版'}]
 const Tag = props =>{
 
@@ -61,7 +62,7 @@ const Tag = props =>{
 
     //跳转file 界面
     const goFile = (value) => {
-        props.history.push(`/repository/${webUrl}/tree/${value.tagName}tag`)
+        props.history.push(`/repository/${webUrl}/code/${value.tagName}tag`)
     }
     //跳转commit 界面
     const goCommit = (value) => {
@@ -100,14 +101,12 @@ const Tag = props =>{
                                     <Btn
                                         type={'primary'}
                                         title={'新建标签'}
-                                        icon={<PlusOutlined/>}
                                         onClick={()=>setAddTagVisible(true)}
                                     />
                                 </PrivilegeProjectButton > :
                                 <Btn
                                     type={'primary'}
                                     title={'新建发行版'}
-                                    icon={<PlusOutlined/>}
                                     onClick={()=>setAddPublishVisible(true)}
                                 />
                         }
@@ -126,13 +125,10 @@ const Tag = props =>{
                         tabLis={lis}
                         onClick={clickType}
                     />*/}
-                        <Input
-                            allowClear
+                        <SearchInput
                             placeholder='搜索标签名称'
-                             onChange={onChangeSearch}
+                            onChange={onChangeSearch}
                             onPressEnter={onSearch}
-                            prefix={<SearchOutlined className='input-icon'/>}
-                            style={{ width: 200 }}
                         />
                     </div>
                     <div className='tag-tables'>

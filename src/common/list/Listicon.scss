@@ -3,12 +3,20 @@
     cursor: pointer;
 }
 
-.xcode-listname-icon{
-    display: inline-block;
+.closeNav-width{
+    width: var(--thoughtware-size-24);
+    line-height: var(--thoughtware-size-24);
+}
+
+.common-width{
     width: var(--thoughtware-icon-size-32);
     min-width: var(--thoughtware-icon-size-32);
     height: var(--thoughtware-icon-size-32);
     line-height: var(--thoughtware-icon-size-32);
+}
+
+.xcode-listname-icon{
+    display: inline-block;
     margin-right: 5px;
     border-radius: 4px;
     text-align: center;

@@ -8,7 +8,7 @@ import Btn from "../../../common/btn/Btn";
 import {Form, Input} from "antd";
 import fileStore from "../store/FileStore";
 const FolderCreatePop = (props) => {
-    const {folderVisible,setFolderVisible,repositoryInfo,data}=props
+    const {folderVisible,setFolderVisible,repositoryInfo}=props
     const [form] = Form.useForm()
 
     const {createBareFolder} = fileStore

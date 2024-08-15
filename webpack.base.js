@@ -120,7 +120,7 @@ module.exports = {
                 ),
             },
             {
-                test: /\.(png|jpg|jpeg|gif)/,
+                test: /\.(png|jpg|jpeg|gif|svg)/,
                 // exclude: /node_modules/,
                 use: {
                     loader: 'url-loader',

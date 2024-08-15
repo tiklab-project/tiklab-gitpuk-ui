@@ -38,10 +38,6 @@ const BranchSelect = props => {
     },[repositoryInfo.name])
 
 
-    const changDropList = () => {
-
-    }
-
     /**
      * 路由跳转
      * @param value
@@ -52,22 +48,22 @@ const BranchSelect = props => {
             case 'branch':
                 setData({type:valueType,value:value.branchName})
                 setSelectValue(value.branchName)
-                type==='commit'&&props.history.push(`/repository/${webUrl}/commits/${value.branchName}`)
-                type==='code'&&props.history.push(`/repository/${webUrl}/tree/${value.branchName}`)
+                //type==='commit'&&props.history.push(`/repository/${webUrl}/commits/${value.branchName}`)
+                type==='code'&&props.history.push(`/repository/${webUrl}/code/${value.branchName}`)
                 selectRef.current.blur(); // 关闭弹窗时使选择框失去焦点，从而关闭弹窗
                 break
             case 'tag':
                 setData({type:valueType,value:value.tagName})
                 setSelectValue(value.tagName)
-                type==='commit'&&props.history.push(`/repository/${webUrl}/commits/${value.tagName}`)
-                type==='code'&&props.history.push(`/repository/${webUrl}/tree/${value.tagName}tag`)
+                //type==='commit'&&props.history.push(`/repository/${webUrl}/commits/${value.tagName}`)
+                type==='code'&&props.history.push(`/repository/${webUrl}/code/${value.tagName}tag`)
                 selectRef.current.blur(); // 关闭弹窗时使选择框失去焦点，从而关闭弹窗
                 break
             case 'commit':
                 setData({type:valueType,value:value.tagName})
                 setSelectValue(value.tagName)
-                type==='commit'&&props.history.push(`/repository/${webUrl}/commits/${value.tagName}`)
-                type==='code'&&props.history.push(`/repository/${webUrl}/tree/${value.tagName}commit_id`)
+               // type==='commit'&&props.history.push(`/repository/${webUrl}/commits/${value.tagName}`)
+                type==='code'&&props.history.push(`/repository/${webUrl}/code/${value.tagName}commit_id`)
                 selectRef.current.blur(); // 关闭弹窗时使选择框失去焦点，从而关闭弹窗
                 break
 

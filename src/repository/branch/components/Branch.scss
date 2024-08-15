@@ -131,4 +131,13 @@
 
         }
     }
+
+    .branch-nav{
+        display: flex;
+        cursor: pointer;
+        padding: 3px 0 3px 16px;
+        &:hover{
+            background: #f5f5f5;
+        }
+    }
 }

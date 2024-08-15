@@ -44,7 +44,7 @@ const ThirdInfoPop = (props) => {
     )
     return(
         <Modals
-            open={visible}
+            visible={visible}
             onCancel={closeVisible}
             closable={false}
             footer={modalFooter}
@@ -60,13 +60,24 @@ const ThirdInfoPop = (props) => {
                 {
                     type==='priGitlab'&&
                     <Form.Item
-                        label='Gitlab地址'
+                        label='gitlab地址'
                         name='address'
                         rules={[{required:true,message:'请输入gitlab地址'}]}
                     >
                         <Input style={{background:'#fff'}}  placeholder="例：http://gitlab.my.net" />
                     </Form.Item>
                 }
+                {
+                    type==='priBitbucket'&&
+                    <Form.Item
+                        label='bitbucket地址'
+                        name='address'
+                        rules={[{required:true,message:'请输入bitbucket地址'}]}
+                    >
+                        <Input style={{background:'#fff'}}  placeholder="例：http://example.com" />
+                    </Form.Item>
+                }
+
                 <Form.Item
                     label='Access Token'
                     name='accessToken'

@@ -19,6 +19,7 @@ import {SpinLoading} from "../../../common/loading/Loading";
 import Page from "../../../common/page/Page";
 import UserIcon from "../../../common/list/UserIcon";
 import {PrivilegeButton} from 'thoughtware-privilege-ui';
+import SearchInput from "../../../common/input/SearchInput";
 const RepositoryGroup = props => {
 
     const {findRepositoryGroupPage} = groupStore
@@ -125,7 +126,10 @@ const RepositoryGroup = props => {
                 return (
                     <div className='repository-group-tables-name' onClick={()=>goDetails(text,record)}>
                         <div className='name-icon'>
-                            <Listicon text={text} colors={record.color}/>
+                            <Listicon text={text}
+                                      colors={record.color}
+                                      type={"common"}
+                            />
                         </div>
                         <div className='name-text'>
                             <span className='name-text-name text-color'>{text}</span>
@@ -224,13 +228,10 @@ const RepositoryGroup = props => {
                             onClick={clickType}
                         />
                         <div className='repository-group-type-input'>
-                            <Input
-                                allowClear
+                            <SearchInput
                                 placeholder='搜索仓库组名称'
                                 onChange={onChangeSearch}
                                 onPressEnter={onSearch}
-                                prefix={<SearchOutlined />}
-                                style={{ width: 200 }}
                             />
                         </div>
                     </div>

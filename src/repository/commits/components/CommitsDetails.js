@@ -227,7 +227,7 @@ const CommitsDetails = props =>{
      */
     const findFile = (type,item) => {
         if(type==='tree'){
-            props.history.push(`/repository/${webUrl}/tree/${commitId+commitU4}`)
+            props.history.push(`/repository/${webUrl}/code/${commitId+commitU4}`)
             return
         }
         props.history.push(`/repository/${webUrl}/blob/${commitId+commitU4}/${item.newFilePath}`)

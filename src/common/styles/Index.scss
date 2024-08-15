@@ -4,7 +4,7 @@ ul li{
     list-style: none;
 }
 
-.antd-custom,.ant-modal,.ant-drawer{
+.antd-custom,.ant-modal,.ant-drawer,.ant-table {
     .ant-form-item{
         margin-bottom: 20px !important;
     }
@@ -22,6 +22,8 @@ ul li{
         line-height: 1;
         content: "*";
     }
+
+
     .ant-form-item-label>label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
         display: none !important;
         content: "" !important;
@@ -50,10 +52,14 @@ ul li{
     }
     .ant-table-thead>tr>th{
         background: #ffffff;
-        padding: 8px;
         font-size: 13px;
         color: #777;
         font-weight: 600;
+        padding: 8px;
+    }
+
+    .ant-table-column-sorters{
+        padding: 1px;
     }
     .ant-table-tbody>tr>td{
         border: none;
@@ -102,22 +108,10 @@ ul li{
 }
 
 
-
-.xcode .ant-steps-item-process>.ant-steps-item-container>.ant-steps-item-icon{
-    background-color: var(--thoughtware-blue);
+.ant-table-thead > tr > th:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before {
+    background-color: #ffffff !important;
 }
 
-.xcode .ant-steps-item-finish .ant-steps-item-icon{
-    border-color: var(--thoughtware-blue);
-}
-
-.xcode .ant-steps-item-finish .ant-steps-finish-icon{
-    color: var(--thoughtware-blue);
-}
-
-.xcode .ant-steps-item-finish>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-title:after{
-    background-color: var(--thoughtware-blue);
-}
 
 /*ant-form 样式修改*/
 .xcode .ant-form{
@@ -155,13 +149,7 @@ ul li{
 
 
 /*ant-table 样式修改*/
-.xcode .ant-table-thead>tr>th{
-    background: #ffffff;
-    padding: 8px;
-    color: #666;
-    font-size: 13px;
-    font-weight: 600;
-}
+
 .xcode .ant-table-tbody>tr>td{
     border: none;
     padding: 8px ;
@@ -326,15 +314,46 @@ ul li{
     --xcode-hover-color: #edf0f5;
     --xcode-backdrop-color: #f7f7f7;
     --xcode-head-height: 48px;
-    --xcode-content-height: calc(100vh - 48px);
+    --xcode-content-height: 100% /* content 高度 calc(100vh - 48px)*/;
 
     --git-hover-color:var(--thoughtware-gray-300); /*hover颜色*/
     --git-action-color:var(--thoughtware-gray-400); /*选中*/
 
     --gittork-table-top:10px;
     --gittok-data-top-20:20px;
-    --gittork-data-top-30:30px
+    --gittork-data-top-30:30px;
 
+    --gittok-icon:26px ;  /*项目图标*/
+    --gittok-icon-top:11px;
+
+    /* 距离 */
+    --thoughtware-distance-13:13px;
+    --thoughtware-distance-15:15px;
+    --thoughtware-distance-18:18px;
+    --thoughtware-distance-20:20px;
+
+
+    /*大小 */
+    --thoughtware-size-15: 15px;
+    --thoughtware-size-16: 16px;
+    --thoughtware-size-18: 18px;
+    --thoughtware-size-20: 20px;
+    --thoughtware-size-22: 22px;
+    --thoughtware-size-24: 24px;
+    --thoughtware-size-26: 26px;
+    --thoughtware-size-32: 32px;
+
+    /*主题颜色*/
+    --thoughtware-motif-color-defult: #f7f7f7;
+    --thoughtware-motif-color-blue: #2f5eb1;
+    --thoughtware-motif-color-black: #131d30;
+
+    /*导航栏*/
+    --nav-left-space:20px;  /*导航栏左边距*/
+    --nav-left-border-size:3px;  /*导航栏左边框大小*/
+    --nav-icone-text-space:10px;  /*导航栏图标和文件间距  左右*/
+    --nav-icone-open-size:18px;  /*打开后的导航栏图标大小*/
+    --nav-icon-width:50px   /*导航栏图标宽度*/
 
 }
 .text-color:hover{

@@ -17,6 +17,7 @@ import './Branch.scss';
 import branchStore from "../store/BranchStore"
 import {getUser} from "thoughtware-core-ui";
 import {PrivilegeProjectButton} from 'thoughtware-privilege-ui';
+import SearchInput from "../../../common/input/SearchInput";
 const { confirm } = Modal;
 /**
  * 分支页面
@@ -75,7 +76,7 @@ const Branch = props =>{
      * @param item
      */
    const goCode = item =>{
-       props.history.push(`/repository/${webUrl}/tree/${item.branchName}`)
+       props.history.push(`/repository/${webUrl}/code/${item.branchName}`)
    }
 
    //输入搜索的分支名字
@@ -131,28 +132,34 @@ const Branch = props =>{
             <Menu.Item>
                 下载分支
             </Menu.Item>
+
             {
                 value.defaultBranch &&
-                <PrivilegeProjectButton code={"rpy_branch_delete"} domainId={repositoryInfo && repositoryInfo.rpyId}>
-                    <Menu.Item onClick={()=>DeletePop(value)} disabled={true}>
+                <Menu.Item onClick={()=>DeletePop(value)} disabled={true}>
+                    <PrivilegeProjectButton code={"rpy_branch_delete"} domainId={repositoryInfo && repositoryInfo.rpyId}>
                         <Tooltip placement="top" title={'默认分支不能被删除'} >
                             删除
                         </Tooltip>
-                    </Menu.Item>
-                </PrivilegeProjectButton > ||
+                    </PrivilegeProjectButton >
+                </Menu.Item>
+                ||
                 value?.mergeRequest?.mergeState===1&&
-                <PrivilegeProjectButton code={"rpy_branch_delete"} domainId={repositoryInfo && repositoryInfo.rpyId}>
                     <Menu.Item onClick={()=>DeletePop(value)} disabled={true}>
-                        <Tooltip placement="top" title={'存在开启的合并请求'} >
-                            删除
-                        </Tooltip>
+                        <PrivilegeProjectButton code={"rpy_branch_delete"} domainId={repositoryInfo && repositoryInfo.rpyId}>
+                            <Tooltip placement="top" title={'存在开启的合并请求'} >
+                                删除
+                            </Tooltip>
+                        </PrivilegeProjectButton >
                     </Menu.Item>
-                </PrivilegeProjectButton > ||
+                    ||
                 (!value.defaultBranch && !value?.mergeRequest?.mergeState!==1)&&
                 <PrivilegeProjectButton code={"rpy_branch_delete"} domainId={repositoryInfo && repositoryInfo.rpyId}>
-                    <Menu.Item onClick={()=>DeletePop(value)}>
-                        删除
-                    </Menu.Item>
+                    <div className='branch-nav'>
+                        <Menu.Item onClick={()=>DeletePop(value)}>
+                            {"删除"}
+                        </Menu.Item>
+                    </div>
+
                 </PrivilegeProjectButton >
             }
         </Menu>
@@ -269,7 +276,6 @@ const Branch = props =>{
                             <Btn
                                 type={'primary'}
                                 title={'新建分支'}
-                                icon={<PlusOutlined/>}
                                 onClick={()=>setAddVisible(true)}
                             />
                         </PrivilegeProjectButton>
@@ -293,14 +299,10 @@ const Branch = props =>{
                             ]}
                             onClick={clickBranchType}
                         />
-                        <Input
-                            allowClear
-                            value={branchName}
+                        <SearchInput
                             placeholder='搜索分支名称'
                             onChange={onChangeSearch}
                             onPressEnter={onSearch}
-                            prefix={<SearchOutlined className='input-icon'/>}
-                            style={{ width: 200 }}
                         />
                     </div>
                     <div className='branch-content-tables'>

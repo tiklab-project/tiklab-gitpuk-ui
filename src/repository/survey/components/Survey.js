@@ -20,6 +20,7 @@ import SurveyMergeReq from "../../../common/statistics/SurveyMergeReq";
 import SurveyMergeReview from "../../../common/statistics/SurveyMergeReview";
 import statisticsStore from "../../statistics/store/StatisticsStore";
 import SurveyUserCommit from "../../../common/statistics/SurveyUserCommit";
+import EmptyText from "../../../common/emptyText/EmptyText";
 const Survey = (props) => {
     const {repositoryStore,match,location} = props
     const {repositoryInfo} = repositoryStore
@@ -86,10 +87,7 @@ const Survey = (props) => {
                                             )
                                         })
                                         :
-                                        <div className='no-data'>
-                                            <img  src={noData}  style={{width:40,height:40}}/>
-                                            <div>暂无提交记录</div>
-                                        </div>
+                                        <EmptyText title={"暂无提交记录"}/>
                             }
                         </div>
                     </div>

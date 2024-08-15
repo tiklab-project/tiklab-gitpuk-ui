@@ -74,7 +74,6 @@ const RepositoryBasicInfo = props =>{
 
     //提交更新
     const onOk =async value => {
-        debugger
        let rules=powerType
        const repositoryPath=name+"/"+value.address;
         //仓库组为私有 仓库组下面的仓库也需改为私有仓库

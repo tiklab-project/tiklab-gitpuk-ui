@@ -1,14 +1,13 @@
 import React,{useEffect,useState} from 'react';
-import {DownOutlined, ExportOutlined, UpOutlined} from '@ant-design/icons';
+import {DownOutlined, ExportOutlined, HomeOutlined, UpOutlined} from '@ant-design/icons';
 import {PrivilegeButton,SystemNav} from 'thoughtware-privilege-ui';
 import {renderRoutes} from 'react-router-config';
 import {useTranslation} from 'react-i18next';
 import {inject, observer} from "mobx-react";
 import './SettingContent.scss';
-import {getUser,getVersionInfo} from "thoughtware-core-ui";
+import {getVersionInfo} from "thoughtware-core-ui";
 import UpgradePopup from "../../common/upgrade/UpgradePopup";
 import member from "../../assets/images/img/member.png";
-import goBack from "../../assets/images/img/goBack.png";
 
 const SettingContent= props =>  {
 
@@ -96,7 +95,7 @@ const SettingContent= props =>  {
     const renderMenu = (data,deep)=> {
         return (
             <PrivilegeButton key={data.id} code={data.purviewCode} {...props}>
-                <li style={{cursor:'pointer',paddingLeft:`${deep*20+25}`}}
+                <li style={{cursor:'pointer',paddingLeft:`${deep*20+28}`}}
                     className={`system-aside-li system-aside-second ${data.id=== selectKey ? 'system-aside-select' :null}`}
                     onClick={()=>skip(data)}
                     key={data.id}
@@ -120,7 +119,7 @@ const SettingContent= props =>  {
         return (
             <li key={item.id} className='system-aside-li'>
                 <div className='system-aside-item system-aside-first '
-                     style={{paddingLeft: `${deep * 20 + 30}`}}
+                     style={{paddingLeft: `${deep * 20 + 20}`}}
                      onClick={()=>setOpenOrClose(item.id)}
                 >
                     <span className='sys-content-tab-style'>
@@ -175,11 +174,15 @@ const SettingContent= props =>  {
         >
             <div className='system'>
                 <div className='system-aside'>
-                    <div className='system-aside-title-nav'>
-                        <img src={goBack} className='system-aside-icon' onClick={backHome}/>
-                        <div className='system-aside-title-text'>设置</div>
+                    <div className='system-icon' onClick={backHome}>
+                        <div className='aside-text-size'>设置</div>
                     </div>
-
+                    <div className='system-aside-goHome'>
+                        <div className='system-aside-title-nav' onClick={backHome}>
+                            <HomeOutlined className='system-aside-icon'/>
+                            <div>返回首页</div>
+                        </div>
+                    </div>
                     <ul className='system-aside-top' style={{padding:0}}>
                         {
                             menus().map(firstItem => {
@@ -189,9 +192,12 @@ const SettingContent= props =>  {
                         }
                     </ul>
                 </div>
-                <div className='system-content antd-custom'>
-                    {renderRoutes(route.routes)}
+                <div className='system-data-tab'>
+                    <div className='system-content antd-custom'>
+                        {renderRoutes(route.routes)}
+                    </div>
                 </div>
+
             </div>
             <UpgradePopup visible={upgradeVisible}
                           setVisible={setUpgradeVisible}

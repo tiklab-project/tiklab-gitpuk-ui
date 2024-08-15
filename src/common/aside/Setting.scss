@@ -2,6 +2,9 @@
     display: flex;
     width: 100%;
     height: 100%;
+    .setting-nav-text{
+        font-size: var(--thoughtware-font-14);
+    }
     .xcode-setting-aside{
         height: 100%;
         width: 180px;
@@ -13,6 +16,7 @@
             padding: 0 20px;
             font-weight: var(--thoughtware-font-weight-bold);
             border-bottom: 1px solid #ececec;
+
         }
         .setting-aside-item{
             padding: 8px 20px;

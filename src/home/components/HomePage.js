@@ -102,7 +102,7 @@ const HomePage = props =>{
      */
     const goDetails = repository => {
 
-        props.history.push(`/repository/${repository.address}/tree`)
+        props.history.push(`/repository/${repository.address}/code`)
     }
     /**
      * 跳转commit
@@ -114,7 +114,7 @@ const HomePage = props =>{
 
     //跳转待办界面
     const goTodoPag = () => {
-        props.history.push(`/home/todoList`)
+        props.history.push(`/index/todoList`)
     }
 
     //修改查询合并请求时间
@@ -126,29 +126,18 @@ const HomePage = props =>{
         setFindCommitTime(value)
     }
 
-    /**
-     * 字段过长省略
-     * @param value  当前字段参数
-     */
-    const filedState = (value) => {
-        return(
-            value?.length>17?
-                <Tooltip placement="right" title={value}>
-                    <div className='omit-text'>
-                        {value}
-                    </div>
-                </Tooltip>
-                :
-                <div>{value}</div>
-        )
-    }
-
     const openBorder = (item) => {
       return(
           <Fragment>
               <div className='houseRecent-border-flex'>
-                  <Listicon text={item?.repository?.name} colors={item?.repository.color}/>
-                  <div className='houseRecent-border-text' >{filedState(item?.repository?.name)}</div>
+                  <Listicon text={item?.repository?.name}
+                            colors={item?.repository.color}
+                            type={"common"}
+                  />
+                  <div className='houseRecent-border-text' >
+                      {/*{filedState(item?.repository?.name)}*/}
+                      {item?.repository?.name}
+                  </div>
               </div>
               <div className='houseRecent-border-flex houseRecent-border-text-top'>
                   <div className='houseRecent-border-desc'>
@@ -170,7 +159,7 @@ const HomePage = props =>{
             <Col sm={{ span: "24" }}
                  md={{ span: "24" }}
                  lg={{ span: "24" }}
-                 xl={{ span: "18", offset: "3" }}
+                 xl={{ span: "20", offset: "2" }}
                  xxl={{ span: "18", offset: "3" }}
             >
                 <div className='homePage-content'>
@@ -281,24 +270,7 @@ const HomePage = props =>{
                     <div className='home-todo'>
                         <div className='home-todo-title'>
                             <Guide title={'待办事项'} />
-                           {/* {
-                                todoTaskList&& todoTaskList.length>0?
-                                    <div>
-                                        <ArrowRightOutlined className='home-todo-title-icon' onClick={goTodoPag}/>
-                                    </div>:null
-
-                            }*/}
                         </div>
-                     {/*   <div className='home-todo-tab'>
-                            <Tabs
-                                type={todoTaskStatus}
-                                tabLis={[
-                                    {id:1, title:'进行中'},
-                                    {id:2, title:'已完成'},
-                                ]}
-                                onClick={clickType}
-                            />
-                        </div>*/}
                         <div className='home-todo-tab'>
                             <div className='todo-tab-item' onClick={goTodoPag}>
                                 <img src={all}  style={{width:32,height:32}}/>
@@ -329,16 +301,6 @@ const HomePage = props =>{
                                 </div>
                             </div>
                         </div>
-                        {/*<div className='home-todo-nav'>
-                            {
-                                todoTaskList&& todoTaskList.length>0?todoTaskList.map((item,index)=>{
-                                    return <HomePageTodo {...props} todoTask={item} index={index}/>
-                                }):   <div className='no-data'>
-                                    <img  src={noData}  style={{width:40,height:40}}/>
-                                    <div>暂无待办</div>
-                                </div>
-                            }
-                        </div>*/}
                     </div>
                 </div>
             </Col>

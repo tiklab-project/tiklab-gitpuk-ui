@@ -9,6 +9,7 @@ import AsyncComponent from "./common/lazy/SyncComponent";
 import xcodeZh from "./common/language/zh.json"
 
 //公共组件
+const SearchInput=AsyncComponent(()=>import('./common/input/SearchInput'))
 const Breadcrumb=AsyncComponent(()=>import('./common/breadcrumb/Breadcrumb'))
 const DeleteExec=AsyncComponent(()=>import('./common/delete/DeleteExec'))
 const Btn=AsyncComponent(()=>import('./common/btn/Btn'))
@@ -32,7 +33,7 @@ const TodoPageList=AsyncComponent(()=>import('./home/components/TodoPageList'))
 
 const WEBIDE=AsyncComponent(()=>import('./WEBIDE/components/WebIde'))
 
-
+const repository_white = require("./assets/images/img/repository-white.png").default;
 /**
  * 仓库
  */
@@ -155,7 +156,16 @@ const UserRpyList=AsyncComponent(()=>import('./setting/repository/components/Use
 //资源监控
 const Resources =AsyncComponent(()=>import('./setting/resources/components/Resources'))
 
+
+const gitTokImg = {
+    repository_white
+};
+
+
 export {
+    gitTokImg,
+
+    SearchInput,
     Routers,
     xcodeZh,
 

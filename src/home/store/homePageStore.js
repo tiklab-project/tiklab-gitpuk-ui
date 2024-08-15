@@ -64,7 +64,6 @@ class HomePageStore {
             status:status
         }
         const data = await Axios.post("/todo/findtodopage", param);
-        debugger
         return data;
     }
 

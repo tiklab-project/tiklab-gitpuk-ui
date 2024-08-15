@@ -183,7 +183,7 @@ const RemoteList = (props) => {
                />
            </Col>
            <RemoteCompile
-               open={addVisible}
+               visible={addVisible}
                setOpen={closeVisible}
                createRemoteInfo={createRemoteInfo}
                updateRemoteInfo={updateRemoteInfo}

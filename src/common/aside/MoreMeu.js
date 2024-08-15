@@ -12,13 +12,11 @@ import { useTranslation } from 'react-i18next';
 import { withRouter } from "react-router";
 import {EllipsisOutlined} from "@ant-design/icons";
 import {getVersionInfo} from "thoughtware-core-ui";
+import NavigationImage from "../image/NavigationImage";
 
 const MoreMeu = (props) => {
-    const {moreMenu, morePath,nav ,setUpgradeVisible} = props;
+    const {moreMenu,nav ,setUpgradeVisible,collapsed,theme} = props;
 
-
-    // 获取当前被激活的菜单
-    const path = props.location.pathname.split("/")[3];
     // 菜单的形式，宽菜单，窄菜单
     const [showMenu, setShowMenu] = useState(false);
 
@@ -26,7 +24,6 @@ const MoreMeu = (props) => {
     const setButton = useRef()
     // 菜单弹窗ref
     const modelRef = useRef()
-
     /**
      * 监听菜单的弹窗的显示与不显示
      */
@@ -74,10 +71,18 @@ const MoreMeu = (props) => {
         }
     }
 
+
     return (
         <div className='more-menu'>
             <div ref={setButton} className={`more-menu-aside-item`} onClick={() => showMoreMenu()}>
-                <EllipsisOutlined style={{fontSize:32}} />
+                {collapsed?<div className='close-nav-more'>
+                    <NavigationImage theme={theme} icon={"more"} type={"close"} />
+                        </div>:
+                    <div className='open-nav-more'>
+                        <NavigationImage theme={theme} icon={"more"} type={"open"} />
+                        <div>更多</div>
+                    </div>
+                }
             </div>
 
             <div    className={`more-menu-box ${showMenu ? "menu-show" : "menu-hidden"}`}

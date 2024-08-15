@@ -61,14 +61,11 @@ export class ToLeadStore{
 
     /**
      * 查询第三方仓库的仓库列表
-     * @param importAuthId
+     * @param param
      * @returns {Promise<*>}
      */
     @action
-    findThirdRepositoryList = async (importAuthId,page) =>{
-        const param=new FormData()
-        param.append("importAuthId",importAuthId)
-        param.append("page",page)
+    findThirdRepositoryList = async (param) =>{
         const data = await Axios.post('/toLead/findThirdRepositoryList',param)
         return data
     }

@@ -16,7 +16,7 @@ const RepositorySetting = props =>{
             title:`RepositoryInfo`,
         },
         {
-            id:`/repository/${webUrl}/setting/member`,
+            id:`/repository/${webUrl}/setting/user`,
             title:`Member`,
             purviewCode: "rpy_user",
         },

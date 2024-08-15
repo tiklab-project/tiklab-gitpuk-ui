@@ -13,7 +13,7 @@ const MergeClashPop = (props) => {
 
     return(
         <Modals
-            open={visible}
+            visible={visible}
             onCancel={()=>setVisible(false)}
             closable={false}
             destroyOnClose={true}

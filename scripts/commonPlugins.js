@@ -36,12 +36,10 @@ const commonPlugins = [
         'process.env.NODE_ENV': JSON.stringify(NODE_ENV),
         preventAssignment:true,
     }),
-    url({
-        include: ['**/*.svg', '**/*.png', '**/*.jpg'],
-        limit: 0,
-        fileName: '[name][extname]',
-        destDir: 'es/src/assets/images/svg',
-        publicPath: '/images/'
+    image({
+        output: `dist/images`,
+        extensions: /\.(png|jpg|jpeg|gif|svg)$/,
+        limit: 8192
     })
 ];
 

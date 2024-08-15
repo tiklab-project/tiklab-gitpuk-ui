@@ -91,12 +91,11 @@
                         margin:0 10px;
                     }
                     .houseRecent-border-text{
-                        display: flex;
-                        height: 32px;
-                        -webkit-box-align: center;
-                        align-items: center;
-                        -webkit-box-pack: justify;
-                        justify-content: space-between;
+                        flex: 1;
+                        overflow: hidden;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                        -o-text-overflow: ellipsis;
                         font-weight: 600;
                     }
                     .houseRecent-border-desc {
@@ -370,12 +369,6 @@
         text-align: center;
         color: #666666;
         /* min-height: 100px;*/
-    }
-    .omit-text{
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden;
-        max-width: 140px;
     }
 }
 

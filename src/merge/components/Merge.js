@@ -6,7 +6,7 @@
  */
 
 import React,{useEffect,useState} from 'react';
-import {Col, Input} from 'antd';
+import {Col} from 'antd';
 import {
     SearchOutlined,
     PullRequestOutlined,
@@ -21,6 +21,7 @@ import './Merge.scss';
 import MergeStore from "../store/MergeStore";
 import {inject, observer} from "mobx-react";
 import Page from "../../common/page/Page";
+import SearchInput from "../../common/input/SearchInput";
 
 
 const Merge = (props) => {
@@ -170,13 +171,10 @@ const Merge = (props) => {
                             tabLis={lis}
                             onClick={clickType}
                         />
-                        <Input
-                            allowClear
+                        <SearchInput
                             placeholder='搜索合并请求'
                             onChange={onChangeSearch}
                             onPressEnter={onSearch}
-                            prefix={<SearchOutlined className='input-icon'/>}
-                            style={{ width: 200 }}
                         />
                     </div>
                     <div className='merge-tables'>

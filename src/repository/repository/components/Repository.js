@@ -1,7 +1,6 @@
 import React,{useState,useEffect} from 'react';
-import {PlusOutlined,SearchOutlined} from '@ant-design/icons';
 import {inject,observer} from 'mobx-react';
-import {Col, Dropdown, Input} from 'antd';
+import {Col, Dropdown, Input, Menu} from 'antd';
 import BreadcrumbContent from '../../../common/breadcrumb/Breadcrumb';
 import Btn from '../../../common/btn/Btn';
 import Tabs from '../../../common/tabs/Tabs';
@@ -9,6 +8,7 @@ import RepositoryTable from "./RepositoryTable";
 import './Repository.scss';
 import {getUser} from "thoughtware-core-ui";
 import {PrivilegeButton} from 'thoughtware-privilege-ui';
+import SearchInput from "../../../common/input/SearchInput";
 const Repository = props => {
 
     const {repositoryStore} = props
@@ -135,27 +135,24 @@ const Repository = props => {
         }
     }
 
-    const items=[
-        {
-            key: '1',
-            label: (
-                <div  onClick={()=>props.history.push('/repository/new')}>
-                   新建仓库
-                </div>
-            ),
-        },
-        {
-            key: '2',
-            label: (
-                <div  onClick={()=>props.history.push('/repository/lead')}>
-                    导入仓库
-                </div>
-            ),
-        },
-    ]
+
+    const items = (
+            <Menu>
+                <Menu.Item>
+                    <div  onClick={()=>props.history.push('/repository/add')}>
+                        新建仓库
+                    </div>
+                </Menu.Item>
+                <Menu.Item>
+                    <div  onClick={()=>props.history.push('/repository/lead')}>
+                        导入仓库
+                    </div>
+                </Menu.Item>
+            </Menu>
+            );
 
     return(
-        <div className='repository gittok-width xcode'>
+        <div className='repository gittok-width xcode '>
             <Col sm={{ span: "24" }}
                 md={{ span: "24" }}
                 lg={{ span: "24" }}
@@ -166,7 +163,7 @@ const Repository = props => {
                     <BreadcrumbContent firstItem={'Repository'}/>
 
                     <PrivilegeButton  code={"gittok_rpy_add"} key={'gittok_rpy_add'} >
-                        <Dropdown  menu={{items}}  trigger={['click']} getPopupContainer={e => e.parentElement}>
+                        <Dropdown  overlay={items}  trigger={['click']} >
                             <Btn
                                 type={'primary'}
                                 title={'创建仓库'}
@@ -185,13 +182,10 @@ const Repository = props => {
                         ]}
                         onClick={clickType}
                     />
-                    <Input
-                        allowClear
-                        placeholder='搜索仓库名称'
-                        onChange={onChangeSearch}
-                        onPressEnter={onSearch}
-                        prefix={<SearchOutlined className='input-icon'/>}
-                        style={{ width: 200 }}
+                    <SearchInput {...props}
+                                 placeholder={"搜索仓库名称"}
+                                 onChange={onChangeSearch}
+                                 onPressEnter={onSearch}
                     />
                 </div>
                 <RepositoryTable

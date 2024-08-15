@@ -76,7 +76,6 @@ const RepositoryTable = props => {
             setColumnList(columns)
         }
         if (tab==='collect'){
-            debugger
             setTabType('collect')
         }
     },[collectList])
@@ -87,7 +86,7 @@ const RepositoryTable = props => {
      */
     const goDetails = (text,record) => {
         createOpenRecord(record.rpyId)
-        props.history.push(`/repository/${record.address}/tree`)
+        props.history.push(`/repository/${record.address}/code`)
     }
 
     /**
@@ -159,7 +158,10 @@ const RepositoryTable = props => {
             render:(text,record)=>{
                 return (
                     <div className='repository-tables-name' onClick={()=>goDetails(text,record)}>
-                        <Listicon text={text} colors={record.color}/>
+                        <Listicon text={text}
+                                  colors={record.color}
+                                  type={"common"}
+                        />
                         {
                             record.category===1?
                             <div className='name-text'>

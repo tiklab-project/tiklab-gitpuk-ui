@@ -57,7 +57,7 @@ const TimeTaskPop = (props) => {
 
     return(
         <Modals
-            open={visible}
+            visible={visible}
             onCancel={cancel}
             closable={false}
             footer={modalFooter}

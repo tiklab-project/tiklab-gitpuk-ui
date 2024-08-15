@@ -52,7 +52,7 @@ const RepositoryResetPop  = (props) => {
 
     return(
         <Modals
-            open={resetVisible}
+            visible={resetVisible}
             onCancel={cancel}
             closable={false}
             footer={modalFooter}

@@ -4,15 +4,17 @@ import {
     BarChartOutlined,
     BranchesOutlined, PullRequestOutlined,
     PushpinOutlined,
-    TagOutlined,
     TagsOutlined
 } from '@ant-design/icons';
 import {inject,observer} from 'mobx-react';
+import "./RepositoryAside.scss"
 import Aside from "../../common/aside/Aside";
 import {Loading} from '../../common/loading/Loading';
 import {getUser,getVersionInfo} from "thoughtware-core-ui";
 import member from "../../assets/images/img/member.png";
 import code from "../../assets/images/img/code.png";
+import NavigationImage from "../../common/image/NavigationImage";
+
 
 const RepositoryAside= props=>{
 
@@ -25,44 +27,51 @@ const RepositoryAside= props=>{
     const namespace = match.params.namespace
     const name = match.params.name
 
+    const [theme] = useState(localStorage.getItem("theme") ? localStorage.getItem("theme") : "default");
+
+
     const webUrl = `${match.params.namespace}/${match.params.name}`
     // 页面初始加载状态
     const [isLoading,setIsLoading] = useState(true);
 
     const [repositoryList,setRepositoryList]=useState([])
 
+    const [foldState,setFoldState]=useState()
+
 
     // 侧边第一栏导航
     const firstRouters=[
         {
-            id:`/repository/${namespace}/${name}/survey`,
+            id:`/repository/${namespace}/${name}/overview`,
             title:`概览`,
-            icon:<ApartmentOutlined />,
+            icon:<ApartmentOutlined className={`${foldState?'close-iconfont':'open-iconfont'}`}/>,
         },
         {
-            id:`/repository/${namespace}/${name}`,
+            id:`/repository/${namespace}/${name}/code`,
             title:`Code`,
-            icon: <img  src={code}  style={{width:20,height:20}}/>,
+           /* icon: <img  src={code}  style={{width:20,height:20}}/>,*/
+
+            icon: <NavigationImage theme={theme} icon={"code"} type={`${foldState?'close':'open'}`}/>
         },
         {
-            id:`/repository/${webUrl}/commits/${repositoryInfo && repositoryInfo.defaultBranch?repositoryInfo.defaultBranch:0}`,
+            id:`/repository/${webUrl}/commits`,
             title: `Commits`,
-            icon: <PushpinOutlined />,
+            icon: <PushpinOutlined className={`${foldState?'close-iconfont':'open-iconfont'}`}/>,
         },
         {
             id:`/repository/${webUrl}/branch`,
             title: `Branch`,
-            icon: <BranchesOutlined />,
+            icon: <BranchesOutlined className={`${foldState?'close-iconfont':'open-iconfont'}`}/>,
         },
         {
             id:`/repository/${webUrl}/tag`,
             title: `标签`,
-            icon: <TagsOutlined />,
+            icon: <TagsOutlined className={`${foldState?'close-iconfont':'open-iconfont'}`}/>,
         },
         {
-            id:`/repository/${webUrl}/merge_requests`,
+            id:`/repository/${webUrl}/mergeRequest`,
             title: `合并请求`,
-            icon: <PullRequestOutlined />,
+            icon: <PullRequestOutlined className={`${foldState?'close-iconfont':'open-iconfont'}`}/>,
         },
         {
             id:`/repository/${webUrl}/scanPlay`,
@@ -74,7 +83,7 @@ const RepositoryAside= props=>{
         {
             id:`/repository/${webUrl}/statistics/commit`,
             title: `统计`,
-            icon: <PullRequestOutlined />,
+            icon: <PullRequestOutlined className={`${foldState?'close-iconfont':'open-iconfont'}`}/>,
         },
     ]
 
@@ -141,6 +150,7 @@ const RepositoryAside= props=>{
                 repositoryAddress={webUrl}
                 asideType={'repository'}
                 setNavLevel={setNavLevel}
+                setFoldState={setFoldState}
             />
 }
 
