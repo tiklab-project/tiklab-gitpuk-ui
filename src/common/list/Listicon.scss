@@ -17,7 +17,6 @@
 
 .xcode-listname-icon{
     display: inline-block;
-    margin-right: 5px;
     border-radius: 4px;
     text-align: center;
     color: black;
@@ -42,4 +41,16 @@
 }
 .xcode-listname-name{
     color: var(--thoughtware-blue);
+}
+.closeNav-width{
+    width: var(--thoughtware-icon-size-32);
+    height: var(--thoughtware-icon-size-32);
+    line-height: var(--thoughtware-icon-size-32);
+}
+.openNav-width{
+    width: 24px;
+    height: 24px;
+}
+.icon-tab-mar{
+    margin-right: 5px;
 }

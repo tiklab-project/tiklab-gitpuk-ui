@@ -10,7 +10,7 @@ const Hooks = props => {
     const [addVisible,setAddVisible] = useState(false)
 
     return (
-        <div className='xcode gittok-width hooks'>
+        <div className='xcode  hooks'>
             <Col
                 sm={{ span: "24" }}
                 md={{ span: "24" }}

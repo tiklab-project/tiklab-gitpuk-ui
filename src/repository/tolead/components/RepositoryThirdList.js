@@ -269,7 +269,7 @@ const RepositoryThirdList = (props) => {
     }
 
     return(
-        <div className='xcode gittok-width third'>
+        <div className='xcode page-width third'>
             <Col sm={{ span: "24" }}
                  md={{ span: "24" }}
                  lg={{ span: "24" }}

@@ -33,10 +33,10 @@
       cursor: pointer;
     }
     .categoryNav-li:hover{
-      background-color: var(--git-hover-color);
+      background-color: var(--hover-color);
     }
     .choices-scheme-nav{
-      background-color: var( --git-action-color);
+      background-color: var(--thoughtware-gray-400);
     }
 
     .category-action {
@@ -121,7 +121,7 @@
     align-items: center;
   }
   .scanScheme-table{
-    padding-top: var(--gittork-table-top);
+    padding-top: var(--data-table-10);
   }
   .scanScheme-ill{
     margin: var(--thoughtware-padding-item) 0;

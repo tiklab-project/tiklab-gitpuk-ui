@@ -4,7 +4,7 @@ import {
     SoundOutlined,
     VerifiedOutlined,
     FileDoneOutlined,
-    DeploymentUnitOutlined, TeamOutlined
+    DeploymentUnitOutlined, TeamOutlined, SafetyCertificateOutlined
 } from '@ant-design/icons';
 import SettingContent from './SettingContent';
 import {templateRouter} from "./SettingRouters"

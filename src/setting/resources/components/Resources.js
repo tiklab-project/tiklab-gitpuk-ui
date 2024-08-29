@@ -23,7 +23,7 @@ const Resources = (props) => {
 
 
     return(
-        <div className='xcode gittok-width resources  '>
+        <div className='xcode page-width resources  '>
             <Col
                 sm={{ span: 24 }}
                 xs={{ span: 24 }}

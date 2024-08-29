@@ -5,7 +5,7 @@ import './PushRule.scss';
 
 const PushRule = props => {
     return (
-        <div className='xcode gittok-width push-rule'>
+        <div className='xcode  push-rule'>
             <Col
                 sm={{ span: "24" }}
                 md={{ span: "24" }}

@@ -12,12 +12,11 @@ import Btn from "../../../../common/btn/Btn";
 import {autoHeight} from '../../../../common/client/Client';
 
 const RemoteCompile = (props) => {
-    const {open,setOpen,createRemoteInfo,rpyId,remoteInfo,updateRemoteInfo}=props
+    const {visible,setOpen,createRemoteInfo,rpyId,remoteInfo,updateRemoteInfo}=props
     const [form] = Form.useForm()
 
     const [authWay,setAuthWay]=useState("password")  //认证方式
     const [height,setHeight] = useState(0)
-
     useEffect(()=>{
         setHeight(autoHeight())
         return ()=>{
@@ -88,7 +87,7 @@ const RemoteCompile = (props) => {
 
     return(
         <Modal
-            visible={open}
+            visible={visible}
             onCancel={()=>close(false)}
             footer={modalFooter}
             closable={false}

@@ -207,7 +207,7 @@ const RepositoryClean = (props) => {
 
     return(
         /*<div className='xcode-setting-with repository-setting-width xcode'>*/
-         <div className='xcode gittok-width '>
+         <div className='xcode  clean'>
             <Col
                 sm={{ span: "24" }}
                 md={{ span: "24" }}
@@ -216,7 +216,7 @@ const RepositoryClean = (props) => {
                 xxl={{ span: "18", offset: "3" }}
             >
                 <BreadcrumbContent firstItem={'仓库清理'}/>
-                <div className='clean'>
+                <div className='clean-table-style'>
                     <div className='clean-condition-style'>
                         <div className='clean-condition-title'>仓库名称:</div>
                         <div className='clean-condition-data'>{repository?.name}</div>

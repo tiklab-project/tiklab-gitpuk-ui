@@ -9,7 +9,7 @@ import {ProjectRole} from "thoughtware-privilege-ui";
  */
 const ProjectRoleContent = props =>{
 
-    return <ProjectRole {...props} bgroup={"gittok"} isBase={true}/>
+    return <ProjectRole {...props} bgroup={"gitpuk"} isBase={true}/>
 
 }
 

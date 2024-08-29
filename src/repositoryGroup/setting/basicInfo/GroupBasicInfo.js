@@ -209,7 +209,7 @@ const GroupBasicInfo = props =>{
 
 
     return(
-        <div className='groupSetting gittok-width xcode'>
+        <div className='groupSetting  xcode'>
             <Col
                 sm={{ span: "24" }}
                 md={{ span: "24" }}

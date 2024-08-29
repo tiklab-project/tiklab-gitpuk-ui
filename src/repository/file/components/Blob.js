@@ -68,7 +68,7 @@ const Blob = props =>{
     }
 
     return(
-        <div className=' xcode gittok-width blob'>
+        <div className=' xcode page-width blob'>
             <Col sm={{ span: "24" }}
                  md={{ span: "24" }}
                  lg={{ span: "24" }}

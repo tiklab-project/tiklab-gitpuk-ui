@@ -13,18 +13,12 @@ const {webpackGlobal} = require('./environment/environment_' + customEnv);
 module.exports = merge(baseWebpackConfig,{
     // 指定构建环境
     mode:'development',
-    output:{
-        path: path.resolve(__dirname, './dist'),
-        filename: 'assets/js/[name].[hash].js',
-        chunkFilename:'[name][chunkhash].js',
-        publicPath: '/',
-    },
     devtool: 'cheap-module-eval-source-map',
     // 插件
     plugins:[
         new HtmlWebpackPlugin({
             alwaysWriteToDisk: true,
-            title:'GitTok',
+            title:'gitpuk',
             template: path.resolve(__dirname, './public/index.template.html'),
             hash: false,
             filename: 'index.html',

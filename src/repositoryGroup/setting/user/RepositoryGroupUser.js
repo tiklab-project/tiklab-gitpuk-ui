@@ -23,7 +23,7 @@ const RepositoryGroupUser =(props)  => {
             <DomainUser
                 {...props}
                 domainId={groupInfo.groupId}
-                bgroup = {"gittok"}
+                bgroup = {"gitpuk"}
             />
         </div>
     )

@@ -5,7 +5,7 @@ import {Col} from "antd";
 
 const Issue = props => {
     return (
-        <div className='xcode gittok-width question'>
+        <div className='xcode page-width question'>
             <Col sm={{ span: "24" }}
                  md={{ span: "24" }}
                  lg={{ span: "24" }}

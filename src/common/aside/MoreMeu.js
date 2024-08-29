@@ -10,12 +10,12 @@ import React, { useEffect, useRef, useState } from "react";
 import "./MoreMeu.scss";
 import { useTranslation } from 'react-i18next';
 import { withRouter } from "react-router";
-import {EllipsisOutlined} from "@ant-design/icons";
+import {BarChartOutlined, EllipsisOutlined} from "@ant-design/icons";
 import {getVersionInfo} from "thoughtware-core-ui";
 import NavigationImage from "../image/NavigationImage";
 
 const MoreMeu = (props) => {
-    const {moreMenu,nav ,setUpgradeVisible,collapsed,theme} = props;
+    const {moreMenu,nav ,setUpgradeVisible,collapsed,theme,themeClass} = props;
 
     // 菜单的形式，宽菜单，窄菜单
     const [showMenu, setShowMenu] = useState(false);
@@ -40,7 +40,7 @@ const MoreMeu = (props) => {
      * @param {菜单key} key
      */
     const selectMenu = (item) => {
-        if (item.id.endsWith("scanPlay")&&(getVersionInfo().expired&&getVersionInfo().release!==3)){
+        if (item.id.endsWith("codeScan")&&(getVersionInfo().expired&&getVersionInfo().release!==3)){
             setUpgradeVisible(true)
         }else {
             props.history.push(item.id)
@@ -94,10 +94,18 @@ const MoreMeu = (props) => {
                                     key={index}
                                     onClick={() => selectMenu(item)}
                         >
-                            <span>{item.icon}</span>
+                            {
+                                item.title==="代码扫描"?
+                                    <BarChartOutlined className='rpy-nav-icon'/>
+                                 : <span>{item.icon}</span>
+                            }
                             <span>
                                 {item.title}
                             </span>
+                            {
+                                ( item.title==="代码扫描"&&getVersionInfo().expired)&& <div className='open-icon-vip'>{item.icon}</div>
+                            }
+
                         </div>
                     })}
                 </div>

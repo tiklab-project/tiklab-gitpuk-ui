@@ -30,7 +30,7 @@ const Usher = props =>{
     }
 
     return (
-        <div className='xcode gittok-width usher'>
+        <div className='xcode page-width usher'>
             <Col sm={{ span: "24" }}
                  md={{ span: "24" }}
                  lg={{ span: "24" }}

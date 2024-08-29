@@ -52,7 +52,7 @@ const TodoPageList = (props) => {
     }
 
     return(
-        <div className='todo-page gittok-width'>
+        <div className='todo-page page-width'>
             <Col sm={{ span: "24" }}
                  md={{ span: "24" }}
                  lg={{ span: "24" }}

@@ -115,7 +115,7 @@ const ScanEnvironment = (props) => {
     }
 
     return(
-        <div className='xcode gittok-width dev-deploy'>
+        <div className='xcode page-width dev-deploy'>
             <Col sm={{ span: "24" }}
                  md={{ span: "24" }}
                  lg={{ span: "24" }}

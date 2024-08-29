@@ -300,7 +300,7 @@ const MergeAddVerify = (props) => {
         props.history.go(-1)
     }
     return(
-        <div className='xcode gittok-width merge-verify'>
+        <div className='xcode page-width merge-verify'>
             <Col sm={{ span: "24" }}
                  md={{ span: "24" }}
                  lg={{ span: "24" }}

@@ -9,7 +9,7 @@ import {SystemRole} from "thoughtware-privilege-ui";
  */
 const SystemRoleTrue = props =>{
 
-    return <SystemRole {...props} bgroup={"gittok"} isBase={true}/>
+    return <SystemRole {...props} bgroup={"gitpuk"} isBase={true}/>
 
 }
 

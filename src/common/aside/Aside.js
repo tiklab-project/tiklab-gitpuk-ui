@@ -209,7 +209,7 @@ const Aside = props => {
 
     //跳转界面
     const goPage = (item) => {
-        if (item.id.endsWith("scanPlay")&&(getVersionInfo().expired&&getVersionInfo().release!==3)){
+        if (item.id.endsWith("codeScan")&&(getVersionInfo().expired&&getVersionInfo().release!==3)){
             setUpgradeVisible(true)
         }else {
             props.history.push(item.id)
@@ -244,20 +244,16 @@ const Aside = props => {
                             {
 
                                     collapsed?
-                                        <div className={`repository-nav`} onClick={(e)=>e.preventDefault()}>
-                                            <Tooltip placement="right" title={info?.name} >
-                                                <div>  <Listicon text={info?.name}
-                                                                 colors={info?.color}
-                                                                 type={"common"}
-                                                /></div>
-                                            </Tooltip >
-                                            <CaretDownOutlined  className='repository-nav-icon'/>
+                                        <div className={`repository-nav repository-nav-close`}   data-title-right={info?.name}>
+                                            <Listicon text={info?.name}
+                                                      colors={info?.color}
+                                                      type={"closeNav"}/>
                                         </div>:
                                         <div className='repository-nav' >
                                             <div>
                                                 <Listicon text={info.name}
                                                           colors={info?.color}
-                                                          type={"closeNav"}
+                                                          type={"openNav"}
                                                 />
                                             </div>
                                             <div className='repository-open-nav-name'>{info.name}</div>
@@ -271,14 +267,13 @@ const Aside = props => {
                     <div className='go-back-style'>
                         {
                             collapsed?
-                                <div className='nav-go-close-back tab-link' onClick={backHome}>
-                                     <HomeOutlined className='rpy-nav-icon'/>
-                                    <div>返回首页</div>
+                                <div className='nav-go-close-back tab-link' onClick={backHome} data-title-right={'返回首页'}>
+                                     <HomeOutlined className='rpy-nav-close-icon'/>
                                 </div>:
                                 <div className='nav-go-open-back tab-link' onClick={backHome}>
                                     <div className='nav-go-back-left'>
                                         <div className='nav-go-back-icon'>
-                                            <HomeOutlined className='rpy-nav-icon'/>
+                                            <HomeOutlined className='rpy-nav-open-icon'/>
                                         </div>
                                         <div>返回首页</div>
                                     </div>
@@ -296,6 +291,7 @@ const Aside = props => {
                                  setUpgradeVisible={setUpgradeVisible}
                                  collapsed={collapsed}
                                  theme={theme}
+                                 themeClass={themeClass}
                         />}
 
                 </div>

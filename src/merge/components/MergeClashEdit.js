@@ -62,7 +62,7 @@ const MergeClashEdit = (props) => {
     }
 
     return(
-        <div className='xcode gittok-width clash-edit'>
+        <div className='xcode page-width clash-edit'>
             <Col sm={{ span: "24" }}
                  md={{ span: "24" }}
                  lg={{ span: "24" }}

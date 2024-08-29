@@ -231,16 +231,6 @@ ul li{
     }
 }
 
-.gittok-width{
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    padding: 20px 30px;
-    min-width: 700px;
-   /* .ant-col{
-        min-width: 1280px;
-    }*/
-}
 
 
 ::-webkit-scrollbar {
@@ -309,23 +299,6 @@ ul li{
     --thoughtware-input-icon-15: 15px;
     --thoughtware-input-icon-16: 16px;
 
-    --xcode-sider-color: #efefef;
-    --xcode-select-color: #e3e8f0;
-    --xcode-hover-color: #edf0f5;
-    --xcode-backdrop-color: #f7f7f7;
-    --xcode-head-height: 48px;
-    --xcode-content-height: 100% /* content 高度 calc(100vh - 48px)*/;
-
-    --git-hover-color:var(--thoughtware-gray-300); /*hover颜色*/
-    --git-action-color:var(--thoughtware-gray-400); /*选中*/
-
-    --gittork-table-top:10px;
-    --gittok-data-top-20:20px;
-    --gittork-data-top-30:30px;
-
-    --gittok-icon:26px ;  /*项目图标*/
-    --gittok-icon-top:11px;
-
     /* 距离 */
     --thoughtware-distance-13:13px;
     --thoughtware-distance-15:15px;
@@ -353,9 +326,32 @@ ul li{
     --nav-left-border-size:3px;  /*导航栏左边框大小*/
     --nav-icone-text-space:10px;  /*导航栏图标和文件间距  左右*/
     --nav-icone-open-size:18px;  /*打开后的导航栏图标大小*/
-    --nav-icon-width:50px   /*导航栏图标宽度*/
+    --nav-icon-width:50px;   /*导航栏图标宽度*/
+    --project-setting-min-width:700px;   /*项目中的设置最小宽度*/
+
+
+    --hover-color: var(--thoughtware-gray-300) ;
+    --backdrop-color: #f7f7f7;
+    --home-height:48px;
+    --content-height-100:100%; /* content 高度 calc(100vh - 48px)*/;
+
+    --data-table-10:10px;
+    --data-top-20:20px;
+    --data-top-30:30px;
 
 }
+
+.page-width{
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    padding: 20px 30px;
+    /*   min-width: 700px;*/
+    .ant-col{
+        min-width: 900px;
+    }
+}
+
 .text-color:hover{
     color: #1890ff;
     cursor: pointer;

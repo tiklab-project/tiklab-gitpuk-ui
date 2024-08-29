@@ -4,14 +4,10 @@
     height: 100%;
     .system-icon{
         display: flex;
-        padding: var(--gittok-icon-top) 0;
+        padding: 11px 0;
         align-items: center;
         gap: var(--nav-icone-text-space);
         margin-left: var(--nav-left-space);
-        .icon-size{
-            width: var(--gittok-icon);
-            height: var(--gittok-icon);
-        }
         .icon-text{
             font-size: 22px;
         }
@@ -24,7 +20,7 @@
         flex-grow: 0;
         flex-shrink: 0;
         flex-basis: 220px;
-        background-color: var(--thoughtware-left-nav);
+        background-color: #f0f3fa;
         border-right: 1px solid #EBECF0;
         &-sys{
             width: 100%;
@@ -44,6 +40,7 @@
         .aside-text-size{
             font-size: 16px;
             font-weight: bolder;
+            cursor: pointer;
         }
         ul,li {
             list-style: none;
@@ -64,7 +61,7 @@
             padding-right: 7px;
         }
         .system-aside-first:hover {
-            background: var(--thoughtware-gray-300);
+            background: var(--thoughtware-gray-400);
         }
         .system-aside-second:hover{
             background: var(--thoughtware-gray-300);
@@ -102,11 +99,8 @@
 
     .system-data-tab{
         flex: 1;
-        .system-content{
-            /*    height: 100%;*/
-            overflow: auto;
-            height: var(--xcode-content-height)
-        }
+        overflow: auto;
+        height: var(--content-height-100)
     }
     .sys-content-tab-style{
         display: flex;

@@ -1,14 +1,14 @@
 {
-    "name": "thoughtware-gittok-ui",
+    "name": "thoughtware-gitpuk-ui",
     "version": "1.0.0",
-    "description": "thoughtware gittok",
+    "description": "thoughtware gitpuk",
     "main": "es/src/ui.js",
     "module": "es/src/ui.js",
     "files": [
         "es"
     ],
     "scripts": {
-        "gittok-start": "cross-env NODE_ENV=development CUSTOM_ENV=local webpack-dev-server --progress --config webpack.dev.js",
+        "gitpuk-start": "cross-env NODE_ENV=development CUSTOM_ENV=local webpack-dev-server --progress --config webpack.dev.js",
         "dev": "cross-env NODE_ENV=dev CUSTOM_ENV=dev webpack-dev-server --progress  --config webpack.dev.js --open",
         "build": "rimraf es/* && ./node_modules/.bin/babel src --copy-files --extensions .js --out-dir es/module && ncp ./src/ui.js es/index.js && ncp README.md es/README.md",
         "build:dev": "npm run build:dev:esm && npm run build:dev:cjs && npm run build:umd && npm run build:css",
@@ -22,7 +22,7 @@
         "build:umd": "rimraf dist && cross-env BABEL_ENV=umd rollup -c"
     },
     "keywords": [
-        "thoughtware-gittork"
+        "thoughtware-gitpuk"
     ],
     "author": "",
     "license": "ISC",

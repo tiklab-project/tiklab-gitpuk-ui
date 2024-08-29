@@ -85,7 +85,7 @@ const Tag = props =>{
     }
 
     return(
-        <div className='xcode gittok-width tag'>
+        <div className='xcode page-width tag'>
             <Col sm={{ span: "24" }}
                  md={{ span: "24" }}
                  lg={{ span: "24" }}

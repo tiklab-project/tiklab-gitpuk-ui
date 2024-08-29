@@ -59,7 +59,7 @@ class HomePageStore {
                 name: "createtime",
                 orderType: "desc"
             }],
-            bgroup: "gittok",
+            bgroup: "gitpuk",
             assignUserId:getUser().userId,
             status:status
         }

@@ -128,7 +128,7 @@ const RepositoryToLead = (props) => {
         },
         ]
     return(
-        <div className="xcode gittok-width lead">
+        <div className="xcode page-width lead">
             <Col sm={{ span: "24" }}
                  md={{ span: "24" }}
                  lg={{ span: "24" }}

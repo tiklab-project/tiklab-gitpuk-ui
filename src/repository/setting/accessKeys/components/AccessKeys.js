@@ -87,7 +87,7 @@ const AccessKeys = props => {
 
     return (
         <div className='keys'>
-            <div className='keys-content gittok-width xcode'>
+            <div className='keys-content  xcode'>
                 <Col
                     sm={{ span: "24" }}
                     md={{ span: "24" }}

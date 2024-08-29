@@ -101,12 +101,12 @@
     }
 
     .theme-gray {
-        background-color: var(--thoughtware-motif-color-defult);
+        background-color: #f0f3fa;
         .tab-link{
             cursor: pointer;
             border-left: var(--nav-left-border-size) solid transparent;
             &:hover{
-                background: var(--thoughtware-gray-300);
+                background: var(--thoughtware-gray-400);
             }
         }
         .tab-link-active {

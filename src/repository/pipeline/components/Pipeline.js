@@ -5,7 +5,7 @@ import {Col} from "antd";
 
 const Pipeline = props => {
     return (
-        <div className='xcode gittok-width pipeline'>
+        <div className='xcode page-width pipeline'>
             <Col sm={{ span: "24" }}
                  md={{ span: "24" }}
                  lg={{ span: "24" }}

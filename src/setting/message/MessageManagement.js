@@ -13,7 +13,7 @@ const ProjectMessageNoticeContent = props =>{
         <ProjectMessageNotice
             {...props}
             isBase={true}
-            bgroup={"gittok"} // 产品code
+            bgroup={"gitpuk"} // 产品code
         />
     )
 

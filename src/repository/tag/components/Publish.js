@@ -63,7 +63,7 @@ const Publish = props =>{
     const goBack = () =>setPublishDetails(false)
 
     return (
-        <div className='xcode gittok-width publish'>
+        <div className='xcode page-width publish'>
             <Col sm={{ span: "24" }}
                  md={{ span: "24" }}
                  lg={{ span: "24" }}

@@ -73,7 +73,7 @@ const CommitRepository = (props) => {
     }
 
     return(
-        <div className='xcode gittok-width repository'>
+        <div className='xcode page-width repository'>
             <Col
                 sm={{ span: 24 }}
                 xs={{ span: 24 }}

@@ -194,7 +194,7 @@ const File = props =>{
     }
 
     return(
-        <div className="xcode code gittok-width">
+        <div className="xcode code page-width">
             <Col sm={{ span: "24" }}
                  md={{ span: "24" }}
                  lg={{ span: "24" }}

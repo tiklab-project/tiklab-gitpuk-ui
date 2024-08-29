@@ -13,7 +13,7 @@
         border-right: 1px solid #EBECF0;
 
         .rpy-close-nav-repository{
-            margin-left: var(--thoughtware-distance-20);
+           /* margin-left: var(--thoughtware-distance-20);*/
         }
         .rpy-open-nav-repository{
             margin-left: var(--thoughtware-distance-15);
@@ -51,12 +51,12 @@
 
 
     .theme-gray {
-        background-color: var(--thoughtware-motif-color-defult);
+        background-color: #f0f3fa;;
         .tab-link{
             cursor: pointer;
             border-left: var(--nav-left-border-size) solid transparent;
             &:hover{
-                background: var(--thoughtware-gray-300);
+                background: var(--thoughtware-gray-400);
             }
         }
         .tab-link-active {
@@ -172,7 +172,10 @@
         }
     }
 
-    .rpy-nav-icon{
+    .rpy-nav-close-icon{
+        font-size: 24px;
+    }
+    .rpy-nav-open-icon{
         font-size: 18px;
     }
 }
@@ -202,23 +205,15 @@
     min-width: 76px;
 }
 
-
-
-/*.aside-dropdown {
-    top: 48px !important;
-    box-shadow: 0 4px 8px -2px #091e4240, 0 0 1px #091e424f;
-    border-radius: 4px;
-    background-color: #ffffff;
-    left: 80px !important;
-
-}*/
+.repository-nav-close{
+    flex-direction: column;
+}
 
 .repository-nav{
     display: flex;
     margin-top: 20px;
     align-items: center;
     cursor: pointer;
-    margin-right: 5px;
     .repository-open-nav-name{
         flex: 1;
         text-overflow: ellipsis;

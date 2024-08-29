@@ -179,7 +179,7 @@ const StatisticsCommit = props =>{
 
     }
     return (
-        <div className='drop-down gittok-width statistics'>
+        <div className='drop-down  statistics'>
             <Col sm={{ span: "24" }}
                  md={{ span: "24" }}
                  lg={{ span: "24" }}

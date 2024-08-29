@@ -183,11 +183,11 @@ const UserRpyList = (props) => {
 
     }
     return(
-        <div className='xcode gittok-width user-rpy'>
+        <div className='xcode page-width user-rpy'>
             <Col sm={{ span: "24" }}
                  md={{ span: "24" }}
                  lg={{ span: "24" }}
-                 xl={{ span: "20", offset: "2" }}
+                 xl={{ span: "22", offset: "1" }}
                  xxl={{ span: "18", offset: "3" }}
             >
                 <BreadcrumbContent firstItem={'用户'} secondItem={'仓库'} goBack={goBack}/>

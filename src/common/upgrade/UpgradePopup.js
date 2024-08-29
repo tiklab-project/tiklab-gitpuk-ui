@@ -15,9 +15,9 @@ const UpgradePopup = (props) => {
 
     const onOk = () => {
         if (getVersionInfo().release===3){
-            window.open(`https://work.thoughtware.cn/#/enterprise/application/gittok`)
+            window.open(`https://work.thoughtware.cn/#/enterprise/application/gitpuk`)
         }else {
-            window.open(`https://thoughtware.cn/account/subscribe/apply/gittok`)
+            window.open(`https://thoughtware.cn/account/subscribe/apply/gitpuk`)
         }
     }
     const modalFooter = (

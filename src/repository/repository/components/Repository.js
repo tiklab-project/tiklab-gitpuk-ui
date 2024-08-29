@@ -152,7 +152,7 @@ const Repository = props => {
             );
 
     return(
-        <div className='repository gittok-width xcode '>
+        <div className='repository page-width xcode '>
             <Col sm={{ span: "24" }}
                 md={{ span: "24" }}
                 lg={{ span: "24" }}
@@ -163,12 +163,12 @@ const Repository = props => {
                     <BreadcrumbContent firstItem={'Repository'}/>
 
                     <PrivilegeButton  code={"gittok_rpy_add"} key={'gittok_rpy_add'} >
-                        <Dropdown  overlay={items}  trigger={['click']} >
-                            <Btn
-                                type={'primary'}
-                                title={'创建仓库'}
-                                /* icon={<PlusOutlined/>}*/
-                            />
+                        <Dropdown
+                            overlay={items}
+                            trigger={['click']}
+                            getPopupContainer={triggerNode => triggerNode.parentElement}
+                        >
+                            <Btn type={'primary'} title={'创建仓库'}/>
                         </Dropdown>
                     </PrivilegeButton>
                 </div>

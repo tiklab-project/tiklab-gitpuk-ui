@@ -1,4 +1,9 @@
 .groupSetting{
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    padding: 20px 30px;
+    min-width: var(--project-setting-min-width);
     .groupSetting-up{
         padding-bottom: var(--thoughtware-padding-item);
     }
@@ -46,6 +51,7 @@
         }
         .groupSetting-li-bottom{
             padding:10px 20px;
+            background-color: white;
         }
         .groupSetting-li-none{
             display: none;

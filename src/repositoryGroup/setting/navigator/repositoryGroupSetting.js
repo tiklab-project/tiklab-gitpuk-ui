@@ -12,7 +12,7 @@ const RepositoryGroupSetting = props =>{
     const secondRouter = [
         {
             id:`/group/${groupName}/setting/info`,
-            title:`Setting`,
+            title:`仓库组信息`,
         },
         {
             id:`/group/${groupName}/setting/member`,

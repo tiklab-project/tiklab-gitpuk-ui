@@ -10,12 +10,12 @@ const featureList = [
     {
         "id": "23rfsd",
         "productType": {
-            "id": "gittok",
+            "id": "gitpuk",
             "code": null,
             "typeName": null
         },
         "type": "ee",
-        "name": "gittok-企业版",
+        "name": "gitpuk-企业版",
         "price": "45",
         "version": "V1.0.2",
         "createTime": "2024-01-31 16:17:04.831",
@@ -131,7 +131,7 @@ const featureList = [
             "typeName": null
         },
         "type": "ce",
-        "name": "gittok-社区版",
+        "name": "gitpuk-社区版",
         "price": "0",
         "version": "V1.0.1",
         "createTime": "2024-01-31 16:17:04.831",
@@ -233,12 +233,12 @@ const featureList = [
     {
         "id": "2a4627413bef",
         "productType": {
-            "id": "gittok",
+            "id": "gitpuk",
             "code": null,
             "typeName": null
         },
         "type": "cloud-free",
-        "name": "gittok-线上免费版",
+        "name": "gitpuk-线上免费版",
         "price": "0",
         "version": null,
         "createTime": "2024-03-26 10:56:04.821",
@@ -365,12 +365,12 @@ const featureList = [
     {
         "id": "a6305e348d38",
         "productType": {
-            "id": "gittok",
+            "id": "gitpuk",
             "code": null,
             "typeName": null
         },
         "type": "cloud-pay",
-        "name": "gittok-线上付费版",
+        "name": "gitpuk-线上付费版",
         "price": "15",
         "version": null,
         "createTime": "2024-03-26 10:56:24.921",

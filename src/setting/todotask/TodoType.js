@@ -9,7 +9,7 @@ import {TodoType} from "thoughtware-message-ui";
  */
 const TodoTypeContent = props =>{
 
-    return <TodoType {...props} bgroup={"gittok"}/>
+    return <TodoType {...props} bgroup={"gitpuk"}/>
 
 }
 

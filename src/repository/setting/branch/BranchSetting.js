@@ -231,7 +231,7 @@ const BranchSetting = (props) => {
     ]
 
     return(
-        <div className='drop-down  xcode gittok-width branch-setting'>
+        <div className='drop-down  xcode  branch-setting'>
             <Col
                 sm={{ span: "24" }}
                 md={{ span: "24" }}

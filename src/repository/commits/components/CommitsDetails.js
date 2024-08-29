@@ -280,7 +280,7 @@ const CommitsDetails = props =>{
     }
 
     return (
-        <div className='xcode gittok-width commitsDetails' id='commits_contrast'  onScroll={handleScroll}>
+        <div className='xcode page-width commitsDetails' id='commits_contrast'  onScroll={handleScroll}>
             <Col sm={{ span: "24" }}
                  md={{ span: "24" }}
                  lg={{ span: "24" }}

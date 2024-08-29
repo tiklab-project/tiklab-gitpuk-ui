@@ -1,7 +1,7 @@
 
 import React,{useState,useEffect} from "react";
 import {Badge, Dropdown, Tooltip} from "antd";
-import {AppstoreOutlined, BellOutlined, QuestionCircleOutlined} from "@ant-design/icons";
+import {AppstoreOutlined, BellOutlined, QuestionCircleOutlined, SettingOutlined} from "@ant-design/icons";
 import "./TopNav.scss"
 import {AppLink,HelpLink,AvatarLink} from "thoughtware-licence-ui";
 import {AppLink as CloudAppLink,HelpLink as CloudHelpLink,AvatarLink as CloudAvatarLink} from "thoughtware-licence-cloud-ui";
@@ -22,8 +22,24 @@ const TopNav = (props) => {
         localStorage.setItem("theme", type)
     }
 
+    const goSetting = () => {
+        props.history.push('/setting/home')
+    }
+
     return(
         <div className='top-nav'>
+            <div className='tab-link'>
+                {
+                    collapsed?
+                        <div className="close-top-tab" onClick={goSetting} data-title-right='设置'>
+                            <SettingOutlined className={`close-iconfont `} />
+                        </div>:
+                        <div className='open-top-tab' onClick={goSetting}>
+                            <div className={` open-iconfont`}> <SettingOutlined /></div>
+                            <div>设置</div>
+                        </div>
+                }
+            </div>
             <div className='tab-link'>
                 {
                     collapsed?
@@ -37,7 +53,7 @@ const TopNav = (props) => {
                 }
             </div>
             <div className='tab-link'>
-                {version!=='cloud'?<HelpLink  bgroup={'gittok'}
+                {version!=='cloud'?<HelpLink  bgroup={'gitpuk'}
                                               iconComponent={
                                                   collapsed ?
                                                       <div className='close-top-tab' data-title-right='帮助'>
@@ -50,7 +66,7 @@ const TopNav = (props) => {
                                                       </div>
                                               }
                 />:<CloudHelpLink
-                    bgroup={'gittok'}
+                    bgroup={'gitpuk'}
                     iconComponent={
                         collapsed ?
                             <div className='close-top-tab' data-title-right='帮助'>

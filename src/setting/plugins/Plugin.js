@@ -9,7 +9,7 @@ import {Plugin} from "thoughtware-plugin-manager-ui";
  */
 const PluginContent = props =>{
 
-    return <Plugin {...props}  bgroup={"gittok"}/>
+    return <Plugin {...props}  bgroup={"gitpuk"}/>
 
 }
 

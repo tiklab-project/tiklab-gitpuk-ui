@@ -262,7 +262,7 @@ const Branch = props =>{
     }
 
     return(
-        <div className='xcode gittok-width branch'>
+        <div className='xcode page-width branch'>
             <Col sm={{ span: "24" }}
                  md={{ span: "24" }}
                  lg={{ span: "24" }}

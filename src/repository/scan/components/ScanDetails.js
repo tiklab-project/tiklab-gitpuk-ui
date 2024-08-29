@@ -72,7 +72,7 @@ const ScanDetails = (props) => {
     }
 
     return(
-        <div className='xcode gittok-width scanDetails   '>
+        <div className='xcode page-width scanDetails   '>
             <Col sm={{ span: "24" }}
                  md={{ span: "24" }}
                  lg={{ span: "24" }}

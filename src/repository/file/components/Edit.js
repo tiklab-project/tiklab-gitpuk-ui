@@ -111,7 +111,7 @@ const Edit = props =>{
 
 
     return(
-        <div className='xcode gittok-width xcode-edit'>
+        <div className='xcode page-width xcode-edit'>
             <Col sm={{ span: "24" }}
                  md={{ span: "24" }}
                  lg={{ span: "24" }}

@@ -48,7 +48,7 @@ const RemoteList = (props) => {
             width:'50%',
             ellipsis:true,
         },
-        {
+     /*   {
             title: '开启定时',
             dataIndex: 'timedState',
             key: 'timedState',
@@ -59,7 +59,7 @@ const RemoteList = (props) => {
                     <Switch checkedChildren="开启" unCheckedChildren="关闭" checked={text===0?false:true}  onChange={(r)=>changeTimeState(record)} />
                 </Space>
             )
-        },
+        },*/
         {
             title: '操作',
             dataIndex: 'action',
@@ -152,7 +152,7 @@ const RemoteList = (props) => {
         setExecState(newArray)
     }
     return(
-       <div className='xcode gittok-width remote'>
+       <div className='xcode  remote'>
            <Col
                sm={{ span: "24" }}
                md={{ span: "24" }}

@@ -155,7 +155,7 @@ const HomePage = props =>{
 
 
     return(
-        <div className='homePage gittok-width drop-down'>
+        <div className='homePage page-width drop-down'>
             <Col sm={{ span: "24" }}
                  md={{ span: "24" }}
                  lg={{ span: "24" }}
@@ -198,7 +198,11 @@ const HomePage = props =>{
                     <div className='home-page-statistics'>
                         <div className='home-page-statistics-find'>
                             <Guide title={'代码统计'} />
-                            <Select value={findCommitTime} style={{minWidth:150}} onChange={value=>changCommitTime(value)}>
+                            <Select value={findCommitTime}
+                                    style={{minWidth:150}}
+                                    onChange={value=>changCommitTime(value)}
+                                    getPopupContainer={triggerNode => triggerNode.parentElement}
+                            >
                                 {findData.map(item=>{
                                     return(
                                         <Select.Option key={item.key} value={item.key}>{item.value}</Select.Option>
@@ -215,7 +219,11 @@ const HomePage = props =>{
                     <div className='home-page-statistics'>
                         <div className='home-page-statistics-find'>
                             <Guide title={'合并统计'} />
-                            <Select value={findMergeTime} style={{minWidth:150}} onChange={value=>changMergeTime(value)}>
+                            <Select value={findMergeTime}
+                                    style={{minWidth:150}}
+                                    onChange={value=>changMergeTime(value)}
+                                    getPopupContainer={triggerNode => triggerNode.parentElement}
+                            >
                                 {findData.map(item=>{
                                         return(
                                             <Select.Option key={item.key} value={item.key}>{item.value}</Select.Option>

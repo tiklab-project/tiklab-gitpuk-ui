@@ -71,21 +71,6 @@ const  Portal = props =>{
     }
 
 
-    // 渲染一级标题
-    const renderRouter = routers => {
-        return routers && routers.map(routers=>{
-
-            return  <div key={routers.key}
-                         onClick={()=>changeCurrentLink(routers)}
-                         className={`headers-active-item ${currentLink===routers.to ? "headers-active" : null}`}
-            >
-                <span>
-                      {t(routers.title)}
-                </span>
-            </div>
-        })
-    }
-
     return(
         <Layout className='gittok-portal'>
             {
@@ -98,60 +83,6 @@ const  Portal = props =>{
                 </div>
             </Layout>
         </Layout>
-        /*<div className='frame'>
-            {
-                navLevel===1&&
-                <FirstNav {...props}/>
-            }
-            {renderRoutes(route.routes)}
-        </div>*/
-
-       /* <div className="frame">
-            <div className="frame-header">
-                <div className="frame-header-right">
-                    {AppLink}
-                    <div className="frame-header-logo" onClick={goHomePage}>
-                        <div style={{paddingTop:13}}>
-
-                            <img  src={productWhiteImg.sward }  style={{width:22,height:22}}/>
-                        </div>
-                        <div className={'text'}>
-                            {"GitTok"}
-                        </div>
-                    </div>
-                </div>
-                <div className="frame-header-right">
-                    <div className="frame-header-right-text">
-                        <PortalDropdown
-                            tooltip={'消息'}
-                            Icon={ <Badge count={unread} size="small">
-                                <BellOutlined className="frame-header-icon"/>
-                            </Badge>}
-                            onClick={()=>setVisible(true)}
-                        />
-                        {HelpLink}
-                        <div className="layout-header-text">
-                            <PortalFeature/>
-                        </div>
-                        {AvatarLink}
-                    </div>
-                </div>
-                <PortalMessage
-                    {...props}
-                    visible={visible}
-                    setVisible={setVisible}
-                    unread={unread}
-                    setUnread={setUnread}
-                />
-            </div>
-            <div className="frame-content">
-                {
-                    navLevel===1&&
-                    <FirstNav {...props} HelpLink={HelpLink}/>
-                }
-                {renderRoutes(route.routes)}
-            </div>
-        </div>*/
     )
 }
 

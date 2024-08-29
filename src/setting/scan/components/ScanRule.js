@@ -85,7 +85,7 @@ const ScanRule = (props) => {
     }
 
     return(
-        <div className='xcode gittok-width scanRule'>
+        <div className='xcode page-width scanRule'>
             <Col sm={{ span: "24" }}
                  md={{ span: "24" }}
                  lg={{ span: "24" }}

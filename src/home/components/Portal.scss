@@ -7,13 +7,13 @@
         justify-content: space-between;
         width: 100%;
         min-width: 600px;
-        height: var(--xcode-head-height);
+        height: var(--home-height);
         border-bottom: 1px solid #e9e9e9;
         /*background: var(--thoughtware-blue);*/
         &-logo{
             gap: 10px;
             display: flex;
-            height: var(--xcode-head-height);
+            height: var(--home-height);
             width: 100px;
             margin: 0 30px;
             cursor: pointer;
@@ -121,7 +121,7 @@
 }
 .portals-content{
     background: var(--thoughtware-white);
-    height: var(--xcode-content-height);
+    height: var(--content-height-100);
 }
 .text{
    /* color: #f6f6f6;*/

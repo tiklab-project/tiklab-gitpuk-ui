@@ -95,12 +95,12 @@ const SettingContent= props =>  {
     const renderMenu = (data,deep)=> {
         return (
             <PrivilegeButton key={data.id} code={data.purviewCode} {...props}>
-                <li style={{cursor:'pointer',paddingLeft:`${deep*20+28}`}}
+                <li style={{cursor:'pointer',paddingLeft:`${deep===0?20:40}`}}
                     className={`system-aside-li system-aside-second ${data.id=== selectKey ? 'system-aside-select' :null}`}
                     onClick={()=>skip(data)}
                     key={data.id}
                 >
-                    <div className='nav-style'>
+                    <div className='sys-content-tab-style'>
                         <span className='sys-content-icon'>{data.icon}</span>
                         <span className='nav-style-title'>{t(data.title)}</span>
                         {!authConfig?.authType&&(data.id.endsWith("orga")||data.id.endsWith("user")||
@@ -163,6 +163,11 @@ const SettingContent= props =>  {
         setNavLevel(1)
         props.history.push(`/repository`)
     }
+    //跳转设置首页
+    const goSettingHome = () => {
+        props.history.push(`/setting/home`)
+    }
+
     return (
         <SystemNav
             {...props}
@@ -174,7 +179,7 @@ const SettingContent= props =>  {
         >
             <div className='system'>
                 <div className='system-aside'>
-                    <div className='system-icon' onClick={backHome}>
+                    <div className='system-icon' onClick={goSettingHome}>
                         <div className='aside-text-size'>设置</div>
                     </div>
                     <div className='system-aside-goHome'>
@@ -193,9 +198,7 @@ const SettingContent= props =>  {
                     </ul>
                 </div>
                 <div className='system-data-tab'>
-                    <div className='system-content antd-custom'>
-                        {renderRoutes(route.routes)}
-                    </div>
+                    {renderRoutes(route.routes)}
                 </div>
 
             </div>

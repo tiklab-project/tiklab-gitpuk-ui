@@ -205,7 +205,7 @@ const ScanPlay = (props) => {
     const a=pluginStore.filter(item => item.point === "work-gantt").length > 0
 
     return(
-        <div className='xcode gittok-width scanPlay'>
+        <div className='xcode page-width scanPlay'>
             <Col sm={{ span: "24" }}
                  md={{ span: "24" }}
                  lg={{ span: "24" }}

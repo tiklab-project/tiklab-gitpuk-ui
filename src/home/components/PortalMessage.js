@@ -58,7 +58,7 @@ const PortalMessage = props =>{
     //查询消息
     const getMessage = (currentPage,status,type) => {
         findMessageItemPage({ pageParam:{currentPage:currentPage,pageSize:pageSize},
-            bgroup:"gittok",receiver:getUser().userId,sendType:'site',status:status})
+            bgroup:"gitpuk",receiver:getUser().userId,sendType:'site',status:status})
             .then(res=>{
                 if (res.code===0){
                     if (messageList&&messageList.length>0&&type==='more'){

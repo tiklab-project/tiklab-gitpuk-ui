@@ -101,29 +101,27 @@ const FirstNav = (props) => {
             icon: <NavigationImage theme={theme} icon={"group"} type={`${collapsed?'close':'open'}`}/>
 
         },
-        {
+      /*  {
             key: 'setting',
             id:`/setting/version`,
             title:'设置',
             icon:  <SettingOutlined className={`${collapsed?'close-iconfont':'open-iconfont'}`}/>
-        },
+        },*/
     ];
 
     //切换nav
     const cuteNav = (value) => {
         setNavPath(value.id)
-        props.history.push(value.id)
-    }
-
-    const cutSetting = () => {
-        setNavPath("setting")
-        if (version==='cloud'){
-            props.history.push('/setting/myLog')
+        if (value.key==='setting'){
+            if (version==='cloud'){
+                props.history.push('/setting/myLog')
+            }else {
+                props.history.push('/setting/version')
+            }
         }else {
-            props.history.push('/setting/version')
+            props.history.push(value.id)
         }
     }
-
     /**
      * 点击折叠或展开菜单
      */
@@ -155,7 +153,7 @@ const FirstNav = (props) => {
                                             <img  src={productImg.sward }  className='icon-size'/>:
                                             <img  src={productFrameImg.sward }  className='icon-size'/>
                                     }
-                                    <div className='icon-text'>GitTok</div>
+                                    <div className='icon-text'>GitPuk</div>
                                 </div>
                         }
                     </div>

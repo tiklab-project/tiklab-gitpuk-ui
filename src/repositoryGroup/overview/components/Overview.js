@@ -7,7 +7,7 @@ import {Col} from "antd";
 
 const Overview = props =>{
     return (
-        <div className='xcode gittok-width overview'>
+        <div className='xcode page-width overview'>
             <Col sm={{ span: "24" }}
                  md={{ span: "24" }}
                  lg={{ span: "24" }}

@@ -146,7 +146,7 @@ const Merge = (props) => {
     ]
 
     return (
-        <div className='xcode gittok-width merge'>
+        <div className='xcode page-width merge'>
             <Col sm={{ span: "24" }}
                  md={{ span: "24" }}
                  lg={{ span: "24" }}

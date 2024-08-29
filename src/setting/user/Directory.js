@@ -9,7 +9,7 @@ import {Directory} from "thoughtware-user-ui";
  */
 const UserDirectory = props =>{
 
-    return  <Directory {...props} bgroup={"gittok"}/>
+    return  <Directory {...props} bgroup={"gitpuk"}/>
 
 }
 

@@ -199,7 +199,7 @@ const RepositoryGroup = props => {
     ]
 
     return(
-        <div className='xcode gittok-width repository-group'>
+        <div className='xcode page-width repository-group'>
             <Col sm={{ span: "24" }}
                  md={{ span: "24" }}
                  lg={{ span: "24" }}

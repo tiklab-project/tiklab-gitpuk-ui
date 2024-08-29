@@ -30,7 +30,7 @@ export class SurveyStore{
                 pageSize: 10,
                 currentPage: value.currentPage
             },
-            bgroup: "gittok",
+            bgroup: "gitpuk",
             data: {
                 repositoryId: value.repositoryId
             }

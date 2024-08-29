@@ -164,11 +164,6 @@ const routers = [
         render: props => <NotFoundContent {...props} homePath={'/'}/>
     },
     {
-        exact: true,
-        path: '/noaccess',
-        render: props => <NotFoundContent {...props} homePath={'/'} type='noaccess'/>
-    },
-    {
         path: '/',
         exact:true,
         render:()=><Redirect to={'/index'}/>,
@@ -362,6 +357,12 @@ const routers = [
                                 component:RemoteList
                             },
 
+                            {
+                                exact: true,
+                                path: '/noaccess',
+                                render: props => <NotFoundContent {...props} homePath={'/'} type='noaccess'/>
+                            },
+
                         ]
                     },
                 ]
@@ -386,6 +387,11 @@ const routers = [
                         exact: true,
                     },
                     {
+                        exact: true,
+                        path: '/noaccess',
+                        render: props => <NotFoundContent {...props} homePath={'/'} type='noaccess'/>
+                    },
+                    {
                         path:'/group/:name/setting',
                         component: GroupDetailsSet,
                         routes:[
@@ -403,7 +409,12 @@ const routers = [
                                 path:'/group/:name/setting/role',
                                 component: RepositoryGroupRole,
                                 exact:true
-                            }
+                            },
+                            {
+                                exact: true,
+                                path: '/noaccess',
+                                render: props => <NotFoundContent {...props} homePath={'/'} type='noaccess'/>
+                            },
                         ]
                     },
                     /* {
@@ -547,6 +558,12 @@ const routers = [
                     {
                         path:'/setting/resources',
                         component: Resources,
+                    },
+
+                    {
+                        exact: true,
+                        path: '/noaccess',
+                        render: props => <NotFoundContent {...props} homePath={'/'} type='noaccess'/>
                     },
                 ]
             },

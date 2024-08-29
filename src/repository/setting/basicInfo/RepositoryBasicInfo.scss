@@ -3,6 +3,7 @@
     height: 100%;
     overflow: auto;
     padding: 20px 30px;
+    min-width: var(--project-setting-min-width);
     .houseReDel-up{
         padding-bottom: var(--thoughtware-padding-item);
     }

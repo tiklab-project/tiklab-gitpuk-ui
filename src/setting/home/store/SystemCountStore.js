@@ -19,7 +19,17 @@ export class SystemCountStore {
         if (data.code===0){
             this.systemCount=data.data
         }
+        return data
     }
+
+    @action
+    findUseLicence = async () =>{
+        const data = await Axios.post('/licence/findUseLicence')
+        if (data.code===0){
+           return data
+        }
+    }
+
 }
 
 const systemCountStore=new SystemCountStore()

@@ -207,7 +207,7 @@ const Commits = props =>{
     }
 
     return (
-        <div className='gittok-width commits drop-down' id='xcode-commits' onScroll={handleScroll}>
+        <div className='page-width commits drop-down' id='xcode-commits' onScroll={handleScroll}>
             <Col sm={{ span: "24" }}
                  md={{ span: "24" }}
                  lg={{ span: "24" }}

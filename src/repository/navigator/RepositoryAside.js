@@ -74,7 +74,7 @@ const RepositoryAside= props=>{
             icon: <PullRequestOutlined className={`${foldState?'close-iconfont':'open-iconfont'}`}/>,
         },
         {
-            id:`/repository/${webUrl}/scanPlay`,
+            id:`/repository/${webUrl}/codeScan`,
             title: `代码扫描`,
             icon: !getVersionInfo().expired||getVersionInfo().release===3?<BarChartOutlined />:
                 <img  src={member}  style={{width:18,height:18}}/>,

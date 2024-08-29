@@ -1,4 +1,4 @@
-import {store as gittokStore} from "./store";
+import {store as gitpukStore} from "./store";
 import App from "./app";
 import Routers from "./routes";
 import Portal from "./home/components/Portal";
@@ -261,7 +261,7 @@ export {
 
     SettingContent,
     Portal,
-    gittokStore,
+    gitpukStore,
     ExcludeProductUser,
     CommitRepository,
 

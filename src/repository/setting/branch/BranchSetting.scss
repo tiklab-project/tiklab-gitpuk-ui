@@ -1,4 +1,9 @@
 .branch-setting{
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  padding: 20px 30px;
+  min-width: var(--project-setting-min-width);
   &-mode{
     margin: var(--thoughtware-padding-item) 0;
     .mode-title{

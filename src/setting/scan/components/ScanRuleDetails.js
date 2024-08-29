@@ -140,7 +140,7 @@ const ScanRuleDetails = (props) => {
         getScanRulePage(currentPage)
     }
     return(
-        <div className='xcode gittok-width ruleDetails'>
+        <div className='xcode page-width ruleDetails'>
             <Col sm={{ span: "24" }}
                  md={{ span: "24" }}
                  lg={{ span: "24" }}
