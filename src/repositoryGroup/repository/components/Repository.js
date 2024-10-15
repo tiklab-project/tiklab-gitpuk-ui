@@ -5,10 +5,11 @@ import BreadcrumbContent from '../../../common/breadcrumb/Breadcrumb';
 import RepositoryTable from '../../../repository/repository/components/RepositoryTable';
 import './Repository.scss';
 import groupStore from "../../repositoryGroup/store/RepositoryGroupStore"
-import {getUser} from "thoughtware-core-ui";
-import {Col, Input} from "antd";
+import {getUser} from "tiklab-core-ui";
+import {Col, Input, Select} from "antd";
 import {SearchOutlined} from "@ant-design/icons";
-import {PrivilegeProjectButton} from 'thoughtware-privilege-ui';
+import {PrivilegeProjectButton} from 'tiklab-privilege-ui';
+import SearchInput from "../../../common/input/SearchInput";
 const Repository = props =>{
     const {match}=props
     const groupName = match.params.name
@@ -22,6 +23,7 @@ const Repository = props =>{
     const [currentPage,setCurrentPage]=useState(1)
     const [totalPage,setTotalPage]=useState()
     const [pageSize]=useState(15)
+    const [totalRecord,setTotalRecord]=useState()
 
     const [repositoryList,setRepositoryList]=useState([])
 
@@ -29,9 +31,11 @@ const Repository = props =>{
     const [repositoryName,setRepositoryName]=useState()
     const [sort,setSort]=useState(null)
 
+    const [rules,setRules]=useState()
+
     useEffect( ()=>{
         findRpyPage()
-    },[])
+    },[rules])
 
 
     //分页查询仓库
@@ -41,14 +45,17 @@ const Repository = props =>{
             userId:getUser().userId,
             groupName:groupName,
             name:repositoryName,
-            sort:sort
+            sort:sort,
+            rules:rules
         }).then(res=>{
             if (res.code===0){
                 setIsLoading(false)
                 setRepositoryList(res.data?.dataList)
                 setTotalPage(res.data.totalPage)
                 setCurrentPage(res.data.currentPage)
+                setTotalRecord(res.data.totalRecord)
             }
+
         })
     }
 
@@ -97,8 +104,14 @@ const Repository = props =>{
         await findRpyPage(value,sort,repositoryName)
     }
 
+
+    //切换权限
+    const changAuth = (value) => {
+        setRules(value)
+    }
+
     return (
-        <div className='xcode page-width group-repository'>
+        <div className='xcode page-width group-repository drop-down'>
             <Col sm={{ span: "24" }}
                  md={{ span: "24" }}
                  lg={{ span: "24" }}
@@ -107,26 +120,32 @@ const Repository = props =>{
             >
                 <div className='group-repository-head'>
                     <BreadcrumbContent firstItem={'Repository'} />
-                    <PrivilegeProjectButton code={"rpy_group_rpy_add"} domainId={groupInfo && groupInfo.groupId}>
-                        <div className='head-right'>
-                            <Btn
-                                type={'primary'}
-                                title={'新建仓库'}
-                                /* icon={<PlusOutlined/>}*/
-                                onClick={()=>props.history.push(`/repository/new?group=${groupName}`)}
-                            />
-                        </div>
-                    </PrivilegeProjectButton>
+                 {/*   <PrivilegeProjectButton code={"rpy_group_rpy_add"} domainId={groupInfo && groupInfo.groupId}>
+
+                    </PrivilegeProjectButton>*/}
+                    <div className='head-right'>
+                        <Btn
+                            type={'primary'}
+                            title={'新建仓库'}
+                            /* icon={<PlusOutlined/>}*/
+                            onClick={()=>props.history.push(`/repository/add?group=${groupName}`)}
+                        />
+                    </div>
                 </div>
-                <div>
-                    <Input
-                        allowClear
-                        placeholder='搜索仓库名称'
+
+                <div className='group-repository-filter'>
+                    <SearchInput
+                        placeholder='搜索仓库组名称'
                         onChange={onChangeSearch}
                         onPressEnter={onSearch}
-                        prefix={<SearchOutlined />}
-                        style={{ width: 200 }}
                     />
+
+                    <Select  allowClear onChange={value=>changAuth(value)} style={{minWidth:140}} placeholder='可见范围'>
+                        <Select.Option value={"private"}>{"私有"}</Select.Option>
+                        <Select.Option value={"public"}>{"公开"}</Select.Option>
+                    </Select>
+                </div>
+
 
                     <RepositoryTable
                         {...props}
@@ -136,10 +155,11 @@ const Repository = props =>{
                         changPage={changPage}
                         totalPage={totalPage}
                         currentPage={currentPage}
+                        totalRecord={totalRecord}
                         onChange={onChange}
                         type={'group'}
                     />
-                </div>
+
             </Col>
         </div>
     )

@@ -6,7 +6,7 @@
  */
 import {observable,action} from 'mobx';
 import {message} from 'antd';
-import {Axios, getUser} from 'thoughtware-core-ui';
+import {Axios, getUser} from 'tiklab-core-ui';
 import {MergeStore} from "./MergeStore";
 export  class MergeConditionStore{
 

@@ -18,7 +18,7 @@ import ScanEnvironmentEditPop from "./ScanEnvironmentEditPop";
 import scanEnvStore from "../store/ScanEnvStore";
 import deployStore from "../store/DeployStore";
 import DeleteExec from "../../../common/delete/DeleteExec";
-import {PrivilegeButton} from 'thoughtware-privilege-ui';
+import {PrivilegeButton} from 'tiklab-privilege-ui';
 const ScanEnvironment = (props) => {
     const {deployEnvList,findDeployEnvList,deleteDeployEnv,deleteDeployServer,findDeployServerList,deployServerList,fresh} = scanEnvStore
     const {deployFresh} = deployStore

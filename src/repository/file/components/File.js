@@ -1,5 +1,5 @@
 import React, {useEffect,useState,useRef,} from "react";
-import {Input, Dropdown, Col} from "antd";
+import {Input, Dropdown, Col, Tooltip} from "antd";
 import {
     SearchOutlined,
     PlusOutlined,
@@ -7,89 +7,70 @@ import {
 } from "@ant-design/icons";
 import {inject,observer} from "mobx-react";
 import BreadcrumbContent from "../../../common/breadcrumb/Breadcrumb";
-import Btn from "../../../common/btn/Btn";
 import EmptyText from "../../../common/emptyText/EmptyText";
 import Usher from "./Usher";
 import RecentSubmitMsg from "./RecentSubmitMsg";
 import BreadChang from "./BreadChang";
 import Clone from "./Clone";
-import {setBranch,setFileAddress,findType,findCommitId} from "./Common";
+import {findRefCode,setFileAddress} from "./Common";
 import {SpinLoading} from "../../../common/loading/Loading";
 import fileStore from '../store/FileStore';
 import "./File.scss";
 import tagStore from "../../tag/store/TagStore";
-import FolderCreatePop from "./FolderCreatePop";
+import CreateFolderPop from "./CreateFolderPop";
+import CreateFilePop from "./CreateFilePop";
+import FileSearchDrop from "./FileSearchDrop";
 
 const File = props =>{
 
     const {repositoryStore,location,match} = props
-    const {findRepositoryByAddress,repositoryInfo} = repositoryStore
-    const {findFileTree,codeTreeData,findCloneAddress,cloneAddress,findLatelyBranchCommit,latelyBranchCommit} = fileStore
+    const {repositoryInfo} = repositoryStore
+    const {findFileTree,codeTreeData,findCloneAddress,cloneAddress,findLatelyBranchCommit,latelyBranchCommit
+        ,findBareAllFile,findRefCodeType} = fileStore
     const {findTagByName} = tagStore
     const webUrl = `${match.params.namespace}/${match.params.name}`
 
     const searValue = useRef(null)
     const urlInfo = match.params.branch
 
-    const branch = setBranch(urlInfo,repositoryInfo)
-    const fileAddress = setFileAddress(location,webUrl+"/code/"+urlInfo)
+    //refCode
+    const refCode = findRefCode(location,repositoryInfo,"code")
 
+    const fileAddress = setFileAddress(location,webUrl+"/code/"+urlInfo)
 
     //文本框搜索
     const [searInput,setSearInput] = useState(false)
     //加载
     const [isLoading,setIsLoading] = useState(true)
 
-    //选择的代码类型 分支、tag、commit
-    const [data,setData]=useState(null)
-
     const [triggerVisible,setTriggerVisible] = useState(false)
     //文件夹弹窗状态
     const [folderVisible,setFolderVisible]=useState(false)
 
-    useEffect(()=>{
-        setData({type:'branch',value:branch})
-    },[])
+    //文件弹窗状态
+    const [fileVisible,setFileVisible]=useState(false)
 
-    useEffect(async ()=>{
+    //裸仓库的所有文件
+    const [fileList,setFileList]=useState([])
+    const [searFileList,setSearchFileList]=useState([])
+    //下拉框状态
+    const [dropDownVisible,setDropDownVisible] = useState(false)
+
+    // 代码类型branch、tag、commit
+    const [refCodeType,setRefCodeType]=useState('branch')
+
+    //localStorage.removeItem(webUrl)
+
+    const a=localStorage.getItem(webUrl)
+
+    useEffect( async ()=>{
         if(repositoryInfo.name){
-            // 获取文件，同时监听路由变化
-            findFileTree({
-                rpyId:repositoryInfo.rpyId,
-                path:fileAddress[1],
-                branch:branch,
-                findType:findType(urlInfo)
-            }).then(res=>{
-                setIsLoading(false)
-                res.code===500001 && props.history.push("/404")
-            })
-
+            //根据路径总的code查询code类型
+             getBareRepoType()
             // 获取文件地址
             findCloneAddress(repositoryInfo.rpyId)
         }
     },[repositoryInfo.name,location.pathname])
-
-
-    useEffect(async ()=>{
-        let branchName;
-        if (urlInfo&&urlInfo.endsWith("tag")){
-            const res=await findTagByName(repositoryInfo.rpyId,urlInfo.substring(0,urlInfo.length-"tag".length))
-            if (res.code===0){
-                branchName=res.data.commitId
-            }
-        }else {
-            branchName=branch
-        }
-        findRepositoryByAddress(webUrl).then(res=>{
-            // 获取最近提交信息
-            findLatelyBranchCommit({
-                rpyId:res.data.rpyId,
-                branch:branchName,
-                findCommitId:findCommitId(urlInfo)
-            })
-        })
-
-    },[urlInfo,location.pathname])
 
 
     useEffect(()=>{
@@ -99,11 +80,56 @@ const File = props =>{
         }
     },[searInput])
 
+    //查询裸仓库的类型
+    const getBareRepoType=()=>{
+        const match = location.pathname.match(/code\/([^\/]+)/);
+        if (match){
+            const code=match[1]
+            findRefCodeType(repositoryInfo.rpyId,code).then(res=>{
+                if (res.code===0){
+                    setRefCodeType(res.data)
+                    //查询文件树
+                    getFileTree(res.data)
+                    //查询最新提交
+                    getNewCommit(res.data)
+                }
+            })
+        }else {
+            getFileTree("branch")
+            getNewCommit("branch")
+        }
+    }
+
+    //获取仓库文件树
+    const getFileTree = (codeType) => {
+        // 获取文件，同时监听路由变化
+        findFileTree({
+            rpyId:repositoryInfo.rpyId,
+            path:fileAddress[1],
+            refCode:refCode,
+            refCodeType:codeType
+        }).then(res=>{
+            setIsLoading(false)
+            res.code===500001 && props.history.push("/404")
+        })
+    }
+
+    //获取最近的提交
+    const getNewCommit = (refCodeType) => {
+        // 获取最近提交信息
+        findLatelyBranchCommit({
+            rpyId:repositoryInfo.rpyId,
+            refCode:refCode,
+            refCodeType:refCodeType
+        })
+    }
+
     /**
      * 跳转到下一个文件路由
      * @param record
      */
     const goFileChild = record => {
+        debugger
         props.history.push(`/repository/${webUrl}${record.path}`)
     }
 
@@ -121,7 +147,6 @@ const File = props =>{
      * @returns {string|*}
      */
     const renderFileIcon = fileType => {
-
         switch (fileType) {
             case "txt":
             case "yaml":
@@ -149,18 +174,61 @@ const File = props =>{
         // props.history.push(`/ide/${repositoryInfo.name}`)
     }
 
+
     //打开创建文件夹的弹窗
     const openFolderPop = () => {
         setFolderVisible(true)
         setTriggerVisible(false)
     }
 
+    //打开创建文件的弹窗
+    const openFilePop = () => {
+        setFileVisible(true)
+    }
 
+
+    //打开查询框
+    const openInput = () => {
+        findBareAllFile({
+            rpyId:repositoryInfo.rpyId,
+            refCode:refCode,
+            refCodeType:refCodeType
+        }).then(res=>{
+            if (res.code===0){
+                setFileList(res.data)
+            }
+        })
+        setSearInput(true)
+    }
+
+
+    //搜索
+    const onChangeSearch = (e) => {
+        const searchName=e.target.value
+        let files=[]
+        fileList.map(item=>{
+            const fileName=item.slice(item.lastIndexOf("/")+1)
+           if (fileName.includes(searchName)) {
+               files.push(item)
+           }
+        })
+        setSearchFileList(files)
+    }
+
+    const cuteDropDownVisible = (value) => {
+        setDropDownVisible(value)
+       if (!value){
+           setSearchFileList(null)
+       }
+
+    }
+
+    //创建文件 下拉
     const addFileMenu = (
         <div className="file-add-menu">
-            <div className="file-add-item">新建文件</div>
+            <div className="file-add-item" onClick={openFilePop} >新建文件</div>
             <div className="file-add-item" onClick={openFolderPop}>新建文件夹</div>
-            <div className="file-add-item">上传文件</div>
+        {/*    <div className="file-add-item">上传文件</div>*/}
         </div>
     )
 
@@ -171,22 +239,29 @@ const File = props =>{
                 />
     }
 
+    //仓库文件
     const renderCode = item => {
         return (
             <div key={item.fileName} className="code-data-item">
-                <div className="code-item-fileName" onClick={()=>goFileChild(item)}>
-                    <span style={{paddingRight:5}}>
-                        {
-                            item.type==="tree" ?
-                                <FolderOutlined/>
-                                :
-                                <svg className="icon" aria-hidden="true">
-                                    <use xlinkHref={`#icon-${renderFileIcon(item.fileType)}`}/>
-                                </svg>
-                        }
-                    </span>
-                    <span>{item.fileName}</span>
+                <div className='code-item-fileName'>
+                    <div className='code-item-fileName-text' onClick={()=>goFileChild(item)}>
+                        <span style={{paddingRight:5}}>
+                            {
+                                item.type==="tree" ?
+                                    <FolderOutlined/>
+                                    :
+                                    <svg className="icon" aria-hidden="true">
+                                        <use xlinkHref={`#icon-${renderFileIcon(item.fileType)}`}/>
+                                    </svg>
+                            }
+                        </span>
+                        <span>{item.fileName}</span>
+                    </div>
+                    {
+                        item.lfs&& <div className='code-item-fileName-fls'>LFS</div>
+                    }
                 </div>
+
                 <div className="code-item-commitMessage">{item.commitMessage}</div>
                 <div className="code-item-commitTime">{item.commitTime}</div>
             </div>
@@ -210,45 +285,65 @@ const File = props =>{
                             branch={urlInfo}
                             fileAddress={fileAddress}
                             type={"tree"}
-                            setData={setData}
+                            refCode={refCode}
                         />
                         <div className="code-head-right">
                             {
                                 searInput ?
                                     <div className="code-search-input">
-                                        <Input
-                                            ref={searValue}
-                                            placeholder="文件名称"
-                                            // onChange={onChangeSearch}
-                                            prefix={<SearchOutlined />}
-                                            onBlur={()=>setSearInput(false)}
-                                            style={{width:200}}
-                                        />
+                                        <Dropdown
+                                            overlay={<FileSearchDrop
+                                                setDropDownVisible={setDropDownVisible}
+                                                searFileList={searFileList}
+                                            />}
+                                            trigger={['click']}
+                                            placement={'bottomLeft'}
+                                            visible={dropDownVisible}
+                                            onVisibleChange={visible=>cuteDropDownVisible(visible)}
+                                            getPopupContainer={e => e.parentElement}
+                                        >
+                                            <Input
+                                                ref={searValue}
+                                                placeholder="文件名称"
+                                                onChange={onChangeSearch}
+                                                prefix={<SearchOutlined />}
+                                                onBlur={()=>setSearInput(false)}
+                                                style={{width:400}}
+                                            />
+                                        </Dropdown>
+
                                     </div>
                                     :
                                     <div className="code-search">
-                                        <SearchOutlined onClick={()=>setSearInput(true)}/>
+                                        <SearchOutlined onClick={openInput}/>
                                     </div>
                             }
                             <div className="code-file-add">
                                 {
-                                    data&&data.type==='branch'?
+                                    refCodeType==='branch'?
                                         <Dropdown overlay={addFileMenu}
                                                   trigger={["click"]}
                                                   placement={"bottomCenter"}
-                                                  visible={triggerVisible}
-                                                  onOpenChange={visible=>setTriggerVisible(visible)}
+                                                  getPopupContainer={e => e.parentElement}
+                                                 /* visible={triggerVisible}
+                                                  onOpenChange={visible=>test(!visible)}*/
                                         >
                                             <PlusOutlined/>
                                         </Dropdown>:
-                                        <PlusOutlined/>
+                                        <Tooltip placement="topRight" title={"只支持分支视图操作"}>
+                                            <PlusOutlined className='not-disabled'/>
+                                        </Tooltip>
                                 }
                             </div>
-                            <div className="code-desc">
+                            {/*<div className="code-desc">
                                 <Btn title={"WEB IDE"} onClick={()=>goWebIde()}/>
-                            </div>
+                            </div>*/}
                             <div className="code-clone">
-                                <Clone cloneAddress={cloneAddress} data={data} repositoryInfo={repositoryInfo}/>
+                                <Clone cloneAddress={cloneAddress}
+                                       repositoryInfo={repositoryInfo}
+                                       refCode={refCode}
+                                       refCodeType={refCodeType}
+                                      />
                             </div>
                         </div>
                     </div>
@@ -277,10 +372,17 @@ const File = props =>{
                     </div>
                 </div>
             </Col>
-            <FolderCreatePop {...props} folderVisible={folderVisible}
+            <CreateFolderPop {...props} folderVisible={folderVisible}
                              setFolderVisible={setFolderVisible}
-                             repositoryInfo={repositoryInfo}
-                             data={data}
+                             branch={refCode}
+                             webUrl={webUrl}
+                             folderPath={`${repositoryInfo.name}${fileAddress[1]?fileAddress[1]:''}`}
+            />
+            <CreateFilePop {...props} fileVisible={fileVisible}
+                             setFileVisible={setFileVisible}
+                             branch={refCode}
+                             webUrl={webUrl}
+                             folderPath={`${repositoryInfo.name}${fileAddress[1]?fileAddress[1]:''}`}
             />
         </div>
     )

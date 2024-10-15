@@ -13,6 +13,12 @@
         .input-icon{
             font-size: var(--thoughtware-input-icon-15);
         }
+
+        .select-right-style{
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
     }
     &-tables{
         .repository-tables-name{

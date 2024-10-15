@@ -18,9 +18,8 @@ const NavigationImage = (props) => {
     const {theme,icon,type}=props
 
     const [imgPath,setImagPath]=useState()
-
     useEffect(()=> {
-        if (theme==='default'){
+        if (theme==='gray'||theme==='default'){
             switch (icon){
                 case "repository":
                     setImagPath(repository_black)

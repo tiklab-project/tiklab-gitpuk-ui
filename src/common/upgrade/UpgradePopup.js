@@ -3,7 +3,7 @@ import Modals from "../../common/modal/Modal";
 import Btn from "../btn/Btn";
 import upgrade from "../../assets/images/img/upgrade.png"
 import "./UpgradePopup.scss"
-import {getVersionInfo} from "thoughtware-core-ui";
+import {getVersionInfo} from "tiklab-core-ui";
 const UpgradePopup = (props) => {
     const {visible,setVisible,title,desc}=props
 
@@ -15,9 +15,9 @@ const UpgradePopup = (props) => {
 
     const onOk = () => {
         if (getVersionInfo().release===3){
-            window.open(`https://work.thoughtware.cn/#/enterprise/application/gitpuk`)
+            window.open(`https://work.tiklab.net/#/enterprise/application/gitpuk`)
         }else {
-            window.open(`https://thoughtware.cn/account/subscribe/apply/gitpuk`)
+            window.open(`https://tiklab.net/account/subscribe/apply/gitpuk`)
         }
     }
     const modalFooter = (

@@ -10,7 +10,7 @@ import {inject,observer} from 'mobx-react';
 import "./RepositoryAside.scss"
 import Aside from "../../common/aside/Aside";
 import {Loading} from '../../common/loading/Loading';
-import {getUser,getVersionInfo} from "thoughtware-core-ui";
+import {getUser,getVersionInfo} from "tiklab-core-ui";
 import member from "../../assets/images/img/member.png";
 import code from "../../assets/images/img/code.png";
 import NavigationImage from "../../common/image/NavigationImage";
@@ -27,7 +27,7 @@ const RepositoryAside= props=>{
     const namespace = match.params.namespace
     const name = match.params.name
 
-    const [theme] = useState(localStorage.getItem("theme") ? localStorage.getItem("theme") : "default");
+    const [theme] = useState(localStorage.getItem("theme") ? localStorage.getItem("theme") : "gray");
 
 
     const webUrl = `${match.params.namespace}/${match.params.name}`

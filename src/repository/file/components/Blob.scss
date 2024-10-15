@@ -57,12 +57,28 @@
                 padding: 8px 16px;
                 .editor-title-left{
                     flex: 1;
+                    display: flex;
+                    align-items: center;
                     .editor-title-text{
+                        display: flex;
                         font-size: 13px;
-                        font-weight: var(--thoughtware-font-weight-bold);
+                        margin-left: 8px;
+                        gap: 10px;
+                        .editor-title-text-name{
+                            font-weight: var(--thoughtware-font-weight-bold);
+                        }
+                        .editor-title-text-fls{
+                            border:1px solid #cccccc;
+                            padding: 0 7px;
+                            color: #cccccc;
+                            border-radius:4px
+                        }
                     }
                     .editor-title-size{
-                        padding: 0 8px;
+                        padding: 0 15px;
+                        .editor-title-size-text{
+                            padding: 0 15px;
+                        }
                     }
                     .editor-title-copy{
                         cursor: pointer;
@@ -83,8 +99,31 @@
                             border-right: 1px solid #d9d9d9;
                         }
                     }
+                    .not-editor-title-item{
+                        cursor: not-allowed;
+                        color: #999999;
+                        border-right: 1px solid #d9d9d9;
+                        height: 32px;
+                        line-height: 32px;
+                        padding: 0 10px;
+                        &:not(:last-child){
+                            border-right: 1px solid #d9d9d9;
+                        }
+                    }
                 }
             }
+            .blob-editor-desc{
+                display: flex;
+                gap: 10px;
+                align-items: center;
+                justify-content: center;
+                margin-top: 60px;
+                .blob-editor-desc-download{
+                    color: #1890ff;
+                    cursor: pointer;
+                }
+            }
+
             .blob-editor-content{
                 flex: 1;
                 width: 100%;

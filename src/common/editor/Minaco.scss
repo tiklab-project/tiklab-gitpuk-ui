@@ -10,3 +10,53 @@
   max-height: 550px;
   height: auto;
 }
+
+
+
+
+
+/* 样式文件 MonacoDiffEditor.css */
+.monaco-diff-container {
+/*  display: flex;
+  flex-direction: column;*/
+}
+
+
+
+
+
+
+
+/* 冲突区域的背景色 */
+.current-conflict {
+  background-color: rgba(200, 255, 200, 0.3); /* 传入的改动：浅绿色 */
+  width: 100%; /* 确保背景覆盖整行 */
+  position: relative; /* 让背景覆盖整个区域 */
+  height: 1px;
+}
+
+.incoming-conflict {
+  background-color: rgba(255, 200, 200, 0.3); /* 当前的改动：浅红色 */
+
+}
+
+.monaco-merge-text{
+  /*position: absolute;
+  display: block;
+  visibility: inherit;*/
+  display: flex;
+  gap: 5px;
+  width: 1219px;
+  max-width: 1219px;
+  font-feature-settings: "liga" off, "calt" off;
+  font-size: 12px;
+  color: #999999;
+  .monaco-merge-text-nav{
+    cursor: pointer;
+    &:hover{
+      color: #1890ff;
+    }
+  }
+}
+
+

@@ -14,7 +14,7 @@ import './AccessKeys.scss';
 import {Col, Table} from "antd";
 import authStore from "../../../../setting/auth/store/AuthStore";
 
-import {getUser} from "thoughtware-core-ui";
+import {getUser} from "tiklab-core-ui";
 import DeleteExec from "../../../../common/delete/DeleteExec";
 import {inject, observer} from "mobx-react";
 import Tabs from "../../../../common/tabs/Tabs";

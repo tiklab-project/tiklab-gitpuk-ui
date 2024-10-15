@@ -1,5 +1,5 @@
 import React,{useEffect} from 'react';
-import {BackupRestore} from 'thoughtware-security-ui';
+import {BackupRestore} from 'tiklab-security-ui';
 import {inject, observer} from "mobx-react";
 
 /**

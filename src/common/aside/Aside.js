@@ -15,10 +15,9 @@ import AsideMenu from './AsideMenu';
 import Listicon from '../list/Listicon';
 import './Aside.scss';
 import UpgradePopup from "../upgrade/UpgradePopup"
-import {getUser, getVersionInfo, productWhiteImg} from "thoughtware-core-ui";
+import {getUser, getVersionInfo, productWhiteImg} from "tiklab-core-ui";
 import MoreMeu from "./MoreMeu";
 
-import NavigationImage from "../image/NavigationImage";
 const {Sider} = Layout;
 /**
  * 左侧路由（二级标题）
@@ -62,6 +61,7 @@ const Aside = props => {
     },[normalOrScrum])
 
     useEffect(()=>{
+
         // 激活菜单
         let indexPath
         switch (asideType) {
@@ -71,7 +71,6 @@ const Aside = props => {
             case 'group':
                 indexPath = path
         }
-
         setNav(indexPath)
     },[path,info])
 
@@ -152,7 +151,9 @@ const Aside = props => {
             case 'commits':
                 return `${path}/commits`
             case 'mergeAdd':
-                return `${path}/merge_requests`
+                return `${path}/mergeRequest`
+            case 'mergeClashEdit':
+                return `${path}/mergeRequest`
             default:
                 return path + '/'+pathType
         }

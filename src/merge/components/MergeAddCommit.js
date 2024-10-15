@@ -27,7 +27,7 @@ const MergeAddCommit = (props) => {
      * @param item
      */
     const findFile = item => {
-        window.open(`#/repository/${webUrl}/code/${item.commitId+commitU4}`)
+        window.open(`#/repository/${webUrl}/code/${item.commitId}`)
        // props.history.push(`/repository/${webUrl}/code/${item.commitId+commitU4}`)
     }
 

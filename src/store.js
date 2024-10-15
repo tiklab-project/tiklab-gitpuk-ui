@@ -1,7 +1,7 @@
 import {REPOSITORY_STORE,RepositoryStore} from './repository/repository/store/RepositoryStore';
 
-import {orgStores} from "thoughtware-user-ui/es/store"
-import {privilegeStores} from "thoughtware-privilege-ui/es/store"
+import {orgStores} from "tiklab-user-ui/es/store"
+import {privilegeStores} from "tiklab-privilege-ui/es/store"
 import {createContext} from 'react'
 function createStores() {
     return{

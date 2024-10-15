@@ -73,7 +73,7 @@
                 .branch-tables-action{
                     display: flex;
                     flex-direction: row;
-
+                    align-items: center;
                     .branch-tables-combine,.branch-tables-compare,.branch-tables-download{
                         background: #f4f4f4;
                         cursor: pointer;

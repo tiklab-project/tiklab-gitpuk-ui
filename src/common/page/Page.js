@@ -10,7 +10,7 @@ import './Page.scss';
  */
 const Page = props =>{
 
-    const {pageCurrent,changPage,totalPage,totalRecord,refresh} = props
+    const {pageCurrent,changPage,totalPage,totalRecord,refresh,type} = props
 
 
     const renderRightOut = () =>{
@@ -31,7 +31,7 @@ const Page = props =>{
     return (
         <div className='xcode-page'>
             {
-                (totalPage>1)?
+                (totalPage>1||type==="show")?
                     <Fragment>
                         <span className='xcode-page-padding'>{`共${totalRecord}条`}</span>
                         <span

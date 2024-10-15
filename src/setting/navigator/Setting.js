@@ -79,8 +79,8 @@ const Setting = props =>{
                         purviewCode:'gittok_ssh',
                     },
                     {
-                        id:'/setting/userpower',
-                        title:'用户仓库',
+                        id:'/setting/powerUser',
+                        title:'成员权限',
                         purviewCode:'gittok_user_rpy',
                     },
                     {
@@ -110,8 +110,6 @@ const Setting = props =>{
                 },
                ]
          },
-
-
         {
             id:'5',
             title:'Security',

@@ -7,21 +7,31 @@
  */
 import React, {useState,useEffect} from "react";
 import BreadcrumbContent from "../../../common/breadcrumb/Breadcrumb";
-import {Button, Col, Space, Table, Tooltip} from "antd";
+import {Button, Col, Dropdown, Menu, Space, Table, Tooltip} from "antd";
 import EmptyText from "../../../common/emptyText/EmptyText";
 import Listicon from "../../../common/list/Listicon";
-import {CloseCircleOutlined, LockOutlined, SettingOutlined, StopOutlined, UnlockOutlined} from "@ant-design/icons";
+import {
+    CloseCircleOutlined,
+    EllipsisOutlined,
+    LockOutlined,
+    SettingOutlined,
+    StopOutlined,
+    UnlockOutlined
+} from "@ant-design/icons";
 import {inject, observer} from "mobx-react";
 import "./UserRpyList.scss"
-import {getUser} from "thoughtware-core-ui";
+import {getUser} from "tiklab-core-ui";
 import {SpinLoading} from "../../../common/loading/Loading";
 import Page from "../../../common/page/Page";
 import XcodeUserStore from "../store/XcodeUserStore";
+import SearchInput from "../../../common/input/SearchInput";
+import groupStore from "../../../repositoryGroup/repositoryGroup/store/RepositoryGroupStore";
+import UserGroupList from "./UserGroupList";
 const UserRpyList = (props) => {
     const {repositoryStore,match:{params}} = props
 
     const {findPrivateRepositoryByUser} = repositoryStore
-    const {deleteDmUser,findDmUserList}=XcodeUserStore
+    const {deleteDmUser,findDmUserList,findNumByUser}=XcodeUserStore
 
     const [currentPage,setCurrentPage]=useState(1)
     const [totalPage,setTotalPage]=useState()
@@ -29,32 +39,10 @@ const UserRpyList = (props) => {
 
     const [isLoading,setIsLoading]=useState(false)
     const [repositoryList,setRepositoryList]=useState([])
+    const [repositoryName,setRepositoryName]=useState()
 
-
-    useEffect(async ()=>{
-        await findRpyPage(1)
-    },[])
-
-
-    const findRpyPage =async (currentPage) => {
-        const param={
-            pageParam:{
-                currentPage:currentPage,
-                pageSize:15
-            },
-            userId:params.userId,
-        }
-        setIsLoading(true)
-        const res=await findPrivateRepositoryByUser(param)
-        setIsLoading(false)
-        if (res.code===0){
-            setRepositoryList(res.data?.dataList)
-
-            setTotalPage(res.data.totalPage)
-            setCurrentPage(res.data.currentPage)
-            setTotalRecord(res.data.totalRecord)
-        }
-    }
+    const [tabType,setTabType]=useState("repo")
+    const [num,setNum]=useState(null)
 
 
     const columns = [
@@ -62,7 +50,7 @@ const UserRpyList = (props) => {
             title: '仓库名称',
             dataIndex: 'name',
             key: 'name',
-            width:'35%',
+            width:'40%',
             ellipsis:true,
             render:(text,record)=>{
                 return (
@@ -72,7 +60,7 @@ const UserRpyList = (props) => {
                         />
                         <div className='name-text'>
                             <div className='name-text-title'>
-                                <span className='name-text-name'>{ record?.address.substring(0, record?.address.indexOf("/",1))+"/"+record.name}</span>
+                                <div className='name-text-name'>{ record?.address.substring(0, record?.address.indexOf("/",1))+"/"+record.name}</div>
                             </div>
                         </div>
                     </div>
@@ -108,16 +96,6 @@ const UserRpyList = (props) => {
             width:'20%',
             ellipsis:true,
         },
-
-        {
-            title: '更新',
-            dataIndex: 'updateTime',
-            key: 'updateTime',
-            width:'20%',
-            ellipsis:true,
-            render:text => text?text:'暂无更新'
-        },
-
         {
             title: '操作',
             dataIndex: 'action',
@@ -126,23 +104,84 @@ const UserRpyList = (props) => {
             ellipsis:true,
             render:(text,record)=>{
                 return(
-                    <Space>
-                        {
-                            params.userId==="111111"?
-                                <Tooltip title='不能移除管理员的项目'>
-                                    <StopOutlined />
-                                </Tooltip>:
-                                <Tooltip title='移除'>
-                                    <span className='user-rpy-set' onClick={()=>deleteUsrRpy(record)} >
-                                        <CloseCircleOutlined  className='actions-se' />
-                                    </span>
-                                </Tooltip>
-                        }
-                    </Space>
+                    <Dropdown    overlay={()=>execPullDown(record)}
+                                 placement="bottomRight"
+                                 trigger={['click']}
+                        /* getPopupContainer={e => e.parentElement}*/
+                    >
+                        <div style={{cursor:"pointer"}}>
+                            <EllipsisOutlined style={{fontSize:20}}/>
+                        </div>
+                    </Dropdown>
                 )
             }
         },
     ]
+
+    useEffect(async ()=>{
+        await findRpyPage(1)
+
+        findNumByUser({userId:params.userId}).then(res=>{
+            if (res.code===0){
+                setNum(res.data)
+            }
+        })
+    },[])
+
+    //查询用户仓库
+    const findRpyPage =async (currentPage,repositoryName) => {
+        const param={
+            pageParam:{
+                currentPage:currentPage,
+                pageSize:10
+            },
+            userId:params.userId,
+            name:repositoryName
+        }
+        setIsLoading(true)
+        const res=await findPrivateRepositoryByUser(param)
+        setIsLoading(false)
+        if (res.code===0){
+            setRepositoryList(res.data?.dataList)
+
+            setTotalPage(res.data.totalPage)
+            setCurrentPage(res.data.currentPage)
+            setTotalRecord(res.data.totalRecord)
+        }
+    }
+
+
+    //查询用户仓库组
+
+
+    const cuteTab = (value) => {
+      setTabType(value)
+
+        if (value==='repo'){
+            findRpyPage(1)
+        }
+    }
+    /**
+     * 操作下拉
+     */
+    const execPullDown=(value) => (
+        <Menu>
+            { params.userId==="111111"?
+                <Menu.Item  disabled={true}>
+                    <Tooltip placement="top" title={'不能移除超级管理员的项目'} >
+                        移除
+                    </Tooltip>
+                </Menu.Item>:
+                <Menu.Item  onClick={()=>deleteUsrRpy(value)}>
+                    移除
+                </Menu.Item>
+            }
+
+        </Menu>
+    );
+
+
+
 
 
     /**
@@ -163,12 +202,12 @@ const UserRpyList = (props) => {
      */
     const changPage =async (value) => {
         setCurrentPage(value)
-        await findRpyPage(value)
+        await findRpyPage(value,repositoryName)
     }
 
     //刷新查询
     const refreshFind = () => {
-        findRpyPage(currentPage)
+        findRpyPage(currentPage,repositoryName)
     }
 
     //用户用权限仓库
@@ -177,11 +216,28 @@ const UserRpyList = (props) => {
          if(res.code===0){
               deleteDmUser(res.data[0].id).then(item=>{
 
-                  item.code===0&&findRpyPage(1)
+                  item.code===0&&findRpyPage(currentPage,repositoryName)
               })
          }
-
     }
+
+
+    /**
+     * 搜索仓库
+     * @returns {Promise<void>}
+     */
+    const onSearch =async () => {
+        findRpyPage(1,repositoryName)
+    }
+
+    const onChangeSearch = (e) => {
+        const value=e.target.value
+        setRepositoryName(value)
+        if (value===''){
+            findRpyPage(1)
+        }
+    }
+
     return(
         <div className='xcode page-width user-rpy'>
             <Col sm={{ span: "24" }}
@@ -190,24 +246,53 @@ const UserRpyList = (props) => {
                  xl={{ span: "22", offset: "1" }}
                  xxl={{ span: "18", offset: "3" }}
             >
-                <BreadcrumbContent firstItem={'用户'} secondItem={'仓库'} goBack={goBack}/>
-                <div className='user-rpy-table'>
-                    <Table
-                        bordered={false}
-                        columns={columns}
-                        dataSource={repositoryList}
-                        rowKey={record=>record.id}
-                        pagination={false}
-                        locale={{emptyText: isLoading ?
-                                <SpinLoading type="table"/>: <EmptyText title={"没有仓库"}/>}}
-                    />
-                    <Page pageCurrent={currentPage}
-                          changPage={changPage}
-                          totalPage={totalPage}
-                          totalRecord={totalRecord}
-                          refresh={refreshFind}
-                    />
+                <BreadcrumbContent firstItem={'成员权限'} secondItem={'仓库'} goBack={goBack}/>
+
+                <div className='user-rpy-tab'>
+                        <div className={`user-rpy-tab-nav ${tabType==='repo'&&" choose-rpy-tab-nav"}`} onClick={()=>cuteTab("repo")}>
+                            仓库
+                            <span className='tab-nav-size'>{num?.repositoryNum}</span>
+                        </div>
+                    <div className={`user-rpy-tab-nav ${tabType==='group'&&" choose-rpy-tab-nav"}`} onClick={()=>cuteTab("group")}>
+                        仓库组
+                        <span className='tab-nav-size'>{num?.groupNum}</span>
+                    </div>
                 </div>
+
+                {
+                    tabType==='repo'?
+                        <>
+                            <div className='user-rpy-search'>
+                                <SearchInput {...props}
+                                             placeholder={"搜索仓库"}
+                                             onChange={onChangeSearch}
+                                             onPressEnter={onSearch}
+                                />
+                            </div>
+                            <Table
+                                bordered={false}
+                                columns={columns}
+                                dataSource={repositoryList}
+                                rowKey={record=>record.id}
+                                pagination={false}
+                                className='user-rpy-table'
+                                locale={{emptyText: isLoading ?
+                                        <SpinLoading type="table"/>: <EmptyText title={"没有仓库"}/>}}
+                            />
+                            <Page pageCurrent={currentPage}
+                                  changPage={changPage}
+                                  totalPage={totalPage}
+                                  totalRecord={totalRecord}
+                                  refresh={refreshFind}
+
+                            />
+                        </>:
+                        <UserGroupList {...props}
+                                       userId={params.userId}
+                        />
+                }
+
+
             </Col>
         </div>
     )

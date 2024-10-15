@@ -13,7 +13,7 @@ import {
     RightOutlined,
     EditOutlined, RedoOutlined
 } from '@ant-design/icons';
-import {PrivilegeProjectButton} from 'thoughtware-privilege-ui';
+import {PrivilegeProjectButton} from 'tiklab-privilege-ui';
 import {inject,observer} from 'mobx-react';
 import Btn from '../../../common/btn/Btn';
 import BreadcrumbContent from '../../../common/breadcrumb/Breadcrumb';
@@ -22,7 +22,7 @@ import RepositoryPower from '../../repository/components/RepositoryPower';
 import './RepositoryBasicInfo.scss';
 import FileStore from "../../file/store/FileStore";
 import GroupStore from "../../../repositoryGroup/repositoryGroup/store/RepositoryGroupStore";
-import {getUser} from "thoughtware-core-ui";
+import {getUser} from "tiklab-core-ui";
 import {Validation} from "../../../common/client/Client";
 import RepositoryDeletePop from "./RepositoryDeletePop";
 import RepositoryResetPop from "./RepositoryResetPop";
@@ -189,7 +189,7 @@ const RepositoryBasicInfo = props =>{
                             <Form.Item label='仓库名称' name='name' rules={[
                                 {required:true,message:'请输入名称'},
                                 Validation('名称','appoint'),
-                                {max:30,message:'请输入1~31位以内的名称'},
+                                {max:64,message:'请输入1~31位以内的名称'},
                                 ({getFieldValue}) => ({
                                 validator(rule,value) {
                                     if (errorMsg) {
@@ -219,7 +219,7 @@ const RepositoryBasicInfo = props =>{
                                     rules={[
                                         {required:true,message:'仓库地址不能为空'},
                                         Validation('名称','appoint'),
-                                        {max:30,message:'请输入1~31位以内的名称'},
+                                        {max:64,message:'请输入1~64位以内的名称'},
                                         ({getFieldValue}) => ({
                                             validator(rule,value) {
                                                 if (errorMsg) {

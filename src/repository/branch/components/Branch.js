@@ -15,8 +15,8 @@ import EmptyText from '../../../common/emptyText/EmptyText';
 import BranchAdd from './BranchAdd';
 import './Branch.scss';
 import branchStore from "../store/BranchStore"
-import {getUser} from "thoughtware-core-ui";
-import {PrivilegeProjectButton} from 'thoughtware-privilege-ui';
+import {getUser} from "tiklab-core-ui";
+import {PrivilegeProjectButton} from 'tiklab-privilege-ui';
 import SearchInput from "../../../common/input/SearchInput";
 const { confirm } = Modal;
 /**
@@ -102,6 +102,12 @@ const Branch = props =>{
        props.history.push(`/repository/${webUrl}/mergeAdd?source_branch=${branchName}`)
    }
 
+   //下载当前分支仓库
+   const downloadRepo = (data) => {
+       const a=getUser().tenant
+       window.location.href=`${node_env? base_url:window.location.origin}/repositoryFile/downLoadBareRepo${a?"/"+getUser().tenant:""}?branch=${data.branchName}&type=zip&rpyId=${repositoryInfo?.rpyId}&rpyName=${repositoryInfo.name}`
+
+   }
 
 
     //删除弹窗
@@ -129,7 +135,7 @@ const Branch = props =>{
             <Menu.Item  style={{width:120}}>
                 比较
             </Menu.Item>
-            <Menu.Item>
+            <Menu.Item  onClick={()=>downloadRepo(value)}>
                 下载分支
             </Menu.Item>
 
@@ -221,41 +227,6 @@ const Branch = props =>{
                     >
                         <EllipsisOutlined style={{fontSize:20}}/>
                     </Dropdown>
-
-             {/*       <Tooltip title='对比'>
-                        <div className='branch-tables-compare'>对比</div>
-                    </Tooltip>
-                    <Tooltip title='下载'>
-                        <div className='branch-tables-download'>
-                            <svg className='icon' aria-hidden='true'>
-                                <use xlinkHref='#icon-xiazai'/>
-                            </svg>
-                        </div>
-                    </Tooltip>
-                    {
-                        item.defaultBranch ?
-                        <div className='no-del'>
-                            <svg className="icon" aria-hidden="true">
-                                <use xlinkHref="#icon-delete"/>
-                            </svg>
-                        </div>
-                            :
-                        <Tooltip title='删除'>
-                            <Popconfirm
-                                title="你确定删除吗"
-                                onConfirm={()=>delBranch(item)}
-                                okText="确定"
-                                cancelText="取消"
-                                placement="topRight"
-                            >
-                                <div className='branch-tables-del'>
-                                    <svg className="icon" aria-hidden="true">
-                                        <use xlinkHref="#icon-delete"/>
-                                    </svg>
-                                </div>
-                            </Popconfirm>
-                        </Tooltip>
-                    }*/}
                 </div>
             </div>
         )

@@ -7,7 +7,7 @@
  * @LastEditTime: 2023-01-03 19:56:02
  */
 import React ,{useEffect}from "react";
-import {DomainUser} from "thoughtware-user-ui";
+import {DomainUser} from "tiklab-user-ui";
 import { inject, observer } from "mobx-react";
 import groupStore from "../../repositoryGroup/store/RepositoryGroupStore"
 const RepositoryGroupUser =(props)  => {
@@ -20,11 +20,15 @@ const RepositoryGroupUser =(props)  => {
     },[])
     return (
         <div >
-            <DomainUser
-                {...props}
-                domainId={groupInfo.groupId}
-                bgroup = {"gitpuk"}
-            />
+            {
+                groupInfo&&
+                <DomainUser
+                    {...props}
+                    domainId={groupInfo.groupId}
+                    bgroup = {"gitpuk"}
+                />
+            }
+
         </div>
     )
 }

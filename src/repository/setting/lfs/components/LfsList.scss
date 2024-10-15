@@ -1,0 +1,34 @@
+.lfs-list{
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  padding: 20px 30px;
+  min-width: var(--project-setting-min-width);
+  .lfs-list-desc{
+    margin-top: 15px;
+    color: #999999;
+  }
+
+  .lfs-list-tab{
+    display: flex;
+    gap: 15px;
+    margin-top: 25px;
+    font-size: var(--thoughtware-font-14);
+    align-items: center;
+    .lfs-list-tab-nav{
+      cursor: pointer;
+    }
+    .choose-lfs-tab{
+      color: #0063FF;
+      border-bottom:2px solid #0063FF;
+    }
+  }
+  .lfs-list-table{
+    margin-top: 20px;
+    .lfs-table-exec{
+      display: flex;
+      gap: 10px;
+    }
+  }
+
+}

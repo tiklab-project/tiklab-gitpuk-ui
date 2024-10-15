@@ -14,7 +14,7 @@ import {
 import {Dropdown, Input, Menu, Modal} from "antd";
 import Btn from "../../common/btn/Btn";
 import Profile from "../../common/profile/Profile";
-import {getUser} from "thoughtware-core-ui";
+import {getUser} from "tiklab-core-ui";
 import MergeClashPop from "./MergeClashPop";
 import MergeAddVerifyBasicDrop from "./MergeAddVerifyBasicDrop";
 import mergeAuditorStore from "../store/MergeAuditor";

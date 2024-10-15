@@ -26,7 +26,7 @@ import Omit from "../../../common/omit/Omit";
 import ScanPlayStore from "../../../repository/scan/store/ScanPlayStore";
 import ScanSchemeSetting from "./ScanSchemeSetting";
 const { TextArea } = Input;
-import {PrivilegeButton} from 'thoughtware-privilege-ui';
+import {PrivilegeButton} from 'tiklab-privilege-ui';
 const ScanScheme = (props) => {
 
     const {findScanSchemeList,deleteScanScheme,createScanScheme,createScanSchemeRuleSet,

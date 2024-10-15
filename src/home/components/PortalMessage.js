@@ -15,7 +15,7 @@ import {
 } from '@ant-design/icons';
 import EmptyText from '../../common/emptyText/EmptyText';
 import './PortalMessage.scss';
-import {getUser} from "thoughtware-core-ui";
+import {getUser} from "tiklab-core-ui";
 import MessageStore from "../store/MessageStore";
 import {observer} from "mobx-react";
 

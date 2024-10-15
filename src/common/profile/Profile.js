@@ -1,7 +1,7 @@
 import React from "react";
 import {Avatar} from "antd";
 import {UserOutlined} from "@ant-design/icons";
-import {getUser} from "thoughtware-core-ui"
+import {getUser} from "tiklab-core-ui"
 
 const ProfileContent = ({userInfo = undefined}) => {
 

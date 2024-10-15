@@ -12,6 +12,11 @@
          align-items: center;
          justify-content: space-between;
          padding-bottom: 10px;
+        .group-select-right-style{
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
     }
     &-tables{
         .repository-group-tables-name{

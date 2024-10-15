@@ -1,7 +1,7 @@
 import React, {useState,useEffect} from "react";
 import {Row,Col} from "antd";
 import SystemCountStore from "../store/SystemCountStore";
-import {applyJump, disableFunction, applySubscription, getUser} from "thoughtware-core-ui";
+import {applyJump, disableFunction, applySubscription, getUser} from "tiklab-core-ui";
 ;
 import vipLight from '../../../assets/images/img/vip-light.png';
 import vipDark from '../../../assets/images/img/vip-dark.png';
@@ -180,7 +180,7 @@ const SettingHome = props => {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className='home-licence-sub' onClick={()=>applySubscription('gittok')}>
+                                        <div className='home-licence-sub' onClick={()=>applySubscription('gitpuk')}>
                                             {licence?.subScribe === false ? '续订' : '订阅'}
                                         </div>
                                     </div>
@@ -241,7 +241,7 @@ const SettingHome = props => {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className='home-licence-sub' onClick={()=>applySubscription('gittok')}>
+                                        <div className='home-licence-sub' onClick={()=>applySubscription('gitpuk')}>
                                             {count?.version === false ? '续订' : '订阅'}
                                         </div>
                                     </div>

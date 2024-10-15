@@ -11,51 +11,104 @@ import BreadcrumbContent from "../../common/breadcrumb/Breadcrumb";
 import MergeStore from "../store/MergeStore";
 import {inject, observer} from "mobx-react";
 import {MonacoEditMerge} from "../../common/editor/Monaco";
+import Btn from "../../common/btn/Btn";
 const MergeClashEdit = (props) => {
     const {repositoryStore,match} = props
     const {repositoryInfo} = repositoryStore
-    const {findMergeClashFile,findMergeRequest,findClashFileData,}=MergeStore
+    const {findConflictingFile,findConflictingFileDetails,findMergeRequest,conflictResolutionFile}=MergeStore
+
+    const [fileData,setFileData]=useState(null)
+    //合并数据
+    const [mergeData,setMergeData]=useState(null)
+
     //冲突文件list
     const [mergeClashFileList,setMergeClashFileList]=useState(["thoughtware-hadess-server/src/main/java/io/thoughtware/hadess/repository/controller/RepositoryController.java"])
-    const [fileData,setFileData]=useState(null)
-
     //冲突文件的路径文件
     const [filePath,setFilePath]=useState()
 
     // 获取修改内容的行数
     const [editPosition,setEditPosition] = useState('')
-    // 修改的内容
-    const [previewValue,setPreviewValue] = useState('')
+
+    // 修改的内容 文件路径和文件内容
+    const [previewValueList,setPreviewValueList] = useState([])
 
     useEffect(()=>{
-   /*     findMergeRequest(match.params.mergeId).then(res=>{
+
+        findMergeRequest(match.params.mergeId).then(res=>{
             if (res.code===0){
-                getMergeClashFile(res.data.mergeOrigin,res.data.mergeTarget)
+                setMergeData(res.data)
+                getConflictingFile(res.data)
             }
-        })*/
-        findClashFileData("585456fc2e3f","thoughtware-hadess-server/src/main/java/io/thoughtware/hadess/repository/controller/RepositoryController.java").then(res=>{
-            res.code===0&&setFileData(res.data)
         })
+     /*   findClashFileData("585456fc2e3f","thoughtware-hadess-server/src/main/java/io/thoughtware/hadess/repository/controller/RepositoryController.java").then(res=>{
+            res.code===0&&setFileData(res.data)
+        })*/
     },[])
 
+    //查询冲突文件
+    const getConflictingFile = (data) => {
+        findConflictingFile({
+            rpyId:repositoryInfo.rpyId,
+            mergeOrigin:data.mergeOrigin,
+            mergeTarget:data.mergeTarget,
+        }).then(res=>{
+            if (res.code===0){
+                setMergeClashFileList(res.data)
+                if (res.data.length){
+                    setFilePath(res.data[0])
+                    getConflictingFileDetails(data,res.data[0])
+                }
+            }
+        })
+    }
 
     //查询冲突文件详情
-    const getMergeClashFile = (branch,targetBranch) => {
-        findMergeClashFile({
-            rpyId: repositoryInfo.rpyId,
-            mergeOrigin:branch,
-            mergeTarget:targetBranch
+    const getConflictingFileDetails = (mergeData,value) => {
+        findConflictingFileDetails({
+            rpyId:repositoryInfo.rpyId,
+            mergeOrigin:mergeData.mergeOrigin,
+            mergeTarget:mergeData.mergeTarget,
+            filePath:value
         }).then(res=>{
-            setFilePath(res.data.filePath)
-            res.code===0&&setMergeClashFileList(res.data)
+            if (res.code===0){
+                setFileData(res.data.fileData)
+            }
         })
     }
 
     //切换冲突文件
     const cutFilePath = (value) => {
         setFilePath(value)
+        getConflictingFileDetails(mergeData,value)
     }
 
+    //添加修改后的内容
+    const updatePreviewValue = (value) => {
+        setFileData(value)
+        const data={filePath:filePath,fileData:value}
+        if (previewValueList){
+            const index = previewValueList.findIndex(item => item.filePath === filePath);
+            if (index !== -1) {
+                // 如果找到相同的元素，替换
+                previewValueList[index] = data;
+            } else {
+                // 如果没有相同的元素，拼接到列表末尾
+                previewValueList.push(data);
+            }
+        }else {
+            setPreviewValueList([data])
+        }
+    }
+
+    //提交修改的冲突文件
+    const conflictFile = () => {
+        conflictResolutionFile({
+            mergeClashFileList:previewValueList,
+            mergeOrigin:mergeData.mergeTarget,
+            mergeTarget:mergeData.mergeOrigin,
+            repositoryId:repositoryInfo.rpyId,
+        })
+    }
 
     const goBack = () => {
         props.history.go(-1)
@@ -71,7 +124,23 @@ const MergeClashEdit = (props) => {
             >
                 <div className='clash-edit-content'>
                     <BreadcrumbContent firstItem= {"在线解决冲突"}  goBack={goBack}/>
-                    <div className='clash-edit-title'>正在解决 b 分支和 master 分支间的代码冲突</div>
+                    <div className='clash-edit-title-style'>
+                        <div className='clash-edit-title-text'>{`正在解决 ${mergeData?.mergeOrigin} 分支和 ${mergeData?.mergeTarget} 分支间的代码冲突`}</div>
+                        <div>
+                            {
+                               1===1? <Btn
+                                    title={'提交改动'}
+                                    type={'primary'}
+                                    onClick={conflictFile}
+                                />:
+                                <Btn
+                                    title={'提交更改'}
+                                    type={'disabled'}
+                                />
+                            }
+                        </div>
+                    </div>
+
 
                     <div className='clash-edit-body'>
                         <div className='edit-body-left'>
@@ -96,12 +165,14 @@ const MergeClashEdit = (props) => {
                         <div className='edit-body-right'>
                             <div className={'body-right-title'}>{filePath}</div>
                             <div className='edit-right-body'>
-                                <MonacoEditMerge
-                                    blobFile={{fileType:"java"}}
-                                    previewValue={fileData}
-                                    setPreviewValue={setFileData}
-                                    setEditPosition={setEditPosition}
-                                />
+                                {
+                                    fileData&&
+                                    <MonacoEditMerge
+                                        blobFile={{fileType:"java"}}
+                                        previewValue={fileData}
+                                        setPreviewValue={updatePreviewValue}
+                                    />
+                                }
                             </div>
                         </div>
                     </div>

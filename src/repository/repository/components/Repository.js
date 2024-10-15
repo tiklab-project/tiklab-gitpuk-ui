@@ -1,13 +1,13 @@
 import React,{useState,useEffect} from 'react';
 import {inject,observer} from 'mobx-react';
-import {Col, Dropdown, Input, Menu} from 'antd';
+import {Col, Dropdown, Input, Menu, Select} from 'antd';
 import BreadcrumbContent from '../../../common/breadcrumb/Breadcrumb';
 import Btn from '../../../common/btn/Btn';
 import Tabs from '../../../common/tabs/Tabs';
 import RepositoryTable from "./RepositoryTable";
 import './Repository.scss';
-import {getUser} from "thoughtware-core-ui";
-import {PrivilegeButton} from 'thoughtware-privilege-ui';
+import {getUser} from "tiklab-core-ui";
+import {PrivilegeButton} from 'tiklab-privilege-ui';
 import SearchInput from "../../../common/input/SearchInput";
 const Repository = props => {
 
@@ -30,10 +30,12 @@ const Repository = props => {
     const [isLoading,setIsLoading]=useState(false)
     const [sort,setSort]=useState(null)
 
+    const [rules,setRules]=useState()
+
 
     useEffect(async ()=>{
        await findRpyPage(1,repositoryType)
-    },[])
+    },[rules])
 
     //分页查询仓库列表
     const findRpyPage =async (currentPage,repositoryType,sort) => {
@@ -42,7 +44,8 @@ const Repository = props => {
                userId:getUser().userId,
                name: repositoryName,
                findType:repositoryType,
-               sort:sort
+               sort:sort,
+                rules:rules
            }).then(res=>{
            setIsLoading(false)
                if (res.code===0){
@@ -79,6 +82,7 @@ const Repository = props => {
                 userId: getUser().userId,
                 findType: repositoryType,
                 sort: sort
+
             }).then(res=>{
                 setIsLoading(false)
                 if (res.code===0){
@@ -117,6 +121,11 @@ const Repository = props => {
         findRpyPage(currentPage,repositoryType,sort)
     }
 
+    //切换权限
+    const changAuth = (value) => {
+        setRules(value)
+    }
+
     //排序
     const onChange = (pagination, filters, sorter, extra) => {
         //降序
@@ -152,7 +161,7 @@ const Repository = props => {
             );
 
     return(
-        <div className='repository page-width xcode '>
+        <div className='repository page-width xcode drop-down '>
             <Col sm={{ span: "24" }}
                 md={{ span: "24" }}
                 lg={{ span: "24" }}
@@ -162,31 +171,39 @@ const Repository = props => {
                 <div className='repository-top'>
                     <BreadcrumbContent firstItem={'Repository'}/>
 
-                    <PrivilegeButton  code={"gittok_rpy_add"} key={'gittok_rpy_add'} >
-                        <Dropdown
-                            overlay={items}
-                            trigger={['click']}
-                            getPopupContainer={triggerNode => triggerNode.parentElement}
-                        >
-                            <Btn type={'primary'} title={'创建仓库'}/>
-                        </Dropdown>
-                    </PrivilegeButton>
+                 {/*   <PrivilegeButton  code={"gittok_rpy_add"} key={'gittok_rpy_add'} >
+
+                    </PrivilegeButton>*/}
+                    <Dropdown
+                        overlay={items}
+                        trigger={['click']}
+                        getPopupContainer={triggerNode => triggerNode.parentElement}
+                    >
+                        <Btn type={'primary'} title={'创建仓库'}/>
+                    </Dropdown>
                 </div>
                 <div className='repository-filter'>
                     <Tabs
                         type={repositoryType}
                         tabLis={[
-                            {id:"viewable", title:'所有仓库'},
-                            {id:"oneself", title:'我的仓库'},
-                            {id:"collect", title:'我的收藏'}
+                            {id:"viewable", title:'所有'},
+                            {id:"oneself", title:'我创建的'},
+                            {id:"collect", title:'我收藏的'}
                         ]}
                         onClick={clickType}
                     />
-                    <SearchInput {...props}
-                                 placeholder={"搜索仓库名称"}
-                                 onChange={onChangeSearch}
-                                 onPressEnter={onSearch}
-                    />
+                    <div className='select-right-style'>
+                        <SearchInput {...props}
+                                     placeholder={"搜索仓库名称"}
+                                     onChange={onChangeSearch}
+                                     onPressEnter={onSearch}
+                        />
+                        <Select  allowClear onChange={value=>changAuth(value)} style={{minWidth:140}} placeholder='可见范围'>
+                            <Select.Option value={"private"}>{"私有"}</Select.Option>
+                            <Select.Option value={"public"}>{"公开"}</Select.Option>
+                        </Select>
+                    </div>
+
                 </div>
                 <RepositoryTable
                     {...props}

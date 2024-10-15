@@ -12,7 +12,7 @@ import {
     PullRequestOutlined,
 } from '@ant-design/icons';
 import BreadcrumbContent from '../../common/breadcrumb/Breadcrumb';
-import {PrivilegeProjectButton} from 'thoughtware-privilege-ui';
+import {PrivilegeProjectButton} from 'tiklab-privilege-ui';
 import Btn from '../../common/btn/Btn';
 import Tabs from '../../common/tabs/Tabs';
 import EmptyText from '../../common/emptyText/EmptyText';

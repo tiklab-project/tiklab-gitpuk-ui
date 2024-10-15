@@ -5,7 +5,7 @@ import {
     LockOutlined,
     SearchOutlined, UnlockOutlined
 } from '@ant-design/icons';
-import {Table, Tooltip, Space, Input, Col} from 'antd';
+import {Table, Tooltip, Space, Input, Col, Select} from 'antd';
 import BreadcrumbContent from '../../../common/breadcrumb/Breadcrumb';
 import Btn from '../../../common/btn/Btn';
 import Tabs from '../../../common/tabs/Tabs';
@@ -14,11 +14,11 @@ import Listicon from '../../../common/list/Listicon';
 import './RepositoryGroup.scss';
 import groupStore from "../store/RepositoryGroupStore"
 import {observer} from "mobx-react";
-import {getUser} from "thoughtware-core-ui";
+import {getUser} from "tiklab-core-ui";
 import {SpinLoading} from "../../../common/loading/Loading";
 import Page from "../../../common/page/Page";
 import UserIcon from "../../../common/list/UserIcon";
-import {PrivilegeButton} from 'thoughtware-privilege-ui';
+import {PrivilegeButton} from 'tiklab-privilege-ui';
 import SearchInput from "../../../common/input/SearchInput";
 const RepositoryGroup = props => {
 
@@ -37,83 +37,7 @@ const RepositoryGroup = props => {
     const [groupName,setGroupName]=useState()
     const [isLoading,setIsLoading]=useState(false)
 
-    useEffect( async ()=>{
-
-        // 初始化仓库组
-        await findGroupPage(1,groupType)
-    },[])
-
-    const findGroupPage =async (currentPage,repositoryType,name) => {
-        const param={
-            pageParam:{
-                currentPage:currentPage,
-                pageSize:10
-            },
-            userId:getUser().userId,
-            name:name,
-            findType:repositoryType
-        }
-        setIsLoading(true)
-        const res=await findRepositoryGroupPage(param)
-        setIsLoading(false)
-        if (res.code===0){
-            setGroupList(res.data?.dataList)
-
-            setTotalPage(res.data.totalPage)
-            setCurrentPage(res.data.currentPage)
-            setTotalRecord(res.data.totalRecord)
-        }
-    }
-
-    /**
-     * 切换仓库组类型
-     * @param item
-     */
-    const clickType = item => {
-        setGroupType(item.id)
-    }
-
-    const goDetails = (text) => {
-         props.history.push(`/group/${text}/repository`)
-    }
-
-    /**
-     * 跳转仓库组的设置界面
-     * @param value 仓库信息
-     */
-    const goSet = (value) => {
-        props.history.push(`/group/${value.name}/setting/info`)
-    }
-
-    /**
-     * 输入搜索的仓库组名称
-     * @param e
-     */
-    const onChangeSearch = (e) => {
-        const value=e.target.value
-        setGroupName(value)
-        if (value===''){
-            findGroupPage(1,groupType)
-        }
-    }
-
-    const onSearch = () => {
-        findGroupPage(1,groupType,groupName)
-    }
-
-    /**
-     * 分页
-     */
-    const changPage =async (value) => {
-        setCurrentPage(value)
-        await findGroupPage(value,groupType,groupName)
-    }
-
-
-    //刷新查询
-    const refreshFind = () => {
-        findGroupPage(currentPage,groupType,groupName)
-    }
+    const [rules,setRules]=useState()
 
     const columns = [
         {
@@ -197,9 +121,93 @@ const RepositoryGroup = props => {
             }
         },
     ]
+    useEffect( async ()=>{
+
+        // 初始化仓库组
+        await findGroupPage(1,groupType)
+    },[rules])
+
+    const findGroupPage =async (currentPage,repositoryType,name) => {
+        const param={
+            pageParam:{
+                currentPage:currentPage,
+                pageSize:10
+            },
+            userId:getUser().userId,
+            name:name,
+            findType:repositoryType,
+            rules:rules
+        }
+        setIsLoading(true)
+        const res=await findRepositoryGroupPage(param)
+        setIsLoading(false)
+        if (res.code===0){
+            setGroupList(res.data?.dataList)
+
+            setTotalPage(res.data.totalPage)
+            setCurrentPage(res.data.currentPage)
+            setTotalRecord(res.data.totalRecord)
+        }
+    }
+
+    /**
+     * 切换仓库组类型
+     * @param item
+     */
+    const clickType = item => {
+        setGroupType(item.id)
+    }
+
+    const goDetails = (text) => {
+         props.history.push(`/group/${text}/repository`)
+    }
+
+    /**
+     * 跳转仓库组的设置界面
+     * @param value 仓库信息
+     */
+    const goSet = (value) => {
+        props.history.push(`/group/${value.name}/setting/info`)
+    }
+
+    /**
+     * 输入搜索的仓库组名称
+     * @param e
+     */
+    const onChangeSearch = (e) => {
+        const value=e.target.value
+        setGroupName(value)
+        if (value===''){
+            findGroupPage(1,groupType)
+        }
+    }
+
+    const onSearch = () => {
+        findGroupPage(1,groupType,groupName)
+    }
+
+    /**
+     * 分页
+     */
+    const changPage =async (value) => {
+        setCurrentPage(value)
+        await findGroupPage(value,groupType,groupName)
+    }
+
+
+    //刷新查询
+    const refreshFind = () => {
+        findGroupPage(currentPage,groupType,groupName)
+    }
+
+
+    //切换权限
+    const changAuth = (value) => {
+        setRules(value)
+    }
 
     return(
-        <div className='xcode page-width repository-group'>
+        <div className='xcode page-width repository-group drop-down'>
             <Col sm={{ span: "24" }}
                  md={{ span: "24" }}
                  lg={{ span: "24" }}
@@ -209,14 +217,14 @@ const RepositoryGroup = props => {
                 <div className='repository-group-content  '>
                     <div className='repository-group-top'>
                         <BreadcrumbContent firstItem={'Repository_group'}/>
-                        <PrivilegeButton  code={"gittok_rpy_group_add"} key={'gittok_rpy_group_add'} >
-                            <Btn
-                                type={'primary'}
-                                title={'新建仓库组'}
-                                /* icon={<PlusOutlined/>}*/
-                                onClick={()=>props.history.push('/group/new')}
-                            />
-                        </PrivilegeButton>
+                   {/*     <PrivilegeButton  code={"gittok_rpy_group_add"} key={'gittok_rpy_group_add'} >
+                        </PrivilegeButton>*/}
+                        <Btn
+                            type={'primary'}
+                            title={'新建仓库组'}
+                            /* icon={<PlusOutlined/>}*/
+                            onClick={()=>props.history.push('/group/new')}
+                        />
                     </div>
                     <div className='repository-group-type'>
                         <Tabs
@@ -227,12 +235,16 @@ const RepositoryGroup = props => {
                             ]}
                             onClick={clickType}
                         />
-                        <div className='repository-group-type-input'>
+                        <div className='group-select-right-style'>
                             <SearchInput
                                 placeholder='搜索仓库组名称'
                                 onChange={onChangeSearch}
                                 onPressEnter={onSearch}
                             />
+                            <Select  allowClear onChange={value=>changAuth(value)} style={{minWidth:140}} placeholder='可见范围'>
+                                <Select.Option value={"private"}>{"私有"}</Select.Option>
+                                <Select.Option value={"public"}>{"公开"}</Select.Option>
+                            </Select>
                         </div>
                     </div>
                     <div className='repository-group-tables'>

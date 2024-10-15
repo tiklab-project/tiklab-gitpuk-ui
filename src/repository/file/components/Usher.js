@@ -2,7 +2,7 @@ import React,{useEffect,useState} from 'react';
 import {Col, Input} from 'antd';
 import {CopyOutlined} from '@ant-design/icons';
 import {observer} from 'mobx-react';
-import {getUser} from 'thoughtware-core-ui';
+import {getUser} from 'tiklab-core-ui';
 import BreadcrumbContent from '../../../common/breadcrumb/Breadcrumb';
 import {copy} from '../../../common/client/Client';
 import './Usher.scss';

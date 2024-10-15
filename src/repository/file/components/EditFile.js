@@ -1,33 +1,34 @@
-import React,{useEffect,useState} from 'react';
-import {Input, Form, Col} from 'antd';
-import {inject,observer} from 'mobx-react';
-import {MonacoEdit, MonacoPreview} from '../../../common/editor/Monaco';
-import BreadcrumbContent from '../../../common/breadcrumb/Breadcrumb';
-import Btn from '../../../common/btn/Btn';
-import {findCommitId, setBranch, setFileAddress} from './Common';
-import './Edit.scss'
-
-import fileStore from '../store/FileStore'
-import MonacoBlob from "../../../common/editor/MonacoBlob";
-import EditFilePop from "./EditFilePop";
 /**
  * 编辑文件页面
  * @param props
  * @returns {JSX.Element}
  * @constructor
  */
-const Edit = props =>{
+import React,{useEffect,useState} from 'react';
+import {Input, Form, Col} from 'antd';
+import {inject,observer} from 'mobx-react';
+import {MonacoEdit, MonacoPreview} from '../../../common/editor/Monaco';
+import BreadcrumbContent from '../../../common/breadcrumb/Breadcrumb';
+import Btn from '../../../common/btn/Btn';
+import { findRefCode, setFileAddress} from './Common';
+import './EditFile.scss'
+
+import fileStore from '../store/FileStore'
+import EditFilePop from "./EditFilePop";
+
+const EditFile = props =>{
 
     const {repositoryStore,location,match} = props
 
     const {repositoryInfo} = repositoryStore
-    const {readFile,blobFile,updateBareFile} = fileStore
+    const {readBareRepoFile,updateBareFile,createBareFolder,findRefCodeType} = fileStore
 
     const webUrl = `${match.params.namespace}/${match.params.name}`
     const [form] = Form.useForm()
     const urlInfo = match.params.branch
-    const branch = setBranch(urlInfo,repositoryInfo)
-    const fileAddress = setFileAddress(location,webUrl+'/edit/'+urlInfo)
+
+
+    const [blobFile,setBlobFile]=useState('')
 
     // 编写 || 预览
     const [editType,setEditType] = useState('compile')
@@ -46,27 +47,64 @@ const Edit = props =>{
 
     // 编辑文件弹窗状态
     const [editFileVisible,setEditFileVisible]=useState(false)
-
-    if(findCommitId(urlInfo)){
-        props.history.go(-1)
-    }
+   const [pageType,setPageType]=useState('')
+    const [refCode,setRefCode]=useState()
+    const fileAddress = setFileAddress(location,webUrl+'/edit/'+urlInfo)
 
     useEffect(()=>{
+        let refCode
+        if (location.pathname.includes(webUrl+"/new")){
+            const fileName = location.pathname.substring(location.pathname.lastIndexOf("/")+1)
+            setFileName(fileName)
+            setPageType("create")
+            //refCode
+             refCode = findRefCode(location,repositoryInfo,"create")
+        }else {
+            setPageType("update")
+            //refCode
+             refCode = findRefCode(location,repositoryInfo,"edit")
+            getBareRepoType(refCode)
+        }
+        setRefCode(refCode)
+    },[repositoryInfo.name,location.pathname])
+
+    //获取仓库Ref类型
+    const getBareRepoType = (refCode) => {
+        const match = location.pathname.match(/code\/([^\/]+)/);
+        if (match){
+            const code=match[1]
+            findRefCodeType(repositoryInfo.rpyId,code).then(res=>{
+                if (res.code===0){
+                    //读取文件信息
+                    getBareRepoFile(res.data,refCode)
+                }
+            })
+        }else {
+            getBareRepoFile("branch",refCode)
+        }
+    }
+
+    //读取裸仓库文本信息
+    const getBareRepoFile = (refCodeType,refCode) => {
         // 获取文本内容
-        repositoryInfo.name && readFile({
+        readBareRepoFile({
             rpyId:repositoryInfo.rpyId,
             fileAddress:fileAddress[1],
-            commitBranch:branch,
-            findCommitId:false
-        })
-        .then(res=>{
-            if(res.code===0){
+            refCode:refCode,
+            refCodeType:refCodeType
+
+        }).then(res=>{
+            if (res.code===0){
                 setPreviewValue(res.data && res.data.fileMessage)
                 setEditPreviewValue(res.data && res.data.fileMessage)
                 setFileName(res.data && res.data.fileName)
+                setBlobFile(res.data)
             }
         })
-    },[repositoryInfo.name])
+    }
+
+
+
 
     /**
      * 提交信息
@@ -74,17 +112,6 @@ const Edit = props =>{
      */
     const commitChanges = value => {
         setEditFileVisible(true)
-
-        // writeFile({
-        //     rpyId:repositoryInfo.rpyId,
-        //     newFileName:fileName?fileName:blobFile.fileName,
-        //     oldFileName:blobFile.fileName,
-        //     fileAddress:fileAddress[1],
-        //     fileContent:previewValue,
-        //     ...value
-        // }).then(res=>{
-        //     res.code===0 && props.history.push(`/${webUrl}/code/${urlInfo}`)
-        // })
     }
 
     //修改
@@ -96,17 +123,40 @@ const Edit = props =>{
     //更新文件
     const updateFile = (commitMessage) => {
         updateBareFile({
-            branch:branch,
+            branch:refCode,
             repositoryId:repositoryInfo.rpyId,
             filePath:fileAddress[1],
             fileData:editPreviewValue,
             commitMessage:commitMessage,
         }).then(res=>{
             if (res.code==0){
-
-                props.history.push(`/repository/${webUrl}/blob/${branch+fileAddress[1]}`)
+                props.history.push(`/repository/${webUrl}/blob/${refCode+fileAddress[1]}`)
             }
         })
+    }
+
+    //创建文件夹、文件
+    const createFolder = (commitMessage) => {
+        let newFileAddress = setFileAddress(location,webUrl+'/new/'+urlInfo)
+
+        //创建文件的时候 文件路径不需要携带 项目名字
+        let filePath=newFileAddress[1]
+        if (newFileAddress[1].startsWith("/"+repositoryInfo.name)){
+            filePath=  newFileAddress[1].substring(repositoryInfo.name.length+2);
+        }
+
+        //创建文件，文件的全路径不需要携带仓库的名字
+      createBareFolder({
+          branch:refCode,
+          repositoryId:repositoryInfo.rpyId,
+          filePath:filePath,
+          fileName:fileName,
+          fileData:editPreviewValue,
+          commitMessage:commitMessage,
+      }).then(res=>{
+          res.code===0&& props.history.push(`/repository/${webUrl}/blob/${refCode+"/"+filePath}`)
+
+      })
     }
 
 
@@ -123,7 +173,7 @@ const Edit = props =>{
                    {/* <div className='edit-content-head'>编辑文件</div>*/}
                     <div className='edit-content-title'>
                         <span className='edit-title'
-                              onClick={()=>props.history.push(`/repository/${webUrl}/code/${branch}`)}
+                              onClick={()=>props.history.push(`/repository/${webUrl}/code/${refCode}`)}
                         >{repositoryInfo.name}</span>
                             <span className='edit-title'>/</span>
                             <span className='edit-title'>
@@ -211,12 +261,13 @@ const Edit = props =>{
             </Col>
             <EditFilePop {...props} editFileVisible={editFileVisible}
                          setEditFileVisible={setEditFileVisible}
-                         fileName={blobFile?.fileName}
-                         type={"update"}
+                         fileName={fileName}
+                         type={pageType}
                          updateFile={updateFile}
+                         createBareFolder={createFolder}
             />
         </div>
     )
 }
 
-export default inject('repositoryStore')(observer(Edit))
+export default inject('repositoryStore')(observer(EditFile))

@@ -1,6 +1,6 @@
 import {observable,action} from 'mobx';
 import {message} from 'antd';
-import {Axios} from 'thoughtware-core-ui';
+import {Axios} from 'tiklab-core-ui';
 
 export class BranchStore{
 
@@ -55,6 +55,7 @@ export class BranchStore{
             message.info('创建成功',0.5)
             this.fresh = !this.fresh
         }
+        return data
     }
 
     /**
@@ -84,6 +85,7 @@ export class BranchStore{
         }else {
             message.error('切换失败',1)
         }
+        return data;
 
     }
 

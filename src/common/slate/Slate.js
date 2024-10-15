@@ -1,6 +1,6 @@
 import React from "react";
 import {DocumentEditor,PreviewEditor} from 'thoughtware-slate-ui';
-import {getUser} from "thoughtware-core-ui";
+import {getUser} from "tiklab-core-ui";
 
 
 export const SlateDocumentEditorDebounce = props =>{

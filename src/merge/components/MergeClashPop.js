@@ -29,7 +29,7 @@ const MergeClashPop = (props) => {
                     </div>
                     <div className='merge-clash-border'>
                         <div>git fetch origin</div>
-                        <div>{`git checkout ${mergeData?.mergeOrigin}`}</div>
+                        <div>{`git checkout -b ${mergeData?.mergeOrigin} origin/${mergeData?.mergeOrigin}`}</div>
                     </div>
                 </div>
                 <div className='merge-clash-nav'>

@@ -13,7 +13,6 @@ import {copy} from "../../../common/client/Client";
 import BreadcrumbContent from "../../../common/breadcrumb/Breadcrumb";
 import EmptyText from '../../../common/emptyText/EmptyText';
 import {SpinLoading} from '../../../common/loading/Loading';
-import {commitU4,setBranch,findCommitId} from '../../file/components/Common';
 import BranchSelect from '../../file/components/BranchSelect';
 import './Commits.scss';
 import commitsStore from "../store/CommitsStore"
@@ -28,10 +27,6 @@ const Commits = props =>{
     const {findBranchCommit,commitsList,setCommitsList,findDmUserList,userList,setCommitsQueryData,queryData} = commitsStore
     const {findAllBranch,branchList} = branchStore
 
-    const urlInfo = match.params.branch
-    const branch = setBranch(urlInfo,repositoryInfo)
-
-
     // 初始化加载状态findDmUserList
     const [isLoading,setIsLoading] = useState(true)
 
@@ -44,7 +39,7 @@ const Commits = props =>{
     const [commitName,setCommitName]=useState('')  //提交名称
     const [commitUser,setCommitUser]=useState()  //选择的提交用户
 
-    const [branchData,setBranchData]=useState({type:"branch",value:branch})  //分支数据
+    const [branch,setBranch]=useState(repositoryInfo.defaultBranch)  //分支数据
 
     useEffect(()=>{
         if(repositoryInfo.name){
@@ -64,7 +59,7 @@ const Commits = props =>{
             findAllBranch(repositoryInfo.rpyId)
         }
         return ()=>setCommitsList()
-    },[repositoryInfo.name,location.pathname,branchData])
+    },[repositoryInfo.name,location.pathname,branch])
 
 
 
@@ -106,8 +101,8 @@ const Commits = props =>{
         findBranchCommit({
             ...data,
             rpyId:repositoryInfo.rpyId,
-            branch:branchData.value,
-            findCommitId:findCommitId(urlInfo),
+            refCode:branch,
+            refCodeType:"branch",
             number:number
         }).then(()=>{
             if(number){
@@ -149,7 +144,7 @@ const Commits = props =>{
      * @param item
      */
     const findFile = item => {
-        props.history.push(`/repository/${webUrl}/code/${item.commitId+commitU4}`)
+        props.history.push(`/repository/${webUrl}/code/${item.commitId}`)
     }
 
     const renderCommits = item => {
@@ -222,7 +217,8 @@ const Commits = props =>{
                                 {...props}
                                 repositoryInfo={repositoryInfo}
                                 type={'commit'}
-                                setData={setBranchData}
+                                setData={setBranch}
+                                refCode={repositoryInfo.defaultBranch}
                             />
                         </div>
                         <div className='commits-filter-right'>

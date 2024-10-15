@@ -10,28 +10,51 @@ const BranchAdd = props =>{
 
     const [form] = Form.useForm()
     const [height,setHeight] = useState(0)
+    const [branchName,setBranchName]=useState()
+    const [errorMsg,setErrorMsg]=useState(null)
 
     useEffect(()=>{
+        if (addVisible){
+            form.resetFields();
+        }
         setHeight(autoHeight())
         return ()=>{
             window.onresize = null
         }
-    },[height])
+    },[height,addVisible])
 
     window.onresize=() =>{
         setHeight(autoHeight())
     }
 
+    useEffect(()=>{
+        if (addVisible){
+            form.resetFields();
+        }
+    },[addVisible])
+
     /**
      * 添加分支确定
      * @param values
      */
-    const onOk = values =>{
-        createBranch({
-            ...values,
-            rpyId:repositoryInfo.rpyId
+    const onOk = () =>{
+        form.validateFields().then((values) => {
+            createBranch({
+                ...values,
+                rpyId:repositoryInfo.rpyId
+            }).then(res=>{
+                if (res.code===0){
+                    setAddVisible(false)
+                }else{
+                    form.validateFields()
+                    setErrorMsg(res.msg)
+                }
+            })
         })
-        setAddVisible(false)
+    }
+    const inputBranchName = (e) => {
+        setBranchName(e.target.value)
+        setErrorMsg(null)
     }
 
     const modalFooter = (
@@ -42,14 +65,7 @@ const BranchAdd = props =>{
                 isMar={true}
             />
             <Btn
-                onClick={() => {
-                    form
-                        .validateFields()
-                        .then((values) => {
-                            form.resetFields()
-                            onOk(values)
-                        })
-                }}
+                onClick={onOk}
                 title={'确定'}
                 type={'primary'}
             />
@@ -64,6 +80,7 @@ const BranchAdd = props =>{
             footer={modalFooter}
             destroyOnClose={true}
             title={"新建分支"}
+            initialValues={{branchName:branchName}}
         >
             <div className='branch-add-modal'>
                 <Form
@@ -89,11 +106,14 @@ const BranchAdd = props =>{
                                        if (nameArray.includes(value)) {
                                            return Promise.reject('名称已经存在');
                                        }
+                                       if (errorMsg){
+                                           return Promise.reject(errorMsg);
+                                       }
                                        return Promise.resolve()
                                    },
                                }),
                            ]}
-                    ><Input  placeholder={"输入分支名称"}/>
+                    ><Input onChange={inputBranchName} value={branchName}  placeholder={"输入分支名称"}/>
                     </Form.Item>
                     <Form.Item
                         label={'分支来源'}

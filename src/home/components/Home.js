@@ -1,8 +1,7 @@
 import React from "react";
-import {UserVerify} from "thoughtware-eam-ui";
-import {connect} from "thoughtware-plugin-core-ui";
+import {UserVerify} from "tiklab-eam-ui";
 import Portal from "./Portal";
-import {AppLink,HelpLink,AvatarLink} from "thoughtware-licence-ui";
+import {AppLink,HelpLink,AvatarLink} from "tiklab-licence-ui";
 /**
  * 首页入口
  * @param props
@@ -18,11 +17,6 @@ const Home = props => {
             />
 }
 
-function mapStateToProps(state) {
 
-    return {
-        pluginStore: state.pluginStore
-    }
-}
 
 export default UserVerify(Home,"/no-auth")

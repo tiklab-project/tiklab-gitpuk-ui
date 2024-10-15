@@ -1,6 +1,6 @@
 import React,{useState} from 'react'
-import {BaseModal,HeaderDropdown} from "thoughtware-licence-ui/es/commons";
-import {disableFunction} from "thoughtware-core-ui";
+import {BaseModal,HeaderDropdown} from "tiklab-licence-ui/es/commons";
+import {disableFunction} from "tiklab-core-ui";
 import vipLight from '../../assets/images/img/vip-light.png';
 import vipDark from '../../assets/images/img/vip-dark.png';
 import "./PortalFeature.scss";
@@ -484,9 +484,9 @@ const PortalFeature = props =>{
 
     const onOk = () =>{
         if(version==='cloud'){
-            window.open(`https://work.thoughtware.cn/#/enterprise/application/eas`)
+            window.open(`https://work.tiklab.net/#/enterprise/application/eas`)
         } else {
-            window.open(`https://thoughtware.cn/account/subscribe/apply/eas`)
+            window.open(`https://tiklab.net/account/subscribe/apply/eas`)
         }
         onCancel()
     }

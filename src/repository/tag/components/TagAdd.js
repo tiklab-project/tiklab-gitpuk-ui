@@ -6,32 +6,42 @@ import Btn from '../../../common/btn/Btn';
 import Modals from "../../../common/modal/Modal";
 import {observer} from "mobx-react";
 import tagStore from "../store/TagStore";
-import commitsStore from "../../commits/store/CommitsStore";
+import fileStore from "../../file/store/FileStore";
 
 const TagAdd = props =>{
 
     const {addTagVisible,setAddTagVisible,branchList,repositoryInfo,findTags,tagList} = props
     const {createTag}=tagStore
-    const {findLatelyBranchCommit,commit} = commitsStore
+    const {findLatelyBranchCommit} = fileStore
 
     const [form] = Form.useForm()
     const [height,setHeight] = useState(0)
     const [branch,setBranch]=useState()
     const [tagName,setTagName]=useState(null)
+    const [errorMsg,setErrorMsg]=useState(null)
 
+    const [commit,setCommit]=useState(null)
     useEffect(()=>{
         setHeight(autoHeight())
         return ()=>{
             window.onresize = null
         }
+
     },[height])
+
+    useEffect(()=>{
+        if (addTagVisible){
+            form.resetFields();
+        }
+        setErrorMsg(null)
+    },[addTagVisible])
 
     useEffect(()=>{
         if (branchList.length>0){
             const tag=branchList.filter(item=>item.defaultBranch===true)
             setBranch(tag[0].branchName)
+            getNewCommit(tag[0].branchName)
 
-            findLatelyBranchCommit({rpyId:repositoryInfo.rpyId,branch:tag[0].branchName,findCommitId:false})
         }
     },[branchList])
 
@@ -40,13 +50,34 @@ const TagAdd = props =>{
         setHeight(autoHeight())
     }
 
+    //获取最近的提交
+    const getNewCommit = (refCode) => {
+        // 获取最近提交信息
+        findLatelyBranchCommit({
+            rpyId:repositoryInfo.rpyId,
+            refCode:refCode,
+            refCodeType:"branch"
+        }).then(res=>{
+            if (res.code===0){
+                setCommit(res.data)
+            }
+        })
+    }
+
     //创建标签
     const onOk = () =>{
         form.validateFields().then((values) => {
-            createTag({rpyId:repositoryInfo.rpyId,commitId:commit.commitId,tagName:values.tagName,desc:values.desc}).then(item=>{
+            createTag({rpyId:repositoryInfo.rpyId,
+                commitId:branch?branch:repositoryInfo.defaultBranch,
+                tagName:values.tagName,
+                desc:values.desc}
+            ).then(item=>{
                if (item.code===0){
                    setTagName(null)
                    findTags()
+               }else {
+                 form.validateFields()
+                 setErrorMsg(item.msg)
                }
             })
         })
@@ -56,16 +87,18 @@ const TagAdd = props =>{
     //切换分支
     const changBranch = (value) => {
         setBranch(value)
-        findLatelyBranchCommit({rpyId:repositoryInfo.rpyId,branch:value,findCommitId:false})
+        getNewCommit(value)
     }
 
     //输入tagName
     const inputTagName= (e) => {
         setTagName(e.target.value)
+        setErrorMsg(null)
     }
 
     const closeVisible = () => {
         setTagName(null)
+        form.resetFields();
         setAddTagVisible(false)
     }
 
@@ -110,7 +143,7 @@ const TagAdd = props =>{
                     <Form.Item
                         label={'标签名称'}
                         name='tagName'
-                        rules={[{required:true,message:`分支名称不能为空`},
+                        rules={[{required:true,message:`标签名称不能为空`},
                             ({ getFieldValue }) => ({
                                 validator(rule,value) {
                                     let nameArray = []
@@ -120,13 +153,16 @@ const TagAdd = props =>{
                                     if (nameArray.includes(value)) {
                                         return Promise.reject('名称已经存在');
                                     }
+                                    if (errorMsg){
+                                        return Promise.reject(errorMsg);
+                                    }
                                     return Promise.resolve()
                                 }
                             })
                         ]
                     }
                     >
-                        <Input  onChange={inputTagName} value={tagName}  placeholder={"输入标签名称"}/>
+                        <Input  onChange={inputTagName}  placeholder={"输入标签名称"}/>
                     </Form.Item>
                     <Form.Item label={'分支来源'}>
                         <Select onChange={value=>changBranch(value)} value={branch}>

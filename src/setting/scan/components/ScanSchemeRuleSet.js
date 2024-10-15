@@ -12,7 +12,7 @@ import "./ScanSchemeRuleSet.scss"
 import {Popconfirm, Table, Tooltip} from "antd";
 import Omit from "../../../common/omit/Omit";
 import {DeleteOutlined} from "@ant-design/icons";
-import {PrivilegeButton} from 'thoughtware-privilege-ui';
+import {PrivilegeButton} from 'tiklab-privilege-ui';
 const ScanSchemeRuleSet = (props) => {
     const {scheme,scanSchemeRuleSetList,goSchemeRule,deleteScanSchemeRuleSet}=props
 

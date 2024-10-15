@@ -12,9 +12,9 @@ import {Checkbox, Form, Input} from "antd";
 
 const EditFilePop = (props) => {
     const [form] = Form.useForm()
-    const {editFileVisible,setEditFileVisible,repositoryInfo,webUrl,fileName,fileAddress,branch,type,updateFile}=props
+    const {editFileVisible,setEditFileVisible,repositoryInfo,webUrl,fileName,fileAddress,branch,type,updateFile,createBareFolder}=props
     const [height,setHeight] = useState(0)
-    const {deleteBareFile,updateBareFile} = fileStore
+    const {deleteBareFile} = fileStore
 
     useEffect(()=>{
         setHeight(autoHeight())
@@ -22,6 +22,7 @@ const EditFilePop = (props) => {
 
     //创建合并请求的状态
     const [pullState,setPullState]=useState(false)
+
     const onOk = () => {
         form.validateFields().then(async values => {
             form.resetFields()
@@ -40,6 +41,9 @@ const EditFilePop = (props) => {
 
             if (type==='update'){
                 updateFile(values.commitMessage)
+            }
+            if(type==='create'){
+                createBareFolder(values.commitMessage)
             }
         })}
 
@@ -61,13 +65,13 @@ const EditFilePop = (props) => {
             style={{height:height,top:60}}
             footer={modalFooter}
             destroyOnClose={true}
-            title={type==='delete'?"提交修改":"提交删除"}
+            title={type==='delete'&&"提交删除"||type==='update'&&"提交编辑"||type==='create'&&"提交创建"}
         >
             <Form
                 form={form}
                 layout='vertical'
                 autoComplete='off'
-                initialValues={{commitMessage:`${type==='delete'?'delete ':'edited '} ${fileName} `} }
+                initialValues={{commitMessage:`${type} ${fileName} `} }
             >
                 <Form.Item
                     label={'提交信息'}

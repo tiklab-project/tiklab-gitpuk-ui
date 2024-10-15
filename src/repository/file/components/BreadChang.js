@@ -1,6 +1,7 @@
 import React, {Fragment, useEffect} from 'react';
 import BranchSelect from './BranchSelect';
 import './BreadChang.scss';
+import {observer} from "mobx-react";
 
 /**
  * 文件目录
@@ -10,7 +11,7 @@ import './BreadChang.scss';
  */
 const BreadChang = props => {
 
-    const {repositoryInfo,type,branch,fileAddress,match,setData} = props
+    const {repositoryInfo,type,branch,fileAddress,match,refCode} = props
 
     const webUrl = `${match.params.namespace}/${match.params.name}`
     /**
@@ -55,12 +56,14 @@ const BreadChang = props => {
                 {...props}
                 repositoryInfo={repositoryInfo}
                 type={'code'}
-                setData={setData}
+                refCode={refCode}
             />
             <div className='code-bread'>
                 <div className='bread-item'
                      onClick={()=>branch && props.history.push(`/repository/${webUrl}/code/${branch}`)}
-                >{repositoryInfo.name}</div>
+                >
+                    {repositoryInfo.name}
+                </div>
                 <div className='bread-item'> / </div>
                 { renderCodeBread(fileAddress) }
             </div>
@@ -68,4 +71,4 @@ const BreadChang = props => {
     )
 }
 
-export default BreadChang
+export default observer(BreadChang)

@@ -61,7 +61,7 @@ const SurveyCommit = (props) => {
                     },
                     xAxis: {
                         type: 'category',
-                        boundaryGap: false,
+                       /* boundaryGap: false,*/
                         data:dateList
                     },
                     yAxis: {

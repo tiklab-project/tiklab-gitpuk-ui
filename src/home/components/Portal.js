@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from "react";
 import {Dropdown, Badge, Tooltip, Layout} from "antd";
 import {useTranslation} from "react-i18next";
-import {getUser,productImg,productWhiteImg} from "thoughtware-core-ui";
+import {getUser,productImg,productWhiteImg} from "tiklab-core-ui";
 import {renderRoutes} from "react-router-config";
 import {
     BellOutlined, SettingOutlined,
@@ -69,7 +69,6 @@ const  Portal = props =>{
     const changeLan = type =>{
         i18n.changeLanguage(type)
     }
-
 
     return(
         <Layout className='gittok-portal'>

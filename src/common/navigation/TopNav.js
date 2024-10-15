@@ -3,16 +3,17 @@ import React,{useState,useEffect} from "react";
 import {Badge, Dropdown, Tooltip} from "antd";
 import {AppstoreOutlined, BellOutlined, QuestionCircleOutlined, SettingOutlined} from "@ant-design/icons";
 import "./TopNav.scss"
-import {AppLink,HelpLink,AvatarLink} from "thoughtware-licence-ui";
-import {AppLink as CloudAppLink,HelpLink as CloudHelpLink,AvatarLink as CloudAvatarLink} from "thoughtware-licence-cloud-ui";
-import {getUser} from "thoughtware-core-ui";
+import {AppLink,HelpLink,AvatarLink} from "tiklab-licence-ui";
+import {AppLink as CloudAppLink,HelpLink as CloudHelpLink,AvatarLink as CloudAvatarLink} from "tiklab-licence-cloud-ui";
+import {getUser} from "tiklab-core-ui";
 import PortalMessage from "../../home/components/PortalMessage";
+import {inject,observer} from "mobx-react";
 
 const TopNav = (props) => {
-    const {showType,collapsed,setTheme}=props
+    const {repositoryStore,collapsed,setTheme}=props
     const [unread,setUnread] = useState()
     const [visible,setVisible] = useState(false)
-
+    const {setNavLevel}=repositoryStore
 
 
 
@@ -23,6 +24,7 @@ const TopNav = (props) => {
     }
 
     const goSetting = () => {
+        setNavLevel(2)
         props.history.push('/setting/home')
     }
 
@@ -163,4 +165,4 @@ const TopNav = (props) => {
         </div>
     )
 }
-export default TopNav
+export default inject("repositoryStore")(observer(TopNav))

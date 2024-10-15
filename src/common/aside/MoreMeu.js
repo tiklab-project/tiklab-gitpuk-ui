@@ -11,7 +11,7 @@ import "./MoreMeu.scss";
 import { useTranslation } from 'react-i18next';
 import { withRouter } from "react-router";
 import {BarChartOutlined, EllipsisOutlined} from "@ant-design/icons";
-import {getVersionInfo} from "thoughtware-core-ui";
+import {getVersionInfo} from "tiklab-core-ui";
 import NavigationImage from "../image/NavigationImage";
 
 const MoreMeu = (props) => {
@@ -76,10 +76,10 @@ const MoreMeu = (props) => {
         <div className='more-menu'>
             <div ref={setButton} className={`more-menu-aside-item`} onClick={() => showMoreMenu()}>
                 {collapsed?<div className='close-nav-more'>
-                    <NavigationImage theme={theme} icon={"more"} type={"close"} />
+                    <NavigationImage {...props} theme={theme} icon={"more"} type={"close"} />
                         </div>:
                     <div className='open-nav-more'>
-                        <NavigationImage theme={theme} icon={"more"} type={"open"} />
+                        <NavigationImage {...props} theme={theme} icon={"more"} type={"open"} />
                         <div>更多</div>
                     </div>
                 }
@@ -103,9 +103,8 @@ const MoreMeu = (props) => {
                                 {item.title}
                             </span>
                             {
-                                ( item.title==="代码扫描"&&getVersionInfo().expired)&& <div className='open-icon-vip'>{item.icon}</div>
+                                ( item.title==="代码扫描"&&getVersionInfo().expired&&getVersionInfo().release!==3)&& <div className='open-icon-vip'>{item.icon}</div>
                             }
-
                         </div>
                     })}
                 </div>

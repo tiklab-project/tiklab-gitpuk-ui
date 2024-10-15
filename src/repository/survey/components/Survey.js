@@ -22,7 +22,7 @@ import statisticsStore from "../../statistics/store/StatisticsStore";
 import SurveyUserCommit from "../../../common/statistics/SurveyUserCommit";
 import EmptyText from "../../../common/emptyText/EmptyText";
 const Survey = (props) => {
-    const {repositoryStore,match,location} = props
+    const {repositoryStore,match:{params},location} = props
     const {repositoryInfo} = repositoryStore
 
     const {findLatelyCommit,findLogPage,logList} = SurveyStore
@@ -37,18 +37,26 @@ const Survey = (props) => {
 
 
     useEffect(()=>{
+        //查询最新的提交
         findLatelyCommit(repositoryInfo.rpyId,4).then(res=>{
             if (res.code===0){
                 setCommitList(res.data)
             }})
 
+          //查询动态
           findLogPage({ repositoryId: repositoryInfo.rpyId, currentPage: 1 })
 
+        //代办
         statisticsTodoWorkByStatus({repositoryId:repositoryInfo.rpyId}).then(res=>{
             res.code===0&&setTodoSum(res.data)
         })
 
         }, [])
+
+    // 跳转提交
+    const goCommit = (value) => {
+        props.history.push(`/repository/${params.namespace}/${params.name}/commit/${value.commitId}`)
+    }
 
 
     return(
@@ -74,10 +82,9 @@ const Survey = (props) => {
                                                     <div className='survey-commit-left'>
                                                         <div className="survey-commit-icon">{item.commitUser.slice(0, 1).toUpperCase()}</div>
                                                         <div>
-                                                            <div className='survey-commit-message'>{item.commitMessage}</div>
+                                                            <div className='survey-commit-message' onClick={()=>goCommit(item)}>{item.commitMessage}</div>
                                                             <div className='survey-commit-desc'>{item.commitUser} 提交于 {item.commitTime}</div>
                                                         </div>
-
                                                     </div>
 
                                                     <div className='survey-commit-time'>

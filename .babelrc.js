@@ -32,7 +32,7 @@ module.exports = {
             }
         }, "thoughtware-plugin-manager-ui"],
         ["import", {
-            "libraryName": "thoughtware-eam-ui",
+            "libraryName": "tiklab-eam-ui",
             "libraryDirectory": "es",
             "style": true,
             "customName": (name) => {
@@ -46,9 +46,9 @@ module.exports = {
                     const name = UpBit + lowBit
                     return total += name;
                 },'');
-                return `thoughtware-eam-ui/es/${fullName}`;
+                return `tiklab-eam-ui/es/${fullName}`;
             }
-        },"thoughtware-eam-ui"],
+        },"tiklab-eam-ui"],
 
         ["import", {
             "libraryName": "thoughtware-integration-ui",
@@ -70,7 +70,7 @@ module.exports = {
         }, "thoughtware-integration-ui"],
 
         ["import", {
-            "libraryName": "thoughtware-message-ui",
+            "libraryName": "tiklab-message-ui",
             "libraryDirectory": "es",
             "style": true,
             "customName": (name) => {
@@ -84,9 +84,9 @@ module.exports = {
                     const name = UpBit + lowBit
                     return total += name;
                 },'');
-                return `thoughtware-message-ui/es/${fullName}`;
+                return `tiklab-message-ui/es/${fullName}`;
             }
-        }, "thoughtware-message-ui"],
+        }, "tiklab-message-ui"],
 
         ["import", {
             "libraryName": "thoughtware-todotask-ui",
@@ -108,7 +108,7 @@ module.exports = {
         }, "thoughtware-todotask-ui"],
 
         ["import", {
-            "libraryName": "thoughtware-security-ui",
+            "libraryName": "tiklab-security-ui",
             "libraryDirectory": "es",
             "style": true,
             "customName": (name) => {
@@ -122,12 +122,12 @@ module.exports = {
                     const name = UpBit + lowBit
                     return total += name;
                 },'');
-                return `thoughtware-security-ui/es/${fullName}`;
+                return `tiklab-security-ui/es/${fullName}`;
             }
-        }, "thoughtware-security-ui"],
+        }, "tiklab-security-ui"],
 
         ["import", {
-            "libraryName": "thoughtware-user-ui",
+            "libraryName": "tiklab-user-ui",
             "libraryDirectory": "es",
             "style": true,
             "customName": (name) => {
@@ -141,12 +141,12 @@ module.exports = {
                     const name = UpBit + lowBit
                     return total += name;
                 },'');
-                return `thoughtware-user-ui/es/${fullName}`;
+                return `tiklab-user-ui/es/${fullName}`;
             }
-        }, "thoughtware-user-ui"],
+        }, "tiklab-user-ui"],
 
         ["import", {
-            "libraryName": "thoughtware-licence-ui",
+            "libraryName": "tiklab-licence-ui",
             "libraryDirectory": "es",
             "style": true,
             "customName": (name) => {
@@ -160,12 +160,12 @@ module.exports = {
                     const name = UpBit + lowBit
                     return total += name;
                 },'');
-                return `thoughtware-licence-ui/es/${fullName}`;
+                return `tiklab-licence-ui/es/${fullName}`;
             }
-        }, "thoughtware-licence-ui"],
+        }, "tiklab-licence-ui"],
 
         ["import", {
-            "libraryName": "thoughtware-privilege-ui",
+            "libraryName": "tiklab-privilege-ui",
             "libraryDirectory": "es",
             "style": true,
             "customName": (name) => {
@@ -179,9 +179,9 @@ module.exports = {
                     const name = UpBit + lowBit
                     return total += name;
                 },'');
-                return `thoughtware-privilege-ui/es/${fullName}`;
+                return `tiklab-privilege-ui/es/${fullName}`;
             }
-        }, "thoughtware-privilege-ui"],
+        }, "tiklab-privilege-ui"],
 
         ["@babel/plugin-proposal-decorators", { "legacy": true }],
         ["@babel/plugin-proposal-class-properties", { "loose" : false }],

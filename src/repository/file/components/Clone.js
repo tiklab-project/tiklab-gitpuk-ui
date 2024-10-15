@@ -8,20 +8,20 @@ import React,{useState,useEffect} from 'react';
 import {Button, Divider, Dropdown, Input, Tooltip} from 'antd';
 import {CopyOutlined} from '@ant-design/icons';
 import {observer} from 'mobx-react';
-import {getUser} from "thoughtware-core-ui";
+import {getUser} from "tiklab-core-ui";
 import Btn from '../../../common/btn/Btn';
 import {copy} from '../../../common/client/Client';
 import './Clone.scss';
 const Clone = props =>{
 
-    const {cloneAddress,data,repositoryInfo} = props
+    const {cloneAddress,refCode,refCodeType,repositoryInfo} = props
 
     const [cloneVisible,setCloneVisible] = useState(false)
     //下载
     const download = (type) => {
         const a=getUser().tenant
-        if (data){
-            window.location.href=`${node_env? base_url:window.location.origin}/rpyDown/downloadRpy/${a?getUser().tenant+"/":""}${data.value}.${type}?type=${data.type}&rpyId=${repositoryInfo?.rpyId}`
+        if (refCode){
+            window.location.href=`${node_env? base_url:window.location.origin}/repositoryFile/downLoadBareRepo${a?"/"+getUser().tenant:""}?branch=${refCode}&type=${type}&rpyId=${repositoryInfo?.rpyId}&rpyName=${repositoryInfo.name}`
         }
     }
 

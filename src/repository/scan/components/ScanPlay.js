@@ -21,8 +21,7 @@ import ScanLogDrawer from "./ScanLogDrawer";
 import ScanSchemeStore from "../../../setting/scan/store/scanSchemeStore";
 import DeleteExec from "../../../common/delete/DeleteExec";
 import codeScanStore from "../store/CodeScanStore";
-import {PrivilegeProjectButton} from 'thoughtware-privilege-ui';
-import { useSelector ,RemoteComponent} from "thoughtware-plugin-core-ui";
+import {PrivilegeProjectButton} from 'tiklab-privilege-ui';
 const ScanPlay = (props) => {
     const {repositoryStore,match} = props
     const {findScanPlayPage,deleteScanPlay,refresh}=scanPlayStore
@@ -201,8 +200,6 @@ const ScanPlay = (props) => {
             })
         },1000)
     }
-
-    const a=pluginStore.filter(item => item.point === "work-gantt").length > 0
 
     return(
         <div className='xcode page-width scanPlay'>

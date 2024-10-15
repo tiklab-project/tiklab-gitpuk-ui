@@ -19,7 +19,7 @@ import MergeAddVerifyCommit from "./MergeAddVerifyCommit";
 import MergeAddVerifyFile from "./MergeAddVerifyFile";
 import commitsStore from "../../repository/commits/store/CommitsStore";
 import mergeAuditorStore from "../store/MergeAuditor";
-import {getUser} from "thoughtware-core-ui";
+import {getUser} from "tiklab-core-ui";
 import {DownOutlined} from "@ant-design/icons";
 const MergeAddVerify = (props) => {
     const {repositoryStore,match}=props
@@ -271,7 +271,7 @@ const MergeAddVerify = (props) => {
         <div className='merge-select-menu'>
             <div className='merge-select-nav'  onClick={()=>openMergePop("createNode")}>
                 <div>创建一个合并节点</div>
-                <div className='merge-select-nav-desc'>创建一条合并分支的提交记录</div>
+                <div className='merge-select-nav-desc'>创建一个合并节点，记录合并信息</div>
             </div>
             <div className='merge-select-nav' onClick={()=>openMergePop("squash")}>
                 <div>Squash合并</div>

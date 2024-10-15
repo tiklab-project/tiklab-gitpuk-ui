@@ -10,7 +10,7 @@ import {observer} from "mobx-react";
 import Btn from "../../../common/btn/Btn";
 import {Form, Input, message} from "antd";
 import ToLeadStore from "../store/ToLeadStore"
-import {getUser} from "thoughtware-core-ui";
+import {getUser} from "tiklab-core-ui";
 const ThirdInfoPop = (props) => {
     const {visible,setVisible,type,title}=props
     const [form] = Form.useForm()

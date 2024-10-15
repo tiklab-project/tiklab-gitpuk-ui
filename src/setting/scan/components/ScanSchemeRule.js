@@ -14,7 +14,7 @@ import ScanSchemeRuleStore from "../store/ScanSchemeRuleStore";
 import {observer, Observer} from "mobx-react";
 import Page from "../../../common/page/Page";
 import ScanRuleDetailsDrawer from "./ScanRuleDetailsDrawer";
-import {PrivilegeButton} from 'thoughtware-privilege-ui';
+import {PrivilegeButton} from 'tiklab-privilege-ui';
 import {
     CheckCircleOutlined,
     CloseCircleOutlined,

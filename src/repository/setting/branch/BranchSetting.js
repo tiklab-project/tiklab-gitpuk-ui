@@ -11,28 +11,17 @@ import "./BranchSetting.scss"
 import BreadcrumbContent from "../../../common/breadcrumb/Breadcrumb";
 import branchStore from "../../branch/store/BranchStore";
 import {inject, observer} from "mobx-react";
-import {setBranch} from "../../file/components/Common";
-import EmptyText from "../../../common/emptyText/EmptyText";
 import {
     BranchesOutlined,
-    DeleteOutlined,
     DownOutlined,
-    EditOutlined,
-    FilePdfOutlined,
     RightOutlined
 } from "@ant-design/icons";
-import {Validation} from "../../../common/client/Client";
-import RepositoryPower from "../../repository/components/RepositoryPower";
-import Btn from "../../../common/btn/Btn";
-import {PrivilegeProjectButton} from "thoughtware-privilege-ui";
 const BranchSetting = (props) => {
     const {repositoryStore,match} = props
-    const {repositoryInfo} = repositoryStore
+    const {repositoryInfo,findRepository} = repositoryStore
     const {findAllBranch,branchList,updateDefaultBranch} = branchStore
 
     const urlInfo = match.params.branch
-    //默认分支
-    const branch = setBranch(urlInfo,repositoryInfo && repositoryInfo)
 
     const [branchData,setBranchData]=useState()
 
@@ -43,7 +32,7 @@ const BranchSetting = (props) => {
         // 获取全部分支
          findAllBranch(repositoryInfo.rpyId).then(res=>{
             if(res.code===0&&res.data.length>0){
-                setBranchData(branch)
+                setBranchData(repositoryInfo.defaultBranch)
             }
         })
     },[repositoryInfo.name])
@@ -99,6 +88,10 @@ const BranchSetting = (props) => {
         updateDefaultBranch({
             name:branchData,
             rpyId:repositoryInfo.rpyId
+        }).then(res=>{
+            if (res.code===0){
+                findRepository(repositoryInfo.rpyId)
+            }
         })
     }
 
@@ -175,7 +168,7 @@ const BranchSetting = (props) => {
                         </Select>
                         <div style={{marginTop:20}}>
                             {
-                                branchData===branch?
+                                branchData===repositoryInfo.defaultBranch?
                                     <Button type="primary" disabled>更新</Button>:
                                     <Button type="primary" onClick={cutBranch}>更新</Button>
                             }

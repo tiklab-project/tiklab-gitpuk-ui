@@ -18,7 +18,7 @@ import Page from "../../../common/page/Page";
 import UserIcon from "../../../common/list/UserIcon";
 
 import RepositoryCollectStore from "../store/RepositoryCollectStore";
-import {getUser} from "thoughtware-core-ui";
+import {getUser} from "tiklab-core-ui";
 
 import xingxing from "../../../assets/images/img/xingxing.png"
 
@@ -164,18 +164,18 @@ const RepositoryTable = props => {
                         />
                         {
                             record.category===1?
-                            <div className='name-text'>
+                            <div className='rpy-name-text'>
                                 <div className='name-text-title'>
-                                    <div className=' text-color'>
+                                    <div>
                                         <div className='name-text-name'>{ record?.address.substring(0, record?.address.indexOf("/",1))+"/"+record.name}</div>
                                     </div>
-
                                     <div className='name-text-type'>{ "示例仓库"}</div>
                                 </div>
                             </div>
                                 :
-                            <div className='official-text-name'>
+                            <div className='official-text-name '>
                                 { record?.address.substring(0, record?.address.indexOf("/",1))+"/"+record.name}
+
                             </div>
                         }
                     </div>

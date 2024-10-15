@@ -21,7 +21,7 @@ const Page=AsyncComponent(()=>import('./common/page/Page'))
 const TimeTaskPop=AsyncComponent(()=>import('./common/timetask/TimeTaskPop'))
 const EmptyText=AsyncComponent(()=>import('./common/emptyText/EmptyText'))
 const DownSelect=AsyncComponent(()=>import('./common/downSelect/DownSelect'))
-
+const Loading=AsyncComponent(()=>import('./common/loading/Loading'))
 
 const ExcludeProductUser=AsyncComponent(()=>import('./login/ExcludeProductUser'))
 
@@ -42,7 +42,7 @@ const RepositoryAdd=AsyncComponent(()=>import('./repository/repository/component
 const RepositoryDetails=AsyncComponent(()=>import('./repository/navigator/RepositoryAside'))
 const File=AsyncComponent(()=>import('./repository/file/components/File'))
 const Blob=AsyncComponent(()=>import('./repository/file/components/Blob'))
-const Edit=AsyncComponent(()=>import('./repository/file/components/Edit'))
+const Edit=AsyncComponent(()=>import('./repository/file/components/EditFile'))
 const Branch=AsyncComponent(()=>import('./repository/branch/components/Branch'))
 const Tag=AsyncComponent(()=>import('./repository/tag/components/Tag'))
 const Commits=AsyncComponent(()=>import('./repository/commits/components/Commits'))
@@ -103,8 +103,6 @@ const Setting=AsyncComponent(()=>import('./setting/navigator/Setting'))
 
 const Auth=AsyncComponent(()=>import('./setting/auth/components/Auth'))
 
-// plugin
-const Plugin=AsyncComponent(()=>import('./setting/plugins/Plugin'))
 
 // message
 const MessageManagement=AsyncComponent(()=>import('./setting/message/MessageManagement'))
@@ -180,6 +178,7 @@ export {
     TimeTaskPop,
     EmptyText,
     DownSelect,
+    Loading,
 
     App,
      Homepage,
@@ -228,7 +227,6 @@ export {
     SettingHome,
     Setting,
     Auth,
-    Plugin,
     MessageManagement,
     MessageType,
     MessageSendType,

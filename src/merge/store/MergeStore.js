@@ -1,6 +1,6 @@
 import {observable,action} from 'mobx';
 import {message} from 'antd';
-import {Axios, getUser} from 'thoughtware-core-ui';
+import {Axios, getUser} from 'tiklab-core-ui';
 
 export class MergeStore {
     // 刷新
@@ -119,30 +119,41 @@ export class MergeStore {
      * @returns {Promise<void>}
      */
     @action
-    findMergeClashFile = async param =>{
-        const data = await Axios.post('/mergeRequest/findMergeClashFile',param)
+    findConflictingFile = async param =>{
+        const data = await Axios.post('/mergeRequest/findConflictingFile',param)
         if (data.code===0){
             this.mergeClashFileList=data.data
         }
         return data;
     }
+
     /**
-     * 查询合并分支的冲突文件
+     * 查询合并分支的冲突文件的详情
      * @param value
      * @returns {Promise<void>}
      */
     @action
-    findClashFileData = async (rpyId,path) =>{
-        const param=new FormData()
-        param.append("repositoryId",rpyId)
-        param.append("filePath",path)
-        const data = await Axios.post('/mergeRequest/findClashFileData',param)
+    findConflictingFileDetails = async param =>{
+        const data = await Axios.post('/mergeRequest/findConflictingFileDetails',param)
+        if (data.code===0){
+            this.mergeClashFileList=data.data
+        }
         return data;
     }
 
-
-
-
+    /**
+     * 在线解决冲突文件
+     * @param value
+     * @returns {Promise<void>}
+     */
+    @action
+    conflictResolutionFile = async param =>{
+        const data = await Axios.post('/mergeRequest/conflictResolutionFile',param)
+        if (data.code===0){
+            this.mergeClashFileList=data.data
+        }
+        return data;
+    }
 }
 
 const mergeStore=new MergeStore()

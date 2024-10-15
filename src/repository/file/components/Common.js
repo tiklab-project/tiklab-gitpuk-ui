@@ -6,29 +6,33 @@ const commitU4 = 'commit_id'
 //标签标识
 const tagU4='tag'
 
-/**
- * 是否为提交历史记录
- * @param branch：分支
- * @returns {*}
- */
-const findCommitId = branch =>{
-    return branch &&( branch.endsWith(commitU4)||branch.endsWith(tagU4))
-}
+
 
 /**
- * 查询提交历史或者标签
+ * 查询RefCode 分支名字、标签名字、提交的commitId
  * @param branch：分支
- * @returns {*}
+ * @param repositoryInfo：仓库信息
+ * @returns {string|*}
  */
-const findType = urlInfo =>{
-    let type="branch"
-    if ( urlInfo&&urlInfo.endsWith(tagU4)){
-        type= 'tag'
+const findRefCode = (location,repositoryInfo,type) =>{
+    debugger
+    let  match;
+    if (type==='code'){
+         match = location.pathname.match(/code\/([^\/]+)/);
     }
-    if (urlInfo&&urlInfo.endsWith(commitU4)){
-        type= 'commit'
+    if (type==='blob'){
+         match = location.pathname.match(/blob\/([^\/]+)/);
     }
-    return type;
+    if (type==='edit'){
+        match = location.pathname.match(/edit\/([^\/]+)/);
+    }
+    if (type==='create'){
+        match = location.pathname.match(/new\/([^\/]+)/);
+    }
+    if (match){
+        return match[1]
+    }
+    return  repositoryInfo.defaultBranch
 }
 
 
@@ -60,7 +64,7 @@ const setFileAddress = (location,data) =>{
 
 
 
-export {setFileAddress,setBranch,findCommitId,commitU4,findType}
+export {setFileAddress,setBranch,commitU4,findRefCode}
 
 
 

@@ -1,7 +1,7 @@
 import React,{useState,useRef,useEffect} from 'react';
 import {Col, Input} from 'antd';
 import {FolderOutlined} from '@ant-design/icons';
-import {getUser} from 'thoughtware-core-ui';
+import {getUser} from 'tiklab-core-ui';
 import BreadcrumbContent from '../../common/breadcrumb/Breadcrumb';
 import Btn from '../../common/btn/Btn';
 import Tabs from '../../common/tabs/Tabs';

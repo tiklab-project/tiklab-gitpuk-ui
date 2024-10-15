@@ -24,7 +24,7 @@ import ScanLogDrawer from "./ScanLogDrawer";
 import UserIcon from "../../../common/list/UserIcon";
 import ScanSetting from "./ScanSetting";
 import DeleteExec from "../../../common/delete/DeleteExec";
-import {PrivilegeProjectButton} from 'thoughtware-privilege-ui';
+import {PrivilegeProjectButton} from 'tiklab-privilege-ui';
 const ScanRecord= (props) => {
     const {repositoryStore,match:{params}} = props;
     const {findScanPlay,scanPlay}=ScanPlayStore

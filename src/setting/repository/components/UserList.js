@@ -14,15 +14,23 @@ import {observer} from "mobx-react";
 import "./UserList.scss"
 import Profile from "../../../common/profile/Profile";
 import UserIcon from "../../../common/list/UserIcon";
+import SearchInput from "../../../common/input/SearchInput";
+import {getUser} from "tiklab-core-ui";
+import Page from "../../../common/page/Page";
 const UserList = (props) => {
 
-    const {findUserAndRpy,xcodeUserList}=XcodeUserStore
+    const {findUserAndRpy}=XcodeUserStore
+
+    const [currentPage,setCurrentPage]=useState(1)
+    const [totalPage,setTotalPage]=useState()
+    const [totalRecord,setTotalRecord]=useState()
+    const [pageSize]=useState(10)
+    const [gitPukUserList,setGitPukUserList]=useState([])
+    const [userName,setUserName]=useState('')
 
 
     useEffect( ()=>{
-
-        findUserAndRpy()
-
+        getUserAndRpy(1)
     },[])
 
     const columns = [
@@ -34,17 +42,11 @@ const UserList = (props) => {
             ellipsis:true,
             render:(text,record)=>{
                 return (
-                    <div className='user-list-tables-name' onClick={()=>goRpyList(record.userId)}>
+                    <div className='user-list-tables-name'  onClick={()=>goRpyList(record.userId,'repository')}>
                         <UserIcon text={text} size={"middle"}/>
                         <div className='name-text-title'>
                             {text}
                         </div>
-                        {
-                            text==='admin' &&
-                            <div style={{paddingLeft:10}}>
-                                <div className='user-tag'>{ "管理员"}</div>
-                            </div>
-                        }
                     </div>
                 )
             }
@@ -57,17 +59,72 @@ const UserList = (props) => {
             ellipsis:true,
         },
         {
+            title: '仓库组数',
+            dataIndex: 'groupNum',
+            key: 'groupNum',
+            width:'20%',
+            ellipsis:true,
+            render:(text,record)=><div className='user-list-tables-rpy' >{text}</div>
+        },
+        {
             title: '仓库数',
             dataIndex: 'repositoryNum',
             key: 'repositoryNum',
             width:'20%',
             ellipsis:true,
+            render:(text,record)=><div className='user-list-tables-rpy' onClick={()=>goRpyList(record.userId,'repository')}>{text}</div>
         },
     ]
 
-    const goRpyList = (userId) => {
-        props.history.push(`/setting/power/repository/${userId}`)
+    //查询
+    const getUserAndRpy = (currentPage,userName) => {
+        findUserAndRpy({ pageParam:{currentPage:currentPage,pageSize:pageSize},
+            userName:userName
+        }).then(res=>{
+            if (res.code===0){
+                setGitPukUserList(res.data.dataList)
+                setTotalPage(res.data.totalPage)
+                setCurrentPage(res.data.currentPage)
+                setTotalRecord(res.data.totalRecord)
+            }
+        })
+    }
 
+
+
+
+    const goRpyList = (userId,type) => {
+        if (type==='repository'){
+            props.history.push(`/setting/power/repository/${userId}`)
+        }else {
+            props.history.push(`/setting/power/group/${userId}`)
+        }
+    }
+
+    /**
+     * 搜索用户
+     * @returns {Promise<void>}
+     */
+    const onSearch =async () => {
+        getUserAndRpy(1,userName)
+    }
+
+    const onChangeSearch = (e) => {
+        const value=e.target.value
+        setUserName(value)
+        if (value===''){
+            getUserAndRpy(1)
+        }
+    }
+
+    //分页
+    const changPage = (value) => {
+        setCurrentPage(value)
+        getUserAndRpy(value,userName)
+    }
+    //刷新查询
+    const refreshFind = () => {
+        getUserAndRpy(currentPage,userName)
     }
 
     return(
@@ -78,18 +135,30 @@ const UserList = (props) => {
                  xl={{ span: "22", offset: "1" }}
                  xxl={{ span: "18", offset: "3" }}
             >
-                <BreadcrumbContent firstItem={'用户仓库'}/>
+                <BreadcrumbContent firstItem={'成员权限'}/>
 
-                <div className='user-list-table'>
-                    <Table
-                        bordered={false}
-                        columns={columns}
-                        dataSource={xcodeUserList}
-                        rowKey={record=>record.id}
-                        pagination={false}
-                        locale={{emptyText: <EmptyText title={'暂无推送的仓库'}/>}}
+                <div className='user-list-search'>
+                    <SearchInput {...props}
+                                 placeholder={"搜索用户名"}
+                                 onChange={onChangeSearch}
+                                 onPressEnter={onSearch}
                     />
                 </div>
+                <Table
+                    bordered={false}
+                    columns={columns}
+                    dataSource={gitPukUserList}
+                    rowKey={record=>record.id}
+                    pagination={false}
+                    locale={{emptyText: <EmptyText title={'暂无数据'}/>}}
+                />
+
+                <Page pageCurrent={currentPage}
+                      changPage={changPage}
+                      totalPage={totalPage}
+                      totalRecord={totalRecord}
+                      refresh={refreshFind}
+                />
             </Col>
 
         </div>

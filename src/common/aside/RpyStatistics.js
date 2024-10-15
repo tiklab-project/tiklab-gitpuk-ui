@@ -8,7 +8,7 @@
 import React,{useEffect,useState} from 'react';
 import {renderRoutes} from 'react-router-config';
 import {useTranslation} from 'react-i18next';
-import {ProjectNav,PrivilegeProjectButton} from 'thoughtware-privilege-ui';
+import {ProjectNav,PrivilegeProjectButton} from 'tiklab-privilege-ui';
 import './Setting.scss';
 const RpyStatistics = props =>{
 

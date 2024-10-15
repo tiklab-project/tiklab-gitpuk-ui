@@ -1,5 +1,5 @@
 import React from "react";
-import {Login, UserVerify} from "thoughtware-eam-ui";
+import {Login, UserVerify} from "tiklab-eam-ui";
 
 /**
  * 登录

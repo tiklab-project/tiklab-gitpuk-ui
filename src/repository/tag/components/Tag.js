@@ -15,7 +15,7 @@ import './Tag.scss';
 import branchStore from "../../branch/store/BranchStore";
 import {inject, observer} from "mobx-react";
 import tagStore from "../store/TagStore";
-import {PrivilegeProjectButton} from 'thoughtware-privilege-ui';
+import {PrivilegeProjectButton} from 'tiklab-privilege-ui';
 import Omit from "../../../common/omit/Omit";
 import EmptyText from "../../../common/emptyText/EmptyText";
 import DeleteExec from "../../../common/delete/DeleteExec";

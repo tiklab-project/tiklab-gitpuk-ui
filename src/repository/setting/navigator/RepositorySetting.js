@@ -44,6 +44,10 @@ const RepositorySetting = props =>{
             title:'WebHooks',
         },
         {
+            id:`/repository/${webUrl}/setting/lfs`,
+            title:'大文件存储',
+        },
+        {
             id:`/repository/${webUrl}/setting/clean`,
             title:'仓库清理',
             purviewCode: "rpy_clean",

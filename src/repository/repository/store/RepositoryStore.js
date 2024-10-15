@@ -1,6 +1,6 @@
 import {observable,action} from 'mobx';
 import {message} from 'antd';
-import {getUser,Axios} from 'thoughtware-core-ui';
+import {getUser,Axios} from 'tiklab-core-ui';
 
 export class RepositoryStore {
 
@@ -179,7 +179,6 @@ export class RepositoryStore {
         param.append('id',value)
         const data = await Axios.post('/rpy/findRepository',param)
         if(data.code===0){
-
             this.repositoryInfo = data.data && data.data
         }
         return data
@@ -248,7 +247,7 @@ export class RepositoryStore {
      */
     @action
     findPrivateRepositoryByUser = async (param) =>{
-        const data = await Axios.post('/rpy/findPrivateRepositoryByUser',param)
+        const data = await Axios.post('/rpy/findRepositoryListByUser',param)
         return data
     }
 
@@ -334,6 +333,8 @@ export class RepositoryStore {
         const data = await Axios.post('/rpy/findRepositoryAuth',param)
         return data
     }
+
+
 
 }
 

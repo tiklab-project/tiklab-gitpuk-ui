@@ -2,15 +2,37 @@
     height: 100%;
     overflow: auto;
     &-head{
+        margin-bottom: var(--thoughtware-padding-item);
+        padding: var(--thoughtware-padding-item);
+        background-color: #f7f7f7;
+        border-radius: 4px;
         display: flex;
-        flex-direction: row;
-        justify-content: space-between;
+        justify-content: flex-start;
         align-items: center;
-        margin: 8px 0 8px;
+        margin-top: 20px;
         .commitsDetails-head-left{
             display: flex;
-            flex-direction: row;
-            align-items: center;
+            gap: 10px;
+            flex-direction: column;
+            flex: 1;
+            width: 65%;
+            .head-left-title{
+                display: flex;
+                gap: 10px;
+                align-items: center;
+                .head-left-title-icon{
+                    cursor: pointer;
+                }
+            }
+            .commitsDetails-head-left-desc{
+                display: flex;
+                gap: 15px;
+                color: var(--thoughtware-gray-500);
+                .head-left-desc-parent-commit{
+                    display: flex;
+                    gap: 7px;
+                }
+            }
             .head-title-icon .head-icon{
                 padding-left: 5px;
                 cursor: pointer;
@@ -26,6 +48,27 @@
                 padding-right: 5px;
             }
         }
+        .commitsDetails-head-right{
+            display: flex;
+            width: 35%;
+            justify-content: space-between;
+            align-items: center;
+            .head-variation{
+                .contrast-affected-num{
+                    color: var(--thoughtware-gray-500);
+                    .num-icon{
+                        padding: 0 5px;
+                    }
+                    .num-add{
+                        color: var(--thoughtware-gree);
+                    }
+                    .num-reduce{
+                        color: #ff0000;
+                    }
+                }
+            }
+        }
+
     }
     &-contrast{
         .commitsDetails-contrast-content{
@@ -41,19 +84,34 @@
                 .contrast-affected-opt{
                     margin-right: 10px;
                     cursor: pointer;
-                }
-                .contrast-affected-num{
-                    .num-add{
-                        padding-right: 5px;
-                        color: var(--thoughtware-gree);
+                    .affected-opt-input{
+                        display: flex;
+                        cursor: pointer;
+                        padding: 5px 10px;
+                        background-color: #f7f7f7;
+                        width: 150px;
+                        border-radius: 4px;
+                        align-items: center;
+                        justify-content: space-between;
+
                     }
-                    .num-reduce{
-                        color: #ff0000;
-                    }
                 }
+
             }
             .contrast-content {
                 padding-top: 10px;
+                .contrast-content-title{
+                    display: flex;
+                    justify-content: space-between;
+                    font-size: 13px;
+                    color: #777;
+                    font-weight: 600;
+                    border-bottom: solid 1px #f0f0f0;
+                    padding: 10px ;
+                    .content-title-exec{
+                        margin-right: 60px;
+                    }
+                }
                 .contrast-content-item{
                     .item-head{
                         display: flex;
@@ -63,13 +121,14 @@
                         .item-head-icon{
                             margin-right: 8px;
                             cursor: pointer;
+                            font-size: 12px;
                         }
                         .item-head-file{
                             flex: 1;
                             .item-title-title{
                                 display: inline-block;
                                 vertical-align: middle;
-                                max-width: 570px;
+                                max-width: 800px;
                                 overflow: hidden;
                                 white-space: nowrap;
                                 text-overflow: ellipsis;

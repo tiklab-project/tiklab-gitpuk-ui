@@ -15,7 +15,7 @@ import AuthAdd from './AuthAdd';
 import './Auth.scss';
 import authStore from "../store/AuthStore"
 import DeleteExec from "../../../common/delete/DeleteExec";
-import {getUser} from "thoughtware-core-ui";
+import {getUser} from "tiklab-core-ui";
 import EmptyText from "../../../common/emptyText/EmptyText";
 
 

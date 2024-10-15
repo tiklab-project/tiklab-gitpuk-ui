@@ -10,7 +10,7 @@ import "./MergeAdd.scss"
 import Btn from "../../common/btn/Btn";
 import {Option} from "antd/es/mentions";
 import mergeAuditorStore from "../store/MergeAuditor";
-import {getUser} from "thoughtware-core-ui";
+import {getUser} from "tiklab-core-ui";
 const MergeAddBasic = (props) => {
     const [form] = Form.useForm()
     const {repositoryInfo,createMerge,findDmUserList,setAuditorUser}=props

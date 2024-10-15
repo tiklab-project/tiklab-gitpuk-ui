@@ -14,7 +14,7 @@ import TimeTaskStore from "../store/TimeTaskStore";
 import TimeTaskPop from "../../../common/timetask/TimeTaskPop";
 import DeleteExec from "../../../common/delete/DeleteExec";
 import {observer} from "mobx-react";
-import {PrivilegeProjectButton} from 'thoughtware-privilege-ui';
+import {PrivilegeProjectButton} from 'tiklab-privilege-ui';
 const ScanSetting = (props) => {
 
     const {scanPlayId,rpyId}=props

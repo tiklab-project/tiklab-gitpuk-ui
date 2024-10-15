@@ -7,23 +7,15 @@ import Modals from '../../../common/modal/Modal';
 import Btn from "../../../common/btn/Btn";
 import {Form, Input} from "antd";
 import fileStore from "../store/FileStore";
-const FolderCreatePop = (props) => {
-    const {folderVisible,setFolderVisible,repositoryInfo}=props
+const CreateFolderPop = (props) => {
+    const {folderVisible,setFolderVisible,webUrl,folderPath,branch}=props
     const [form] = Form.useForm()
-
-    const {createBareFolder} = fileStore
-    const [branch,setBranch]=useState('test1')
 
     //创建文件夹
     const onOk = () => {
         form.validateFields().then(async values => {
-            form.resetFields()
-            createBareFolder({branch:branch,repositoryId:repositoryInfo.rpyId,
-                fileName:values.fileName,folderPath:"test/"
-            })
+            props.history.push(`/repository/${webUrl}/new/${branch}/${folderPath}/${values.folderName}/${values.fileName}`)
         })}
-
-
 
     const CustomPrefix = () => (
         <span style={{ maxWidth: '250px',
@@ -33,7 +25,7 @@ const FolderCreatePop = (props) => {
             whiteSpace: "nowrap"
 
         }}>
-          http://thoughtware-hadess/thoughtware-hadess/thoughtware-hadess
+            {folderPath+"/"}
   </span>);
 
     const modalFooter = (
@@ -61,9 +53,7 @@ const FolderCreatePop = (props) => {
                     name={'folderName'}
                     rules={[{required:true,message:'文件夹名称不能为空'}]}
                 >
-                    <Input addonBefore={<CustomPrefix />}  placeholder={"请输入文件夹名称"}
-
-                           />
+                    <Input addonBefore={<CustomPrefix />}  placeholder={"请输入文件夹名称"}/>
                 </Form.Item>
                 <Form.Item
                     label={'文件名称'}
@@ -71,7 +61,7 @@ const FolderCreatePop = (props) => {
                     rules={[{required:true,message:'文件名称不能为空'}]}
                 >
                     <Input placeholder={"请输入文件名称"}/>
-                  {/*  <div style={{color:"#999999",paddingTop:5}}>Git 文件夹不允许为空，因此需要同时创建一个文件</div>*/}
+                 {/*   <div style={{color:"#999999",paddingTop:5}}>Git 文件夹不允许为空，因此需要同时创建一个文件</div>*/}
                 </Form.Item>
 
             </Form>
@@ -80,4 +70,4 @@ const FolderCreatePop = (props) => {
 
 
 }
-export default FolderCreatePop
+export default CreateFolderPop

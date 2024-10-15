@@ -1,5 +1,5 @@
 import {observable,action} from 'mobx';
-import {getUser,Axios} from 'thoughtware-core-ui';
+import {getUser,Axios} from 'tiklab-core-ui';
 
 export class TagStore {
 

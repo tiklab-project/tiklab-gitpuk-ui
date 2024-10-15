@@ -5,6 +5,8 @@
         justify-content: space-between;
         align-items: center;
         margin-bottom: 10px;
+
+
         .head-left{
             display: flex;
             flex-direction: row;
@@ -34,6 +36,13 @@
                 }
             }
         }
+    }
+
+    .group-repository-filter {
+        display: flex;
+        align-items: center;
+        gap:15px
+      /*  justify-content: end;*/
     }
 
 }

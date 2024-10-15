@@ -5,7 +5,7 @@
  * @update: 2023-05-22 14:30
  */
 import React from "react";
-import {NotFound} from "thoughtware-eam-ui";
+import {NotFound} from "tiklab-eam-ui";
 
 const NotFoundContent = props =>{
     return <NotFound {...props}

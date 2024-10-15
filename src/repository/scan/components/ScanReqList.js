@@ -18,7 +18,7 @@ const ScanReqList = (props) => {
     const {scanPlay,scanRecord}=props
     const {findScanIssuesDeBySonar}=codeScanStore
     const {findRecordInstancePageByPlay}=ScanRecordStore
-    const {readFile} = fileStore
+    const {readBareRepoFile} = fileStore
 
     const [scanIssuesList,setScanIssuesList]=useState([])
     const [currentPage,setCurrentPage]=useState(1)
@@ -108,8 +108,13 @@ const ScanReqList = (props) => {
                 }
             })
         }else {
-            readFile({rpyId:scanPlay.repository.rpyId, fileAddress:record.filePath, commitBranch:scanPlay.branch,
-                findCommitId:false}).then(res=>{
+            readBareRepoFile({
+                    rpyId: scanPlay.repository.rpyId,
+                    fileAddress: record.filePath,
+                    refCode: scanPlay.branch,
+                    refCodeType: 'branch',
+                }
+            ).then(res=>{
                     res.code===0&&setBlobFile(res.data)
             })
         }

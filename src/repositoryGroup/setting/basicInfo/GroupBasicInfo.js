@@ -14,7 +14,7 @@ import RepositoryPower from '../../../repository/repository/components/Repositor
 import './GroupBasicInfo.scss';
 import groupStore from "../../repositoryGroup/store/RepositoryGroupStore"
 import GroupDeletePop from "./GroupDeletePop";
-import {PrivilegeProjectButton} from 'thoughtware-privilege-ui';
+import {PrivilegeProjectButton} from 'tiklab-privilege-ui';
 const GroupBasicInfo = props =>{
     const {repositoryStore}=props
     const {findRepositoryList}=repositoryStore

@@ -4,7 +4,7 @@ import {PullRequestOutlined, BankOutlined} from '@ant-design/icons';
 import Aside from '../../common/aside/Aside';
 import groupStore from "../repositoryGroup/store/RepositoryGroupStore"
 import {inject, observer} from "mobx-react";
-import {getUser} from "thoughtware-core-ui";
+import {getUser} from "tiklab-core-ui";
 const RepositoryGroupAside= props =>{
 
     const {match,systemRoleStore,repositoryStore}=props

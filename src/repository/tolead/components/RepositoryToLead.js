@@ -16,7 +16,7 @@ import bitbucket from "../../../assets/images/img/bitbucket.png";
 import notice from "../../../assets/images/img/notice.png"
 import link from "../../../assets/images/img/link.png"
 import ToLeadStore from "../store/ToLeadStore"
-import {getUser} from "thoughtware-core-ui";
+import {getUser} from "tiklab-core-ui";
 import {Col, Table, Tag} from "antd";
 import EmptyText from "../../../common/emptyText/EmptyText";
 import ThirdInfoPop from "./ThirdInfoPop";

@@ -71,7 +71,7 @@ const AuthAdd = props =>{
 
     //跳转文档
     const goDoc = () => {
-      window.open("https://thoughtware.cn/document/78aa45b76d4c")
+      window.open("https://tiklab.net/document/78aa45b76d4c")
     }
 
     const cancelVisible = () => {

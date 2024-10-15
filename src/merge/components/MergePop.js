@@ -9,7 +9,7 @@ import "./mergePop.scss"
 import Modals from "../../common/modal/Modal";
 import Btn from "../../common/btn/Btn";
 import {Checkbox, Form, Input} from "antd";
-import {getUser} from "thoughtware-core-ui";
+import {getUser} from "tiklab-core-ui";
 const MergePop = (props) => {
     const [form] = Form.useForm()
 

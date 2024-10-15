@@ -6,6 +6,7 @@
             margin: var(--thoughtware-padding-item) 0;
             .code-head-right{
                 display: flex;
+                align-items: center;
                 .code-search,.code-file-add{
                     margin-left: var(--thoughtware-padding-item);
                     font-size: 16px;
@@ -39,11 +40,22 @@
                 &:not(:first-child):hover{
                     background: #f8f8f8;
                 }
+
                 .code-item-fileName{
                     width: 60%;
-                    &:hover{
+                    display: flex;
+                    align-items: center;
+                    gap: 20px;
+                    .code-item-fileName-text:hover{
                         cursor: pointer;
                         text-decoration: underline;
+                    }
+
+                    .code-item-fileName-fls{
+                        border:1px solid #cccccc;
+                        padding: 0 7px;
+                        color: #cccccc;
+                        border-radius:4px
                     }
                 }
                 .code-item-commitMessage{
@@ -53,7 +65,7 @@
                 .code-item-commitTime{
                     width: 10%;
                 }
-                .code-item-fileName,.code-item-commitMessage,.code-item-commitTime{
+                .code-item-fileName-text,.code-item-commitMessage,.code-item-commitTime{
                     overflow: hidden;
                     white-space: nowrap;
                     text-overflow: ellipsis;
@@ -113,4 +125,9 @@
             }
         }
     }
+}
+
+.not-disabled{
+    cursor: not-allowed;
+    color: #999999;
 }

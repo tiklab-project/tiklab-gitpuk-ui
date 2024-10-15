@@ -1,5 +1,5 @@
 import {observable,action} from 'mobx';
-import {getUser,Axios} from 'thoughtware-core-ui';
+import {getUser,Axios} from 'tiklab-core-ui';
 import {message} from 'antd';
 
 export class XcodeUserStore {
@@ -13,12 +13,8 @@ export class XcodeUserStore {
      * @returns {Promise<*>}
      */
     @action
-    findUserAndRpy = async () =>{
-        const data = await Axios.post('/xcodeUser/findUserAndRpy')
-
-        if(data.code===0){
-            this.xcodeUserList = data.data && data.data
-        }
+    findUserAndRpy = async (param) =>{
+        const data = await Axios.post('/gitPukUser/findUserAndRpy',param)
         return data
     }
 
@@ -46,6 +42,16 @@ export class XcodeUserStore {
     findDmUserList = async (param) =>{
         const data = await Axios.post('dmUser/findDmUserList',param)
        return data
+    }
+
+    /**
+     * 通过用户查询仓库组和仓库数量
+     * @returns {Promise<*>}
+     */
+    @action
+    findNumByUser = async (param) =>{
+        const data = await Axios.post('gitPukUser/findNumByUser',param)
+        return data
     }
 }
 

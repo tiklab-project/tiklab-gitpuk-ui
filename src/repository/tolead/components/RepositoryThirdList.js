@@ -15,7 +15,7 @@ import {Table} from "antd";
 import {SpinLoading} from "../../../common/loading/Loading";
 import EmptyText from "../../../common/emptyText/EmptyText";
 import ToLeadStore from "../store/ToLeadStore"
-import {getUser} from "thoughtware-core-ui";
+import {getUser} from "tiklab-core-ui";
 import Page from "../../../common/page/Page";
 import Btn from "../../../common/btn/Btn";
 const RepositoryThirdList = (props) => {

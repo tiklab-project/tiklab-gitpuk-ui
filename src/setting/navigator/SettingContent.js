@@ -1,11 +1,11 @@
 import React,{useEffect,useState} from 'react';
 import {DownOutlined, ExportOutlined, HomeOutlined, UpOutlined} from '@ant-design/icons';
-import {PrivilegeButton,SystemNav} from 'thoughtware-privilege-ui';
+import {PrivilegeButton,SystemNav} from 'tiklab-privilege-ui';
 import {renderRoutes} from 'react-router-config';
 import {useTranslation} from 'react-i18next';
 import {inject, observer} from "mobx-react";
 import './SettingContent.scss';
-import {getVersionInfo} from "thoughtware-core-ui";
+import {getVersionInfo} from "tiklab-core-ui";
 import UpgradePopup from "../../common/upgrade/UpgradePopup";
 import member from "../../assets/images/img/member.png";
 
@@ -27,8 +27,8 @@ const SettingContent= props =>  {
         if (path.startsWith("/setting/scanRule")){
             setSelectKey("/setting/scanRuleSet")
         }else {
-            if (path.startsWith("/setting/power/repository")){
-                setSelectKey("/setting/power/user")
+            if (path.startsWith("/setting/power")){
+                setSelectKey("/setting/powerUser")
             }else {
                 setSelectKey(path)
             }

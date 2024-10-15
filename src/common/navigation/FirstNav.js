@@ -15,7 +15,7 @@ import {
     HomeOutlined,
     SettingOutlined
 } from "@ant-design/icons";
-import {productImg,productFrameImg,productWhiteImg, productWhitePureImg} from "thoughtware-core-ui";
+import {productImg,productFrameImg,productWhiteImg, productWhitePureImg} from "tiklab-core-ui";
 import {renderRoutes} from "react-router-config";
 import {useTranslation} from "react-i18next";
 import homePage from "../../assets/images/img/homePage.png"
@@ -29,7 +29,7 @@ const FirstNav = (props) => {
     const {location}=props
     const {i18n,t} = useTranslation()
 
-    const [theme, setTheme] = useState(localStorage.getItem("theme") ? localStorage.getItem("theme") : "default");
+    const [theme, setTheme] = useState(localStorage.getItem("theme") ? localStorage.getItem("theme") : "gray");
     const [navPath,setNavPath]=useState('')   //选中的导航栏路径
 
     const [themeClass, setThemeClass] = useState("theme-gray")
@@ -141,17 +141,17 @@ const FirstNav = (props) => {
                             collapsed?
                                 <div className='fist-nav-close-icon'>
                                     {
-                                        theme==='default'?
-                                            <img  src={productImg.sward }  className='icon-size'/>:
-                                            <img  src={productFrameImg.sward }  className='icon-size'/>
+                                        (theme==='default'||theme==='gray')?
+                                            <img  src={productImg.gitpuk }  className='icon-size'/>:
+                                            <img  src={productWhiteImg.gitpuk }  className='icon-size'/>
                                     }
 
                                 </div>:
                                 <div className='fist-nav-open-icon'>
                                     {
-                                        theme==='default'?
-                                            <img  src={productImg.sward }  className='icon-size'/>:
-                                            <img  src={productFrameImg.sward }  className='icon-size'/>
+                                        (theme==='default'||theme==='gray')?
+                                            <img  src={productImg.gitpuk }  className='icon-size'/>:
+                                            <img  src={productWhiteImg.gitpuk }  className='icon-size'/>
                                     }
                                     <div className='icon-text'>GitPuk</div>
                                 </div>

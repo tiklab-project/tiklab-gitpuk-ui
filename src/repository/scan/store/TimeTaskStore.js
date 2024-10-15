@@ -7,7 +7,7 @@
  */
 
 import { observable, action } from "mobx";
-import {Axios} from 'thoughtware-core-ui';
+import {Axios} from 'tiklab-core-ui';
 export class TimeTaskStore  {
 
     @observable

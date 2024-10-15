@@ -16,7 +16,7 @@ import Tabs from "../../common/tabs/Tabs";
 import commitsStore from "../../repository/commits/store/CommitsStore";
 import MergeFileInfo from "./MergeAddFile";
 import mergeStore from "../store/MergeStore";
-import {getUser} from "thoughtware-core-ui";
+import {getUser} from "tiklab-core-ui";
 import MergeEmpty from "../../common/emptyText/MergeEmpty";
 import MergeAddBasic from "./MergeAddBasic";
 import MergeAddCommit from "./MergeAddCommit";
@@ -170,8 +170,7 @@ const MergeAdd = (props) => {
             execType:"create",
             user:{
                 id:getUser().userId
-            },
-            isClash:commitsStatistics?.clash
+            }
         }).then(res=>{
                 if (res.code===0){
                     //创建者默认为审核者

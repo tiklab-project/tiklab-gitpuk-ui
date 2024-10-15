@@ -8,6 +8,7 @@ const Home=AsyncComponent(()=>import('./home/components/Home'))
 
 const Login=AsyncComponent(()=>import('./login/login'))
 const Logout=AsyncComponent(()=>import('./login/Logout'))
+const LoginRpwContent=AsyncComponent(()=>import('./login/LoginRpwContent'))
 const ExcludeProductUser=AsyncComponent(()=>import('./login/ExcludeProductUser'))
 const error=AsyncComponent(()=>import('./login/error'))
 
@@ -33,7 +34,7 @@ const RepositoryAside=AsyncComponent(()=>import('./repository/navigator/Reposito
 
 const File=AsyncComponent(()=>import('./repository/file/components/File'))
 const Blob=AsyncComponent(()=>import('./repository/file/components/Blob'))
-const Edit=AsyncComponent(()=>import('./repository/file/components/Edit'))
+const EditFile=AsyncComponent(()=>import('./repository/file/components/EditFile'))
 const Branch=AsyncComponent(()=>import('./repository/branch/components/Branch'))
 const Tag=AsyncComponent(()=>import('./repository/tag/components/Tag'))
 
@@ -67,6 +68,7 @@ const RepositoryBasicInfo=AsyncComponent(()=>import('./repository/setting/basicI
 const PushRule=AsyncComponent(()=>import('./repository/setting/pushRule/components/PushRule'))
 const AccessKeys=AsyncComponent(()=>import('./repository/setting/accessKeys/components/AccessKeys'))
 const WebHooks=AsyncComponent(()=>import('./repository/setting/webHooks/components/Hooks'))
+const LfsList=AsyncComponent(()=>import('./repository/setting/lfs/components/LfsList'))
 const RepositoryClean=AsyncComponent(()=>import('./repository/setting/RepositoryClean/components/RepositoryClean'))
 
 
@@ -92,8 +94,6 @@ const Setting=AsyncComponent(()=>import('./setting/navigator/Setting'))
 
 const Auth=AsyncComponent(()=>import('./setting/auth/components/Auth'))
 
-// plugin
-const Plugin=AsyncComponent(()=>import('./setting/plugins/Plugin'))
 
 // message
 const MessageManagement=AsyncComponent(()=>import('./setting/message/MessageManagement'))
@@ -113,6 +113,7 @@ const BackupRecoveryContent=AsyncComponent(()=>import('./setting/backups/BackupR
 const CommitRepository=AsyncComponent(()=>import('./setting/operation/CommitRepository'))
 const PowerUserList=AsyncComponent(()=>import('./setting/repository/components/UserList'))
 const UserRpyList=AsyncComponent(()=>import('./setting/repository/components/UserRpyList'))
+const UserGroupList=AsyncComponent(()=>import('./setting/repository/components/UserGroupList'))
 
 // security
 const MyLog=AsyncComponent(()=>import("./setting/security/MyLog"))
@@ -157,7 +158,11 @@ const routers = [
         exact:true,
         component:ExcludeProductUser,
     },
-
+    {
+        path: '/loginRpw',
+        component: LoginRpwContent,
+        exact:true,
+    },
     {
         exact: true,
         path: '/404',
@@ -252,7 +257,12 @@ const routers = [
                     {
                         path:'/repository/:namespace/:name/edit/:branch/*',
                         exact:false,
-                        component:Edit,
+                        component:EditFile,
+                    },
+                    {
+                        path:'/repository/:namespace/:name/new/:branch/*',
+                        exact:false,
+                        component:EditFile,
                     },
                     {
                         path:'/repository/:namespace/:name/branch',
@@ -334,6 +344,10 @@ const routers = [
                             {
                                 path:'/repository/:namespace/:name/setting/hooks',
                                 component:WebHooks
+                            },
+                            {
+                                path:'/repository/:namespace/:name/setting/lfs',
+                                component:LfsList
                             },
                             {
                                 path:'/repository/:namespace/:name/setting/clean',
@@ -436,10 +450,6 @@ const routers = [
                         component: Auth,
                     },
                     {
-                        path: '/setting/plugin',
-                        component: Plugin,
-                    },
-                    {
                         path: '/setting/role',
                         component: sysRole,
                     },
@@ -536,12 +546,16 @@ const routers = [
                         component: CommitRepository,
                     },
                     {
-                        path:'/setting/userpower',
+                        path:'/setting/powerUser',
                         component: PowerUserList,
                     },
                     {
                         path:'/setting/power/repository/:userId',
                         component: UserRpyList,
+                    },
+                    {
+                        path: '/setting/power/group/:userId',
+                        component: UserGroupList,
                     },
                     {
                         path: '/setting/user/userGrouptrue',

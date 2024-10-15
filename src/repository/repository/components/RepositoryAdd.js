@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react';
 import {Form,Input,Select,Checkbox} from 'antd';
-import {getUser} from 'thoughtware-core-ui';
+import {getUser} from 'tiklab-core-ui';
 import {inject,observer} from "mobx-react";
 import Btn from '../../../common/btn/Btn';
 import {Loading} from '../../../common/loading/Loading';
@@ -213,7 +213,7 @@ const RepositoryAdd = props =>{
                 name='name'
                 rules={[
                     {required:true,message:'请输入名称'},
-                    {max:60,message:'请输入1~60位以内的名称'},
+                    {max:64,message:'请输入1~64位以内的名称'},
                     Validation('名称','appoint'),
                     ({getFieldValue}) => ({
                         validator(rule,value) {
@@ -250,7 +250,7 @@ const RepositoryAdd = props =>{
                     name='address'
                     rules={[
                         {required:true,message:'请输入路径'},
-                        {max:30,message:'请输入1~31位以内的名称'},
+                        {max:64,message:'请输入1~64位以内的名称'},
                         Validation('路径','appoint'),
                         ({ getFieldValue }) => ({
                             validator(rule,value) {
