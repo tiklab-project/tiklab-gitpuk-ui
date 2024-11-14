@@ -76,7 +76,6 @@ const Setting = props =>{
                     {
                         id:'/setting/auth',
                         title: 'Keys',
-                        purviewCode:'gittok_ssh',
                     },
                     {
                         id:'/setting/powerUser',
@@ -86,7 +85,6 @@ const Setting = props =>{
                     {
                         id:'/setting/resources',
                         title: '资源监控',
-                        purviewCode:'gittok_resource',
                     },
                 ]
             },

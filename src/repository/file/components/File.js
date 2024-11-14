@@ -27,7 +27,6 @@ const File = props =>{
     const {repositoryInfo} = repositoryStore
     const {findFileTree,codeTreeData,findCloneAddress,cloneAddress,findLatelyBranchCommit,latelyBranchCommit
         ,findBareAllFile,findRefCodeType} = fileStore
-    const {findTagByName} = tagStore
     const webUrl = `${match.params.namespace}/${match.params.name}`
 
     const searValue = useRef(null)
@@ -129,7 +128,6 @@ const File = props =>{
      * @param record
      */
     const goFileChild = record => {
-        debugger
         props.history.push(`/repository/${webUrl}${record.path}`)
     }
 

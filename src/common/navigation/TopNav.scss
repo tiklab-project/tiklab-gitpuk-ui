@@ -4,10 +4,10 @@
     justify-items: end;
     margin-bottom: 10px;
     .close-iconfont{
-        font-size: var(--thoughtware-size-18);
+        font-size: var(--tiklab-size-18);
     }
     .open-iconfont{
-        font-size: var(--thoughtware-size-18);
+        font-size: var(--tiklab-size-18);
         width: var(--nav-icon-width);
         display: flex;
         justify-content: center;
@@ -44,8 +44,8 @@
     }
 
     .head-open-portrait{
-        width: var(--thoughtware-size-24);
-        height: var(--thoughtware-size-24);
+        width: var(--tiklab-size-24);
+        height: var(--tiklab-size-24);
         border-radius: 24px;
         color: #fff;
         background-color: #cadbf3;

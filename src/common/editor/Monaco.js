@@ -194,7 +194,7 @@ export const MonacoPreview = props => {
 
 export const MonacoEditMerge = props =>{
 
-    const {blobFile,previewValue,setPreviewValue} = props
+    const {blobFile,previewValue,setPreviewValue,hadUpdate} = props
 
     const monacoEditorDomRef = useRef()
     const editorInstance = useRef()
@@ -246,9 +246,18 @@ export const MonacoEditMerge = props =>{
                 formatOnPaste: true,
                 overviewRulerBorder: false, // 滚动条的边框
                 scrollBeyondLastLine: false,
+                cursorBlinking: 'Solid',
             });
 
             editorInstance.current = instance;
+
+            // onDidChangeModelContent，方法产生的监听需要在组件销毁的时候dispose下
+            editorInstance.current.onDidChangeModelContent(e => {
+                try {
+                    let newValue = editorInstance.current.getValue()
+                    hadUpdate(newValue)
+                } catch {}
+            })
 
             // 插入装饰内容
             addConflictWidgets(instance);
@@ -568,7 +577,6 @@ export const MonacoEditMerge01 = props =>{
 
     // 插入 Conflict 相关的 Widget
     const addConflictWidgets = (editor) => {
-        debugger
         const model = editor.getModel();
         // 查找包含 '<<<<<<<' 的行
         const conflictLines = [];

@@ -12,8 +12,18 @@ import MergeStore from "../store/MergeStore";
 import {inject, observer} from "mobx-react";
 import {MonacoEditMerge} from "../../common/editor/Monaco";
 import Btn from "../../common/btn/Btn";
+import EditFilePop from "../../repository/file/components/EditFilePop";
+import MergeClashPushPop from "./MergeClashPushPop";
+import {CheckOutlined} from "@ant-design/icons";
+
+function CheckOutlin() {
+    return null;
+}
+
 const MergeClashEdit = (props) => {
     const {repositoryStore,match} = props
+    const webUrl = `${match.params.namespace}/${match.params.name}`
+
     const {repositoryInfo} = repositoryStore
     const {findConflictingFile,findConflictingFileDetails,findMergeRequest,conflictResolutionFile}=MergeStore
 
@@ -26,23 +36,21 @@ const MergeClashEdit = (props) => {
     //冲突文件的路径文件
     const [filePath,setFilePath]=useState()
 
-    // 获取修改内容的行数
-    const [editPosition,setEditPosition] = useState('')
-
     // 修改的内容 文件路径和文件内容
     const [previewValueList,setPreviewValueList] = useState([])
 
-    useEffect(()=>{
+    // 推送冲突状态
+    const [pushMergeVisible,setPushMergeVisible]=useState(false)
+    const [updateFilePath,setUpdateFilePath]=useState([])
 
+    useEffect(()=>{
         findMergeRequest(match.params.mergeId).then(res=>{
             if (res.code===0){
                 setMergeData(res.data)
                 getConflictingFile(res.data)
             }
         })
-     /*   findClashFileData("585456fc2e3f","thoughtware-hadess-server/src/main/java/io/thoughtware/hadess/repository/controller/RepositoryController.java").then(res=>{
-            res.code===0&&setFileData(res.data)
-        })*/
+        debugger
     },[])
 
     //查询冲突文件
@@ -79,12 +87,31 @@ const MergeClashEdit = (props) => {
     //切换冲突文件
     const cutFilePath = (value) => {
         setFilePath(value)
-        getConflictingFileDetails(mergeData,value)
+        const previewValue = previewValueList.filter(item => item.filePath === value);
+        if (previewValue.length>0) {
+            setFileData(previewValue[0].fileData)
+        }else {
+            getConflictingFileDetails(mergeData,value)
+        }
     }
 
     //添加修改后的内容
     const updatePreviewValue = (value) => {
+        const index = updateFilePath.findIndex(item=>item===filePath)
+        if (index === -1) {
+            setUpdateFilePath([...updateFilePath,filePath])
+        }
         setFileData(value)
+        setUpdate(value)
+    }
+
+    //手动修改内容
+    const hadUpdate = (value) => {
+        setUpdate(value)
+    }
+
+    //添加修改数据
+    const setUpdate = (value) => {
         const data={filePath:filePath,fileData:value}
         if (previewValueList){
             const index = previewValueList.findIndex(item => item.filePath === filePath);
@@ -102,11 +129,21 @@ const MergeClashEdit = (props) => {
 
     //提交修改的冲突文件
     const conflictFile = () => {
+        setPushMergeVisible(true)
+    }
+
+    //提交修改的冲突文件
+    const pushMergeData = () => {
         conflictResolutionFile({
             mergeClashFileList:previewValueList,
             mergeOrigin:mergeData.mergeTarget,
             mergeTarget:mergeData.mergeOrigin,
             repositoryId:repositoryInfo.rpyId,
+        }).then(res=>{
+            if (res.code===0){
+                setPushMergeVisible(false)
+                props.history.push(`/repository/${webUrl}/mergeAdd/${match.params.mergeId}`)
+            }
         })
     }
 
@@ -128,7 +165,7 @@ const MergeClashEdit = (props) => {
                         <div className='clash-edit-title-text'>{`正在解决 ${mergeData?.mergeOrigin} 分支和 ${mergeData?.mergeTarget} 分支间的代码冲突`}</div>
                         <div>
                             {
-                               1===1? <Btn
+                                updateFilePath&&updateFilePath.length===mergeClashFileList.length? <Btn
                                     title={'提交改动'}
                                     type={'primary'}
                                     onClick={conflictFile}
@@ -144,7 +181,7 @@ const MergeClashEdit = (props) => {
 
                     <div className='clash-edit-body'>
                         <div className='edit-body-left'>
-                            <div className={'body-left-title'}>已解决文件 0/1</div>
+                            <div className={'body-left-title'}>{`已解决文件 ${updateFilePath.length}/${mergeClashFileList.length}`}</div>
                             <div className='edit-left-body' >
                                 {
                                     mergeClashFileList.length>0&&
@@ -152,9 +189,16 @@ const MergeClashEdit = (props) => {
                                         return(
                                             <div className='left-body-nav' key={key} onClick={()=>cutFilePath(item)}>
                                                 <div className={`left-body-nav-text ${item===filePath&&'cute-body-nav'}`}  >
-                                                    <Tooltip placement="top" title={item} >
-                                                        {item}
-                                                    </Tooltip>
+                                                    <div className='left-body-nav-text-style'>
+                                                        <Tooltip placement="top" title={item} >
+                                                            {item}
+                                                        </Tooltip>
+                                                        {
+                                                            updateFilePath?.findIndex(a => a === item)===0&&
+                                                            <CheckOutlined  style={{color:"#55a532",marginRight:5}}/>
+                                                        }
+                                                    </div>
+
                                                 </div>
                                             </div>
                                         )
@@ -171,6 +215,7 @@ const MergeClashEdit = (props) => {
                                         blobFile={{fileType:"java"}}
                                         previewValue={fileData}
                                         setPreviewValue={updatePreviewValue}
+                                        hadUpdate={hadUpdate}
                                     />
                                 }
                             </div>
@@ -178,6 +223,12 @@ const MergeClashEdit = (props) => {
                     </div>
                 </div>
             </Col>
+
+            <MergeClashPushPop {...props} pushMergeVisible={pushMergeVisible}
+                               setPushMergeVisible={setPushMergeVisible}
+                               mergeTarget={mergeData?.mergeOrigin}
+                               pushMergeData={pushMergeData}
+            />
         </div>
     )
 }

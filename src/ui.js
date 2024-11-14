@@ -67,7 +67,7 @@ const RepositoryThirdList=AsyncComponent(()=>import('./repository/tolead/compone
 //合并分支
 const RepositoryMerge=AsyncComponent(()=>import('./repository/merge/Merge'))
 const MergeAdd=AsyncComponent(()=>import('./merge/components/MergeAdd'))
-const MergeAddVerify=AsyncComponent(()=>import('./merge/components/MergeAddVerify'))
+const MergeAddVerify=AsyncComponent(()=>import('./merge/components/MergeDetails'))
 const MergeClashEdit=AsyncComponent(()=>import('./merge/components/MergeClashEdit'))
 
 //代码扫描

@@ -18,7 +18,7 @@ const BranchSelect = props => {
     const {repositoryInfo,type,match,refCode,setData} = props
     const webUrl = `${match.params.namespace}/${match.params.name}`
     const {findAllBranch,branchList} = branchStore
-    const {findTag,tagList} = tagStore
+    const {findTagList,tagList} = tagStore
 
     const selectRef = useRef(null); // Select 组件的引用
     const [selectValue,setSelectValue]=useState()
@@ -29,7 +29,7 @@ const BranchSelect = props => {
         // 获取全部分支
         repositoryInfo.name&& findAllBranch(repositoryInfo.rpyId)
 
-        repositoryInfo.name&& findTag(repositoryInfo.rpyId)
+        repositoryInfo.name&& findTagList({rpyId:repositoryInfo.rpyId})
 
     },[repositoryInfo.name])
 

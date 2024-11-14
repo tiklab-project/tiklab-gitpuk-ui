@@ -17,8 +17,8 @@
 
 
 .xcode-btn-primary{
-    background: var(--thoughtware-blue);
-    border-color: var(--thoughtware-blue);
+    background: var(--tiklab-blue);
+    border-color: var(--tiklab-blue);
     color: #ffffff;
 }
 
@@ -33,7 +33,7 @@
     background: transparent;
     border-color: transparent;
     padding: 0;
-    font-size: var(--thoughtware-font-13);
+    font-size: var(--tiklab-font-13);
 }
 
 .xcode-btn-dangerous{
@@ -52,7 +52,7 @@
 }
 
 .xcode-btn-link{
-    color: var(--thoughtware-blue);
+    color: var(--tiklab-blue);
     background: transparent;
     border-color: transparent;
     box-shadow: none;
@@ -77,5 +77,5 @@
     display: inline-block;
     width: 16px;
     height: 16px;
-    font-size: var(--thoughtware-icon-size-16);
+    font-size: var(--tiklab-icon-size-16);
 }

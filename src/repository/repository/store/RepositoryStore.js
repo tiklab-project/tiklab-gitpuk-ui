@@ -334,7 +334,16 @@ export class RepositoryStore {
         return data
     }
 
-
+    /**
+     * 查询仓库的用户
+     * @param repositoryId
+     * @returns {Promise<unknown>}
+     */
+    @action
+    findDmUserList = async (param) =>{
+        const data = await Axios.post('/dmUser/findDmUserList',param)
+        return data
+    }
 
 }
 

@@ -4,7 +4,7 @@
     align-items: center;
     height: 40px;
     line-height: 40px;
-    font-size: var(--thoughtware-font-13);
+    font-size: var(--tiklab-font-13);
 }
 
 .xcode-tab{
@@ -13,11 +13,11 @@
     line-height: 40px;
     margin-right: 20px;
     &:hover{
-        color: var(--thoughtware-blue);
+        color: var(--tiklab-blue);
     }
 }
 
 .xcode-active-tab{
-    color: var(--thoughtware-blue);
-    border-bottom: 2px solid var(--thoughtware-blue);
+    color: var(--tiklab-blue);
+    border-bottom: 2px solid var(--tiklab-blue);
 }

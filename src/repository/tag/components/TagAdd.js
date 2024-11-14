@@ -20,7 +20,6 @@ const TagAdd = props =>{
     const [tagName,setTagName]=useState(null)
     const [errorMsg,setErrorMsg]=useState(null)
 
-    const [commit,setCommit]=useState(null)
     useEffect(()=>{
         setHeight(autoHeight())
         return ()=>{
@@ -39,9 +38,9 @@ const TagAdd = props =>{
     useEffect(()=>{
         if (branchList.length>0){
             const tag=branchList.filter(item=>item.defaultBranch===true)
-            setBranch(tag[0].branchName)
-            getNewCommit(tag[0].branchName)
-
+            if (tag.length>0){
+                setBranch(tag[0].branchName)
+            }
         }
     },[branchList])
 
@@ -50,19 +49,6 @@ const TagAdd = props =>{
         setHeight(autoHeight())
     }
 
-    //获取最近的提交
-    const getNewCommit = (refCode) => {
-        // 获取最近提交信息
-        findLatelyBranchCommit({
-            rpyId:repositoryInfo.rpyId,
-            refCode:refCode,
-            refCodeType:"branch"
-        }).then(res=>{
-            if (res.code===0){
-                setCommit(res.data)
-            }
-        })
-    }
 
     //创建标签
     const onOk = () =>{
@@ -74,6 +60,7 @@ const TagAdd = props =>{
             ).then(item=>{
                if (item.code===0){
                    setTagName(null)
+                   setAddTagVisible(false)
                    findTags()
                }else {
                  form.validateFields()
@@ -87,7 +74,6 @@ const TagAdd = props =>{
     //切换分支
     const changBranch = (value) => {
         setBranch(value)
-        getNewCommit(value)
     }
 
     //输入tagName
@@ -181,26 +167,6 @@ const TagAdd = props =>{
                 </Form>
             </div>
         </Modals>
-
-
-        /*<Modal
-            visible={addTagVisible}
-            onCancel={()=>setAddTagVisible(false)}
-            closable={false}
-            footer={modalFooter}
-            style={{height:height,top:60}}
-            bodyStyle={{padding:0}}
-            className="xcode tag-add-modal"
-            destroyOnClose={true}
-        >
-            <div className='tag-add-up'>
-                <div>新建标签</div>
-                <div style={{cursor:'pointer'}} onClick={()=>setAddTagVisible(false)}>
-                    <CloseOutlined />
-                </div>
-            </div>
-
-        </Modal>*/
     )
 }
 

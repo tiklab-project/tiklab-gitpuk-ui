@@ -9,6 +9,7 @@ const Home=AsyncComponent(()=>import('./home/components/Home'))
 const Login=AsyncComponent(()=>import('./login/login'))
 const Logout=AsyncComponent(()=>import('./login/Logout'))
 const LoginRpwContent=AsyncComponent(()=>import('./login/LoginRpwContent'))
+const SysException=AsyncComponent(()=>import('./login/SysExceptionContent'))
 const ExcludeProductUser=AsyncComponent(()=>import('./login/ExcludeProductUser'))
 const error=AsyncComponent(()=>import('./login/error'))
 
@@ -50,7 +51,7 @@ const thirdList=AsyncComponent(()=>import('./repository/tolead/components/Reposi
 //合并分支
 const RepositoryMerge=AsyncComponent(()=>import('./repository/merge/Merge'))
 const MergeAdd=AsyncComponent(()=>import('./merge/components/MergeAdd'))
-const MergeAddVerify=AsyncComponent(()=>import('./merge/components/MergeAddVerify'))
+const MergeAddVerify=AsyncComponent(()=>import('./merge/components/MergeDetails'))
 const MergeClashEdit=AsyncComponent(()=>import('./merge/components/MergeClashEdit'))
 
 //统计
@@ -164,10 +165,16 @@ const routers = [
         exact:true,
     },
     {
+        path:"/500",
+        exact:true,
+        component:SysException,
+    },
+    {
         exact: true,
         path: '/404',
         render: props => <NotFoundContent {...props} homePath={'/'}/>
     },
+
     {
         path: '/',
         exact:true,

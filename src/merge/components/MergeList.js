@@ -16,20 +16,18 @@ import {PrivilegeProjectButton} from 'tiklab-privilege-ui';
 import Btn from '../../common/btn/Btn';
 import Tabs from '../../common/tabs/Tabs';
 import EmptyText from '../../common/emptyText/EmptyText';
-import MergeDetails from './MergeDetails';
-import './Merge.scss';
+import './MergeList.scss';
 import MergeStore from "../store/MergeStore";
 import {inject, observer} from "mobx-react";
 import Page from "../../common/page/Page";
 import SearchInput from "../../common/input/SearchInput";
 
 
-const Merge = (props) => {
+const MergeList = (props) => {
     const {repositoryStore,webUrl}=props
     const {findMergeRequestPage,findMergeStateNum,fresh}=MergeStore
     const {repositoryInfo} = repositoryStore
     const [mergeType,setMergeType] = useState(0)
-    const [details,setDetails] = useState(false)
 
     const [mergeNum,setMergeNum]=useState(null)  //合并请求数
 
@@ -51,7 +49,7 @@ const Merge = (props) => {
 
 
     //条件分页查询 合并请求
-    const getMergeRequestPage = (currentPage,mergeState) => {
+    const getMergeRequestPage = (currentPage,mergeReqTitle,mergeState) => {
         findMergeRequestPage({
             pageParam:{currentPage:currentPage,pageSize:pageSize},
             rpyId:repositoryInfo.rpyId,
@@ -69,9 +67,9 @@ const Merge = (props) => {
     const clickType = item => {
         setMergeType(item.id)
         if (item.id===0){
-            getMergeRequestPage(1)
+            getMergeRequestPage(1,mergeReqTitle)
         }else {
-            getMergeRequestPage(1,item.id)
+            getMergeRequestPage(1,mergeReqTitle,item.id)
         }
     }
 
@@ -88,6 +86,7 @@ const Merge = (props) => {
         const value = e.target.value
         if (value === '') {
             setMergeReqTitle(null)
+            getMergeRequestPage(1)
         } else {
             setMergeReqTitle(value)
         }
@@ -95,9 +94,10 @@ const Merge = (props) => {
     //通过标题搜索合并分支的请求
     const onSearch = () => {
         if (mergeType===0){
-            getMergeRequestPage(1)
+            //查询全部合并请求
+            getMergeRequestPage(1,mergeReqTitle)
         }else {
-            getMergeRequestPage(1,mergeType)
+            getMergeRequestPage(1,mergeReqTitle,mergeType)
         }
     }
 
@@ -105,13 +105,13 @@ const Merge = (props) => {
     const changPage = (value) => {
         setCurrentPage(value)
         if (mergeType===0){
-            getMergeRequestPage(value)
+            getMergeRequestPage(value,mergeReqTitle,)
         }else {
-            getMergeRequestPage(value,mergeType)
+            getMergeRequestPage(value,mergeReqTitle,mergeType,)
         }
     }
     const refreshFind = () => {
-        getMergeRequestPage(currentPage,mergeType)
+        getMergeRequestPage(currentPage,mergeReqTitle,mergeType)
     }
 
 
@@ -120,11 +120,6 @@ const Merge = (props) => {
         props.history.push(`/repository/${webUrl}/mergeAdd`)
     }
 
-    if(details){
-        return  <MergeDetails
-                    setDetails={setDetails}
-                />
-    }
 
     const lis = [
         {
@@ -246,4 +241,4 @@ const Merge = (props) => {
         </div>
     )
 }
-export default inject('repositoryStore')(observer(Merge))
+export default inject('repositoryStore')(observer(MergeList))

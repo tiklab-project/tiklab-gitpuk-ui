@@ -6,7 +6,7 @@
     gap: 20px;
     flex-direction: column;
     .survey-new-commit-style{
-      background-color: var(--thoughtware-gray-600);
+      background-color: var(--tiklab-gray-600);
       margin-top: 10px;
       padding: 0 15px;
       .survey-commit-tab{
@@ -36,7 +36,7 @@
           }
           .survey-commit-desc{
             line-height: 25px;
-            color: var(--thoughtware-merge-text-gray);
+            color: var(--tiklab-merge-text-gray);
           }
         }
 
@@ -54,7 +54,7 @@
         gap: 10px;
         .statistics-work-trend {
           border-radius: 4px;
-          background-color: var(--thoughtware-gray-600);
+          background-color: var(--tiklab-gray-600);
           flex: 1;
           padding: 20px;
         }
@@ -68,7 +68,7 @@
         gap: 10px;
         .statistics-work-trend {
           border-radius: 4px;
-          background-color: var(--thoughtware-gray-600);
+          background-color: var(--tiklab-gray-600);
           flex: 1;
           padding: 20px;
         }
@@ -90,11 +90,11 @@
           margin-top: 10px;
           line-height: 35px;
           cursor: pointer;
-          padding: var(--thoughtware-padding);
-          background-color: var(--thoughtware-gray-600);
+          padding: var(--tiklab-padding);
+          background-color: var(--tiklab-gray-600);
           gap: 10px;
           .todo-tab-item-num{
-            font-weight: var(--thoughtware-font-weight-bold);
+            font-weight: var(--tiklab-font-weight-bold);
             padding-bottom: 10px;
           }
         }

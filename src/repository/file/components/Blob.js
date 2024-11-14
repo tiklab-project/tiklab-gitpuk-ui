@@ -100,15 +100,15 @@ const Blob = props =>{
 
     //下载lfs文件
     const downLoadLfsFile = (data) => {
-        window.location.href=`${node_env? base_url:window.location.origin}/repositoryFile/downloadLfsFile?rpyId=${repositoryInfo.rpyId}&filePath=${data.filePath}&oid=${data.oid}&branch=${refCode}`
+        const tenantId=getUser().tenant
+        window.location.href=`${node_env? base_url:window.location.origin}/repositoryFile/downLoadLfsFile${tenantId?"/"+getUser().tenant:""}?rpyId=${repositoryInfo.rpyId}&filePath=${data.filePath}&oid=${data.oid}&branch=${refCode}`
     }
-
-
 
 
     //下载裸仓库中的文件
     const downLoadBareFile = (data) => {
-        window.location.href=`${node_env? base_url:window.location.origin}/repositoryFile/downLoadBareFile?rpyId=${repositoryInfo.rpyId}&filePath=${data.filePath}&branch=${refCode}`
+        const tenantId=getUser().tenant
+        window.location.href=`${node_env? base_url:window.location.origin}/repositoryFile/downLoadBareFile${tenantId?"/"+getUser().tenant:""}?rpyId=${repositoryInfo.rpyId}&filePath=${data.filePath}&branch=${refCode}`
     }
 
     //跳转

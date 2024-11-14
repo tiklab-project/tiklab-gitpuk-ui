@@ -63,7 +63,7 @@ const StatisticsCommit = props =>{
                 branch:branch,
                 commitUser:"all",
                 repositoryId: repositoryInfo.rpyId,
-
+                commitType:"commit"
             }
             setStatisticsData(params, dom)
         }

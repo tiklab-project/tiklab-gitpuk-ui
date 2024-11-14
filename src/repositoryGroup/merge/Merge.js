@@ -1,5 +1,5 @@
 import React from 'react';
-import MergeContent from '../../merge/components/Merge';
+import MergeContent from '../../merge/components/MergeList';
 
 /**
  * 仓库组合并请求

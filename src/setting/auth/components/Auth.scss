@@ -6,10 +6,10 @@
         align-items: center;
     }
     .sys-keys-ill{
-        margin: var(--thoughtware-padding-item) 0;
+        margin: var(--tiklab-padding-item) 0;
         padding: 10px;
         background: #F8FFFF;
-        color: var(--thoughtware-blue);
+        color: var(--tiklab-blue);
         border: 1px solid #e3e9ed;
     }
 
@@ -27,7 +27,7 @@
                 gap: 10px;
                 align-items: center;
                 .sys-keys-data-icon{
-                    border: 1 solid var(--thoughtware-gray-300);
+                    border: 1 solid var(--tiklab-gray-300);
                     background-color: #d8ecff;
                     padding: 10px;
                     border-radius: 2px;
@@ -44,8 +44,8 @@
                     display: flex;
                     gap: 15px;
                     padding-top: 6px;
-                    color: var(--thoughtware-gray-500);
-                    font-size: var(--thoughtware-font-13);
+                    color: var(--tiklab-gray-500);
+                    font-size: var(--tiklab-font-13);
                 }
             }
             .sys-keys-icon{

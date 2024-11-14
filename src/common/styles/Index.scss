@@ -36,16 +36,16 @@ ul li{
         height: 20px !important;
     }
     .ant-steps-item-process>.ant-steps-item-container>.ant-steps-item-icon{
-        background-color: var(--thoughtware-blue);
+        background-color: var(--tiklab-blue);
     }
     .ant-steps-item-finish .ant-steps-item-icon{
-        border-color: var(--thoughtware-blue);
+        border-color: var(--tiklab-blue);
     }
     .ant-steps-item-finish .ant-steps-finish-icon{
-        color: var(--thoughtware-blue);
+        color: var(--tiklab-blue);
     }
     .ant-steps-item-finish>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-title:after{
-        background-color: var(--thoughtware-blue);
+        background-color: var(--tiklab-blue);
     }
     .ant-table-thead > tr > th:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before {
         position: static;
@@ -252,74 +252,74 @@ ul li{
 }
 
 :root {
-    --thoughtware-white: #fff;   /* 主色调白*/
-    --thoughtware-black: #000;   /*主色调黑 */
-    --thoughtware-blue: #0d66e4;   /* 主色调蓝*/
-    --thoughtware-gree: #4cbb17 ;   /* 主色调蓝*/
-    --thoughtware-gray-200: #ececec;  /*border 的边线 */
-    --thoughtware-gray-300: #EDF0F5;  /*hover颜色 */
-    --thoughtware-gray-400: #e3e8f0;  /*左侧导航 选中颜色 */
-    --thoughtware-gray-500: #999; /* 文字次级颜色灰色调*/
-    --thoughtware-gray-600: #fafbfc;
-    --thoughtware-gray: #f7f8fa;  /* 主色调灰 左侧导航*/
-    --thoughtware-gray-color: #efefef;  /*主色调灰 左侧一级导航*/
-    --thoughtware-red-700:#ffccc7;
-    --thoughtware-red-600: #fff2f0;
-    --thoughtware-red:#FF0000;
-    --thoughtware-merge-back-gree:#d6fedb;
-    --thoughtware-merge-text-gree:#55a532;
-    --thoughtware-merge-back-gray:#EBECF0;
-    --thoughtware-merge-text-gray:#999999;
-    --thoughtware-merge-back-red:rgb(254, 210, 210);;
-    --thoughtware-merge-text-red:rgb(202, 22, 40);;
-    --thoughtware-left-nav:#fafbfc;  /* 左侧导航背景*/
+    --tiklab-white: #fff;   /* 主色调白*/
+    --tiklab-black: #000;   /*主色调黑 */
+    --tiklab-blue: #0d66e4;   /* 主色调蓝*/
+    --tiklab-gree: #4cbb17 ;   /* 主色调蓝*/
+    --tiklab-gray-200: #ececec;  /*border 的边线 */
+    --tiklab-gray-300: #EDF0F5;  /*hover颜色 */
+    --tiklab-gray-400: #e3e8f0;  /*左侧导航 选中颜色 */
+    --tiklab-gray-500: #999; /* 文字次级颜色灰色调*/
+    --tiklab-gray-600: #fafbfc;
+    --tiklab-gray: #f7f8fa;  /* 主色调灰 左侧导航*/
+    --tiklab-gray-color: #efefef;  /*主色调灰 左侧一级导航*/
+    --tiklab-red-700:#ffccc7;
+    --tiklab-red-600: #fff2f0;
+    --tiklab-red:#FF0000;
+    --tiklab-merge-back-gree:#d6fedb;
+    --tiklab-merge-text-gree:#55a532;
+    --tiklab-merge-back-gray:#EBECF0;
+    --tiklab-merge-text-gray:#999999;
+    --tiklab-merge-back-red:rgb(254, 210, 210);;
+    --tiklab-merge-text-red:rgb(202, 22, 40);;
+    --tiklab-left-nav:#fafbfc;  /* 左侧导航背景*/
 
 
-    --thoughtware-padding: 20px;  /*页面边距 */
-    --thoughtware-padding-resove: -20px; /* 页面边距*/
-    --thoughtware-padding-item: 15px;  /*元素间隔边距 */
-    --thoughtware-padding-resove-item:-15px;  /*元素间隔边距 */
+    --tiklab-padding: 20px;  /*页面边距 */
+    --tiklab-padding-resove: -20px; /* 页面边距*/
+    --tiklab-padding-item: 15px;  /*元素间隔边距 */
+    --tiklab-padding-resove-item:-15px;  /*元素间隔边距 */
 
-    --thoughtware-font-12: 12px;  /*图文排需要的文字 */
-    --thoughtware-font-13: 13px;  /*描述文字 */
-    --thoughtware-font-14: 14px; /*正文 */
-    --thoughtware-font-15: 13px;  /* 2级标题*/
-    --thoughtware-font-16: 16px;  /*标题 */
+    --tiklab-font-12: 12px;  /*图文排需要的文字 */
+    --tiklab-font-13: 13px;  /*描述文字 */
+    --tiklab-font-14: 14px; /*正文 */
+    --tiklab-font-15: 13px;  /* 2级标题*/
+    --tiklab-font-16: 16px;  /*标题 */
 
-    --thoughtware-font-weight-bold: bold;  /*标题字重 */
+    --tiklab-font-weight-bold: bold;  /*标题字重 */
 
     /* 图标大小 */
-    --thoughtware-icon-size-16: 16px;
-    --thoughtware-icon-size-20: 20px;
-    --thoughtware-icon-size-22: 22px;
-    --thoughtware-icon-size-25: 25px;
-    --thoughtware-icon-size-32: 32px;
-    --thoughtware-icon-size-45: 45px;
+    --tiklab-icon-size-16: 16px;
+    --tiklab-icon-size-20: 20px;
+    --tiklab-icon-size-22: 22px;
+    --tiklab-icon-size-25: 25px;
+    --tiklab-icon-size-32: 32px;
+    --tiklab-icon-size-45: 45px;
 
-    --thoughtware-input-icon-15: 15px;
-    --thoughtware-input-icon-16: 16px;
+    --tiklab-input-icon-15: 15px;
+    --tiklab-input-icon-16: 16px;
 
     /* 距离 */
-    --thoughtware-distance-13:13px;
-    --thoughtware-distance-15:15px;
-    --thoughtware-distance-18:18px;
-    --thoughtware-distance-20:20px;
+    --tiklab-distance-13:13px;
+    --tiklab-distance-15:15px;
+    --tiklab-distance-18:18px;
+    --tiklab-distance-20:20px;
 
 
     /*大小 */
-    --thoughtware-size-15: 15px;
-    --thoughtware-size-16: 16px;
-    --thoughtware-size-18: 18px;
-    --thoughtware-size-20: 20px;
-    --thoughtware-size-22: 22px;
-    --thoughtware-size-24: 24px;
-    --thoughtware-size-26: 26px;
-    --thoughtware-size-32: 32px;
+    --tiklab-size-15: 15px;
+    --tiklab-size-16: 16px;
+    --tiklab-size-18: 18px;
+    --tiklab-size-20: 20px;
+    --tiklab-size-22: 22px;
+    --tiklab-size-24: 24px;
+    --tiklab-size-26: 26px;
+    --tiklab-size-32: 32px;
 
     /*主题颜色*/
-    --thoughtware-motif-color-defult: #f7f7f7;
-    --thoughtware-motif-color-blue: #2f5eb1;
-    --thoughtware-motif-color-black: #131d30;
+    --tiklab-motif-color-defult: #f7f7f7;
+    --tiklab-motif-color-blue: #2f5eb1;
+    --tiklab-motif-color-black: #131d30;
 
     /*导航栏*/
     --nav-left-space:20px;  /*导航栏左边距*/
@@ -330,7 +330,7 @@ ul li{
     --project-setting-min-width:700px;   /*项目中的设置最小宽度*/
 
 
-    --hover-color: var(--thoughtware-gray-300) ;
+    --hover-color: var(--tiklab-gray-300) ;
     --backdrop-color: #f7f7f7;
     --home-height:48px;
     --content-height-100:100%; /* content 高度 calc(100vh - 48px)*/;

@@ -23,9 +23,9 @@ const Commits = props =>{
 
     const {repositoryStore,match,location} = props
     const webUrl = `${match.params.namespace}/${match.params.name}`
-    const {repositoryInfo} = repositoryStore
-    const {findBranchCommit,commitsList,setCommitsList,findDmUserList,userList,setCommitsQueryData,queryData} = commitsStore
-    const {findAllBranch,branchList} = branchStore
+    const {repositoryInfo,findDmUserList} = repositoryStore
+    const {findBranchCommit,commitsList,setCommitsList,userList,setCommitsQueryData,queryData} = commitsStore
+    const {findAllBranch} = branchStore
 
     // 初始化加载状态findDmUserList
     const [isLoading,setIsLoading] = useState(true)
@@ -38,6 +38,7 @@ const Commits = props =>{
 
     const [commitName,setCommitName]=useState('')  //提交名称
     const [commitUser,setCommitUser]=useState()  //选择的提交用户
+    const [dmUserList,setDmUserList]=useState([])  //仓库用户
 
     const [branch,setBranch]=useState(repositoryInfo.defaultBranch)  //分支数据
 
@@ -57,6 +58,10 @@ const Commits = props =>{
             ({domainId:repositoryInfo.rpyId})
 
             findAllBranch(repositoryInfo.rpyId)
+
+            findDmUserList({domainId:repositoryInfo.rpyId}).then(res=>{
+                setDmUserList(res.data)
+            })
         }
         return ()=>setCommitsList()
     },[repositoryInfo.name,location.pathname,branch])
@@ -231,7 +236,7 @@ const Commits = props =>{
                             <Select  value={commitUser} onChange={value=>changCommitsUser(value)} style={{minWidth:150}} placeholder='用户'>
                                 <Select.Option value={"all"}>{"所有"}</Select.Option>
                                 {
-                                    userList.map(item=>{
+                                    dmUserList.map(item=>{
                                         return(
                                             <Select.Option key={item.id} value={item.user.name}>{item.user.name}</Select.Option>
                                         )

@@ -15,7 +15,6 @@ const tagU4='tag'
  * @returns {string|*}
  */
 const findRefCode = (location,repositoryInfo,type) =>{
-    debugger
     let  match;
     if (type==='code'){
          match = location.pathname.match(/code\/([^\/]+)/);

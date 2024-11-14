@@ -15,8 +15,8 @@ const NotFound = props =>{
 
     const subTitle = (
         <>
-           没有查询到该仓库，是否删除
-            <span style={{color:'var(--thoughtware-blue)',cursor:'pointer'}}
+           没有查询到该仓库的文件，是否删除
+            <span style={{color:'var(--tiklab-blue)',cursor:'pointer'}}
                   onClick={()=>deleteRepository()}>点击这里</span>
             删除
         </>

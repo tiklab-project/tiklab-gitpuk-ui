@@ -8,8 +8,8 @@
 import React from 'react';
 import {Input} from "antd";
 import {SearchOutlined,CheckOutlined} from '@ant-design/icons';
-import "./MergeAddVerifyBasicDrop.scss"
-const MergeAddVerifyBasicDrop = props => {
+import "./MergeDetailsAuditPop.scss"
+const MergeDetailsAuditPop = props => {
     const {userList,auditorUserList,changUser,addAuditorUser} = props
     return (
         <div className='verify-basic-drop-title'>
@@ -44,4 +44,4 @@ const MergeAddVerifyBasicDrop = props => {
     )
 }
 
-export default MergeAddVerifyBasicDrop
+export default MergeDetailsAuditPop

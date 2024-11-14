@@ -5,7 +5,7 @@
  * @constructor
  */
 import React,{useState,useRef,useEffect} from 'react';
-import "./MergeAddVerifyBasic.scss"
+import "./MergeDetailsBasic.scss"
 import {
     BranchesOutlined, CheckCircleOutlined,
     CloseCircleOutlined, CommentOutlined, DeleteOutlined, ExclamationCircleOutlined, FormOutlined, MessageOutlined,
@@ -16,12 +16,12 @@ import Btn from "../../common/btn/Btn";
 import Profile from "../../common/profile/Profile";
 import {getUser} from "tiklab-core-ui";
 import MergeClashPop from "./MergeClashPop";
-import MergeAddVerifyBasicDrop from "./MergeAddVerifyBasicDrop";
+import MergeDetailsAuditPop from "./MergeDetailsAuditPop";
 import mergeAuditorStore from "../store/MergeAuditor";
 
 
 const { confirm } = Modal;
-const MergeAddVerifyBasic = (props) => {
+const MergeDetailsBasic = (props) => {
     const {repositoryInfo,mergeData,mergeConditionList,createMergeComment,deleteMergeComment,findConditionType,
         setFindConditionType,commitsStatistics,auditorUserList,getMergeAuditorList,deGetMergeConditionList,match}=props
     const {findDmUserList,createMergeAuditor,deleteMergeAuditor}=mergeAuditorStore
@@ -441,7 +441,7 @@ const MergeAddVerifyBasic = (props) => {
                         {
                             (mergeData&&mergeData.user.id===userId) &&
                             <Dropdown
-                                overlay={<MergeAddVerifyBasicDrop
+                                overlay={<MergeDetailsAuditPop
                                     mergeData={mergeData}
                                     userList={userList}
                                     auditorUserList={auditorUserList}
@@ -480,4 +480,4 @@ const MergeAddVerifyBasic = (props) => {
     )
 
 }
-export default MergeAddVerifyBasic
+export default MergeDetailsBasic

@@ -11,7 +11,7 @@
             white-space: nowrap;
             overflow: hidden;
          /*   width: 300px;*/
-            font-weight: var(--thoughtware-font-weight-bold);
+            font-weight: var(--tiklab-font-weight-bold);
             &:hover{
                 color: #1890ff;
                 text-decoration: underline;
@@ -27,7 +27,7 @@
         flex: 1;
         .name-text-name{
             flex: 1;
-            font-weight: var(--thoughtware-font-weight-bold);
+            font-weight: var(--tiklab-font-weight-bold);
             &:hover{
                 color: #1890ff;
                 text-decoration: underline;
@@ -49,8 +49,8 @@
             font-weight: 400;
         }
         .name-text-desc{
-            color: var(--thoughtware-gray-500);
-            font-size: var(--thoughtware-font-13);
+            color: var(--tiklab-gray-500);
+            font-size: var(--tiklab-font-13);
         }
     }
 
@@ -60,7 +60,7 @@
             font-size: 16px;
         }
         &:hover{
-            color: var(--thoughtware-blue);
+            color: var(--tiklab-blue);
         }
     }
 

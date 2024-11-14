@@ -88,7 +88,7 @@ const Survey = (props) => {
                                                     </div>
 
                                                     <div className='survey-commit-time'>
-                                                        <div>master</div>
+                                                        <div>{repositoryInfo?.defaultBranch}</div>
                                                     </div>
                                                 </div>
                                             )

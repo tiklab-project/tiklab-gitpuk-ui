@@ -11,13 +11,13 @@
       }
     }
     .clash-edit-body{
-      border-top:1px solid var(--thoughtware-gray-200);
+      border-top:1px solid var(--tiklab-gray-200);
       height: 100%;
       width: 100%;
       display: flex;
       .edit-body-left{
         width: 25%;
-        border-right:1px solid var(--thoughtware-gray-200);
+        border-right:1px solid var(--tiklab-gray-200);
         .body-left-title{
           padding: 10px 0;
           font-weight: 490;
@@ -43,9 +43,14 @@
             width: 100%;
             margin-right: 10px;
             padding: 7px 0 7px 7px;
+            .left-body-nav-text-style{
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+            }
           }
           .cute-body-nav{
-            background: var(--thoughtware-merge-back-gray);
+            background: var(--tiklab-merge-back-gray);
 
             width: 100%;
             border-radius: 4px;

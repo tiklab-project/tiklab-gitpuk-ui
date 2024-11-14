@@ -146,7 +146,7 @@ const StatisticsCode = props =>{
             title: "最近90天"
         },
         {
-            value: "all",
+            value: "0",
             title: "所有时间段"
         },
     ]

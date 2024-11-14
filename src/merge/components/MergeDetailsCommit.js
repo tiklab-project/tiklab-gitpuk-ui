@@ -7,7 +7,7 @@
 import React,{useState,useEffect} from 'react';
 import commitsStore from "../../repository/commits/store/CommitsStore";
 import MergeAddCommit from "./MergeAddCommit";
-const MergeAddVerifyCommit = (props) => {
+const MergeDetailsCommit = (props) => {
     const {commitsList,webUrl}=props
 
 
@@ -19,4 +19,4 @@ const MergeAddVerifyCommit = (props) => {
         </div>
     )
 }
-export default MergeAddVerifyCommit
+export default MergeDetailsCommit

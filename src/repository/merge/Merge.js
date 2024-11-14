@@ -1,5 +1,5 @@
 import React from 'react';
-import MergeContent from '../../merge/components/Merge';
+import MergeContent from '../../merge/components/MergeList';
 import {inject, observer} from "mobx-react";
 import branchStore from "../branch/store/BranchStore";
 

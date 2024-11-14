@@ -23,6 +23,7 @@ const SurveyCommit = (props) => {
             commitUser:"all",
             branchType:'all',
             repositoryId: repositoryId,
+            commitType:"push"
         },dom)
     }, [])
 

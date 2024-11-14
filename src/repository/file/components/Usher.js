@@ -87,7 +87,7 @@ const Usher = props =>{
                                     <div>cd {repositoryInfo && repositoryInfo.name}</div>
                                     <div>git init</div>
                                     <div>touch README.md</div>
-                                    <div>git add README.md</div>
+                                    <div>git add .</div>
                                     <div>git commit -m "first commit"</div>
                                     <div>git remote add origin {urlPrefix==='SSH'? cloneAddress && cloneAddress.sshaddress :cloneAddress.httpAddress}
                                     </div>
@@ -98,6 +98,7 @@ const Usher = props =>{
                                 <div className='course-item-name'>已有仓库?</div>
                                 <div className='course-item-content'>
                                     <div>cd {repositoryInfo && repositoryInfo.name}</div>
+                                    <div>git add .</div>
                                     <div>git commit -m "first commit"</div>
                                     <div>git push -u origin master</div>
                                 </div>

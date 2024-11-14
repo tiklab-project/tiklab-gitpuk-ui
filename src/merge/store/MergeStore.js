@@ -151,6 +151,7 @@ export class MergeStore {
         const data = await Axios.post('/mergeRequest/conflictResolutionFile',param)
         if (data.code===0){
             this.mergeClashFileList=data.data
+            message.info("提交成功")
         }
         return data;
     }

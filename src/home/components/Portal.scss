@@ -9,7 +9,7 @@
         min-width: 600px;
         height: var(--home-height);
         border-bottom: 1px solid #e9e9e9;
-        /*background: var(--thoughtware-blue);*/
+        /*background: var(--tiklab-blue);*/
         &-logo{
             gap: 10px;
             display: flex;
@@ -56,12 +56,12 @@
             }
         }
         &-icon{
-            font-size: var(--thoughtware-icon-size-22);
+            font-size: var(--tiklab-icon-size-22);
           /*  color: #ffffff;*/
         }
         &-icon-ban{
             color: #94979a;
-            font-size: var(--thoughtware-icon-size-22);
+            font-size: var(--tiklab-icon-size-22);
         }
         &-user{
             cursor: pointer;
@@ -87,7 +87,7 @@
                     line-height: 48px;
                     /*padding: 0 10px;*/
                /*     &:not(:last-child){
-                        margin-right: var(--thoughtware-padding-item);
+                        margin-right: var(--tiklab-padding-item);
                     }*/
                 }
             }
@@ -110,7 +110,7 @@
                 span {
                     background: #E1EDFF;
                     border-radius: 3px;
-                    color: var(--thoughtware-blue);
+                    color: var(--tiklab-blue);
                 }
             }
         }
@@ -120,7 +120,7 @@
     }
 }
 .portals-content{
-    background: var(--thoughtware-white);
+    background: var(--tiklab-white);
     height: var(--content-height-100);
 }
 .text{

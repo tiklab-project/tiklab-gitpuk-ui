@@ -3,18 +3,18 @@
     width: 100%;
     height: 100%;
     .setting-nav-text{
-        font-size: var(--thoughtware-font-14);
+        font-size: var(--tiklab-font-14);
     }
     .xcode-setting-aside{
         height: 100%;
         width: 180px;
-        background-color: var(--thoughtware-left-nav);
+        background-color: var(--tiklab-left-nav);
         .xcode-setting-aside-head{
             height: 40px;
             line-height: 40px;
             width: 100%;
             padding: 0 20px;
-            font-weight: var(--thoughtware-font-weight-bold);
+            font-weight: var(--tiklab-font-weight-bold);
             border-bottom: 1px solid #ececec;
 
         }
@@ -22,11 +22,11 @@
             padding: 8px 20px;
             cursor: pointer;
             &:hover{
-                background: var(--thoughtware-gray-300);
+                background: var(--tiklab-gray-300);
             }
         }
         .setting-aside-select{
-            background: var(--thoughtware-gray-400);
+            background: var(--tiklab-gray-400);
         }
     }
 

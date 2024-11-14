@@ -22,6 +22,7 @@ import {
     EllipsisOutlined,
     ExclamationCircleOutlined,
 } from "@ant-design/icons";
+import {getUser} from "tiklab-core-ui";
 const LfsList = (props) => {
     const {repositoryStore,match:{params}}=props
     const {repositoryInfo} = repositoryStore
@@ -83,6 +84,36 @@ const LfsList = (props) => {
         },
     ]
 
+
+    const deleteCloumns = [
+        {
+            title: '文件OID',
+            dataIndex: 'oid',
+            key: 'oid',
+            ellipsis:true,
+            width:'50%',
+        },
+        {
+            title: '文件类型',
+            dataIndex: 'fileType',
+            key:'fileType',
+            width:'10%',
+        },
+        {
+            title: '文件大小',
+            dataIndex: 'fileSize',
+            key:'fileSize',
+            width:'10%',
+        },
+        {
+            title: '删除时间',
+            dataIndex: 'updateTime',
+            key:'updateTime',
+            width:'20%',
+        }
+    ]
+
+
     useEffect(async () => {
         if (props.location.hash==='#delete'){
             setTableType('delete')
@@ -115,7 +146,8 @@ const LfsList = (props) => {
 
     //下载
     const downLoad = (data) => {
-        window.location.href=`${node_env? base_url:window.location.origin}/repositoryFile/downloadLfsFile?rpyId=${data.repositoryId}&filePath=${data.oid}&oid=${data.oid}&branch=branch`
+        const tenantId=getUser().tenant
+        window.location.href=`${node_env? base_url:window.location.origin}/repositoryFile/downLoadLfsFile${tenantId?"/"+getUser().tenant:""}?rpyId=${data.repositoryId}&filePath=${data.oid}&oid=${data.oid}&branch=branch`
     }
 
     /**
@@ -167,7 +199,7 @@ const LfsList = (props) => {
                 <div className='lfs-list-table'>
                    <Table
                        bordered={false}
-                       columns={columns}
+                       columns={tableType==='list'?columns:deleteCloumns}
                        dataSource={flsList}
                        rowKey={record=>record.id}
                        pagination={false}

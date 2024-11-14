@@ -9,13 +9,13 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: var(--thoughtware-padding-item);
+            margin-bottom: var(--tiklab-padding-item);
             .repository-add-top-title{
                 font-size: 15px;
-                font-weight: var(--thoughtware-font-weight-bold);
+                font-weight: var(--tiklab-font-weight-bold);
             }
             .repository-add-top-leadingIn .leadingIn{
-                color: var(--thoughtware-blue);
+                color: var(--tiklab-blue);
                 cursor: pointer;
             }
         }

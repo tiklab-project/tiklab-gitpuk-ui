@@ -104,9 +104,8 @@ const Branch = props =>{
 
    //下载当前分支仓库
    const downloadRepo = (data) => {
-       const a=getUser().tenant
-       window.location.href=`${node_env? base_url:window.location.origin}/repositoryFile/downLoadBareRepo${a?"/"+getUser().tenant:""}?branch=${data.branchName}&type=zip&rpyId=${repositoryInfo?.rpyId}&rpyName=${repositoryInfo.name}`
-
+       const tenantId=getUser().tenant
+       window.location.href=`${node_env? base_url:window.location.origin}/repositoryFile/downLoadBareRepo${tenantId?"/"+getUser().tenant:""}?branch=${data.branchName}&type=zip&rpyId=${repositoryInfo?.rpyId}&rpyName=${repositoryInfo.name}`
    }
 
 
@@ -141,7 +140,7 @@ const Branch = props =>{
 
             {
                 value.defaultBranch &&
-                <Menu.Item onClick={()=>DeletePop(value)} disabled={true}>
+                <Menu.Item  disabled={true}>
                     <PrivilegeProjectButton code={"rpy_branch_delete"} domainId={repositoryInfo && repositoryInfo.rpyId}>
                         <Tooltip placement="top" title={'默认分支不能被删除'} >
                             删除
@@ -150,7 +149,7 @@ const Branch = props =>{
                 </Menu.Item>
                 ||
                 value?.mergeRequest?.mergeState===1&&
-                    <Menu.Item onClick={()=>DeletePop(value)} disabled={true}>
+                    <Menu.Item  disabled={true}>
                         <PrivilegeProjectButton code={"rpy_branch_delete"} domainId={repositoryInfo && repositoryInfo.rpyId}>
                             <Tooltip placement="top" title={'存在开启的合并请求'} >
                                 删除
@@ -160,8 +159,8 @@ const Branch = props =>{
                     ||
                 (!value.defaultBranch && !value?.mergeRequest?.mergeState!==1)&&
                 <PrivilegeProjectButton code={"rpy_branch_delete"} domainId={repositoryInfo && repositoryInfo.rpyId}>
-                    <div className='branch-nav'>
-                        <Menu.Item onClick={()=>DeletePop(value)}>
+                    <div className='branch-nav' onClick={()=>DeletePop(value)}>
+                        <Menu.Item >
                             {"删除"}
                         </Menu.Item>
                     </div>

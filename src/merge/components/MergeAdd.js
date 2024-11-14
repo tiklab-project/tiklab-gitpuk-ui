@@ -58,11 +58,10 @@ const MergeAdd = (props) => {
 
 
     useEffect(()=>{
-
-
         if (repositoryInfo){
             getBranchList()
         }
+
     },[repositoryInfo.name,fresh])
 
 
@@ -79,6 +78,14 @@ const MergeAdd = (props) => {
                     const sourceBranchName = location.search.substring(location.search.indexOf("=")+1)
                     const defaultBranch= res.data.filter(a=>a.branchName===sourceBranchName)[0]
                     setOriginBranch(defaultBranch)
+                }
+
+                if (location.search){
+                    const search= location.search
+                    const branch=search.slice(search.indexOf("=")+1)
+                    getMergeRequestList(branch,defaultBranch.branchName)
+                    getCommitDiffBranch(branch,defaultBranch.branchName)
+                    getDiffCommitStatistics(branch,defaultBranch.branchName)
                 }
             }
         })
@@ -125,12 +132,13 @@ const MergeAdd = (props) => {
 
     //查询两个分支的查询提交
     const findCommitsList = (value,type) => {
+        //目标分支
         if (type==='target'&&originBranch){
             getMergeRequestList(originBranch.branchName,value)
             getCommitDiffBranch(originBranch.branchName,value)
             getDiffCommitStatistics(originBranch.branchName,value)
         }
-
+        //源分支
         if (type==='origin'&&targetBranch){
             getMergeRequestList(value,targetBranch.branchName)
             getCommitDiffBranch(value,targetBranch.branchName)

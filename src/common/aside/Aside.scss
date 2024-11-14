@@ -5,7 +5,7 @@
         display: flex;
         height: auto;
         /*overflow: auto;*/
-    /*    background-color: var(--thoughtware-left-nav);*/
+    /*    background-color: var(--tiklab-left-nav);*/
         flex-direction: column;
         justify-content: space-between;
         width: 76px;
@@ -13,10 +13,10 @@
         border-right: 1px solid #EBECF0;
 
         .rpy-close-nav-repository{
-           /* margin-left: var(--thoughtware-distance-20);*/
+           /* margin-left: var(--tiklab-distance-20);*/
         }
         .rpy-open-nav-repository{
-            margin-left: var(--thoughtware-distance-15);
+            margin-left: var(--tiklab-distance-15);
         }
         .rpy-nav-tab{
             cursor: pointer;
@@ -44,7 +44,7 @@
 
         }
         .choice-table-nav{
-            background-color: var(--thoughtware-gray-400);
+            background-color: var(--tiklab-gray-400);
             border-left:2px solid #0063FF;
         }
     }
@@ -56,21 +56,21 @@
             cursor: pointer;
             border-left: var(--nav-left-border-size) solid transparent;
             &:hover{
-                background: var(--thoughtware-gray-400);
+                background: var(--tiklab-gray-400);
             }
         }
         .tab-link-active {
-            /*    color: var(--thoughtware-blue);*/
-            background-color: var(--thoughtware-gray-400);
-            border-left:var(--nav-left-border-size) solid var(--thoughtware-blue);
+            /*    color: var(--tiklab-blue);*/
+            background-color: var(--tiklab-gray-400);
+            border-left:var(--nav-left-border-size) solid var(--tiklab-blue);
         }
         /*  .user-icon {
-              background-color: var(--thoughtware-blue);
+              background-color: var(--tiklab-blue);
               color: #ffffff;
           }*/
     }
     .theme-blue {
-        background-color: var(--thoughtware-motif-color-blue);
+        background-color: var(--tiklab-motif-color-blue);
         color: #fff;
         .tab-link{
             cursor: pointer;
@@ -89,7 +89,7 @@
         }
     }
     .theme-black {
-        background-color: var(--thoughtware-motif-color-black);
+        background-color: var(--tiklab-motif-color-black);
         color: #D8D8D8;
         .tab-link{
             cursor: pointer;
@@ -136,8 +136,8 @@
             padding: 10px 0;
         }
         .nav-go-back-icon{
-            height: var(--thoughtware-size-26);
-            width: var(--thoughtware-size-26);
+            height: var(--tiklab-size-26);
+            width: var(--tiklab-size-26);
         }
 
     }
@@ -147,7 +147,7 @@
         overflow-y:hidden;
         overflow-x: auto;
         height: var(--xpack-content-height);
-        background: var(--thoughtware-white);
+        background: var(--tiklab-white);
     }
 
     .rpy-nav-setting {
@@ -155,7 +155,7 @@
         cursor: pointer;
         border-top-width: 1px;
         :hover {
-            background: var(--thoughtware-gray-300);
+            background: var(--tiklab-gray-300);
         }
         .nav-close-setting-place{
             padding: 10px 0;
@@ -273,18 +273,18 @@
 }
 
 .close-icon-size{
-    width: var(--thoughtware-size-20);
-    height: var(--thoughtware-size-20);
+    width: var(--tiklab-size-20);
+    height: var(--tiklab-size-20);
 }
 .close-iconfont{
-    font-size: var(--thoughtware-size-20);
+    font-size: var(--tiklab-size-20);
 }
 .open-icon-size{
-    width: var(--thoughtware-size-18);
-    height: var(--thoughtware-size-18);
+    width: var(--tiklab-size-18);
+    height: var(--tiklab-size-18);
 }
 .open-iconfont{
-    font-size: var(--thoughtware-size-18);
+    font-size: var(--tiklab-size-18);
 }
 
 .aside-dropdown-close{
@@ -302,11 +302,11 @@
         width: 240px;
         min-height: 100px;
         &-title{
-            font-weight: var(--thoughtware-font-weight-bold);
-            padding: 0 var(--thoughtware-padding-item);
+            font-weight: var(--tiklab-font-weight-bold);
+            padding: 0 var(--tiklab-padding-item);
             height: 40px;
             line-height: 40px;
-            border-bottom: 1px solid var(--thoughtware-gray-200);
+            border-bottom: 1px solid var(--tiklab-gray-200);
         }
         &-group{
             max-height: 500px;
@@ -314,7 +314,7 @@
         }
         &-item{
             display: flex;
-            padding: 0 var(--thoughtware-padding-item);
+            padding: 0 var(--tiklab-padding-item);
             height: 40px;
             line-height: 40px;
             align-items: center;
@@ -343,7 +343,7 @@
             cursor: pointer;
             padding: 5px 0;
             text-align: center;
-            border-top: 1px solid var(--thoughtware-gray-200);
+            border-top: 1px solid var(--tiklab-gray-200);
             color: #3967FF;
         }
         .cursor:hover{

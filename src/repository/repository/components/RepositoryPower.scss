@@ -1,5 +1,5 @@
 .repository-power{
-    padding-bottom: var(--thoughtware-padding);
+    padding-bottom: var(--tiklab-padding);
     .repository-power-title{
         padding: 0 0 8px;
         color: #666;
@@ -32,7 +32,7 @@
         .power-select-show{
             width: 13px;
             height: 13px;
-            background: var(--thoughtware-blue);
+            background: var(--tiklab-blue);
             border-radius: 50px;
             position: relative;
             &:after{
@@ -42,7 +42,7 @@
                 height: 23px;
                 top: -5px;
                 left: -5px;
-                border: 3px solid var(--thoughtware-blue);
+                border: 3px solid var(--tiklab-blue);
                 border-radius: 50px;
             }
         }
@@ -55,6 +55,6 @@
         flex: 1;
     }
     .repository-power-select{
-        border: 2px solid var(--thoughtware-blue) !important;
+        border: 2px solid var(--tiklab-blue) !important;
     }
 }

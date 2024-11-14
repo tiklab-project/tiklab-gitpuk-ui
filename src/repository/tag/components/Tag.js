@@ -1,11 +1,6 @@
 import React,{useEffect,useState} from 'react';
-import {Input, Tooltip, Popconfirm, Col} from 'antd';
-import {
-    DownloadOutlined,
-    PlusOutlined,
-    SearchOutlined,
-    TagOutlined
-} from '@ant-design/icons';
+import {Tooltip, Col} from 'antd';
+import {TagOutlined} from '@ant-design/icons';
 import BreadcrumbContent from '../../../common/breadcrumb/Breadcrumb';
 import Btn from '../../../common/btn/Btn';
 import Publish from './Publish';
@@ -20,12 +15,13 @@ import Omit from "../../../common/omit/Omit";
 import EmptyText from "../../../common/emptyText/EmptyText";
 import DeleteExec from "../../../common/delete/DeleteExec";
 import SearchInput from "../../../common/input/SearchInput";
+import {getUser} from "tiklab-core-ui";
 const lis = [{id:1, title:'标签'},{id:2, title:'发行版'}]
 const Tag = props =>{
 
     const {repositoryStore,match} = props
     const {repositoryInfo} = repositoryStore
-    const {findTag,tagList,deleteTag}=tagStore
+    const {findTagList,tagList,deleteTag}=tagStore
     const {branchList,fresh,findBranchList} = branchStore
     const webUrl = `${match.params.namespace}/${match.params.name}`
 
@@ -34,15 +30,27 @@ const Tag = props =>{
     const [addTagVisible,setAddTagVisible] = useState(false)
     const [addPublishVisible,setAddPublishVisible] = useState(false)
 
+    const [tagName,setTagName]=useState()
+
     useEffect(()=>{
         repositoryInfo.name && findBranchList({rpyId:repositoryInfo.rpyId})
 
-        findTag(repositoryInfo.rpyId)
+        getTagList()
     },[repositoryInfo.name,fresh])
+
+
+    //查询标签列表
+    const getTagList = () => {
+        findTagList({
+            rpyId:repositoryInfo.rpyId,
+            tagName:tagName
+        })
+    }
+
 
     //查询标签
     const findTags = () => {
-        findTag(repositoryInfo.rpyId).then(res=>
+        findTagList({rpyId:repositoryInfo.rpyId}).then(res=>
         res.code===0&&setAddTagVisible(false))
     }
 
@@ -62,26 +70,32 @@ const Tag = props =>{
 
     //跳转file 界面
     const goFile = (value) => {
-        props.history.push(`/repository/${webUrl}/code/${value.tagName}tag`)
+        props.history.push(`/repository/${webUrl}/code/${value.tagName}`)
     }
     //跳转commit 界面
     const goCommit = (value) => {
         props.history.push(`/repository/${webUrl}/commit/${value.commitId}`)
     }
 
-    //输入搜索的分支名字
+    //输入搜索的标签名字
     const onChangeSearch = (e) => {
         const value=e.target.value
-        setBranchName(value)
+        setTagName(value)
         if (value===''){
-            findBranchList({rpyId:repositoryInfo.rpyId})
+            findTagList({rpyId:repositoryInfo.rpyId})
         }
     }
 
-    //名字搜索分支
+
+    //下载当前标签仓库
+    const downloadRepo = (data) => {
+        const tenantId=getUser().tenant
+        window.location.href=`${node_env? base_url:window.location.origin}/repositoryFile/downLoadBareRepo${tenantId?"/"+getUser().tenant:""}?tag=${data.tagName}&type=zip&rpyId=${repositoryInfo?.rpyId}&rpyName=${repositoryInfo.name}`
+    }
+
+    //名字搜索标签
     const onSearch =async () => {
-        setBranchType('all')
-        findBranchList({rpyId:repositoryInfo.rpyId,name:branchName})
+        getTagList()
     }
 
     return(
@@ -158,9 +172,9 @@ const Tag = props =>{
                                                     <div>{item.timeDiffer}</div>
                                                 </div>
                                             </div>
-                                            <div className='tag-tables-action'>
+                                            <div className='tag-tables-action' >
                                                 <Tooltip title='下载'>
-                                                    <div className='tag-tables-download'>
+                                                    <div className='tag-tables-download' onClick={()=>downloadRepo(item)}>
                                                         <svg className='icon' aria-hidden='true'>
                                                             <use xlinkHref='#icon-xiazai'/>
                                                         </svg>

@@ -4,7 +4,7 @@
     background-color: #ffffff;
     width: 350px;
     .clone-item{
-        padding: 0 var(--thoughtware-padding-item);
+        padding: 0 var(--tiklab-padding-item);
         .clone-item-title{
             padding: 10px 0;
         }
@@ -15,7 +15,7 @@
     .clone-download{
         display: flex;
         align-items: center;
-        margin-top: var(--thoughtware-padding-item);
+        margin-top: var(--tiklab-padding-item);
         border-top: 1px solid #d9d9d9;
         .clone-item-download{
             flex: 1;

@@ -1,7 +1,7 @@
 .branch-select{
     min-width: 160px;
     max-width: 330px;
-    margin-right: var(--thoughtware-padding-item);
+    margin-right: var(--tiklab-padding-item);
     .ant-select{
         width: 100% !important;
     }
@@ -12,8 +12,8 @@
     overflow-y: auto;
     .branchSelect-title{
         padding: 5px 0 5px 12px;
-        font-size: var(--thoughtware-font-12);
-        color: var(--thoughtware-gray-500);
+        font-size: var(--tiklab-font-12);
+        color: var(--tiklab-gray-500);
     }
     .branchSelect-commit:hover{
         background-color: #e7f6ff;

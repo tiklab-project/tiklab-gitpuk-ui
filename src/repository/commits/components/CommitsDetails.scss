@@ -2,8 +2,8 @@
     height: 100%;
     overflow: auto;
     &-head{
-        margin-bottom: var(--thoughtware-padding-item);
-        padding: var(--thoughtware-padding-item);
+        margin-bottom: var(--tiklab-padding-item);
+        padding: var(--tiklab-padding-item);
         background-color: #f7f7f7;
         border-radius: 4px;
         display: flex;
@@ -27,7 +27,7 @@
             .commitsDetails-head-left-desc{
                 display: flex;
                 gap: 15px;
-                color: var(--thoughtware-gray-500);
+                color: var(--tiklab-gray-500);
                 .head-left-desc-parent-commit{
                     display: flex;
                     gap: 7px;
@@ -55,12 +55,12 @@
             align-items: center;
             .head-variation{
                 .contrast-affected-num{
-                    color: var(--thoughtware-gray-500);
+                    color: var(--tiklab-gray-500);
                     .num-icon{
                         padding: 0 5px;
                     }
                     .num-add{
-                        color: var(--thoughtware-gree);
+                        color: var(--tiklab-gree);
                     }
                     .num-reduce{
                         color: #ff0000;
@@ -75,7 +75,7 @@
             .contrast-title{
                 display: flex;
                 border-bottom: 1px solid #d9d9d9;
-                margin-bottom: var(--thoughtware-padding-item);
+                margin-bottom: var(--tiklab-padding-item);
             }
             .contrast-affected{
                 display: flex;
@@ -137,8 +137,8 @@
                                 padding-right: 8px;
                             }
                             .item-title-type{
-                                font-size: var(--thoughtware-font-13);
-                                color: var(--thoughtware-gray-500);
+                                font-size: var(--tiklab-font-13);
+                                color: var(--tiklab-gray-500);
                                 padding-right: 8px;
                             }
                             .item-title-icon{
@@ -166,7 +166,7 @@
     .commits-diff-drop-title-input{
         padding: 8px;
         .input-icon{
-            font-size: var(--thoughtware-input-icon-15);
+            font-size: var(--tiklab-input-icon-15);
         }
     }
     .commits-diff-drop-title-content{
@@ -199,7 +199,7 @@
             padding-left: 8px;
         }
         .diff-drop-title-item-add{
-            color: var(--thoughtware-gree);
+            color: var(--tiklab-gree);
         }
         .diff-drop-title-item-delete{
             color: #ff0000;

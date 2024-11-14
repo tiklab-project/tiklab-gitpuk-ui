@@ -178,7 +178,7 @@ const MergeAddFile = (props) => {
             </div>
             <div className='file-info-content'>
                 {
-                    commitDiffList.length>0 && commitDiffList.map((item,index)=>{
+                    commitDiffList?.length>0 && commitDiffList.map((item,index)=>{
                         return(
                             <div key={index}>
                                 <div className='file-info-head'>

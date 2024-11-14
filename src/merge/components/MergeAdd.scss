@@ -25,9 +25,9 @@
         width: 500px;
 
         .merge-add-select-title {
-          background: var(--thoughtware-gray-400);
+          background: var(--tiklab-gray-400);
           padding: 5px 10px;
-          border-right: 1px solid var(--thoughtware-gray-400);;
+          border-right: 1px solid var(--tiklab-gray-400);;
         }
 
         .merge-add-select-icon {
@@ -42,7 +42,7 @@
     .commit-info-error {
       display: flex;
       align-items: center;
-      margin: var(--thoughtware-padding-item) 0;
+      margin: var(--tiklab-padding-item) 0;
       padding: 12px;
       gap: 10px;
       background: #F8FFFF;
@@ -55,7 +55,7 @@
         display: flex;
         gap: 10px;
         .commit-info-error-text {
-          color: var(--thoughtware-blue);
+          color: var(--tiklab-blue);
           cursor: pointer;
         }
       }
@@ -67,7 +67,7 @@
     .commit-info-clash{
       display: flex;
       align-items: center;
-      margin: var(--thoughtware-padding-item) 0;
+      margin: var(--tiklab-padding-item) 0;
       padding: 12px;
       gap: 10px;
       background: #ffefe3;
@@ -89,7 +89,7 @@
       background: #f7f7f7;
       border-bottom: 1px solid #f0f0f0;
       font-size: 14px;
-      padding: 6px var(--thoughtware-padding-item);
+      padding: 6px var(--tiklab-padding-item);
       font-weight: 500;
       .title-time{
         padding-right: 5px;
@@ -100,15 +100,15 @@
         display: flex;
         flex-direction: row;
         align-items: center;
-        padding: 8px var(--thoughtware-padding-item);
+        padding: 8px var(--tiklab-padding-item);
         .info-item-icon{
-          margin-right: var(--thoughtware-padding-item);
+          margin-right: var(--tiklab-padding-item);
         }
         .info-item-msg{
-          margin-right: var(--thoughtware-padding-item);
+          margin-right: var(--tiklab-padding-item);
           flex: 1;
           .info-item-title{
-            font-weight: var(--thoughtware-font-weight-bold);
+            font-weight: var(--tiklab-font-weight-bold);
             .title-commitMsg:hover{
               cursor: pointer;
               text-decoration: underline;
@@ -116,7 +116,7 @@
           }
           .title-item-desc{
             font-size: 13px;
-            color: var(--thoughtware-gray-500);
+            color: var(--tiklab-gray-500);
             .desc-user{
               padding-right: 5px;
             }
@@ -165,7 +165,7 @@
       padding-right: 5px;
     }
     .num-add{
-      color: var(--thoughtware-gree);
+      color: var(--tiklab-gree);
     }
     .num-reduce{
       color: #ff0000;
@@ -197,8 +197,8 @@
           padding-right: 8px;
         }
         .file-info-title-type{
-          font-size: var(--thoughtware-font-13);
-          color: var(--thoughtware-gray-500);
+          font-size: var(--tiklab-font-13);
+          color: var(--tiklab-gray-500);
           padding-right: 8px;
         }
         .file-info-title-icon{

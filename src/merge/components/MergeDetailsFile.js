@@ -7,7 +7,7 @@
 import React,{useState,useEffect} from 'react';
 import commitsStore from "../../repository/commits/store/CommitsStore";
 import MergeAddFile from "./MergeAddFile";
-const MergeAddVerifyFile = (props) => {
+const MergeDetailsFile = (props) => {
     const {repositoryInfo,mergeData,webUrl}=props
     const {findDiffBranchFileDetails} = commitsStore
 
@@ -31,4 +31,4 @@ const MergeAddVerifyFile = (props) => {
         </div>
     )
 }
-export default MergeAddVerifyFile
+export default MergeDetailsFile

@@ -11,7 +11,7 @@
         justify-content: space-between;
         padding-bottom: 10px;
         .input-icon{
-            font-size: var(--thoughtware-input-icon-15);
+            font-size: var(--tiklab-input-icon-15);
         }
     }
 
@@ -92,14 +92,14 @@
             .name-text{
                 flex: 1;
                 .name-text-title{
-                    font-weight: var(--thoughtware-font-weight-bold);
+                    font-weight: var(--tiklab-font-weight-bold);
                     &:hover{
                         text-decoration: underline;
                     }
                 }
                 .name-text-desc{
-                    color: var(--thoughtware-gray-500);
-                    font-size: var(--thoughtware-font-13);
+                    color: var(--tiklab-gray-500);
+                    font-size: var(--tiklab-font-13);
                     .desc-name{
                         margin-right: 8px;
                     }
@@ -129,11 +129,11 @@
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
-        font-weight: var(--thoughtware-font-weight-bold);
-        padding: var(--thoughtware-padding) var(--thoughtware-padding) var(--thoughtware-padding-item);
+        font-weight: var(--tiklab-font-weight-bold);
+        padding: var(--tiklab-padding) var(--tiklab-padding) var(--tiklab-padding-item);
     }
     .tag-add-content{
-        padding: 0 var(--thoughtware-padding);
+        padding: 0 var(--tiklab-padding);
         max-height:calc(100% - 120px);
         overflow:auto;
     }
@@ -145,11 +145,11 @@
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
-        font-weight: var(--thoughtware-font-weight-bold);
-        padding: var(--thoughtware-padding) var(--thoughtware-padding) var(--thoughtware-padding-item);
+        font-weight: var(--tiklab-font-weight-bold);
+        padding: var(--tiklab-padding) var(--tiklab-padding) var(--tiklab-padding-item);
     }
     .publish-add-content{
-        padding: 0 var(--thoughtware-padding);
+        padding: 0 var(--tiklab-padding);
         max-height:calc(100% - 120px);
         overflow:auto;
     }

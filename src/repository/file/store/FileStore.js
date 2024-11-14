@@ -64,7 +64,7 @@ export class FileStore {
      */
     @action
     downloadLfsFile = async value =>{
-        const data = await Axios.post('/repositoryFile/downloadLfsFile',value)
+        const data = await Axios.post('/repositoryFile/downLoadLfsFile',value)
         if(data.code===0) {
 
             const base64String = data.data;

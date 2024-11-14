@@ -34,28 +34,10 @@ export class TagStore {
      * @param rpyId
      */
     @action
-    findTag = async (rpyId) =>{
-        const res=new FormData()
-        res.append("rpyId",rpyId)
-        const data = await Axios.post('/tag/findTag',res)
+    findTagList = async (param) =>{
+        const data = await Axios.post('/tag/findTagList',param)
         if (data.code===0){
             this.tagList=data.data
-        }
-        return data
-    }
-
-    /**
-     * 查询标签
-     * @param rpyId
-     */
-    @action
-    findTagByName = async (rpyId,tagName) =>{
-        const res=new FormData()
-        res.append("rpyId",rpyId)
-        res.append("tagName",tagName)
-        const data = await Axios.post('/tag/findTagByName',res)
-        if (data.code===0){
-            this.tag=data.data
         }
         return data
     }
