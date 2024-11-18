@@ -7,7 +7,6 @@ import Tabs from '../../../common/tabs/Tabs';
 import RepositoryTable from "./RepositoryTable";
 import './Repository.scss';
 import {getUser} from "tiklab-core-ui";
-import {PrivilegeButton} from 'tiklab-privilege-ui';
 import SearchInput from "../../../common/input/SearchInput";
 const Repository = props => {
 

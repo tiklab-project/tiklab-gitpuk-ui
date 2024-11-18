@@ -136,9 +136,15 @@ GitPuk是免费开源，代码公开透明、灵活
 * Java 16+
 * Maven 3.4+
 ### 克隆仓库
+```
 git clone https://gitee.com/tiklab/tiklab-gitpuk.git
 
-cd tiklab-gitpuk
+```
+### 配置Npm镜像源拉取依赖
+```
+npm config set registry  https://mirror.tiklab.net/repository/tiklab-npm
+```
+
 ### 构建项目
 * MAC系统：mvn clean package -P system-mac,env-dev
 * Linux系统：mvn clean package -P system-linux,env-dev

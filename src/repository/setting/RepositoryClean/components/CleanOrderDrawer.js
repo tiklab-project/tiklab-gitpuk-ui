@@ -50,7 +50,7 @@ const CleanOrderDrawer = (props) => {
         >
             <div className='clean-order'>
                 <div className='clean-data-desc'>
-                    仓库清理大文件会更改commit历史，重新生成objectId,需要谨慎操作
+                    执行前必读：仓库清理大文件是一个非常危险的操作,会重写commit历史，重新生成提交的objectId,请确保操作的代码为最新的代码。操作完成后，开发成员需重新拉取最代码仓库（不是在之前的代码里面拉取，是拉取一个全新的）
                 </div>
                 <div className='clean-data-bottom'>
                     <div className='clean-data-title'>客户端操作</div>

@@ -22,14 +22,14 @@ const RepositoryClean = (props) => {
     const {repositoryStore,match} = props
 
     const {findRepositoryByAddress} = repositoryStore
-    const {findLargeFile,findLargeFileResult,clearLargeFile,findClearResult,execCleanFile,refresh}=RepositoryCleanStore
+    const {findLargeFile,findLargeFileResult,largeFileList,sortLargeFile,clearLargeFile,execState,setExecState,execCleanFile,refresh}=RepositoryCleanStore
 
     const [repository,setRepository]=useState(null)
     const [fileList,setFileList]=useState([])  //文件list
     const [isLoading,setIsLoading]=useState(false)
     const [fileSize,setFileSize]=useState(1)
 
-    const [execState,setExecState]=useState(false)  //执行状态
+
     const [visible,setVisible]=useState(false)
     const [resultData,setResultData]=useState(null)  //获取清除结果
     const [choiceFileList,setChoiceFileList]=useState([])  //选中的文件list
@@ -75,20 +75,16 @@ const RepositoryClean = (props) => {
         if (Number.isInteger(fileSize)&&fileSize>0){
             findLargeFile({repositoryId:repository.rpyId,fileSize:fileSize}).then(res=>{
                 if (res.code===0&&res.data==='OK'){
-                    findFileTime(repository)
-                    setExecState(true)
+                    if (!execState){
+                        setExecState(true)
+                        findFileTime(repository)
+                    }
+
                 }
             })
         }else {
             message.error('只能为整数')
         }
-        /*findLargeFile({repositoryId:repository.rpyId,fileSize:fileSize}).then(res=>{
-            if (res.code===0&&res.data==='OK'){
-                findFileTime(repository)
-                setExecState(true)
-            }
-        })*/
-
     }
 
 
@@ -97,22 +93,8 @@ const RepositoryClean = (props) => {
         let timer=setInterval(()=>{
             findLargeFileResult({repositoryId:repository.rpyId}).then(res=>{
                 if (res.code===0){
-                    if (res.data&&res.data.length>0){
-                        const data=res.data[0]
-                        if (data.msg==='none'){
-                            setFileList([])
-                            message.success('查询数据为空',1)
-                        }
-                        if (data.msg==='fail'){
-                            setFileList([])
-                            message.error('查询失败',1)
-                        }
-                        if (data.msg!=='none'&&data.msg!=='fail'){
-                            setFileList(res.data)
-                        }
-                        clearInterval(timer)
-                        setExecState(false)
-                    }
+                    clearInterval(timer)
+                    setExecState(false)
                 }else {
                     message.success('查询失败',1)
                     setExecState(false)
@@ -122,31 +104,20 @@ const RepositoryClean = (props) => {
         },1000)
     }
 
-    //获取文件结果
-    const getFileResult = (sort) => {
-        findLargeFileResult({repositoryId:repository.rpyId,sort:sort}).then(res=>{
-            if (res.code===0){
-                if (res.data.length>0){
-                    setFileList(res.data)
-                    //setIsLoading(true)
-                }
-            }
-
-        })
-    }
 
     //排序
     const onChange = (pagination, filters, sorter, extra) => {
         //降序
         if (sorter.order==='descend'){
-            getFileResult ("desc")
+            sortLargeFile("desc")
         }
         //升序
         if (sorter.order==='ascend'){
-            getFileResult ("asc")
+            sortLargeFile("asc")
+
         }
         if (!sorter.order){
-            getFileResult ()
+            sortLargeFile()
         }
     }
 
@@ -174,36 +145,6 @@ const RepositoryClean = (props) => {
         })*/
     }
 
-    //扫描定时任务
-    const findCleanResult =async()=>{
-        let timer=setInterval(()=>{
-            findClearResult(repository.rpyId).then(res=>{
-                if (res.code===0){
-                    setResultData(res.data)
-                    if (res.data.state==='success'){
-                        message.success('清除成功',1)
-                        clearInterval(timer)
-                        clearData()
-                    }
-
-                    if (res.data.state==='fail'){
-                        message.success('清除失败',1)
-                        clearInterval(timer)
-
-                    }
-                }else {
-                    setExecState(false)
-                    clearInterval(timer)
-                }
-            })
-        },2000)
-    }
-
-    //删除成功后清理数据
-    const clearData = () => {
-        findRepository()
-        setChoiceFileList([])
-    }
 
     return(
         /*<div className='xcode-setting-with repository-setting-width xcode'>*/
@@ -263,7 +204,7 @@ const RepositoryClean = (props) => {
                             }}
                             bordered={false}
                             columns={columns}
-                            dataSource={fileList}
+                            dataSource={largeFileList}
                             rowKey={record=>record.fileName}
                             pagination={false}
                             onChange={onChange}

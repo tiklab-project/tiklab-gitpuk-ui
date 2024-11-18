@@ -1,11 +1,40 @@
 import {observable,action} from 'mobx';
 import {getUser,Axios} from 'tiklab-core-ui';
+import {message} from "antd";
 
 export class RepositoryCleanStore {
 
 
     @observable
     refresh=false
+
+    // 定时任务执行状态
+    @observable
+    execState=false
+
+    @observable
+    largeFileList=[]
+
+
+    //设置定时任务执行状态
+    @action
+    setExecState=async(state)=>{
+        this.execState=state
+    }
+
+    //排序
+    @action
+    sortLargeFile=async (value)=>{
+        if (this.largeFileList.length>0){
+            if (value==='asc'){
+                this.largeFileList=this.largeFileList.sort((a, b) => a.fileSize - b.fileSize);
+            }
+            if (value==='desc'){
+                debugger
+                this.largeFileList=this.largeFileList.sort((a, b) => b.fileSize - a.fileSize);
+            }
+        }
+    }
 
     /**
      * 条件查询大文件
@@ -25,9 +54,22 @@ export class RepositoryCleanStore {
      */
     @action
     findLargeFileResult = async (param) =>{
-
-        const data = await Axios.post('/repositoryClean/findLargeFileResult',param)
-        return data
+        const res = await Axios.post('/repositoryClean/findLargeFileResult',param)
+        if (res.code===0){
+            const data=res.data[0]
+            if (data.msg==='none'){
+                this.largeFileList=[]
+                message.success('查询数据为空',1)
+            }
+            if (data.msg==='fail'){
+                this.largeFileList=[]
+                message.error('查询失败',1)
+            }
+            if (data.msg!=='none'&&data.msg!=='fail'){
+                this.largeFileList=res.data
+            }
+        }
+        return res
     }
 
 
