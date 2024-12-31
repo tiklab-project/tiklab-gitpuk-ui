@@ -82,6 +82,12 @@ export const Validation = (name,type) =>{
             message: `只能包含字母和数字、 '_'、 '.'和'-'，且只能以字母、数字或'_'开头`,
         }
     }
+    if(type==='webHook'){
+        return {
+            pattern: /^(http:\/\/|https:\/\/)/,
+            message: `请输入正确地址`,
+        }
+    }
     return {
         pattern: /^[\u4e00-\u9fa5a-zA-Z0-9_-]{0,}$/,
         message: `${name}不能包含非法字符，如&,%，&，#……等`,

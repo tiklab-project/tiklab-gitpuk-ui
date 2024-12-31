@@ -35,10 +35,10 @@ const RepositorySetting = props =>{
             title:`Push_rules`,
 
         },
-        {
+      /*  {
             id:`/repository/${webUrl}/setting/keys`,
             title:`Access_keys`,
-        },
+        },*/
         {
             id:`/repository/${webUrl}/setting/hooks`,
             title:'WebHooks',

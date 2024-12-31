@@ -103,7 +103,6 @@ const RemoteCompile = (props) => {
                     form={form}
                     layout="vertical"
                     autoComplete="off"
-                    initialValues={{'2':2}}
                 >
                     <Form.Item label={'镜像名称'} name={'name'}
                                rules={[{required:true,message:`标题不能为空`}]}

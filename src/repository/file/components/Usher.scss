@@ -3,6 +3,9 @@
         font-weight: var(--tiklab-font-weight-bold);
         padding-bottom: var(--tiklab-padding-item);
     }
+    .usher-nav{
+        padding-bottom:15px;
+    }
     .usher-segment{
         margin-top: var(--tiklab-padding-item);
         .usher-segment-url{
@@ -74,6 +77,11 @@
                     margin-bottom: var(--tiklab-padding-item);
                 }
                 .course-item-name{
+                    font-weight:400;
+                    padding-bottom: var(--tiklab-padding-item);
+                }
+                .course-item-name-desc{
+                    color: #707070;
                     padding-bottom: var(--tiklab-padding-item);
                 }
                 .course-item-content{

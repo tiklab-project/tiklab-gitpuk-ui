@@ -72,38 +72,47 @@ const Usher = props =>{
                             </div>
                         </div>
                         <div className='usher-segment-course'>
-                            <div className='usher-title'>简易的命令入门教程</div>
+                            <div className='usher-title'>首次配置Git</div>
                             <div className='usher-course-item'>
-                                <div className='course-item-name'>Git全局设置：</div>
                                 <div className='course-item-content'>
                                     <div>git config --global user.name  "{getUser().name}"</div>
                                     <div>git config --global user.email  "{getUser().email?getUser().email:' '}"</div>
                                 </div>
                             </div>
-                            <div className='usher-course-item'>
-                                <div className='course-item-name'>创建 git 仓库：</div>
-                                <div className='course-item-content'>
-                                    <div>mkdir {repositoryInfo && repositoryInfo.name}</div>
-                                    <div>cd {repositoryInfo && repositoryInfo.name}</div>
-                                    <div>git init</div>
-                                    <div>touch README.md</div>
-                                    <div>git add .</div>
-                                    <div>git commit -m "first commit"</div>
-                                    <div>git remote add origin {urlPrefix==='SSH'? cloneAddress && cloneAddress.sshaddress :cloneAddress.httpAddress}
+                            <div className=''>
+                                <div className='usher-title'>使用仓库命令</div>
+                                <div className='usher-course-item'>
+                                    <div className='course-item-name'>直接clone仓库</div>
+                                    <div className='course-item-name-desc'>如果只想clone空仓库仓库，只需在您的终端执行下面命令 拉取仓库</div>
+                                    <div className='course-item-content'>
+                                        <div>git clone  {urlPrefix==='SSH'? cloneAddress && cloneAddress.sshaddress :cloneAddress.httpAddress}</div>
                                     </div>
-                                    <div>git push -u origin master</div>
+                                </div>
+                                <div className='usher-course-item'>
+                                    <div className='course-item-name'>推送未被Git跟踪的项目</div>
+                                    <div className='course-item-name-desc'>如果本地存在了项目且还未被git跟踪，即项目中没有.git文件 执行下面命令</div>
+                                    <div className='course-item-content'>
+                                        <div>cd existing-project</div>
+                                        <div>git init</div>
+                                        <div>git add --all</div>
+                                        <div>git commit -m "Initial Commit"</div>
+                                        <div>git remote add origin {urlPrefix==='SSH'? cloneAddress && cloneAddress.sshaddress :cloneAddress.httpAddress}</div>
+                                        <div>git push -u origin "master"</div>
+                                    </div>
+                                </div>
+                                <div className='usher-course-item'>
+                                    <div className='course-item-name'>推送已被git跟踪的项目</div>
+                                    <div className=' course-item-name-desc'>本地仓库存在了.git文件</div>
+                                    <div className='course-item-content'>
+                                        <div> cd existing-project</div>
+                                        <div>git remote set-url origin {urlPrefix==='SSH'? cloneAddress && cloneAddress.sshaddress :cloneAddress.httpAddress}</div>
+                                        <div>git push -u origin "master"</div>
+                                    </div>
                                 </div>
                             </div>
-                            <div className='usher-course-item'>
-                                <div className='course-item-name'>已有仓库?</div>
-                                <div className='course-item-content'>
-                                    <div>cd {repositoryInfo && repositoryInfo.name}</div>
-                                    <div>git add .</div>
-                                    <div>git commit -m "first commit"</div>
-                                    <div>git push -u origin master</div>
-                                </div>
-                            </div>
+
                         </div>
+
                     </div>
                 </div>
             </Col>

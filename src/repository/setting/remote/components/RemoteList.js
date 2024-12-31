@@ -9,13 +9,20 @@ import React,{useState,useEffect} from 'react';
 import './Remote.scss';
 import BreadcrumbContent from "../../../../common/breadcrumb/Breadcrumb";
 import Btn from "../../../../common/btn/Btn";
-import {Dropdown, Space, Switch, Table, Tooltip, message, Col} from "antd";
+import {Dropdown, Space, Switch, Table, Tooltip, message, Col, Menu, Modal} from "antd";
+const { confirm } = Modal;
 import EmptyText from "../../../../common/emptyText/EmptyText";
 import remoteStore from "../store/RemoteStore"
-import {DeleteOutlined, EditOutlined, EllipsisOutlined, LoadingOutlined, PlayCircleOutlined} from "@ant-design/icons";
+import {
+    DeleteOutlined,
+    EditOutlined,
+    EllipsisOutlined,
+    ExclamationCircleOutlined,
+    LoadingOutlined,
+    PlayCircleOutlined
+} from "@ant-design/icons";
 import RemoteCompile from "./RemoteCompile";
 import {inject, observer} from "mobx-react";
-import DeleteExec from "../../../../common/delete/DeleteExec";
 const RemoteList = (props) => {
     const {match,repositoryStore}=props
 
@@ -48,18 +55,6 @@ const RemoteList = (props) => {
             width:'50%',
             ellipsis:true,
         },
-     /*   {
-            title: '开启定时',
-            dataIndex: 'timedState',
-            key: 'timedState',
-            width:'20%',
-            ellipsis:true,
-            render: (text, record) => (
-                <Space size="middle">
-                    <Switch checkedChildren="开启" unCheckedChildren="关闭" checked={text===0?false:true}  onChange={(r)=>changeTimeState(record)} />
-                </Space>
-            )
-        },*/
         {
             title: '操作',
             dataIndex: 'action',
@@ -70,12 +65,6 @@ const RemoteList = (props) => {
                 const stateInfo = execState.filter(a=>a.id===record.id)
                 return(
                     <Space>
-                        <Tooltip title='编辑'>
-                            <EditOutlined onClick={()=>updateRemote(record)} />
-                        </Tooltip>
-                      {/*  <Tooltip title='删除'>
-                            <DeleteOutlined  onClick={()=>deleteRemoteInfo(record.id)} className='remote-icon'/>
-                        </Tooltip>*/}
                         {
                             (stateInfo&&stateInfo[0]?.state)?
                                 <LoadingOutlined  className='remote-icon'/> :
@@ -83,13 +72,51 @@ const RemoteList = (props) => {
                                     <PlayCircleOutlined className='remote-icon' onClick={()=>sendOneRemote(record)}/>
                                 </Tooltip>
                         }
-                        <DeleteExec value={record} deleteData={deleteRemoteInfo} title={"确认删除"}/>
+
+                        <Dropdown    overlay={()=>execPullDown(record)}
+                                     placement="bottomRight"
+                                     trigger={['click']}
+                            /* getPopupContainer={e => e.parentElement}*/
+                        >
+                            <div style={{cursor:"pointer"}}>
+                                <EllipsisOutlined style={{fontSize:20}}/>
+                            </div>
+                        </Dropdown>
                     </Space>
                 )
             }
         },
     ]
 
+
+    const execPullDown=(value) => (
+        <Menu>
+            <Menu.Item  style={{width:100}} onClick={()=>updateRemote(value)} >
+                编辑
+            </Menu.Item>
+            <Menu.Item onClick={()=>DeletePop(value)}>
+                删除
+            </Menu.Item>
+        </Menu>
+    )
+
+//删除弹窗
+    const  DeletePop = (value) =>{
+        confirm({
+            title: "确认删除",
+            icon: <ExclamationCircleOutlined />,
+            content: '',
+            okText: '确认',
+            okType: 'danger',
+            cancelText: '取消',
+
+            onOk() {
+                deleteRemoteInfo(value.id)
+            },
+            onCancel() {
+            },
+        });
+    }
 
     //编辑
     const updateRemote = (value) => {
