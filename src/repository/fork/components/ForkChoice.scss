@@ -1,0 +1,44 @@
+.fork-choice{
+  .nav-tabs{
+    display: flex;
+    padding: 10px;
+    align-items: center;
+    .nav-tabs-name-style{
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      flex: 1;
+
+      .nav-tabs-name{
+        font-size: 16px;
+        font-weight: 400;
+      }
+
+      .nav-tabs-name-desc{
+        color: #999999;
+      }
+    }
+    .nav-tabs-desc{
+      color: #ff4d4f;
+    }
+
+
+  }
+  .can-nav-tabs:hover{
+    background-color: #F4F4F4;
+    cursor: pointer;
+  }
+  .not-nav-tabs:hover{
+    background-color: #F4F4F4;
+    cursor:not-allowed;
+  }
+
+  .choice-nav-tabs{
+    background-color: #F4F4F4;
+  }
+  .fork-choice-not{
+    padding: 20px 0;
+    cursor:not-allowed;
+    color: #707070;
+  }
+}

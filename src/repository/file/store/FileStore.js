@@ -36,7 +36,7 @@ export class FileStore {
         } else {
             this.codeTreeData = []
         }
-        data.code===50001 && message.info(data.msg,0.5)
+        data.code===56100 && message.info(data.msg,0.5)
         return data
     }
 
@@ -194,8 +194,6 @@ export class FileStore {
         }
         return data
     }
-
-
 }
 const fileStore=new FileStore()
 export default fileStore

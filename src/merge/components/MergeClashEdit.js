@@ -50,7 +50,6 @@ const MergeClashEdit = (props) => {
                 getConflictingFile(res.data)
             }
         })
-        debugger
     },[])
 
     //查询冲突文件

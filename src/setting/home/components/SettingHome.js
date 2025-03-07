@@ -88,7 +88,7 @@ const SettingHome = props => {
         if(!authConfig.authType){
             const isAuth = li.some(item => item===path)
             if(isAuth){
-                return applyJump(`${authConfig.authServiceUrl}/#/user/${path}`)
+                return applyJump(`${authConfig.authServiceUrl}/#/setting/${path}`)
             }
         }
         props.history.push(`/setting/${path}`)

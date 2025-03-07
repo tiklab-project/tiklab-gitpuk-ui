@@ -39,6 +39,9 @@ const EditFile=AsyncComponent(()=>import('./repository/file/components/EditFile'
 const Branch=AsyncComponent(()=>import('./repository/branch/components/Branch'))
 const Tag=AsyncComponent(()=>import('./repository/tag/components/Tag'))
 
+const ForkWait=AsyncComponent(()=>import('./repository/fork/components/ForkWait'))
+const ForkHistoryList=AsyncComponent(()=>import('./repository/fork/components/ForkHistoryList'))
+
 const Commits=AsyncComponent(()=>import('./repository/commits/components/Commits'))
 const CommitsDetails=AsyncComponent(()=>import('./repository/commits/components/CommitsDetails'))
 const Issue=AsyncComponent(()=>import('./repository/issue/components/Issue'))
@@ -257,6 +260,11 @@ const routers = [
                         component:File,
                     },
                     {
+                        path:'/repository/:namespace/:name/forkWait',
+                        component:ForkWait,
+                    },
+
+                    {
                         path:'/repository/:namespace/:name/blob/:branch/*',
                         exact:false,
                         component:Blob,
@@ -376,6 +384,10 @@ const routers = [
                             {
                                 path:'/repository/:namespace/:name/setting/remote',
                                 component:RemoteList
+                            },
+                            {
+                                path:'/repository/:namespace/:name/setting/forkHistory',
+                                component:ForkHistoryList,
                             },
 
                             {

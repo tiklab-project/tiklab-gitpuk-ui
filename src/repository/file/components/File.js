@@ -3,7 +3,7 @@ import {Input, Dropdown, Col, Tooltip} from "antd";
 import {
     SearchOutlined,
     PlusOutlined,
-    FolderOutlined
+    FolderOutlined, ForkOutlined
 } from "@ant-design/icons";
 import {inject,observer} from "mobx-react";
 import BreadcrumbContent from "../../../common/breadcrumb/Breadcrumb";
@@ -20,6 +20,8 @@ import tagStore from "../../tag/store/TagStore";
 import CreateFolderPop from "./CreateFolderPop";
 import CreateFilePop from "./CreateFilePop";
 import FileSearchDrop from "./FileSearchDrop";
+import Btn from "../../../common/btn/Btn";
+import ForkChoicePop from "../../fork/components/ForkChoicePop";
 
 const File = props =>{
 
@@ -54,6 +56,8 @@ const File = props =>{
     const [searFileList,setSearchFileList]=useState([])
     //下拉框状态
     const [dropDownVisible,setDropDownVisible] = useState(false)
+
+    const [forkVisible,setForkVisible]=useState(false)
 
     // 代码类型branch、tag、commit
     const [refCodeType,setRefCodeType]=useState('branch')
@@ -172,6 +176,11 @@ const File = props =>{
         // props.history.push(`/ide/${repositoryInfo.name}`)
     }
 
+    //打开创建文件夹的弹窗
+    const chanVisible = (value) => {
+        setTriggerVisible(value)
+    }
+
 
     //打开创建文件夹的弹窗
     const openFolderPop = () => {
@@ -182,6 +191,7 @@ const File = props =>{
     //打开创建文件的弹窗
     const openFilePop = () => {
         setFileVisible(true)
+        setTriggerVisible(false)
     }
 
 
@@ -229,6 +239,11 @@ const File = props =>{
         {/*    <div className="file-add-item">上传文件</div>*/}
         </div>
     )
+
+    //打开fork弹窗
+    const openFork = () => {
+      setForkVisible(true)
+    }
 
     if(!codeTreeData){
         return  <Usher
@@ -323,8 +338,8 @@ const File = props =>{
                                                   trigger={["click"]}
                                                   placement={"bottomCenter"}
                                                   getPopupContainer={e => e.parentElement}
-                                                 /* visible={triggerVisible}
-                                                  onOpenChange={visible=>test(!visible)}*/
+                                                  visible={triggerVisible}
+                                                  onVisibleChange={visible=>chanVisible(visible)}
                                         >
                                             <PlusOutlined/>
                                         </Dropdown>:
@@ -332,6 +347,9 @@ const File = props =>{
                                             <PlusOutlined className='not-disabled'/>
                                         </Tooltip>
                                 }
+                            </div>
+                            <div className="code-desc">
+                                <Btn  title={"Fork"} onClick={openFork}/>
                             </div>
                             {/*<div className="code-desc">
                                 <Btn title={"WEB IDE"} onClick={()=>goWebIde()}/>
@@ -381,6 +399,11 @@ const File = props =>{
                              branch={refCode}
                              webUrl={webUrl}
                              folderPath={`${repositoryInfo.name}${fileAddress[1]?fileAddress[1]:''}`}
+            />
+            <ForkChoicePop {...props} visible={forkVisible}
+                           setVisible={setForkVisible}
+                           repository={repositoryInfo}
+
             />
         </div>
     )

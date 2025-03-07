@@ -1,20 +1,16 @@
 
 import React,{useState,useEffect} from "react";
-import {Badge, Dropdown, Tooltip} from "antd";
 import {AppstoreOutlined, BellOutlined, QuestionCircleOutlined, SettingOutlined} from "@ant-design/icons";
 import "./TopNav.scss"
-import {AppLink,HelpLink,AvatarLink} from "tiklab-licence-ui";
-import {AppLink as CloudAppLink,HelpLink as CloudHelpLink,AvatarLink as CloudAvatarLink} from "tiklab-licence-cloud-ui";
 import {getUser} from "tiklab-core-ui";
 import PortalMessage from "../../home/components/PortalMessage";
 import {inject,observer} from "mobx-react";
 
 const TopNav = (props) => {
-    const {repositoryStore,collapsed,setTheme}=props
+    const {repositoryStore,collapsed,setTheme,AppLink,HelpLink,AvatarLink}=props
     const [unread,setUnread] = useState()
     const [visible,setVisible] = useState(false)
     const {setNavLevel}=repositoryStore
-
 
 
     //切换主题
@@ -55,101 +51,59 @@ const TopNav = (props) => {
                 }
             </div>
             <div className='tab-link'>
-                {version!=='cloud'?<HelpLink  bgroup={'gitpuk'}
-                                              iconComponent={
-                                                  collapsed ?
-                                                      <div className='close-top-tab' data-title-right='帮助'>
-                                                          <QuestionCircleOutlined className=' close-iconfont'/>
-                                                      </div>
-                                                      :
-                                                      <div className='open-top-tab'>
-                                                          <div className="open-iconfont"><QuestionCircleOutlined/></div>
-                                                          <div>帮助与支持</div>
-                                                      </div>
-                                              }
-                />:<CloudHelpLink
-                    bgroup={'gitpuk'}
-                    iconComponent={
-                        collapsed ?
-                            <div className='close-top-tab' data-title-right='帮助'>
-                                <QuestionCircleOutlined className=' close-iconfont'/>
-                            </div>
-                            :
-                            <div className='open-top-tab'>
-                                <div className="open-iconfont"><QuestionCircleOutlined/></div>
-                                <div>帮助与支持</div>
-                            </div>
-                    }
-
-                />}
+                <HelpLink  bgroup={'gitpuk'}
+                           iconComponent={
+                               collapsed ?
+                                   <div className='close-top-tab' data-title-right='帮助'>
+                                       <QuestionCircleOutlined className=' close-iconfont'/>
+                                   </div>
+                                   :
+                                   <div className='open-top-tab'>
+                                       <div className="open-iconfont"><QuestionCircleOutlined/></div>
+                                       <div>帮助与支持</div>
+                                   </div>
+                           }
+                />
             </div>
             <div className='tab-link'>
-                {version!=='cloud'?<AppLink {...props}
-                                            translateX={collapsed ? 75 : 200}
-                                            iconComponent={collapsed?
-                                                <div className="close-top-tab" data-title-right='应用'>
-                                                    <AppstoreOutlined className='close-iconfont'/>
-                                                </div>:
-                                                <div className='open-top-tab'>
-                                                    <div className="open-iconfont "><AppstoreOutlined/></div>
-                                                    <div>应用</div>
-                                                </div>
-                                            }
-                                          />
-                    :<CloudAppLink
-                        {...props}
-                        translateX={collapsed ? 75 : 200}
-                        iconComponent={collapsed?
-                            <div className="close-top-tab" data-title-right='应用'>
-                                <AppstoreOutlined className='close-iconfont'/>
-                            </div>:
-                            <div className='open-top-tab'>
-                                <div className="open-iconfont "><AppstoreOutlined/></div>
-                                <div>应用</div>
-                            </div>
-                        }
-                    />}
+                <AppLink {...props}
+                         translateX={collapsed ? 75 : 200}
+                         iconComponent={collapsed?
+                             <div className="close-top-tab" data-title-right='应用'>
+                                 <AppstoreOutlined className='close-iconfont'/>
+                             </div>:
+                             <div className='open-top-tab'>
+                                 <div className="open-iconfont "><AppstoreOutlined/></div>
+                                 <div>应用</div>
+                             </div>
+                         }
+                />
             </div>
             <div className='tab-link'>
-                {version!=='cloud'?
-                    <AvatarLink {...props}
-                                changeTheme={changeTheme}
-                                iconComponent={
-                                    collapsed ?
-                                        <div className='close-top-tab' data-title-right='个人中心'>
-                                            <div className="head-portrait">{getUser()?.nickname.slice(0, 1).toUpperCase()}</div>
-                                        </div>
-                                        :
-                                        <div className='open-top-tab'>
-                                            <div className='open-iconfont'>
-                                                <div className="head-open-portrait">{getUser()?.nickname.slice(0, 1).toUpperCase()}</div>
-                                            </div>
-                                            <div>{getUser()?.nickname}</div>
-                                        </div>}
-                    />:<CloudAvatarLink {...props}
-                                        changeTheme={changeTheme}
-                                        iconComponent={
-                                            collapsed ?
-                                                <div className='close-top-tab' data-title-right='个人中心'>
-                                                    {
-                                                        getUser()?.avatar?
-                                                            <img  src={getUser()?.avatar} className="head-portrait"/>:
-                                                            <div className="head-portrait">{getUser()?.nickname.slice(0, 1).toUpperCase()}</div>
-                                                    }
-                                                </div>
-                                                :
-                                                <div className='open-top-tab'>
-                                                    <div className='open-iconfont'>
-                                                        {
-                                                            getUser()?.avatar?
-                                                                <img  src={getUser()?.avatar} className="head-open-portrait"/>:
-                                                                <div className="head-open-portrait">{getUser()?.nickname.slice(0, 1).toUpperCase()}</div>
-                                                        }
-                                                    </div>
-                                                    <div>{getUser()?.nickname}</div>
-                                                </div>
+                <AvatarLink {...props}
+                            changeTheme={changeTheme}
+                            iconComponent={
+                                collapsed ?
+                                    <div className='close-top-tab' data-title-right='个人中心'>
+                                        {
+                                            getUser()?.avatar?
+                                                <img  src={getUser()?.avatar} className="head-portrait"/>:
+                                                <div className="head-portrait">{getUser()?.nickname.slice(0, 1).toUpperCase()}</div>
                                         }
-                    />}
+                                    </div>
+                                    :
+                                    <div className='open-top-tab'>
+                                        <div className='open-iconfont'>
+                                            {
+                                                getUser()?.avatar?
+                                                    <img  src={getUser()?.avatar} className="head-open-portrait"/>:
+                                                    <div className="head-open-portrait">{getUser()?.nickname.slice(0, 1).toUpperCase()}</div>
+                                            }
+                                        </div>
+                                        <div>{getUser()?.nickname}</div>
+                                    </div>
+                            }
+                />
             </div>
 
             <PortalMessage

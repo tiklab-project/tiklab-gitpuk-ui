@@ -87,11 +87,11 @@ const RepositoryBasicInfo = props =>{
                 setPowerType(rules)
                 props.history.push(`/repository/${repositoryPath}/setting/info`)
             }
-           if (res.code===9000){
+           if (res.code===56111){
                setErrorMsg(res.msg)
                form.validateFields(['name'])
            }
-           if (res.code===9001){
+           if (res.code===56112){
                setErrorMsg(res.msg)
                form.validateFields(['address'])
            }

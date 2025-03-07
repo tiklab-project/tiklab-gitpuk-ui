@@ -44,7 +44,7 @@ const Repository = props => {
                name: repositoryName,
                findType:repositoryType,
                sort:sort,
-                rules:rules
+               rules:rules
            }).then(res=>{
            setIsLoading(false)
                if (res.code===0){

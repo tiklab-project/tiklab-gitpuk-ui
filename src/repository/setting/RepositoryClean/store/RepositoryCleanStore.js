@@ -30,7 +30,6 @@ export class RepositoryCleanStore {
                 this.largeFileList=this.largeFileList.sort((a, b) => a.fileSize - b.fileSize);
             }
             if (value==='desc'){
-                debugger
                 this.largeFileList=this.largeFileList.sort((a, b) => b.fileSize - a.fileSize);
             }
         }

@@ -11,6 +11,7 @@ import { PortalDropdown } from "../../common/dropdown/DropdownMenu";
 import PortalMessage from "./PortalMessage";
 import "./Portal.scss";
 import FirstNav from "../../common/navigation/FirstNav"
+import {HelpLink} from "tiklab-licence-ui";
 /**
  * header 头部
  * @param props
@@ -19,7 +20,7 @@ import FirstNav from "../../common/navigation/FirstNav"
  */
 const  Portal = props =>{
 
-    const {location,route,systemRoleStore,repositoryStore} = props
+    const {location,route,systemRoleStore,repositoryStore,AppLink,HelpLink,AvatarLink} = props
 
     const {getSystemPermissions} = systemRoleStore
     const {navLevel,setNavLevel}=repositoryStore
@@ -74,7 +75,12 @@ const  Portal = props =>{
         <Layout className='gittok-portal'>
             {
                 navLevel===1&&
-                <FirstNav {...props}/>
+                <FirstNav {...props}
+                          AppLink={AppLink}
+                          HelpLink={HelpLink}
+                          AvatarLink={AvatarLink}
+
+                />
             }
             <Layout>
                 <div className='portals-content'>

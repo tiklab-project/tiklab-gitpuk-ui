@@ -26,11 +26,25 @@ const Modals = props => {
     window.onresize=() =>{
         setHeight(autoHeight())
     }
+
+    const style = {
+        maxWidth: 'calc(100vw - 120px)',
+        maxHeight: 'calc(100vh - 120px)',
+        marginRight: 'auto',
+        marginLeft: 'auto',
+        position: 'absolute',
+        top: 60,
+        right: 0,
+        left: 0,
+        height:'100%',
+        display:"flex",
+        flexDirection: 'column'
+    }
     return (
         <Modal
-            style={{height:height,top:70}}
+            style={style}
             bodyStyle={{padding:0}}
-            className="xcode"
+            wrapClassName={'tiklab_modal'}
             {...res}
 
         >

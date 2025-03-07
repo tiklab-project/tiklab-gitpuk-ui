@@ -18,7 +18,7 @@ import NavigationImage from "../../common/image/NavigationImage";
 
 const RepositoryAside= props=>{
 
-    const {match,repositoryStore,systemRoleStore}=props
+    const {match,repositoryStore,systemRoleStore,location}=props
 
     const {findRepositoryPage,repositoryInfo,setRepositoryInfo,findRepositoryByAddress,findRepositoryAuth,setNavLevel} = repositoryStore
 
@@ -130,7 +130,7 @@ const RepositoryAside= props=>{
                 setIsLoading(false)
             }else {
                 //仓库不存
-                if (res.code===9000) {
+                if (res.code===56404&&!location.pathname.endsWith("/forkWait")) {
                     props.history.push(`/${namespace + "/" + name}/404`)
                 }
             }

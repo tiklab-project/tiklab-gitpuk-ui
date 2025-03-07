@@ -11,10 +11,10 @@ import {AppLink,HelpLink,AvatarLink} from "tiklab-licence-ui";
 const Home = props => {
     return <Portal
             {...props}
-            AppLink={<AppLink/>}
-            HelpLink={<HelpLink/>}
-            AvatarLink={<AvatarLink {...props}/>}
-            />
+            AppLink={AppLink}
+            HelpLink={HelpLink}
+            AvatarLink={AvatarLink}
+    />
 }
 
 

@@ -1,0 +1,47 @@
+.fork-history{
+  .fork-history-filter {
+    display: flex;
+    align-items: center;
+    /*justify-content: space-between;*/
+
+    padding: 20px 0 15px 10px;
+    .input-icon {
+      font-size: var(--tiklab-input-icon-15);
+    }
+
+    .fork-history-select-right {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+  }
+
+  .fork-repository-name{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+    .fork-history-text-name{
+      cursor: pointer;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      /*   width: 300px;*/
+      font-weight: var(--tiklab-font-weight-bold);
+      &:hover{
+        color: #1890ff;
+        text-decoration: underline;
+      }
+    }
+
+  }
+  .fork-history-icon-user{
+    display: flex;
+    align-items: center;
+  }
+  .fork-history-icon-auth{
+    display: flex;
+    align-items:center;
+    gap: 5px;
+  }
+}

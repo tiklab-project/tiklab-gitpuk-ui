@@ -26,7 +26,7 @@ import TopNav from "./TopNav";
 import NavigationImage from "../image/NavigationImage";
 const {Sider} = Layout
 const FirstNav = (props) => {
-    const {location}=props
+    const {location,AppLink,HelpLink,AvatarLink}=props
     const {i18n,t} = useTranslation()
 
     const [theme, setTheme] = useState(localStorage.getItem("theme") ? localStorage.getItem("theme") : "gray");
@@ -179,7 +179,12 @@ const FirstNav = (props) => {
                     })}
                 </div>
 
-                <TopNav {...props} showType={"all"} collapsed={collapsed} setTheme={setTheme} />
+                <TopNav {...props} showType={"all"} collapsed={collapsed}
+                        setTheme={setTheme}
+                        AppLink={AppLink}
+                        HelpLink={HelpLink}
+                        AvatarLink={AvatarLink}
+                />
                 <div className="menu-box-right-border" >
                     <div className={"menu-box-isexpanded"} onClick={toggleCollapsed}>
                         {

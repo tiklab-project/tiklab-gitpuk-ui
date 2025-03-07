@@ -48,6 +48,10 @@ const RepositorySetting = props =>{
             title:'大文件存储',
         },
         {
+            id:`/repository/${webUrl}/setting/forkHistory`,
+            title:'Fork历史',
+        },
+        {
             id:`/repository/${webUrl}/setting/clean`,
             title:'仓库清理',
             purviewCode: "rpy_clean",

@@ -254,12 +254,11 @@ const RepositoryAdd = props =>{
                         Validation('路径','appoint'),
                         ({ getFieldValue }) => ({
                             validator(rule,value) {
-                                const address=group?group.name:getUser().name+"/"+value
+                                const address=group?group.name+"/"+value:getUser().name+"/"+value
                                 let nameArray = []
                                 if(repositoryList){
                                     nameArray = repositoryList && repositoryList.map(item=>item.address)
                                 }
-
                                 if (nameArray.includes(address)) {
                                     return Promise.reject('路径已经存在')
                                 }

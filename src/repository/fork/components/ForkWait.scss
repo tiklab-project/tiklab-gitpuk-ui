@@ -1,0 +1,29 @@
+.fork-wait{
+  justify-items: center;
+  margin-top: 70px;
+    .fork-wait-data-style{
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      .fork-wait-data-title{
+        font-size: 20px;
+        font-weight: var(--tiklab-font-weight-bold);
+      }
+    }
+    .fork-wait-data-text{
+      padding-top: 20px;
+    }
+}
+
+.fork-wait-title{
+  display: flex;
+  font-size: 16px;
+  font-weight: var(--tiklab-font-weight-bold);
+  gap: 7px;
+}
+.fork-wait-nav{
+  display: flex;
+  padding-top: 10px;
+  gap: 10px;
+
+}
