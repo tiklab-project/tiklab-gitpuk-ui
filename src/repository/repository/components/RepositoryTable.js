@@ -167,16 +167,21 @@ const RepositoryTable = props => {
                             <div className='rpy-name-text'>
                                 <div className='name-text-title'>
                                     <div>
-                                        <div className='name-text-name'>{ record?.address.substring(0, record?.address.indexOf("/",1))+"/"+record.name}</div>
+                                        <div className='name-text-name'>{ record?.address}</div>
                                     </div>
                                     <div className='name-text-type'>{ "示例仓库"}</div>
                                 </div>
+                                <div className='rpy-text-group'>{record?.name}</div>
                             </div>
                                 :
-                            <div className='official-text-name '>
-                                { record?.address.substring(0, record?.address.indexOf("/",1))+"/"+record.name}
+                                <div className='official-text'>
+                                    <div className='official-text-name '>
+                                        { record?.address}
 
-                            </div>
+                                    </div>
+                                    <div className='official-text-group'>{record.name}</div>
+                                </div>
+
                         }
                     </div>
 

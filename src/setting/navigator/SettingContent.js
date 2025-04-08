@@ -11,7 +11,7 @@ import member from "../../assets/images/img/member.png";
 
 const SettingContent= props =>  {
 
-    const {route,isDepartment,applicationRouters,systemRoleStore,templateRouter,setNavLevel} = props
+    const {route,isDepartment,applicationRouters,systemRoleStore,templateRouter,setNavLevel,openDrawer} = props
     const {systemPermissions}=systemRoleStore
 
     const {t} = useTranslation()
@@ -58,21 +58,7 @@ const SettingContent= props =>  {
         }
     }
 
-    //跳转
-    const skip = data =>{
-        const value=data.id;
-        if (value.endsWith("orga")||value.endsWith("user")||value.endsWith("userGroup")||value.endsWith("dir")){
-            //统一登陆
-            if (!authConfig.authType) {
-                const a =value.substring(value.lastIndexOf("/"));
-                window.open(`${authConfig.authUrl}/#/setting${a}`)
-            }else {
-                props.history.push(data.id)
-            }
-        }else {
-            props.history.push(data.id)
-        }
-    }
+
 
     const isExpandedTree = key => {
         return expandedTree.some(item => item ===key)
@@ -97,18 +83,25 @@ const SettingContent= props =>  {
             <PrivilegeButton key={data.id} code={data.purviewCode} {...props}>
                 <li style={{cursor:'pointer',paddingLeft:`${deep===0?20:40}`}}
                     className={`system-aside-li system-aside-second ${data.id=== selectKey ? 'system-aside-select' :null}`}
-                    onClick={()=>skip(data)}
+                    onClick={()=>childSkip(data)}
                     key={data.id}
                 >
-                    <div className='sys-content-tab-style'>
+                    <div className=' nav-style'>
                         <span className='sys-content-icon'>{data.icon}</span>
                         <span className='nav-style-title'>{t(data.title)}</span>
+                        {
+                            getVersionInfo().expired&&data.character&&
+                            <span>
+                             <img  src={member}  style={{width:18,height:18}}/>
+                          </span>
+                        }
                         {!authConfig?.authType&&(data.id.endsWith("orga")||data.id.endsWith("user")||
                                 data.id.endsWith("userGroup")||data.id.endsWith("dir"))&&
                             <span>
                                 <ExportOutlined  />
                             </span>
                         }
+
                         </div>
                 </li>
             </PrivilegeButton>
@@ -125,7 +118,7 @@ const SettingContent= props =>  {
                     <span className='sys-content-tab-style'>
                         <div className='sys-content-icon'>{item.icon}</div>
                         <span className='system-aside-title'>{t(item.title)}</span>
-                        {item.id==="3"&&(getVersionInfo().expired&&getVersionInfo().release!==3)&&
+                        {item.id==="3"&&(getVersionInfo().expired)&&
                             <img  src={member}  style={{width:18,height:18}}/>
                         }
                     </span>
@@ -166,6 +159,36 @@ const SettingContent= props =>  {
     //跳转设置首页
     const goSettingHome = () => {
         props.history.push(`/setting/home`)
+    }
+
+    //跳转
+    const childSkip = data =>{
+        const value=data.id;
+        //未订阅
+        if (getVersionInfo().expired){
+            //自定义log
+            if (value==='/setting/customLogo'){
+                openDrawer("logo")
+                return
+            }
+            //ip黑白名单
+            if (value==='/setting/ipRoster'){
+                openDrawer("ip")
+                return
+            }
+        }
+
+        if (value.endsWith("orga")||value.endsWith("user")||value.endsWith("userGroup")||value.endsWith("dir")){
+            //统一登陆
+            if (!authConfig.authType) {
+                const a =value.substring(value.lastIndexOf("/"));
+                window.open(`${authConfig.authUrl}/#/setting${a}`)
+            }else {
+                props.history.push(data.id)
+            }
+        }else {
+            props.history.push(data.id)
+        }
     }
 
     return (

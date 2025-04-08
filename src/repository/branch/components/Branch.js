@@ -1,12 +1,6 @@
 import React,{useState,useEffect} from 'react';
-import {
-    PlusOutlined,
-    SearchOutlined,
-    BranchesOutlined,
-    EllipsisOutlined,
-    ExclamationCircleOutlined, PullRequestOutlined
-} from '@ant-design/icons';
-import {Input, Tooltip, Popconfirm, Col, Dropdown, Menu, Modal} from 'antd';
+import {BranchesOutlined, EllipsisOutlined, ExclamationCircleOutlined, PullRequestOutlined} from '@ant-design/icons';
+import {Tooltip, Col, Dropdown, Menu, Modal} from 'antd';
 import {inject,observer} from 'mobx-react';
 import BreadcrumbContent from '../../../common/breadcrumb/Breadcrumb';
 import Btn from '../../../common/btn/Btn';
@@ -18,6 +12,7 @@ import branchStore from "../store/BranchStore"
 import {getUser} from "tiklab-core-ui";
 import {PrivilegeProjectButton} from 'tiklab-privilege-ui';
 import SearchInput from "../../../common/input/SearchInput";
+import Listicon from "../../../common/list/Listicon";
 const { confirm } = Modal;
 /**
  * 分支页面
@@ -105,7 +100,7 @@ const Branch = props =>{
    //下载当前分支仓库
    const downloadRepo = (data) => {
        const tenantId=getUser().tenant
-       window.location.href=`${node_env? base_url:window.location.origin}/repositoryFile/downLoadBareRepo${tenantId?"/"+getUser().tenant:""}?branch=${data.branchName}&type=zip&rpyId=${repositoryInfo?.rpyId}&rpyName=${repositoryInfo.name}`
+       window.location.href=`${node_env? base_url:window.location.origin}/repositoryFile/downLoadBareRepo${tenantId?"/"+getUser().tenant:""}?branch=${data.branchName}&type=zip&refCodeType=branch&rpyId=${repositoryInfo?.rpyId}&rpyName=${repositoryInfo.name}`
    }
 
 
@@ -175,9 +170,12 @@ const Branch = props =>{
     const renderData = item => {
         return(
             <div className='branch-tables-item' key={item.branchName}>
-                <div className='branch-tables-icon'>
-                    <BranchesOutlined/>
-                </div>
+
+                <Listicon text={item.branchName}
+                          colors={2}
+                          type={"common"}
+                />
+                {/*<Profile userInfo={item.branchName}/>*/}
                 <div className='branch-tables-name'>
                     <div className='name-text-title'>
                         <span className='name-text-name' onClick={()=>goCode(item)}>

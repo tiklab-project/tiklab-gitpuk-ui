@@ -90,7 +90,7 @@ const Tag = props =>{
     //下载当前标签仓库
     const downloadRepo = (data) => {
         const tenantId=getUser().tenant
-        window.location.href=`${node_env? base_url:window.location.origin}/repositoryFile/downLoadBareRepo${tenantId?"/"+getUser().tenant:""}?tag=${data.tagName}&type=zip&rpyId=${repositoryInfo?.rpyId}&rpyName=${repositoryInfo.name}`
+        window.location.href=`${node_env? base_url:window.location.origin}/repositoryFile/downLoadBareRepo${tenantId?"/"+getUser().tenant:""}?tag=${data.tagName}&refCodeType=tag&type=zip&rpyId=${repositoryInfo?.rpyId}&rpyName=${repositoryInfo.name}`
     }
 
     //名字搜索标签

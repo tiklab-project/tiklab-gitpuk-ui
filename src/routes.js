@@ -2,7 +2,7 @@ import React from 'react';
 import {Redirect} from 'react-router-dom';
 import AsyncComponent from './common/lazy/SyncComponent';
 import NotFoundContent from "./setting/not/NotFoundContent";
-import NoAccessContent from "./setting/not/NoAccessContent";
+
 
 const Home=AsyncComponent(()=>import('./home/components/Home'))
 
@@ -45,7 +45,6 @@ const ForkHistoryList=AsyncComponent(()=>import('./repository/fork/components/Fo
 const Commits=AsyncComponent(()=>import('./repository/commits/components/Commits'))
 const CommitsDetails=AsyncComponent(()=>import('./repository/commits/components/CommitsDetails'))
 const Issue=AsyncComponent(()=>import('./repository/issue/components/Issue'))
-const Pipeline=AsyncComponent(()=>import('./repository/pipeline/components/Pipeline'))
 
 const notRepository=AsyncComponent(()=>import('./repository/repository/components/404'))
 const RepositoryToLead=AsyncComponent(()=>import('./repository/tolead/components/RepositoryToLead'))
@@ -62,17 +61,21 @@ const StatisticsNav=AsyncComponent(()=>import('./repository/statistics/component
 const StatisticsCommit=AsyncComponent(()=>import('./repository/statistics/components/StatisticsCommit'))
 const StatisticsCode=AsyncComponent(()=>import('./repository/statistics/components/StatisticsCode'))
 
+//流水线
+const Pipeline=AsyncComponent(()=>import('./repository/pipeline/components/Pipeline'))
+
+
 /*仓库设置*/
 const BranchSetting=AsyncComponent(()=>import('./repository/setting/branch/BranchSetting'))
-const RepositoryUser=AsyncComponent(()=>import("./repository/setting/user/RepositoryUser"))
-const RepositoryRole=AsyncComponent(()=>import('./repository/setting/user/RepositoryRole'))
+const RepositoryUser=AsyncComponent(()=>import("./repository/setting/element/RepositoryUser"))
+const RepositoryRole=AsyncComponent(()=>import('./repository/setting/element/RepositoryRole'))
 const RemoteList=AsyncComponent(()=>import('./repository/setting/remote/components/RemoteList'))
 const RepositoryDetailsSet=AsyncComponent(()=>import('./repository/setting/navigator/RepositorySetting'))
 const RepositoryBasicInfo=AsyncComponent(()=>import('./repository/setting/basicInfo/RepositoryBasicInfo'))
 const PushRule=AsyncComponent(()=>import('./repository/setting/pushRule/components/PushRule'))
 const AccessKeys=AsyncComponent(()=>import('./repository/setting/accessKeys/components/AccessKeys'))
 const WebHooks=AsyncComponent(()=>import('./repository/setting/webHooks/components/Hooks'))
-const LfsList=AsyncComponent(()=>import('./repository/setting/lfs/components/LfsList'))
+//const LfsList=AsyncComponent(()=>import('./repository/setting/lfs/components/LfsList'))
 const RepositoryClean=AsyncComponent(()=>import('./repository/setting/RepositoryClean/components/RepositoryClean'))
 
 
@@ -134,20 +137,26 @@ const TodoType=AsyncComponent(()=>import("./setting/todotask/TodoType"))
 const Version=AsyncComponent(()=>import('./setting/licence/Version'))
 const AuthContent=AsyncComponent(()=>import('./setting/licence/AuthContent'))
 
-// user
-const User=AsyncComponent(()=>import("./setting/user/User"))
-const Directory=AsyncComponent(()=>import("./setting/user/Directory"))
-const Orga=AsyncComponent(()=>import("./setting/user/Orga"))
-const UserGroup=AsyncComponent(()=>import("./setting/user/Group"))
-const UserGroupTrue=AsyncComponent(()=>import("./setting/user/Groupture"))
-const sysFeature=AsyncComponent(()=>import('./setting/user/SystemFeature'))
-const sysRole=AsyncComponent(()=>import('./setting/user/SystemRole'))
-const sysRoleTrue=AsyncComponent(()=>import('./setting/user/SystemRoleTrue'))
-const ProjectRole=AsyncComponent(()=>import('./setting/user/ProjectRole'))
-const ProjectFeature=AsyncComponent(()=>import('./setting/user/ProjectFeature'))
+// element
+const User=AsyncComponent(()=>import("./setting/element/User"))
+const Directory=AsyncComponent(()=>import("./setting/element/Directory"))
+const Orga=AsyncComponent(()=>import("./setting/element/Orga"))
+const UserGroup=AsyncComponent(()=>import("./setting/element/Group"))
+const UserGroupTrue=AsyncComponent(()=>import("./setting/element/Groupture"))
+const sysFeature=AsyncComponent(()=>import('./setting/element/SystemFeature'))
+const sysRole=AsyncComponent(()=>import('./setting/element/SystemRole'))
+const sysRoleTrue=AsyncComponent(()=>import('./setting/element/SystemRoleTrue'))
+const ProjectRole=AsyncComponent(()=>import('./setting/element/ProjectRole'))
+const ProjectFeature=AsyncComponent(()=>import('./setting/element/ProjectFeature'))
 
 //资源监控
 const Resources =AsyncComponent(()=>import('./setting/resources/components/Resources'))
+
+//集成与开放
+const OpenApi =AsyncComponent(()=>import('./setting/integration/openApi/OpenApi'))
+const OpenApiDoc =AsyncComponent(()=>import('./setting/integration/openApi/OpenApiDoc'))
+const SystemInt =AsyncComponent(()=>import('./setting/integration/systemInt/components/SystemInt'))
+
 const routers = [
     {
         path:'/login',
@@ -157,15 +166,26 @@ const routers = [
         path:'/logout',
         component:Logout,
     },
+
     {
         path:'/no-auth',
         exact:true,
         component:ExcludeProductUser,
     },
     {
+        exact: true,
+        path: '/noaccess',
+        render: props => <NotFoundContent {...props}/>
+    },
+    {
         path: '/loginRpw',
         component: LoginRpwContent,
         exact:true,
+    },
+    {
+        path: "/openApi",
+        component: OpenApiDoc,
+        key:'OpenApiDocPage',
     },
     {
         path:"/500",
@@ -361,10 +381,6 @@ const routers = [
                                 component:WebHooks
                             },
                             {
-                                path:'/repository/:namespace/:name/setting/lfs',
-                                component:LfsList
-                            },
-                            {
                                 path:'/repository/:namespace/:name/setting/clean',
                                 component:RepositoryClean
                             },
@@ -390,11 +406,11 @@ const routers = [
                                 component:ForkHistoryList,
                             },
 
-                            {
+                          /*  {
                                 exact: true,
                                 path: '/noaccess',
                                 render: props => <NotFoundContent {...props} homePath={'/'} type='noaccess'/>
-                            },
+                            },*/
 
                         ]
                     },
@@ -577,7 +593,7 @@ const routers = [
                         component: UserGroupList,
                     },
                     {
-                        path: '/setting/user/userGrouptrue',
+                        path: '/setting/element/userGrouptrue',
                         component: UserGroupTrue,
                     },
                     {
@@ -592,7 +608,16 @@ const routers = [
                         path:'/setting/resources',
                         component: Resources,
                     },
-
+                    {
+                        path: "/setting/openApi",
+                        component: OpenApi,
+                        key:'OpenApi',
+                    },
+                    {
+                        path: "/setting/systemInt",
+                        component: SystemInt,
+                        key:'SystemInt',
+                    },
                     {
                         exact: true,
                         path: '/noaccess',

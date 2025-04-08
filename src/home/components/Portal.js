@@ -1,17 +1,11 @@
 import React,{useState,useEffect} from "react";
-import {Dropdown, Badge, Tooltip, Layout} from "antd";
+import {Layout} from "antd";
 import {useTranslation} from "react-i18next";
-import {getUser,productImg,productWhiteImg} from "tiklab-core-ui";
+import {getUser} from "tiklab-core-ui";
 import {renderRoutes} from "react-router-config";
-import {
-    BellOutlined, SettingOutlined,
-} from "@ant-design/icons";
 import {inject,observer} from "mobx-react";
-import { PortalDropdown } from "../../common/dropdown/DropdownMenu";
-import PortalMessage from "./PortalMessage";
 import "./Portal.scss";
 import FirstNav from "../../common/navigation/FirstNav"
-import {HelpLink} from "tiklab-licence-ui";
 /**
  * header 头部
  * @param props
@@ -20,16 +14,14 @@ import {HelpLink} from "tiklab-licence-ui";
  */
 const  Portal = props =>{
 
-    const {location,route,systemRoleStore,repositoryStore,AppLink,HelpLink,AvatarLink} = props
+    const {location,route,systemRoleStore,repositoryStore,AppLink,HelpLink,AvatarLink,customLogo} = props
 
     const {getSystemPermissions} = systemRoleStore
     const {navLevel,setNavLevel}=repositoryStore
 
     let path = props.location.pathname
     const {i18n,t} = useTranslation()
-    const [currentLink,setCurrentLink] = useState(path)
-    const [visible,setVisible] = useState(false)
-    const [unread,setUnread] = useState(0)
+
 
     useEffect(()=>{
         getSystemPermissions(getUser().userId)
@@ -50,7 +42,6 @@ const  Portal = props =>{
         if(path.indexOf('/group')===0){
             path='/group'
         }
-        setCurrentLink(path)
     },[path])
 
 
@@ -79,7 +70,7 @@ const  Portal = props =>{
                           AppLink={AppLink}
                           HelpLink={HelpLink}
                           AvatarLink={AvatarLink}
-
+                          customLogo={customLogo}
                 />
             }
             <Layout>

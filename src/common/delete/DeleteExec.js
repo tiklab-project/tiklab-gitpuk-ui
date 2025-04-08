@@ -13,7 +13,9 @@ import {EllipsisOutlined, ExclamationCircleOutlined} from "@ant-design/icons";
 
 const DeleteExec = (props) => {
 
-    const {value ,deleteData,title,type}=props
+    const {value ,repositoryId,deleteData,title,type}=props
+
+    debugger
     /**
      * 删除下拉
      */
@@ -49,6 +51,8 @@ const DeleteExec = (props) => {
         switch (type){
             case "tag":deleteData(value)
                break
+            case "pipeline":deleteData(repositoryId,value.id)
+                break
             default: deleteData(value.id)
                 break
         }

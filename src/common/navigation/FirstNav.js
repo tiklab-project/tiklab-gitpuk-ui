@@ -8,17 +8,12 @@
 import React ,{useEffect,useState}from 'react';
 import "./FirstNav.scss"
 import {
-    BellOutlined,
     CaretLeftOutlined,
     CaretRightOutlined,
-    CodeOutlined,
     HomeOutlined,
-    SettingOutlined
 } from "@ant-design/icons";
-import {productImg,productFrameImg,productWhiteImg, productWhitePureImg} from "tiklab-core-ui";
-import {renderRoutes} from "react-router-config";
+import {productImg,productWhiteImg,productTitle} from "tiklab-core-ui";
 import {useTranslation} from "react-i18next";
-import homePage from "../../assets/images/img/homePage.png"
 import group from "../../assets/images/img/group.png"
 import repository from "../../assets/images/img/repository.png"
 import {Badge, Layout, Tooltip} from "antd";
@@ -26,7 +21,7 @@ import TopNav from "./TopNav";
 import NavigationImage from "../image/NavigationImage";
 const {Sider} = Layout
 const FirstNav = (props) => {
-    const {location,AppLink,HelpLink,AvatarLink}=props
+    const {location,AppLink,HelpLink,AvatarLink,customLogo}=props
     const {i18n,t} = useTranslation()
 
     const [theme, setTheme] = useState(localStorage.getItem("theme") ? localStorage.getItem("theme") : "gray");
@@ -128,6 +123,24 @@ const FirstNav = (props) => {
     const toggleCollapsed = () => {
         setCollapsed(!collapsed)
     }
+
+    //设置图标
+    const logoHtml = () => {
+        let image;
+        if (theme==='default'||theme==='gray'){
+            image=productImg.gitpuk
+        }else {
+            image=productWhiteImg.gitpuk;
+        }
+        return {
+            image: customLogo?.image ? customLogo.image : image,
+            name: customLogo?.name ? customLogo.name :  productTitle.gitpuk
+        };
+    };
+    const logoData = logoHtml();
+
+
+
     return(
         <div className="fist-nav">
             <Sider trigger={null} collapsible collapsed={collapsed}
@@ -140,20 +153,11 @@ const FirstNav = (props) => {
                         {
                             collapsed?
                                 <div className='fist-nav-close-icon'>
-                                    {
-                                        (theme==='default'||theme==='gray')?
-                                            <img  src={productImg.gitpuk }  className='icon-size'/>:
-                                            <img  src={productWhiteImg.gitpuk }  className='icon-size'/>
-                                    }
-
+                                    <img  src={logoData.image }  className='icon-size'/>
                                 </div>:
                                 <div className='fist-nav-open-icon'>
-                                    {
-                                        (theme==='default'||theme==='gray')?
-                                            <img  src={productImg.gitpuk }  className='icon-size'/>:
-                                            <img  src={productWhiteImg.gitpuk }  className='icon-size'/>
-                                    }
-                                    <div className='icon-text'>GitPuk</div>
+                                    <img  src={logoData.image }  className='icon-size'/>
+                                    <div className='icon-text'>{logoData.name}</div>
                                 </div>
                         }
                     </div>

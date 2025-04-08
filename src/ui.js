@@ -55,8 +55,8 @@ const RepositoryBasicInfo=AsyncComponent(()=>import('./repository/setting/basicI
 const PushRule=AsyncComponent(()=>import('./repository/setting/pushRule/components/PushRule'))
 const AccessKeys=AsyncComponent(()=>import('./repository/setting/accessKeys/components/AccessKeys'))
 const WebHooks=AsyncComponent(()=>import('./repository/setting/webHooks/components/Hooks'))
-const RepositoryRole=AsyncComponent(()=>import('./repository/setting/user/RepositoryRole'))
-const RepositoryUser=AsyncComponent(()=>import('./repository/setting/user/RepositoryUser'))
+const RepositoryRole=AsyncComponent(()=>import('./repository/setting/element/RepositoryRole'))
+const RepositoryUser=AsyncComponent(()=>import('./repository/setting/element/RepositoryUser'))
 const BranchSetting=AsyncComponent(()=>import('./repository/setting/branch/BranchSetting'))
 const NotRepository=AsyncComponent(()=>import('./repository/repository/components/404'))
 const error=AsyncComponent(()=>import('./login/error'))
@@ -133,17 +133,17 @@ const Version=AsyncComponent(()=>import('./setting/licence/Version'))
 const AuthContent=AsyncComponent(()=>import('./setting/licence/AuthContent'))
 
 const CommitRepository=AsyncComponent(()=>import('./setting/operation/CommitRepository'))
-// user
-const User=AsyncComponent(()=>import("./setting/user/User"))
-const Directory=AsyncComponent(()=>import("./setting/user/Directory"))
-const Orga=AsyncComponent(()=>import("./setting/user/Orga"))
-const UserGroup=AsyncComponent(()=>import("./setting/user/Group"))
-const UserGroupTrue=AsyncComponent(()=>import("./setting/user/Groupture"))
-const sysFeature=AsyncComponent(()=>import('./setting/user/SystemFeature'))
-const sysRole=AsyncComponent(()=>import('./setting/user/SystemRole'))
-const sysRoleTrue=AsyncComponent(()=>import('./setting/user/SystemRoleTrue'))
-const ProjectRole=AsyncComponent(()=>import('./setting/user/ProjectRole'))
-const ProjectFeature=AsyncComponent(()=>import('./setting/user/ProjectFeature'))
+// element
+const User=AsyncComponent(()=>import("./setting/element/User"))
+const Directory=AsyncComponent(()=>import("./setting/element/Directory"))
+const Orga=AsyncComponent(()=>import("./setting/element/Orga"))
+const UserGroup=AsyncComponent(()=>import("./setting/element/Group"))
+const UserGroupTrue=AsyncComponent(()=>import("./setting/element/Groupture"))
+const sysFeature=AsyncComponent(()=>import('./setting/element/SystemFeature'))
+const sysRole=AsyncComponent(()=>import('./setting/element/SystemRole'))
+const sysRoleTrue=AsyncComponent(()=>import('./setting/element/SystemRoleTrue'))
+const ProjectRole=AsyncComponent(()=>import('./setting/element/ProjectRole'))
+const ProjectFeature=AsyncComponent(()=>import('./setting/element/ProjectFeature'))
 
 const Login=AsyncComponent(()=>import('./login/login'))
 const Logout=AsyncComponent(()=>import('./login/Logout'))
@@ -154,6 +154,7 @@ const UserRpyList=AsyncComponent(()=>import('./setting/repository/components/Use
 //资源监控
 const Resources =AsyncComponent(()=>import('./setting/resources/components/Resources'))
 
+const SettingRouters=AsyncComponent(()=>import('./setting/navigator/SettingRouters'))
 
 const gitTokImg = {
     repository_white
@@ -274,4 +275,5 @@ export {
     UserRpyList,
     Resources,
     RepositoryClean,
+    SettingRouters,
 }

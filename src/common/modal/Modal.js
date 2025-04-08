@@ -4,6 +4,7 @@ import {CloseOutlined} from "@ant-design/icons";
 import {autoHeight} from "../client/Client";
 import Btn from "../btn/Btn";
 import "./Modal.scss";
+import SearchInput from "../input/SearchInput";
 
 /**
  * 弹出框
@@ -46,7 +47,6 @@ const Modals = props => {
             bodyStyle={{padding:0}}
             wrapClassName={'tiklab_modal'}
             {...res}
-
         >
             <div className='xcode-modal'>
                 <div className='xcode-modal-up'>

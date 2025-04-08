@@ -110,7 +110,7 @@ module.exports = merge(baseWebpackConfig, {
                     reuseExistingChunk: true
                 },
                 thoughtwareUserUI: {
-                    name: 'chunk-tiklab-user-ui',
+                    name: 'chunk-tiklab-element-ui',
                     chunks: 'all',
                     test: /tiklab-user-ui/,
                     priority: 65,

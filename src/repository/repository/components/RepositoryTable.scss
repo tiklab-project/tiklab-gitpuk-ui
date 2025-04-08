@@ -1,20 +1,31 @@
 .repository-tables{
     margin-top: 5px;
+
     .repository-tables-name{
         display: flex;
         flex-direction: row;
         align-items: center;
         cursor: pointer;
-        .official-text-name{
-            cursor: pointer;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            overflow: hidden;
-         /*   width: 300px;*/
-            font-weight: var(--tiklab-font-weight-bold);
-            &:hover{
-                color: #1890ff;
-                text-decoration: underline;
+        gap: 10px;
+        .official-text{
+            display: flex;
+            gap: 5px;
+            flex-direction: column;
+            .official-text-name{
+                cursor: pointer;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+                /*   width: 300px;*/
+                font-weight: var(--tiklab-font-weight-bold);
+
+                &:hover{
+                    color: #1890ff;
+                    text-decoration: underline;
+                }
+            }
+            .official-text-group{
+                color: #999999;
             }
         }
 
@@ -25,6 +36,9 @@
     }
     .rpy-name-text{
         flex: 1;
+        display: flex;
+        gap: 5px;
+        flex-direction: column;
         .name-text-name{
             flex: 1;
             font-weight: var(--tiklab-font-weight-bold);
@@ -51,6 +65,10 @@
         .name-text-desc{
             color: var(--tiklab-gray-500);
             font-size: var(--tiklab-font-13);
+        }
+
+        .rpy-text-group{
+            color: #999999;
         }
     }
 

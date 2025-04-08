@@ -2,8 +2,8 @@ import React,{useState,useEffect} from 'react';
 import {
     ApartmentOutlined,
     BarChartOutlined,
-    BranchesOutlined, PullRequestOutlined,
-    PushpinOutlined,
+    BranchesOutlined, LineChartOutlined, PullRequestOutlined,
+    PushpinOutlined, StockOutlined,
     TagsOutlined
 } from '@ant-design/icons';
 import {inject,observer} from 'mobx-react';
@@ -76,10 +76,15 @@ const RepositoryAside= props=>{
         {
             id:`/repository/${webUrl}/codeScan`,
             title: `代码扫描`,
-            icon: !getVersionInfo().expired||getVersionInfo().release===3?<BarChartOutlined />:
+            icon: !getVersionInfo().expired?<BarChartOutlined />:
                 <img  src={member}  style={{width:18,height:18}}/>,
         },
+        {
+            id:`/repository/${webUrl}/pipeline`,
+            title: `CI/CD`,
+            icon: <LineChartOutlined  className={`${foldState?'close-iconfont':'open-iconfont'}`}/>
 
+        },
         {
             id:`/repository/${webUrl}/statistics/commit`,
             title: `统计`,

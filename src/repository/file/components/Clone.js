@@ -21,7 +21,7 @@ const Clone = props =>{
     const download = (type) => {
         const a=getUser().tenant
         if (refCode){
-            window.location.href=`${node_env? base_url:window.location.origin}/repositoryFile/downLoadBareRepo${a?"/"+getUser().tenant:""}?branch=${refCode}&type=${type}&rpyId=${repositoryInfo?.rpyId}&rpyName=${repositoryInfo.name}`
+            window.location.href=`${node_env? base_url:window.location.origin}/repositoryFile/downLoadBareRepo${a?"/"+getUser().tenant:""}?branch=${refCode}&type=${type}&refCodeType=${refCodeType}&rpyId=${repositoryInfo?.rpyId}&rpyName=${repositoryInfo.name}`
         }
     }
 

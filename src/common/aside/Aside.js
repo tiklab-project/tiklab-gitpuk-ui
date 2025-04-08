@@ -91,7 +91,7 @@ const Aside = props => {
         const documentHeight = e.target ? e.target.innerHeight : e.clientHeight;
         const menuHeight = documentHeight - 250;
         const menuNum = Math.floor(menuHeight / 60);
-        let num = menuNum > 7 ? 8 : menuNum;
+        let num = menuNum > 8 ? 9 : menuNum;
 
          setProjectRouter(firstRouters.slice(0, num))
          const hiddenMenu = firstRouters.slice(num, firstRouters.length)
@@ -284,7 +284,7 @@ const Aside = props => {
                     {
                         projectRouter.map(item=>renderTaskRouter(item))
                     }
-                    {(menuNum<8&&asideType==='repository') &&
+                    {(menuNum<9&&asideType==='repository') &&
                         <MoreMeu {...props}
                                  moreMenu={moreMenu}
                                  morePath={morePath}
@@ -335,7 +335,7 @@ const Aside = props => {
             <UpgradePopup visible={upgradeVisible}
                           setVisible={setUpgradeVisible}
                           title={'代码扫描'}
-                          desc={'如需使用代码扫描，请购买企业版Licence'}
+                          desc={getVersionInfo().release===3?"如需使用代码扫描,请先订阅":'如需使用代码扫描，请购买企业版Licence'}
             />
         </Layout>
     )

@@ -27,7 +27,6 @@ const Page = props =>{
             </span>
         )
     }
-
     return (
         <div className='xcode-page'>
             {

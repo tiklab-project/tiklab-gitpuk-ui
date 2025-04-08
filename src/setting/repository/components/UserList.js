@@ -12,10 +12,8 @@ import EmptyText from "../../../common/emptyText/EmptyText";
 import XcodeUserStore from "../store/XcodeUserStore";
 import {observer} from "mobx-react";
 import "./UserList.scss"
-import Profile from "../../../common/profile/Profile";
 import UserIcon from "../../../common/list/UserIcon";
 import SearchInput from "../../../common/input/SearchInput";
-import {getUser} from "tiklab-core-ui";
 import Page from "../../../common/page/Page";
 const UserList = (props) => {
 

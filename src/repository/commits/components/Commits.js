@@ -19,6 +19,8 @@ import commitsStore from "../store/CommitsStore"
 import fileStore from "../../file/store/FileStore";
 import branchStore from "../../branch/store/BranchStore";
 import SearchInput from "../../../common/input/SearchInput";
+import Profile from "../../../common/profile/Profile";
+import Listicon from "../../../common/list/Listicon";
 const Commits = props =>{
 
     const {repositoryStore,match,location} = props
@@ -156,7 +158,7 @@ const Commits = props =>{
         return (
             <div className='msg-item' key={item.commitId}>
                 <div className='msg-item-icon'>
-                 {/*   <Profile userInfo={getUser()}/>*/}
+                    <Profile userInfo={item.commitUser}/>
                 </div>
                 <div className='msg-item-msg'>
                     <div className='msg-item-title'>
