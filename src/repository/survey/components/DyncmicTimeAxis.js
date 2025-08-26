@@ -2,7 +2,6 @@ import React, { Children } from "react";
 import "./DyncmicTimeAxis.scss";
 import DynamicListItem from "./DynamicItem";
 import {observer} from "mobx-react";
-import noData from "../../../assets/images/img/noData.png";
 import EmptyText from "../../../common/emptyText/EmptyText";
 const DyncmicTimeAxis = (props) => {
     const { logList } = props;

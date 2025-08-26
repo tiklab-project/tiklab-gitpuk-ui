@@ -15,7 +15,7 @@ import {getVersionInfo} from "tiklab-core-ui";
 import NavigationImage from "../image/NavigationImage";
 
 const MoreMeu = (props) => {
-    const {moreMenu,nav ,setUpgradeVisible,collapsed,theme,themeClass} = props;
+    const {moreMenu,nav ,setUpgradeVisible,setStatisticsVisible,collapsed,theme} = props;
 
     // 菜单的形式，宽菜单，窄菜单
     const [showMenu, setShowMenu] = useState(false);
@@ -40,8 +40,8 @@ const MoreMeu = (props) => {
      * @param {菜单key} key
      */
     const selectMenu = (item) => {
-        if (item.id.endsWith("codeScan")&&(getVersionInfo().expired&&getVersionInfo().release!==3)){
-            setUpgradeVisible(true)
+       if(item.id.endsWith("statistics/commit")&&(getVersionInfo().expired)){
+            setStatisticsVisible(true)
         }else {
             props.history.push(item.id)
         }
@@ -102,9 +102,7 @@ const MoreMeu = (props) => {
                             <span>
                                 {item.title}
                             </span>
-                            {
-                                ( item.title==="代码扫描"&&getVersionInfo().expired&&getVersionInfo().release!==3)&& <div className='open-icon-vip'>{item.icon}</div>
-                            }
+
                         </div>
                     })}
                 </div>

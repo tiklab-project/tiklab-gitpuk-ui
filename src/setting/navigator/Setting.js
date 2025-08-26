@@ -4,7 +4,12 @@ import {
     SoundOutlined,
     VerifiedOutlined,
     FileDoneOutlined,
-    DeploymentUnitOutlined, TeamOutlined, SafetyCertificateOutlined, InsuranceOutlined, ProductOutlined
+    DeploymentUnitOutlined,
+    TeamOutlined,
+    SafetyCertificateOutlined,
+    InsuranceOutlined,
+    ProductOutlined,
+    UserDeleteOutlined
 } from '@ant-design/icons';
 import SettingContent from './SettingContent';
 import {templateRouter} from "./SettingRouters"
@@ -26,7 +31,7 @@ const Setting = props =>{
     const applicationRouters = [
             {
                 id: "1",
-                title: "用户与权限",
+                title: "用户",
                 icon: <TeamOutlined/>,
                 children: [
                     {
@@ -49,29 +54,20 @@ const Setting = props =>{
                         title: "用户目录",
                         purviewCode: "user_dir",
                     },
-                    {
-                        id:'/setting/role',
-                        title:'Privilege',
-                        purviewCode:'gittok_authority',
-                    },
+
                 ]
             },
             {
-                id:'2',
-                title: 'Message',
+                id:'/setting/role',
+                title:'Privilege',
+                icon: <UserDeleteOutlined />,
+                purviewCode:'permission',
+            },
+            {
+                id:'/setting/message',
+                title: '消息',
                 icon:<SoundOutlined/>,
-                children: [
-                    {
-                        id:'/setting/mes/notice',
-                        title:'Message Notification Scheme',
-                        purviewCode:'gittok_news_scheme',
-                    },
-                    {
-                        id:'/setting/mes/send',
-                        title: 'Message Send Type',
-                        purviewCode: 'gittok_news_way',
-                    },
-                ]
+                purviewCode:'message',
             },
             {
                 id:'4',
@@ -90,14 +86,14 @@ const Setting = props =>{
 
                 ]
             },
-            {
+      /*      {
                  id:'3',
                  title: '扫描配置',
                  icon: <FileDoneOutlined />,
                  purviewCode:'gittok_scan',
                 children: [
                        {
-                           id:'/setting/scanScheme',
+                           id:'/setting/oldScheme',
                            title: '扫描方案',
                        },
                        {
@@ -109,20 +105,22 @@ const Setting = props =>{
                         title:'扫描规则集',
                     },
                    ]
-             },
+             },*/
             {
                 id:'7',
-                title: '集成与开放',
+                title: '集成开放',
                 icon: <LayoutOutlined />,
                 children: [
-                    {
-                        id:'/setting/openApi',
-                        title:'openApi',
-                    },
                     {
                         id:'/setting/systemInt',
                         title:'系统集成',
                     },
+                    {
+                        id:'/setting/openApi',
+                        title:'OpenApi',
+                        purviewCode:'openapi',
+                    },
+
                 ]
             },
             {
@@ -133,12 +131,12 @@ const Setting = props =>{
                     {
                         id:'/setting/myLog',
                         title:'Operation Log',
-                        purviewCode:'gittok_log',
+                        purviewCode:'log',
                     },
                     {
                         id:'/setting/backupRecovery',
                         title:'备份与恢复',
-                        purviewCode:'gittok_backups',
+                        purviewCode:'backups_and_recover',
                     },
                 ]
             },
@@ -150,12 +148,12 @@ const Setting = props =>{
                     {
                         id:'/setting/version',
                         title:'Version And Licence',
-                        purviewCode:'version',
+                        purviewCode:'licence',
                     },
                     {
                         id:'/setting/authContent',
                         title:'系统访问权限',
-                        purviewCode:'gittok_visit_auth',
+                        purviewCode:'apply_limits',
                     },
                     {
                         id:'/setting/resources',

@@ -8,7 +8,6 @@ function createStores() {
         ...orgStores,
         ...privilegeStores,
         [REPOSITORY_STORE]:new RepositoryStore(),
-
     }
 }
 

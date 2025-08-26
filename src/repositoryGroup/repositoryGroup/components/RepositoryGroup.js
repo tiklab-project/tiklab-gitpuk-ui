@@ -63,6 +63,13 @@ const RepositoryGroup = props => {
             }
         },
         {
+            title: '仓库数',
+            dataIndex: 'repositoryNum',
+            key: 'repositoryNum',
+            width:'15%',
+            ellipsis:true,
+        },
+        {
             title: '负责人',
             dataIndex: ['user','nickname'],
             key: 'user',
@@ -74,32 +81,10 @@ const RepositoryGroup = props => {
             </div>
         },
         {
-            title: '可见范围',
-            dataIndex: 'rules',
-            key: 'rules',
-            width:'15%',
-            ellipsis:true,
-            render:(text)=>{
-                return (
-                    <div className='repository-tables-name'>
-                        {text==='private'?
-                            <div className='icon-text-use'>
-                                <LockOutlined/>
-                                <span>私有</span>
-                            </div>:
-                            <div className='icon-text-use'>
-                                <UnlockOutlined />
-                                <span>公开</span>
-                            </div>
-                        }
-                    </div>
-                )}
-        },
-        {
-            title: '仓库数',
-            dataIndex: 'repositoryNum',
-            key: 'repositoryNum',
-            width:'15%0%',
+            title: '创建时间',
+            dataIndex: 'createTime',
+            key: 'createTime',
+            width:'20%',
             ellipsis:true,
         },
         {
@@ -230,8 +215,8 @@ const RepositoryGroup = props => {
                         <Tabs
                             type={groupType}
                             tabLis={[
-                                {id:"viewable", title:'所有仓库组'},
-                                {id:"oneself", title:'我的仓库组'},
+                                {id:"viewable", title:'所有'},
+                                {id:"oneself", title:'我创建的'},
                             ]}
                             onClick={clickType}
                         />

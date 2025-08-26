@@ -7,17 +7,32 @@
 import React,{useState,useRef,useEffect} from 'react';
 import "./MergeDetailsBasic.scss"
 import {
-    BranchesOutlined, CheckCircleOutlined,
-    CloseCircleOutlined, CommentOutlined, DeleteOutlined, ExclamationCircleOutlined, FormOutlined, MessageOutlined,
-    PlusCircleOutlined, UpOutlined, CloseOutlined, UserAddOutlined, UserDeleteOutlined,PlusSquareOutlined,MinusSquareOutlined
+    BranchesOutlined,
+    CheckCircleOutlined,
+    CloseCircleOutlined,
+    CommentOutlined,
+    DeleteOutlined,
+    ExclamationCircleOutlined,
+    FormOutlined,
+    MessageOutlined,
+    PlusCircleOutlined,
+    UpOutlined,
+    CloseOutlined,
+    UserAddOutlined,
+    UserDeleteOutlined,
+    PlusSquareOutlined,
+    MinusSquareOutlined,
+    PlusOutlined
 } from "@ant-design/icons";
-import {Dropdown, Input, Menu, Modal} from "antd";
+import {Dropdown, Input, Menu, Modal, Tooltip} from "antd";
 import Btn from "../../common/btn/Btn";
 import Profile from "../../common/profile/Profile";
 import {getUser} from "tiklab-core-ui";
 import MergeClashPop from "./MergeClashPop";
 import MergeDetailsAuditPop from "./MergeDetailsAuditPop";
 import mergeAuditorStore from "../store/MergeAuditor";
+import UserIcon from "../../common/list/UserIcon";
+import {observer} from "mobx-react";
 
 
 const { confirm } = Modal;
@@ -48,12 +63,33 @@ const MergeDetailsBasic = (props) => {
     //用户
     const [userList,setUserList]=useState([])
 
+    //执行动态信息
+    const [mergeExecInfoList,setMergeExecInfoList]=useState([])
+
+    //评论信息
+    const [commentList,setCommentList]=useState([])
+
+    const [tableType,setTableType]=useState('dynamic')
+
+    const [commentBox,setCommentBox]=useState(null)
+
     useEffect(()=>{
         findDmUserList({"domainId":repositoryInfo.rpyId}).then(res=>{
             setUserList(res.data)
         })
 
     },[])
+
+    useEffect(()=>{
+       if (mergeConditionList){
+           const data=mergeConditionList.filter(item=>item.type!=="comment")
+           setMergeExecInfoList(data)
+
+           const commentData=mergeConditionList.filter(item=>item.type==="comment")
+           setCommentList(commentData)
+       }
+    },[mergeConditionList])
+
     //@ 人
     const getReplyUser = (key) => {
         const user=replyUserList.filter(replyUser=>replyUser.key===key);
@@ -80,12 +116,17 @@ const MergeDetailsBasic = (props) => {
 
 
     //切换输入框的 type:comment(评论下面提交评论)、condition(动态里面提交新的评论)
-    const cuteViewInput = (key,value) => {
+    const cuteViewInput = (key,value,type) => {
+
         if (value){
             setViewInput(viewInput.concat([{key:key,value:value}]))
         }else {
            setViewInput(viewInput.filter(item=>item.key!==key))
            getCommentValue(key).value=null
+
+            if (type==='comment'){
+                setCommentBox(null)
+            }
         }
     }
 
@@ -154,7 +195,8 @@ const MergeDetailsBasic = (props) => {
     }
 
     //回复评论
-    const replyComment = (comment) => {
+    const replyComment = (item,comment) => {
+        setCommentBox(item.id)
         const data="@"+comment.commentUser.name+" "
         const commentValue=getCommentValue(comment.mergeConditionId)
         //添加内容
@@ -195,6 +237,12 @@ const MergeDetailsBasic = (props) => {
             }
         })
     }
+
+    //切换tab
+    const cuteTab = (value) => {
+        setTableType(value)
+    }
+
 
 
     //删除弹窗
@@ -251,12 +299,18 @@ const MergeDetailsBasic = (props) => {
             {
                 item.mergeCommentList.map(comment=>{
                     return(
-                        <div key={comment.id} className='verify-basic-comment-nav'>
+                        <div key={comment.id} className={`verify-basic-comment-nav ${comment?.replyUser?.name&&" verify-basic-comment-nav-left"}`}>
                             <div className='basic-comment-title'>
-                                <Profile userInfo={comment.commentUser}/>
+                            {/*    <Profile userInfo={comment.commentUser.name}/>*/}
+                                {
+                                    comment?.replyUser?.name?
+                                        <UserIcon text={comment.commentUser?.name} size={"little"}/>:
+                                        <UserIcon text={comment.commentUser?.name} size={"small"}/>
+                                }
                                 <div className='comment-title-user'>{comment.commentUser.name}</div>
+
                                 <div className='comment-title-time'>{comment.createTime}</div>
-                                <div className='comment-title-icon reply-icon' onClick={()=>replyComment(comment)}>
+                                <div className='comment-title-icon reply-icon' onClick={()=>replyComment(item,comment)}>
                                     <MessageOutlined />
                                     <span className='comment-title-icon-left'>回复</span>
                                 </div>
@@ -265,6 +319,7 @@ const MergeDetailsBasic = (props) => {
                                     <span className='comment-title-icon-left'>删除</span>
                                 </div>
                             </div>
+
                             <div className='basic-comment-data'>
                                 {
                                     ( comment.replyUser&&comment.replyUser.name)?
@@ -284,7 +339,10 @@ const MergeDetailsBasic = (props) => {
                         </div>
                     )})
             }
-            {view(item.id,"comment")}
+            {
+                commentBox===item.id&&
+                view(item.id,"comment")
+            }
         </div>
     }
 
@@ -292,7 +350,11 @@ const MergeDetailsBasic = (props) => {
     //评论框
     const view = (key,type) => (
         <div className='commit-view-input'>
-            <Profile userInfo={getUser()}/>
+            {
+                (viewInput.filter(a=>a.key===key).length>0&& viewInput.filter(a=>a.key===key)[0]) ?
+                    <UserIcon text={getUser().name} size={"small"}/>:null
+            }
+
             <div className='commit-view-border'>
                 {
                     (viewInput.filter(a=>a.key===key).length>0&& viewInput.filter(a=>a.key===key)[0]) ?
@@ -309,7 +371,7 @@ const MergeDetailsBasic = (props) => {
                                     type={'common'}
                                     title={'取消'}
                                     isMar={true}
-                                    onClick={()=>cuteViewInput(key,false)}
+                                    onClick={()=>cuteViewInput(key,false,type)}
                                 />
                                 {
                                     (getCommentValue(key)?.value)?
@@ -328,7 +390,7 @@ const MergeDetailsBasic = (props) => {
                         </>
                         :
                         <Input
-                            placeholder='请输入评论'
+                            placeholder='点击输入评论'
                             onClick={()=>cuteViewInput(key,true)}
                         />
                 }
@@ -352,6 +414,63 @@ const MergeDetailsBasic = (props) => {
     );
     return(
         <div className='verify-basic'>
+            <div className='review-info'>
+                <div className='review-info-title'>
+                    评审人
+                </div>
+                <div className='review-info-data'>
+                    <div style={{display:"flex"}}>
+                        {
+                            auditorUserList.length>0&&auditorUserList.map((item,index)=>{
+                                return(
+                                    <div key={index}>
+                                        <div className='review-info-nav'>
+                                            <Tooltip placement="top" title={item.user?.name}>
+                                                <div>
+                                                    <UserIcon text={item.user?.name} size={"small"} type={"merge"}/>
+                                                </div>
+                                            </Tooltip>
+                                            {/*  <div className='right-nav-text'>{item.user?.name}</div>*/}
+                                            {/*  {
+                                            (mergeData.user.id===userId&&mergeData?.user.id!==item.user.id)&&
+                                            <div className='category-action' onClick={()=>deleteAuditor(item)}>
+                                                <CloseOutlined className='auditor-nav-icon right-nav-icon'/>
+                                            </div>
+                                        }*/}
+                                        </div>
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
+
+                    {
+                        (mergeData&&mergeData.user.id===userId) &&
+                        <Dropdown
+                            overlay={<MergeDetailsAuditPop
+                                mergeData={mergeData}
+                                userList={userList}
+                                auditorUserList={auditorUserList}
+                                changUser={changeUser}
+                                addAuditorUser={addAuditorUser}
+                            />}
+                            trigger={['click']}
+                            placement={'bottomLeft'}
+                            visible={auditorVisible}
+                            onVisibleChange={auditorVisible=>setAuditorVisible(auditorVisible)}
+                        >
+                            <Tooltip placement="top" title={"新增评审人"}>
+                               {/* <PlusOutlined />*/}
+                                <div style={{cursor:"pointer"}}>
+                                    <UserIcon text={"+"} size={"small"} c/>
+                                </div>
+                            </Tooltip>
+                        </Dropdown>
+                    }
+
+                </div>
+            </div>
+
             <div className='verify-basic-left'>
                 {
                     (commitsStatistics?.clash===0&&mergeData?.mergeState!==2)&&
@@ -373,56 +492,72 @@ const MergeDetailsBasic = (props) => {
                 <div className='verify-basic-style'>
                     {/*menu={{items, selectedKeys: [findConditionType]}}*/}
                     <div className='verify-basic-border'>
-                        <div className='verify-basic-tile'>
-                            <div className='basic-tile-left'>最新动态</div>
-                            <div className='basic-tile-right'>
-                                <Dropdown overlay={items}      trigger={['click']}    placement={'bottomRight'} >
-                                    <div className='basic-tile-right-icon' >
-                                        <div>{findConditionType==='all'?'全部动态':'操作历史'}</div>
-                                        <UpOutlined />
-                                    </div>
-                                </Dropdown>
-                                {/*  <DownOutlined />*/}
-                            </div>
+                        <div className='verify-tab-style'>
+                            <div className={`${tableType==='dynamic'&&' choose-mergeDetails-type'}`} onClick={()=>cuteTab("dynamic")}>动态信息</div>
+                            <div className={`${tableType==='comment'&&' choose-mergeDetails-type'}`} onClick={()=>cuteTab("comment")}>评论</div>
                         </div>
-
-                        <div className='verify-basic-log'>
-                            {
-                                mergeConditionList.length >0&&
-                                mergeConditionList.map((item,key)=>{
-                                    return(
-                                        <div className='basic-log-title'>
-                                            <div className='basic-log-left'>
-                                                <span className='log-left-icon'>{basicIcon(item.type)}</span>
-                                                <span className='log-left-line'/>
-                                            </div>
-                                            <div className='basic-log-right'>
-                                                <div className='right-data-nav'>
-                                                    <div className='right-title'>
-                                                        <span className='title-user'>{item.user?.name}</span>
-                                                        <span className='title-desc'>{item.data}</span>
+                        {
+                            tableType==="dynamic"&&
+                            <div className='verify-basic-log'>
+                                {
+                                    mergeExecInfoList.length >0&&
+                                    mergeExecInfoList.map((item,key)=>{
+                                        return(
+                                            <div className='basic-log-title'>
+                                                <div className='basic-log-right'>
+                                                    <div className='right-data-nav'>
+                                                        <div className='right-title'>
+                                                            <UserIcon text={item.user?.name} size={"small"}/>
+                                                           {/* <div className="merge-user-icon"> {item.user?.name.slice(0, 1)}</div>*/}
+                                                            <span className='title-user'>{item.user?.name}</span>
+                                                            <span className='title-desc'>{item.data}</span>
+                                                        </div>
+                                                        <div className='right-time'>{item.createTime}</div>
                                                     </div>
-                                                    <div className='right-time'>{item.createTime}</div>
+                                                    {
+                                                        (mergeConditionList.length-1!== key||item.type==="comment")&&
+                                                        <div className='right-desc'>
+                                                            {
+                                                                ( item.type==="comment"&&item.mergeCommentList)&&
+                                                                comment(item)
+                                                            }
+                                                        </div>
+                                                    }
                                                 </div>
-                                                {
-                                                    (mergeConditionList.length-1!== key||item.type==="comment")&&
-                                                    <div className='right-desc'>
-                                                        {
-                                                            ( item.type==="comment"&&item.mergeCommentList)&&
-                                                            comment(item)
-                                                        }
-                                                    </div>
-                                                }
                                             </div>
-                                        </div>
-                                    )
-                                })
-                            }
-                            {view(mergeData.id,"condition")}
-                        </div>
+                                        )
+                                    })
+                                }
+                            </div>||
+                            tableType==="comment"&&
+                            <div className='verify-basic-log'>
+                                {view(mergeData.id,"condition")}
+                                {
+                                    commentList.length >0&&
+                                    commentList.map((item,key)=>{
+                                        return(
+                                            <div className='basic-log-title'>
+                                                <div className='basic-log-right'>
+                                                    {
+                                                        (commentList.length-1!== key||item.type==="comment")&&
+                                                        <div className='right-desc'>
+                                                            {
+                                                                ( item.type==="comment"&&item.mergeCommentList)&&
+                                                                comment(item)
+                                                            }
+                                                        </div>
+                                                    }
+                                                </div>
+                                            </div>
+                                        )
+                                    })
+                                }
 
+                            </div>
+                        }
                     </div>
                 </div>
+
                 <MergeClashPop
                     {...props}
                     visible={clashVisible}
@@ -430,54 +565,8 @@ const MergeDetailsBasic = (props) => {
                     mergeData={mergeData}
                 />
             </div>
-            <div className='verify-basic-right'>
-                <div className='verify-basic-right-nav'>
-                    <div className='right-nav-title'>发起人</div>
-                    <div className='right-nav-text'>{mergeData?.user.name}</div>
-                </div>
-                <div className='verify-basic-right-nav'>
-                    <div className='right-nav-style right-nav-title'>
-                        <div className='right-nav-text'>评审人</div>
-                        {
-                            (mergeData&&mergeData.user.id===userId) &&
-                            <Dropdown
-                                overlay={<MergeDetailsAuditPop
-                                    mergeData={mergeData}
-                                    userList={userList}
-                                    auditorUserList={auditorUserList}
-                                    changUser={changeUser}
-                                    addAuditorUser={addAuditorUser}
-                                />}
-                                trigger={['click']}
-                                placement={'bottomLeft'}
-                                visible={auditorVisible}
-                                onVisibleChange={auditorVisible=>setAuditorVisible(auditorVisible)}
-                            >
-                              <FormOutlined className='right-nav-icon'/>
-                            </Dropdown>
-                        }
-                    </div>
-                    {
-                        auditorUserList.length>0&&auditorUserList.map((item,index)=>{
-                            return(
-                                <div key={index}>
-                                    <div className='auditor-nav-style'>
-                                        <div className='right-nav-text'>{item.user?.name}</div>
-                                        {
-                                            (mergeData.user.id===userId&&mergeData?.user.id!==item.user.id)&&
-                                                <div className='category-action' onClick={()=>deleteAuditor(item)}>
-                                                    <CloseOutlined className='auditor-nav-icon right-nav-icon'/>
-                                                </div>
-                                        }
-                                    </div>
-                                </div>
-                            )
-                        })
-                    }
-                </div>
-            </div>
         </div>
     )
 
 }
-export default MergeDetailsBasic
+export default observer(MergeDetailsBasic)

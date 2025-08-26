@@ -8,8 +8,9 @@ import "./UserIcon.scss";
  * @returns {JSX.Element}
  * @constructor
  */
-const UserIcon = ({text,size}) => {
-    return  <span className={`xcode-user-icon xcode-icon xcode-icon-size-${size}`}>
+const UserIcon = ({text,size,type}) => {
+
+    return  <span className={`xcode-user-icon xcode-icon xcode-icon-size-${size} ${type==='merge'?" user-icon-right-5":" user-icon-right"}`}>
                 {text && text.substring(0,1).toUpperCase()}
             </span>
 

@@ -21,6 +21,7 @@ import MergeStore from "../store/MergeStore";
 import {inject, observer} from "mobx-react";
 import Page from "../../common/page/Page";
 import SearchInput from "../../common/input/SearchInput";
+import Listicon from "../../common/list/Listicon";
 
 
 const MergeList = (props) => {
@@ -172,6 +173,12 @@ const MergeList = (props) => {
                             onPressEnter={onSearch}
                         />
                     </div>
+
+                    <div className='merge-head'>
+                        <div className='merge-head-name'>名称</div>
+                        <div className='merge-head-exec'>状态</div>
+                    </div>
+
                     <div className='merge-tables'>
                         {
                             mergeRequestList?.length>0?mergeRequestList.map((merge,index)=>{
@@ -179,9 +186,13 @@ const MergeList = (props) => {
                                     <div key={index} className='tables-nav' onClick={()=>goDetails(merge)}>
                                         <div className='tables-nav-style'>
                                             <div className='tables-nav-left' >
-                                              <span className='tables-nav-icon'>
+                                            {/*  <span className='tables-nav-icon'>
                                                   <PullRequestOutlined className='tables-nav-icon-merge'/>
-                                              </span>
+                                              </span>*/}
+                                                <Listicon text={merge.title}
+                                                          colors={2}
+                                                          type={"common"}
+                                                />
                                                 <div>
                                                     <div className='tables-nav-title'>{merge.title}</div>
                                                     <div className='tables-nav-desc'>

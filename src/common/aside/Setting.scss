@@ -4,6 +4,13 @@
     height: 100%;
     .setting-nav-text{
         font-size: var(--tiklab-font-14);
+
+    }
+    .setting-nav-style{
+        font-size: var(--tiklab-font-14);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
     }
     .xcode-setting-aside{
         height: 100%;

@@ -18,7 +18,7 @@ import all from "../../../assets/images/img/todo-all.png";
 import SurveyCommit from "../../../common/statistics/SurveyCommit";
 import SurveyMergeReq from "../../../common/statistics/SurveyMergeReq";
 import SurveyMergeReview from "../../../common/statistics/SurveyMergeReview";
-import statisticsStore from "../../statistics/store/StatisticsStore";
+import statisticsStore from "../../../home/store/StatisticsStore";
 import SurveyUserCommit from "../../../common/statistics/SurveyUserCommit";
 import EmptyText from "../../../common/emptyText/EmptyText";
 const Survey = (props) => {

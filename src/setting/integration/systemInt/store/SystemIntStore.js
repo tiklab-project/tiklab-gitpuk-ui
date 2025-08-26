@@ -11,11 +11,30 @@ export class SystemIntStore {
     @observable
     integrationAddress=''
 
+    @observable
+    integrationAddressList=[]
+
     /**
+     * 查询所有系统集成地址
+     * @returns {Promise<*>}
+     */
+    @action
+    findAllIntegrationAddress = async () =>{
+        const data = await Axios.post('/integrationAddress/findAllIntegrationAddress')
+        if (data.code===0){
+            this.integrationAddressList=data.data
+        }else {
+            message.error(data.msg)
+        }
+        return data
+    }
+
+
+/*    /!**
      * 查询系统集成地址
      * @param value
      * @returns {Promise<*>}
-     */
+     *!/
     @action
     findIntegrationAddress = async value =>{
         const param = new FormData()
@@ -26,26 +45,27 @@ export class SystemIntStore {
             const lastIndex = address.lastIndexOf('/');
             // 检查是否找到斜杠
             if (address.endsWith("/")) {
-                debugger
                 const path=address.substring(0, lastIndex);
                 this.integrationAddress={...data.data,integrationAddress:path}
             }else {
                 this.integrationAddress=data.data
             }
-
         }else {
             message.error(data.msg)
         }
         return data
-    }
+    }*/
+
+
+
 
     /**
-     * 查询系统集成地址
+     * 查询系统集成信息
      * @param value
      * @returns {Promise<*>}
      */
     @action
-    findIntegrationAddress = async value =>{
+    findIntegrationInfo = async value =>{
         const param = new FormData()
         param.append('code',value)
         const data = await Axios.post('/integrationAddress/findIntegrationAddress',param)

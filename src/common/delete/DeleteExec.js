@@ -15,20 +15,31 @@ const DeleteExec = (props) => {
 
     const {value ,repositoryId,deleteData,title,type}=props
 
-    debugger
     /**
      * 删除下拉
      */
      const DeletePullDown=(value) => (
         <Menu>
-            <Menu.Item onClick={DeletePop} className="delete-exec">
+            <Menu.Item onClick={()=>DeletePop(value)} className="delete-exec">
                 删除
             </Menu.Item>
         </Menu>
     );
 
+    //删除弹窗
+    const openDelete=async (value)=>{
+        findScanPlayList({scanSchemeId:value.id}).then(res=>{
+            if (res.code===0&&res.data&&res.data.length>0){
+                Modal.warning({
+                    title: '存在关联的扫描计划，移出扫描计划后可删除',
+                });
+            }else {
+                deletePop(value)
+            }
+        })
+    }
 
-//删除弹窗
+ //删除弹窗
     const  DeletePop = () =>{
         confirm({
             title: title,

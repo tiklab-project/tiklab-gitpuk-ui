@@ -151,9 +151,10 @@ const GroupBasicInfo = props =>{
                                 此操作无法恢复！请慎重操作！
                             </div>
                             <Btn title={'取消'} isMar={true} onClick={()=>setOpenOrClose(2)}/>
-                            <PrivilegeProjectButton code={"rpy_group_delete"} domainId={groupInfo && groupInfo.groupId}>
+                          {/*  <PrivilegeProjectButton code={"rpy_group_delete"} domainId={groupInfo && groupInfo.groupId}>
                                 <Btn onClick={()=>setDeleteVisible(true)} type={'dangerous'} title={'删除'}/>
-                            </PrivilegeProjectButton>
+                            </PrivilegeProjectButton>*/}
+                            <Btn onClick={()=>setDeleteVisible(true)} type={'dangerous'} title={'删除'}/>
                         </Fragment>
                 }
             </div>

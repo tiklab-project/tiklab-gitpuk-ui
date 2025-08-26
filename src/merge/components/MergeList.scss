@@ -8,6 +8,22 @@
             font-size: var(--tiklab-input-icon-15);
         }
     }
+
+    .merge-head{
+        display: flex;
+        font-size: 13px;
+        color: #777;
+        font-weight: 600;
+        border-bottom: 1px solid #f0f0f0;
+        .merge-head-name{
+            flex: 1;
+            padding: 8px ;
+        }
+        .merge-head-exec{
+            width: 90px ;
+        }
+    }
+
     &-tables{
         display: flex;
 
@@ -26,7 +42,7 @@
             .tables-nav-left{
                 display: flex;
                 align-items: center;
-                gap: 20px;
+                gap: 10px;
                 .tables-nav-desc{
                     display: flex;
                     gap: 15px;

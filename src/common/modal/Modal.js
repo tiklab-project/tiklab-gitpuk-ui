@@ -47,6 +47,7 @@ const Modals = props => {
             bodyStyle={{padding:0}}
             wrapClassName={'tiklab_modal'}
             {...res}
+
         >
             <div className='xcode-modal'>
                 <div className='xcode-modal-up'>

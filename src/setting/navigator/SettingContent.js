@@ -6,9 +6,12 @@ import {useTranslation} from 'react-i18next';
 import {inject, observer} from "mobx-react";
 import './SettingContent.scss';
 import {getVersionInfo} from "tiklab-core-ui";
-import UpgradePopup from "../../common/upgrade/UpgradePopup";
-import member from "../../assets/images/img/member.png";
-
+import {LicenceEnhance} from "tiklab-licence-ui";
+import {SecurityEnhance} from "tiklab-security-ui";
+import customLogo from "../../assets/images/img/custom-log.png";
+import ipRoster from "../../assets/images/img/black-white-list.png";
+import ScanSchemeFree from "../../common/upgrade/ScanSchemeFree";
+import {ScanScheme} from "../../ui";
 const SettingContent= props =>  {
 
     const {route,isDepartment,applicationRouters,systemRoleStore,templateRouter,setNavLevel,openDrawer} = props
@@ -21,7 +24,13 @@ const SettingContent= props =>  {
     const [expandedTree,setExpandedTree] = useState([''])  // 树的展开与闭合
     const [authConfig,setAuthConfig]=useState(null)
 
-    const [upgradeVisible,setUpgradeVisible]=useState(false)
+
+    //自定义log的弹窗
+    const [customLogVisible,setCustomLogVisible]=useState(false)
+    //黑白名单的弹窗
+    const [securityVisible,setSecurityVisible]=useState(false)
+
+    const [scanSchemeVisible,setScanSchemeVisible]=useState(false)
 
     useEffect(()=>{
         if (path.startsWith("/setting/scanRule")){
@@ -67,7 +76,7 @@ const SettingContent= props =>  {
     //导航栏数的展开关闭
     const setOpenOrClose = key => {
         if (key==="3"&&(getVersionInfo().expired&&getVersionInfo().release!==3)){
-            setUpgradeVisible(true)
+            setScanSchemeVisible(true)
         }else {
             if (isExpandedTree(key)) {
                 setExpandedTree(expandedTree.filter(item => item !== key))
@@ -89,12 +98,12 @@ const SettingContent= props =>  {
                     <div className=' nav-style'>
                         <span className='sys-content-icon'>{data.icon}</span>
                         <span className='nav-style-title'>{t(data.title)}</span>
-                        {
+                       {/* {
                             getVersionInfo().expired&&data.character&&
                             <span>
                              <img  src={member}  style={{width:18,height:18}}/>
                           </span>
-                        }
+                        }*/}
                         {!authConfig?.authType&&(data.id.endsWith("orga")||data.id.endsWith("user")||
                                 data.id.endsWith("userGroup")||data.id.endsWith("dir"))&&
                             <span>
@@ -118,9 +127,9 @@ const SettingContent= props =>  {
                     <span className='sys-content-tab-style'>
                         <div className='sys-content-icon'>{item.icon}</div>
                         <span className='system-aside-title'>{t(item.title)}</span>
-                        {item.id==="3"&&(getVersionInfo().expired)&&
+                        {/*{item.id==="3"&&(getVersionInfo().expired)&&
                             <img  src={member}  style={{width:18,height:18}}/>
-                        }
+                        }*/}
                     </span>
                     <div className='system-aside-item-icon'>
                         {
@@ -164,19 +173,19 @@ const SettingContent= props =>  {
     //跳转
     const childSkip = data =>{
         const value=data.id;
-        //未订阅
+     /*   //未订阅
         if (getVersionInfo().expired){
             //自定义log
             if (value==='/setting/customLogo'){
-                openDrawer("logo")
+                setCustomLogVisible(true)
                 return
             }
             //ip黑白名单
             if (value==='/setting/ipRoster'){
-                openDrawer("ip")
+                setSecurityVisible(true)
                 return
             }
-        }
+        }*/
 
         if (value.endsWith("orga")||value.endsWith("user")||value.endsWith("userGroup")||value.endsWith("dir")){
             //统一登陆
@@ -225,10 +234,27 @@ const SettingContent= props =>  {
                 </div>
 
             </div>
-            <UpgradePopup visible={upgradeVisible}
-                          setVisible={setUpgradeVisible}
-                          title={'代码扫描配置'}
-                          desc={"如需配置代码扫描，请购买企业版Licence"}/>
+
+            <LicenceEnhance
+                visible={customLogVisible} //必填
+                setVisible={setCustomLogVisible} //必填
+                bgroup={'gitpuk'} //必填
+                list={[
+                    {id:'logo',title:'自定义Logo',icon:customLogo}
+                ]}  //必填
+            />
+            <SecurityEnhance
+                visible={securityVisible} //必填
+                setVisible={setSecurityVisible} //必填
+                bgroup={'gitpuk'} //必填
+                list={[
+                    {id:'ipRoster',title:'IP黑白名单',icon:ipRoster}
+                ]}  //必填
+            />
+
+            <ScanSchemeFree visible={scanSchemeVisible} //必填
+                            setVisible={setScanSchemeVisible} //必填
+            />
         </SystemNav>
     )
 

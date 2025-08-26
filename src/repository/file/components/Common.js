@@ -55,15 +55,59 @@ const setBranch = (branch,repositoryInfo) =>{
  * @param data：截取数据
  * @returns {*}
  */
-const setFileAddress = (location,data) =>{
+const getFileAddress = (location,data) =>{
     return interceptUrl(location.pathname,data)
+}
+
+//获取界面查询类型
+const getPageType = (location,webUrl) =>{
+    if (location.pathname.includes(webUrl+"/code")){
+        return "code"
+    }
+    //查询文件详情
+    if (location.pathname.includes(webUrl+"/blob")){
+       return "blob"
+    }
+    if (location.pathname.includes(webUrl+"/edit")){
+        return "edit"
+    }
+    if (location.pathname.includes(webUrl+"/new")){
+        return "edit"
+    }
+}
+
+/**
+ * 文件图标
+ * @param fileType
+ * @returns {string|*}
+ */
+const renderFileIcon = fileType => {
+    switch (fileType) {
+        case "txt":
+        case "yaml":
+        case "css":
+        case "json":
+        case "xml":
+        case "cmd":
+        case "md":
+        case "sql":
+        case "ts":
+        case "java":
+            return fileType
+        case "js":
+            return "JavaScript"
+        case "sh":
+            return "powershell"
+        case "gitignore":
+            return "git"
+        default:
+            return "txt"
+    }
 }
 
 
 
-
-
-export {setFileAddress,setBranch,commitU4,findRefCode}
+export {getFileAddress,getPageType,setBranch,commitU4,findRefCode,renderFileIcon}
 
 
 

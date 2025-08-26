@@ -145,6 +145,11 @@ const Tag = props =>{
                             onPressEnter={onSearch}
                         />
                     </div>
+
+                    <div className='tag-head'>
+                        <div className='tag-head-name'>名称</div>
+                        <div className='tag-head-exec'>操作</div>
+                    </div>
                     <div className='tag-tables'>
                         {
                             tagList.length>0?tagList.map(item=>{

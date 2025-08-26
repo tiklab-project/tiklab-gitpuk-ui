@@ -1,12 +1,17 @@
 
 .xcode-user-icon{
   display: inline-block;
-  margin-right: 10px;
   border-radius: 50%;
   text-align: center;
   color: white;
-
 }
+.user-icon-right-5{
+  margin-right: 1px;
+}
+.user-icon-right{
+  margin-right: 10px;
+}
+
 .xcode-icon-size-middle{
   line-height: var(--tiklab-icon-size-32);
   width: var(--tiklab-icon-size-32);
@@ -16,6 +21,12 @@
   line-height: var(--tiklab-icon-size-25);
   width: var(--tiklab-icon-size-25);
   height: var(--tiklab-icon-size-25);
+}
+
+.xcode-icon-size-little{
+  line-height: var(--tiklab-icon-size-20);
+  width: var(--tiklab-icon-size-20);
+  height: var(--tiklab-icon-size-20);
 }
 .xcode-icon {
   background: #cccccc;

@@ -1,9 +1,27 @@
 .verify-basic{
-  display: flex;
   gap: 50px;
   width: 100%;
+  .review-info{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+    .review-info-title{
+      color: #999999;
+    }
+    .review-info-data{
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .review-info-nav {
+      cursor: pointer;
+    }
+  }
+
+
   .verify-basic-left{
-    width:80%;
+    margin-top: 50px;
     .verify-basic-pass{
     border: 1px solid var(--tiklab-merge-back-gree);
     background-color: var(--tiklab-merge-back-gree);
@@ -29,11 +47,29 @@
     .verify-basic-style{
       margin-top: 20px;
       .verify-basic-border{
-        border: 1px solid var( --tiklab-gray-300);
+        /*border: 1px solid var( --tiklab-gray-300);*/
+
+        .verify-tab-style{
+          display: flex;
+          gap: 20px;
+          font-size: 16px;
+          font-weight: normal;
+          margin-left: 8px;
+          cursor: pointer;
+          .choose-mergeDetails-type{
+            color: #0063FF;
+            border-bottom:2px solid #0063FF;
+          }
+        }
+
         .verify-basic-tile{
           display: flex;
-          justify-content: space-between;
           padding: var(--tiklab-padding-item);
+          gap: 10px;
+          .basic-tile-left{
+            font-size: 13px;
+            font-weight:bold
+          }
           .basic-tile-right{
 
             .basic-tile-right-icon{
@@ -106,7 +142,7 @@
               }
               .title-desc{
                 font-size: 14px;
-                padding-left: 14px;
+                padding-left: 5px;
               }
             }
             .right-time{
@@ -139,7 +175,7 @@
         }
       }
       .verify-basic-comment{
-        margin: 6px 0 6px 15px;
+        margin: 6px 0 6px 0;
         display: flex;
         gap: 12px;
         flex-direction: column;
@@ -149,7 +185,7 @@
             display: flex;
             align-items: center;
             .comment-title-user{
-              padding: 0 7px;
+              padding-right: 7px;
               font-size: 16px;
             }
             .comment-title-time{
@@ -160,7 +196,7 @@
 
           }
           .basic-comment-data{
-            margin: 6px 0 0 29px;
+            margin: 6px 0 0 35px;
           }
           .comment-reply-user{
             color: #1890ff;
@@ -191,7 +227,7 @@
       .commit-view-input{
         display: flex;
         gap: 10px;
-        margin: 20px 0 20px 20px;
+        margin: 20px 0;
         .commit-view-border{
           flex: 1;
           .view-input-btn{
@@ -259,4 +295,45 @@
 }
 .tile-right-nav{
   padding: 0 10px;
+}
+
+
+.merge-user-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 32px;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.right-title:nth-child(4n+1) {
+  .merge-user-icon {
+    background-color: #cadbf3;
+  }
+}
+
+.right-title:nth-child(4n+2) {
+  .merge-user-icon {
+    background-color: #deedd7;
+  }
+}
+
+.right-title:nth-child(4n+3) {
+  .dynamic-user-icon {
+    background-color:#f3caca;
+  }
+}
+
+.right-title:nth-child(4n+4) {
+  .merge-user-icon {
+    background-color:#e1e1e8;
+  }
+
+
+}
+.verify-basic-comment-nav-left{
+  margin-left: 20px;
 }

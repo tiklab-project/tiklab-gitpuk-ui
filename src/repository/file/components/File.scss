@@ -1,4 +1,6 @@
 .code{
+    display: flex;
+    height: 100%;
     .code-content{
         &-head{
             display: flex;
@@ -130,4 +132,15 @@
 .not-disabled{
     cursor: not-allowed;
     color: #999999;
+}
+
+
+.code-page-width{
+    width: 100%;;
+    height: 100%;
+    overflow: auto;
+    padding: 0 10px 10px 10px;
+    .ant-col{
+        min-width: 720px;
+    }
 }

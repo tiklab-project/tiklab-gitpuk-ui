@@ -4,6 +4,14 @@ import {getUser,Axios} from 'tiklab-core-ui';
 
 export class RepositoryStore {
 
+    @observable
+    refresh=false
+
+    //最近打开的记录
+    @observable
+    recordOpenList=[]
+
+
     // 仓库列表
     @observable
     repositoryList = []
@@ -100,6 +108,7 @@ export class RepositoryStore {
         return new Promise((resolve, reject) => {
             Axios.post('/rpy/deleteRpy',param).then(res=>{
                 if(res.code===0){
+                    this.refresh=!this.refresh
                     message.info('删除成功')
                 }
                 this.isLoading = false
@@ -151,6 +160,7 @@ export class RepositoryStore {
     updateRpy = async values =>{
         const data = await Axios.post('/rpy/updateRpy',values)
         if(data.code===0){
+            this.refresh=!this.refresh
             message.success('更新成功')
         }
 
@@ -282,6 +292,18 @@ export class RepositoryStore {
     }
 
     /**
+     * 查询仓库类型数量
+     * @returns {Promise<unknown>}
+     */
+    @action
+    findRepositoryNum = async () =>{
+        const param=new FormData()
+        param.append("userId",getUser().userId)
+        const data = await Axios.post('/rpy/findRepositoryNum',param)
+        return data
+    }
+
+    /**
      * 添加打开仓库的记录管理
      * @param repositoryId
      * @returns {Promise<unknown>}
@@ -344,6 +366,24 @@ export class RepositoryStore {
         const data = await Axios.post('/dmUser/findDmUserList',param)
         return data
     }
+
+    /**
+     * 查询最近打开的记录
+     * @returns {Promise<unknown>}
+     */
+    @action
+    findRecordOpenList = async () =>{
+        const param={
+            userId:getUser().userId,
+        }
+        const data = await Axios.post('/recordOpen/findRecordOpenList',param)
+        if (data.code===0){
+            this.recordOpenList=data.data
+        }
+        return data
+    }
+
+
 
 }
 

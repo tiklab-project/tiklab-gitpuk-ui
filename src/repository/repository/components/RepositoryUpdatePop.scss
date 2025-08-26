@@ -1,0 +1,12 @@
+.repository-update-path{
+  display: flex;
+  .path-tips{
+    flex: 1;
+    .ant-form-item-label{
+      margin-left: -506px;
+    }
+  }
+}
+.rpy-add .ant-form-item-label > label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::after {
+  display: none!important;
+}

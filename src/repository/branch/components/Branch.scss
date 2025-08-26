@@ -9,6 +9,28 @@
                 font-size: var(--tiklab-input-icon-15);
             }
         }
+        .branch-title{
+            display: flex;
+            font-size: 13px;
+            color: #777;
+            font-weight: 600;
+
+            border-bottom: 1px solid #f0f0f0;
+            .branch-title-name{
+                flex: 1;
+                padding: 8px ;
+            }
+            .branch-title-num{
+                width: 200px;
+                text-align: center;
+                position: relative;
+                padding: 8px ;
+            }
+            .branch-title-exec{
+                width: 150px;
+                padding: 8px ;
+            }
+        }
         &-tables{
             .branch-tables-item{
                 display: flex;
@@ -54,12 +76,12 @@
                     }
                     .name-text-type{
                         display: inline-block;
-                        background: #02a7f0;
+                        background: #cccccc;
                         color: #ffffff;
                         font-size: 12px;
                         line-height: 20px;
                         padding: 0 7px;
-                        border: 1px solid #e5e5e5;
+
                         border-radius: 100px;
                         font-weight: 400;
                     }

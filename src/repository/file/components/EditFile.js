@@ -10,7 +10,7 @@ import {inject,observer} from 'mobx-react';
 import {MonacoEdit, MonacoPreview} from '../../../common/editor/Monaco';
 import BreadcrumbContent from '../../../common/breadcrumb/Breadcrumb';
 import Btn from '../../../common/btn/Btn';
-import { findRefCode, setFileAddress} from './Common';
+import { findRefCode, getFileAddress} from './Common';
 import './EditFile.scss'
 
 import fileStore from '../store/FileStore'
@@ -49,7 +49,7 @@ const EditFile = props =>{
     const [editFileVisible,setEditFileVisible]=useState(false)
    const [pageType,setPageType]=useState('')
     const [refCode,setRefCode]=useState()
-    const fileAddress = setFileAddress(location,webUrl+'/edit/'+urlInfo)
+    const fileAddress = getFileAddress(location,webUrl+'/edit/'+urlInfo)
 
     useEffect(()=>{
         let refCode
@@ -137,7 +137,7 @@ const EditFile = props =>{
 
     //创建文件夹、文件
     const createFolder = (commitMessage) => {
-        let newFileAddress = setFileAddress(location,webUrl+'/new/'+urlInfo)
+        let newFileAddress = getFileAddress(location,webUrl+'/new/'+urlInfo)
 
         //创建文件的时候 文件路径不需要携带 项目名字
         let filePath=newFileAddress[1]
@@ -162,103 +162,81 @@ const EditFile = props =>{
 
     return(
         <div className='xcode page-width xcode-edit'>
-            <Col sm={{ span: "24" }}
-                 md={{ span: "24" }}
-                 lg={{ span: "24" }}
-                 xl={{ span: "20", offset: "2" }}
-                 xxl={{ span: "18", offset: "3" }}
-            >
-                <div className='edit-content '>
-                    <BreadcrumbContent firstItem={'Code'} secondItem={ blobFile?.fileName} goBack={()=>props.history.go(-1)}/>
-                   {/* <div className='edit-content-head'>编辑文件</div>*/}
-                    <div className='edit-content-title'>
+            <div className='edit-content '>
+                <BreadcrumbContent firstItem={'Code'} secondItem={ blobFile?.fileName} goBack={()=>props.history.go(-1)}/>
+                {/* <div className='edit-content-head'>编辑文件</div>*/}
+                <div className='edit-content-title'>
                         <span className='edit-title'
                               onClick={()=>props.history.push(`/repository/${webUrl}/code/${refCode}`)}
                         >{repositoryInfo.name}</span>
-                            <span className='edit-title'>/</span>
-                            <span className='edit-title'>
+                    <span className='edit-title'>/</span>
+                    <span className='edit-title'>
                             <Input
                                 value={fileName && fileName}
                                 style={{width:'auto'}}
                                 onChange={e=>setFileName(e.target.value)}
                             />
                         </span>
-                    </div>
-                    <div className='edit-content-editor'>
-                        <div className='edit-editor-title'>
+                </div>
+                <div className='edit-content-editor'>
+                    <div className='edit-editor-title'>
                         <span className={`editor-title-compile ${editType==='compile'?'editor-title-active':''}`}
                               onClick={()=>cuteViewType('compile')}
                         >编辑</span>
-                            <span className={`editor-title-preview ${editType==='preview'?'editor-title-active':''}`}
-                                  onClick={()=>cuteViewType('preview')}
-                            >预览</span>
-                        </div>
-                        <div className='edit-editor-content'>
-                            {
-                                editType==='compile'?
-                                  /*  <MonacoBlob readOnly={true} blobFile={blobFile}/>*/
-                                    <MonacoEdit
-                                        blobFile={blobFile}
-                                        previewValue={previewValue}
-                                        setEditPreviewValue={setEditPreviewValue}
-                                        setEditPosition={setEditPosition}
-                                        editPosition={editPosition}
-                                    />
-                                    :
-                                    <MonacoPreview
-                                        newValue={editPreviewValue}
-                                        blobFile={blobFile}
-                                        renderOverviewRuler={true}
-                                        editPosition={editPosition}
-                                    />
-                            }
-                        </div>
+                        <span className={`editor-title-preview ${editType==='preview'?'editor-title-active':''}`}
+                              onClick={()=>cuteViewType('preview')}
+                        >预览</span>
                     </div>
-                  {/*  <div className='edit-content-msg'>
-                        <Form
-                            form={form}
-                            autoComplete='off'
-                            layout='vertical'
-                            initialValues={{commitMessage:`更新`,commitBranch:'master'}}
-                        >
-                            <Form.Item label='提交信息' name='commitMessage'
-                                       rules={[{required:true,message:'提交信息不能为空'},]}
-                            ><Input.TextArea/></Form.Item>
-                            <Form.Item label='目标分支' name='commitBranch'
-                                       rules={[{required:true,message:'目标分支不能为空'},]}
-                            ><Input/></Form.Item>
-                        </Form>
-                    </div>*/}
-                    <div className='edit-content-btn'>
+                    <div className='edit-editor-content'>
                         {
-                            blobFile?.fileMessage===editPreviewValue?
-                                <Btn
-                                    title={'提交更改'}
-                                    type={'disabled'}
-                                />:
-                                <Btn
-                                    title={'提交更改'}
-                                    type={'primary'}
-                                    onClick={() => {
-                                        form
-                                            .validateFields()
-                                            .then((values) => {
-                                                commitChanges(values)
-                                                form.resetFields()
-                                            })
-                                    }}
+                            editType==='compile'?
+                                /*  <MonacoBlob readOnly={true} blobFile={blobFile}/>*/
+                                <MonacoEdit
+                                    blobFile={blobFile}
+                                    previewValue={previewValue}
+                                    setEditPreviewValue={setEditPreviewValue}
+                                    setEditPosition={setEditPosition}
+                                    editPosition={editPosition}
+                                />
+                                :
+                                <MonacoPreview
+                                    newValue={editPreviewValue}
+                                    blobFile={blobFile}
+                                    renderOverviewRuler={true}
+                                    editPosition={editPosition}
                                 />
                         }
-
-                        <Btn
-                            title={'取消'}
-                            isMar={true}
-                            onClick={()=>props.history.go(-1)}
-                        />
-
                     </div>
                 </div>
-            </Col>
+                <div className='edit-content-btn'>
+                    {
+                        blobFile?.fileMessage===editPreviewValue?
+                            <Btn
+                                title={'提交更改'}
+                                type={'disabled'}
+                            />:
+                            <Btn
+                                title={'提交更改'}
+                                type={'primary'}
+                                onClick={() => {
+                                    form
+                                        .validateFields()
+                                        .then((values) => {
+                                            commitChanges(values)
+                                            form.resetFields()
+                                        })
+                                }}
+                            />
+                    }
+
+                    <Btn
+                        title={'取消'}
+                        isMar={true}
+                        onClick={()=>props.history.go(-1)}
+                    />
+
+                </div>
+            </div>
             <EditFilePop {...props} editFileVisible={editFileVisible}
                          setEditFileVisible={setEditFileVisible}
                          fileName={fileName}

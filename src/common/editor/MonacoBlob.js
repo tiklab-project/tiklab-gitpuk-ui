@@ -29,7 +29,6 @@ const languages = blobFile => {
  */
 const MonacoBlob = props =>{
     const {blobFile,readOnly} = props
-
     const monacoEditorRef = useRef()
     const monacoEditorDomRef = useRef()
 
@@ -58,6 +57,12 @@ const MonacoBlob = props =>{
                 overviewRulerBorder: false, // 滚动条的边框
                 scrollBeyondLastLine: false,
                 theme: 'vs', // 主题
+                scrollbar: {
+                    verticalScrollbarSize: 5, // 垂直滚动条宽度
+                    horizontalScrollbarSize: 5, // 水平滚动条高度
+                    arrowSize: 10, // 滚动条箭头大小
+                    useShadows: false, // 是否使用阴影
+                },
             })
         } catch {}
     }

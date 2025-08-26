@@ -4,13 +4,14 @@
  * @returns {JSX.Element}
  * @constructor
  */
-import React,{useState,useEffect} from 'react';
+import React,{useState,useEffect,Fragment} from 'react';
 import commitsStore from "../../repository/commits/store/CommitsStore";
 import MergeAddFile from "./MergeAddFile";
+import DetailsDiff from "../../common/diffData/DetailsDiff";
+import {observer} from "mobx-react";
 const MergeDetailsFile = (props) => {
-    const {repositoryInfo,mergeData,webUrl}=props
+    const {repositoryInfo,mergeData,webUrl,commitDiff,expand}=props
     const {findDiffBranchFileDetails} = commitsStore
-
     useEffect(()=>{
 
     },[])
@@ -18,7 +19,15 @@ const MergeDetailsFile = (props) => {
 
     return(
         <div>
-            {
+
+
+
+                <DetailsDiff content={commitDiff}
+                             expand={expand}
+                />
+
+
+          {/*  {
                 <MergeAddFile {...props}
                               webUrl={webUrl}
                               repositoryInfo={repositoryInfo}
@@ -27,8 +36,8 @@ const MergeDetailsFile = (props) => {
                               findDiffBranchFileDetails={findDiffBranchFileDetails}
                               mergeId={mergeData.mergeState===2?mergeData.id:null}
                 />
-            }
+            }*/}
         </div>
     )
 }
-export default MergeDetailsFile
+export default observer(MergeDetailsFile)

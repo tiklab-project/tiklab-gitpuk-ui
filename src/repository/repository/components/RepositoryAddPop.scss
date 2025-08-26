@@ -1,0 +1,52 @@
+.repository-edit{
+    .repository-edit-content{
+        max-width: 900px;
+        margin: auto;
+        padding: 20px;
+
+        .repository-edit-bottom{
+            .repository-edit-path{
+                display: flex;
+                .path-tips{
+                    flex: 1;
+                    .ant-form-item-label{
+                        margin-left: -336px;
+                    }
+                }
+            }
+            .repository-edit-init{
+                display: flex;
+                gap: 10px;
+                flex-direction: column;
+                .repository-edit-init-error{
+                    color: #ff4d4f;
+                }
+            }
+            .repository-edit-git{
+                display: flex;
+                gap: 10px;
+                flex-direction: column;
+                padding: 10px 20px;
+            }
+            .repository-edit-button{
+                padding-top: 10px;
+            }
+        }
+    }
+}
+
+.must:after{
+    display: inline-block;
+    margin-right: 4px;
+    color: #ff4d4f;
+    font-size: 14px;
+    font-family: SimSun, sans-serif;
+    line-height: 1;
+    content: "*";
+}
+
+ .rpy-add .ant-form-item-label > label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::after {
+     display: none!important;
+ }
+
+

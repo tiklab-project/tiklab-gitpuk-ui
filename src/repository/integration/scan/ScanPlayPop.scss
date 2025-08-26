@@ -1,0 +1,30 @@
+.scan-play-pop{
+  width: 700px;
+
+  .scan-play-number{
+    display: inline-block;
+    color: var(--tiklab-blue);
+    padding: 3px 10px;
+    background: #eeeff9;
+    border-radius: 30px;
+    margin-left: 10px;
+    .scan-play-number-desc{
+      font-size: 14px;
+      padding-left: 5px;
+    }
+  }
+}
+.scan-play-pop-search{
+  padding: 20px 0;
+}
+
+
+.scan-play-pop-hint {
+  text-align: center;
+  padding: 20px 0;
+  .pop-hint-exec{
+    color: #1890ff;
+    cursor: pointer;
+    padding-left: 10px;
+  }
+}

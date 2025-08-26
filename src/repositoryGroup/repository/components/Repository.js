@@ -7,9 +7,8 @@ import './Repository.scss';
 import groupStore from "../../repositoryGroup/store/RepositoryGroupStore"
 import {getUser} from "tiklab-core-ui";
 import {Col, Input, Select} from "antd";
-import {SearchOutlined} from "@ant-design/icons";
-import {PrivilegeProjectButton} from 'tiklab-privilege-ui';
 import SearchInput from "../../../common/input/SearchInput";
+import Page from "../../../common/page/Page";
 const Repository = props =>{
     const {match}=props
     const groupName = match.params.name
@@ -152,14 +151,16 @@ const Repository = props =>{
                         isLoading={isLoading}
                         repositoryList={repositoryList}
                         createOpenRecord={createOpenRecord}
-                        changPage={changPage}
-                        totalPage={totalPage}
-                        currentPage={currentPage}
-                        totalRecord={totalRecord}
                         onChange={onChange}
                         type={'group'}
                     />
 
+                <Page pageCurrent={currentPage}
+                      changPage={changPage}
+                      totalPage={totalPage}
+                      totalRecord={totalRecord}
+                    /*  refresh={refreshFind}*/
+                />
             </Col>
         </div>
     )

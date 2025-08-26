@@ -8,7 +8,7 @@
 import React,{useEffect,useState,useRef} from 'react';
 import {SpinLoading} from "../loading/Loading";
 import echarts from "../echarts/Echarts";
-import StatisticsStore from "../../repository/statistics/store/StatisticsStore";
+import StatisticsStore from "../../home/store/StatisticsStore";
 const HomeUserCommit = (props) => {
     const {findTime}=props
     const {commitRpyUserStatistics}=StatisticsStore

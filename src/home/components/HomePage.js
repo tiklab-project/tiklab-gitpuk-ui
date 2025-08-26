@@ -14,7 +14,7 @@ import all from "../../assets/images/img/todo-all.png";
 import progress from "../../assets/images/img/todo-progress.png";
 import finish from "../../assets/images/img/todo-finish.png";
 import overdue from "../../assets/images/img/todo-overdue.png";
-import statisticsStore from "../../repository/statistics/store/StatisticsStore";
+import statisticsStore from "../store/StatisticsStore";
 /**
  * 首页
  * @param props

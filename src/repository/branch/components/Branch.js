@@ -136,31 +136,42 @@ const Branch = props =>{
             {
                 value.defaultBranch &&
                 <Menu.Item  disabled={true}>
-                    <PrivilegeProjectButton code={"rpy_branch_delete"} domainId={repositoryInfo && repositoryInfo.rpyId}>
+                 {/*   <PrivilegeProjectButton code={"rpy_branch_delete"} domainId={repositoryInfo && repositoryInfo.rpyId}>
                         <Tooltip placement="top" title={'默认分支不能被删除'} >
                             删除
                         </Tooltip>
-                    </PrivilegeProjectButton >
+                    </PrivilegeProjectButton >*/}
+                    <Tooltip placement="top" title={'默认分支不能被删除'} >
+                        删除
+                    </Tooltip>
                 </Menu.Item>
                 ||
                 value?.mergeRequest?.mergeState===1&&
                     <Menu.Item  disabled={true}>
-                        <PrivilegeProjectButton code={"rpy_branch_delete"} domainId={repositoryInfo && repositoryInfo.rpyId}>
+                       {/* <PrivilegeProjectButton code={"rpy_branch_delete"} domainId={repositoryInfo && repositoryInfo.rpyId}>
                             <Tooltip placement="top" title={'存在开启的合并请求'} >
                                 删除
                             </Tooltip>
-                        </PrivilegeProjectButton >
+                        </PrivilegeProjectButton >*/}
+                        <Tooltip placement="top" title={'存在开启的合并请求'} >
+                            删除
+                        </Tooltip>
                     </Menu.Item>
                     ||
                 (!value.defaultBranch && !value?.mergeRequest?.mergeState!==1)&&
-                <PrivilegeProjectButton code={"rpy_branch_delete"} domainId={repositoryInfo && repositoryInfo.rpyId}>
+                <div className='branch-nav' onClick={()=>DeletePop(value)}>
+                    <Menu.Item >
+                        {"删除"}
+                    </Menu.Item>
+                </div>
+          /*      <PrivilegeProjectButton code={"rpy_branch_delete"} domainId={repositoryInfo && repositoryInfo.rpyId}>
                     <div className='branch-nav' onClick={()=>DeletePop(value)}>
                         <Menu.Item >
                             {"删除"}
                         </Menu.Item>
                     </div>
 
-                </PrivilegeProjectButton >
+                </PrivilegeProjectButton >*/
             }
         </Menu>
     );
@@ -176,6 +187,9 @@ const Branch = props =>{
                           type={"common"}
                 />
                 {/*<Profile userInfo={item.branchName}/>*/}
+
+
+
                 <div className='branch-tables-name'>
                     <div className='name-text-title'>
                         <span className='name-text-name' onClick={()=>goCode(item)}>
@@ -218,11 +232,11 @@ const Branch = props =>{
                             <div className='branch-tables-combine' onClick={()=>goMergeAdd(item.branchName)}>创建合并请求</div>
                     }
                     <Dropdown    overlay={()=>execPullDown(item)}
-                                placement="bottomRight"
-                                trigger={['click']}
+                                 placement="bottomRight"
+                                 trigger={['click']}
                                  getPopupContainer={e => e.parentElement}
                     >
-                        <EllipsisOutlined style={{fontSize:20}}/>
+                        <EllipsisOutlined style={{fontSize:25}}/>
                     </Dropdown>
                 </div>
             </div>
@@ -240,13 +254,18 @@ const Branch = props =>{
                 <div className='branch-content  '>
                     <div className='branch-content-top'>
                         <BreadcrumbContent firstItem={'Branch'}/>
-                        <PrivilegeProjectButton code={"rpy_branch_add"} domainId={repositoryInfo && repositoryInfo.rpyId}>
+                      {/*  <PrivilegeProjectButton code={"rpy_branch_add"} domainId={repositoryInfo && repositoryInfo.rpyId}>
                             <Btn
                                 type={'primary'}
                                 title={'新建分支'}
                                 onClick={()=>setAddVisible(true)}
                             />
-                        </PrivilegeProjectButton>
+                        </PrivilegeProjectButton>*/}
+                        <Btn
+                            type={'primary'}
+                            title={'新建分支'}
+                            onClick={()=>setAddVisible(true)}
+                        />
                         <BranchAdd
                             createBranch={createBranch}
                             branchList={branchList}
@@ -272,6 +291,17 @@ const Branch = props =>{
                             onChange={onChangeSearch}
                             onPressEnter={onSearch}
                         />
+                    </div>
+                    <div className='branch-title'>
+                        <div className='branch-title-name'>
+                            分支
+                        </div>
+                        <div className='branch-title-num'>
+                            Behind/Ahead
+                        </div>
+                        <div className='branch-title-exec'>
+                            操作
+                        </div>
                     </div>
                     <div className='branch-content-tables'>
                         {

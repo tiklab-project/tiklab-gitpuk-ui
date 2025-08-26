@@ -5,9 +5,26 @@ import {Service} from "../../../common/utils/Requset";
 
 export class FileStore {
 
-    // 代码文件数据
+    @observable findState=false
+
+    @observable addState=false;
+
     @observable
-    codeTreeData = []
+    currentLayerTree=[]
+
+    @observable
+    codeTreeData=[]
+
+    @observable
+    collapsed=false
+
+    //完整的树数据
+    @observable
+    completeTreeData=[]
+
+    //打开的文件树
+    @observable
+    openNav=[]
 
     // 文件内容
     @observable
@@ -21,6 +38,42 @@ export class FileStore {
     @observable
     latelyBranchCommit = ''
 
+    //设置查询状态 (控制需要查询的接口)
+    @action
+    setFindState = async () =>{
+        this.findState=true
+    }
+
+    //添加完整的树结构（每次点击文件夹都会切换路由）
+    @action
+    setCompleteTreeData = async (data) =>{
+        this.completeTreeData=data
+    }
+
+    //添加完整的树结构（每次点击文件夹都会切换路由）
+    @action
+    setStoreValue = async (type,data) =>{
+        if (type==="findState"){
+            this.findState=true
+        }
+        if (type==="setFalse"){
+            this.findState=false
+        }
+        if (type==="tree"){
+            this.completeTreeData=data
+        }
+        if (type==="nav"){
+            this.openNav=data
+        }
+        if (type==="collapsed"){
+            this.collapsed=data
+        }
+        if (type==='addState'){
+            this.addState=data
+        }
+
+
+    }
 
 
     /**
@@ -29,15 +82,32 @@ export class FileStore {
      * @returns {Promise<*>}
      */
     @action
-    findFileTree = async value =>{
-        const data = await Axios.post('/repositoryFile/findFileTree',value)
-        if(data.code===0){
-            this.codeTreeData = data.data
-        } else {
-            this.codeTreeData = []
+    findFileTree = async (value,address) =>{
+        const res = await Axios.post('/repositoryFile/findFileTree',value)
+        if(res.code===0&&!this.findState){
+            this.completeTreeData = res.data
         }
-        data.code===56100 && message.info(data.msg,0.5)
-        return data
+
+        if(res.code===0){
+            if (!res.data){
+                this.codeTreeData=[]
+                this.currentLayerTree=[]
+                return
+            }
+            if (address){
+                const data=res.data.filter(a=>"/"+a.path===address)
+                if (data){
+                    this.codeTreeData=data[0].items
+                    this.currentLayerTree=data
+                }
+            }else {
+                this.codeTreeData=res.data[0].items
+                this.currentLayerTree=res.data
+            }
+        }
+
+        res.code===56100 && message.info(res.msg,0.5)
+        return res
     }
 
     /**

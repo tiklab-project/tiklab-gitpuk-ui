@@ -1,0 +1,75 @@
+.scan-play{
+  .scan-play-head{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .scan-play-tab{
+    padding-top: 20px;
+  }
+  .scan-play-content{
+    .scan-play-content-desc{
+      display: flex;
+      margin: var(--tiklab-padding-item) 0;
+      padding: 10px;
+      background: #F8FFFF;
+      color: var(--tiklab-blue);
+      border: 1px solid #e3e9ed;
+      &>div:not(:last-child){
+        padding-bottom: 10px;
+      }
+    }
+    .scan-play-content-details{
+      display: flex;
+      flex-direction: column;
+      margin-top: 50px;
+      align-items: center;
+      gap: 15px;
+
+      .scan-play-content-img{
+        width: 200px;
+        height: 190px;
+      }
+
+      .scan-play-content-title{
+        font-size: 16px;
+      }
+    }
+
+  }
+  .pipelineTable-name:hover{
+    color: var(--tiklab-blue);
+    cursor: pointer;
+  }
+}
+.scan-play-number{
+  display: inline-block;
+  color: var(--tiklab-blue);
+  padding: 3px 10px;
+  background: #eeeff9;
+  border-radius: 30px;
+  margin-left: 10px;
+  .scan-play-number-desc{
+    font-size: 14px;
+    padding-left: 5px;
+  }
+}
+.last-scan{
+  display: flex;
+  gap: 10px;
+  font-weight:400;
+  font-size: 15px;
+  align-items: center;
+  cursor: pointer;
+  .last-scan-style{
+    display: flex;
+    gap: 10px;
+    color: #1890ff;
+    cursor: pointer;
+    align-items: center;
+  }
+}
+.last-scan-text{
+  color: #94979a;
+  font-size: 13px;
+}

@@ -16,6 +16,7 @@ import {
     DownOutlined,
     RightOutlined
 } from "@ant-design/icons";
+import Btn from "../../../common/btn/Btn";
 const BranchSetting = (props) => {
     const {repositoryStore,match} = props
     const {repositoryInfo,findRepository} = repositoryStore
@@ -169,8 +170,9 @@ const BranchSetting = (props) => {
                         <div style={{marginTop:20}}>
                             {
                                 branchData===repositoryInfo.defaultBranch?
-                                    <Button type="primary" disabled>更新</Button>:
-                                    <Button type="primary" onClick={cutBranch}>更新</Button>
+                                    <Btn  type={'disabled'} title={'更新'}/>:
+                                    <Btn  type={'primary'} onClick={cutBranch} title={'更新'}/>
+
                             }
                         </div>
                     </div>

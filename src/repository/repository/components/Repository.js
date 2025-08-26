@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react';
+import React, {useState, useEffect, Fragment} from 'react';
 import {inject,observer} from 'mobx-react';
 import {Col, Dropdown, Input, Menu, Select} from 'antd';
 import BreadcrumbContent from '../../../common/breadcrumb/Breadcrumb';
@@ -8,11 +8,21 @@ import RepositoryTable from "./RepositoryTable";
 import './Repository.scss';
 import {getUser} from "tiklab-core-ui";
 import SearchInput from "../../../common/input/SearchInput";
+import RepositoryAddPop from "./RepositoryAddPop";
+import Page from "../../../common/page/Page";
+import RepositoryCollectStore from "../store/RepositoryCollectStore";
+import {SpinLoading} from "../../../common/loading/Loading";
+import EmptyText from "../../../common/emptyText/EmptyText";
+import Listicon from "../../../common/list/Listicon";
 const Repository = props => {
 
     const {repositoryStore} = props
 
-    const {findRepositoryPage,createOpenRecord} = repositoryStore
+    const {refresh,findRepositoryPage,createOpenRecord,deleteRpy,updateRpy,findRecordOpenList,recordOpenList,findRepositoryNum} = repositoryStore
+    const {coRefresh}=RepositoryCollectStore
+
+    // 最近打开的加载状态
+    const [newlyLoading,setNewlyLoading] = useState(true)
 
     // 仓库分类
     const [repositoryType,setRepositoryType] = useState("viewable")
@@ -31,10 +41,29 @@ const Repository = props => {
 
     const [rules,setRules]=useState()
 
+    //编辑弹窗状态
+    const [addVisible,setAddVisible]=useState(false)
+
+    //仓库数量
+    const [repositoryNum,setRepositoryNum]=useState(null)
 
     useEffect(async ()=>{
-       await findRpyPage(1,repositoryType)
-    },[rules])
+        findRepositoryNum().then(res=>{
+            res.code===0&&setRepositoryNum(res.data)
+        })
+    },[refresh,coRefresh])
+
+
+    useEffect(async ()=>{
+        // 获取最近打开的仓库
+        findRecordOpenList().then(()=>setNewlyLoading(false))
+    },[])
+
+
+    useEffect(async ()=>{
+        await findRpyPage(currentPage,repositoryType,sort)
+    },[rules,refresh,coRefresh])
+
 
     //分页查询仓库列表
     const findRpyPage =async (currentPage,repositoryType,sort) => {
@@ -143,11 +172,50 @@ const Repository = props => {
         }
     }
 
+    //打开编辑的弹窗
+    const openEditPop=()=>{
+        setAddVisible(true)
+    }
+
+    /**
+     * 跳转代码文件
+     * @param repository
+     */
+    const goDetails = repository => {
+        props.history.push(`/repository/${repository.address}/code`)
+    }
+
+    const openBorder = (item) => {
+        return(
+            <Fragment>
+                <div className='houseRecent-border-flex'>
+                    <Listicon text={item?.repository?.name}
+                              colors={item?.repository.color}
+                              type={"common"}
+                    />
+                    <div className='houseRecent-border-text' >
+                        {/*{filedState(item?.repository?.name)}*/}
+                        {item?.repository?.name}
+                    </div>
+                </div>
+                <div className='houseRecent-border-flex houseRecent-border-text-top'>
+                    <div className='houseRecent-border-desc'>
+                        <span className='title-color'>分支</span>
+                        <span className='desc-text'>{item?.branchNum}</span>
+                    </div>
+                    <div className='houseRecent-border-desc'>
+                        <span className='title-color'>成员</span>
+                        <span className='desc-text'>{item?.memberNum}</span>
+                    </div>
+                </div>
+            </Fragment>
+        )
+    }
 
     const items = (
             <Menu>
                 <Menu.Item>
-                    <div  onClick={()=>props.history.push('/repository/add')}>
+                    <div  onClick={openEditPop}>
                         新建仓库
                     </div>
                 </Menu.Item>
@@ -169,10 +237,6 @@ const Repository = props => {
             >
                 <div className='repository-top'>
                     <BreadcrumbContent firstItem={'Repository'}/>
-
-                 {/*   <PrivilegeButton  code={"gittok_rpy_add"} key={'gittok_rpy_add'} >
-
-                    </PrivilegeButton>*/}
                     <Dropdown
                         overlay={items}
                         trigger={['click']}
@@ -180,6 +244,36 @@ const Repository = props => {
                     >
                         <Btn type={'primary'} title={'创建仓库'}/>
                     </Dropdown>
+                </div>
+                <div>
+                    常用项目
+                    <div className='repository-use-top'>
+                        {
+                            newlyLoading ?
+                                <SpinLoading type='table'/>:
+                                recordOpenList && recordOpenList.length >0 ?
+                                    <div className="repository-open-record">
+                                        {
+                                            recordOpenList.map((item,key)=>{
+                                                return(
+                                                    (innerWidth>=1700&&key < 5) &&
+                                                    <div key={key} className='houseRecent-border houseRecent-border-width-20' onClick={()=>goDetails(item.repository)}>
+                                                        {openBorder(item)}
+                                                    </div> ||
+                                                    (innerWidth<1700&&key < 4) &&
+                                                    <div key={key} className='houseRecent-border houseRecent-border-width-25' onClick={()=>goDetails(item.repository)}>
+                                                        {openBorder(item)}
+                                                    </div>
+                                                )
+                                            })
+                                        }
+                                    </div>
+                                    :
+                                    <div className='no-data'>
+                                        <EmptyText/>
+                                    </div>
+                        }
+                    </div>
                 </div>
                 <div className='repository-filter'>
                     <Tabs
@@ -190,6 +284,8 @@ const Repository = props => {
                             {id:"collect", title:'我收藏的'}
                         ]}
                         onClick={clickType}
+                        findType={'repository'}
+                        dataNum={repositoryNum}
                     />
                     <div className='select-right-style'>
                         <SearchInput {...props}
@@ -202,7 +298,6 @@ const Repository = props => {
                             <Select.Option value={"public"}>{"公开"}</Select.Option>
                         </Select>
                     </div>
-
                 </div>
                 <RepositoryTable
                     {...props}
@@ -210,14 +305,23 @@ const Repository = props => {
                     repositoryList={repositoryList}
                     getRpyData={getRpyData}
                     createOpenRecord={createOpenRecord}
-                    changPage={changPage}
-                    totalPage={totalPage}
-                    currentPage={currentPage}
-                    totalRecord={totalRecord}
                     tab={repositoryType}
-                    onChange={onChange}
                     type={"repository"}
-                    refreshFind={refreshFind}
+                    deleteRpy={deleteRpy}
+                    updateRpy={updateRpy}
+                    onChange={onChange}
+                />
+
+                <Page pageCurrent={currentPage}
+                      changPage={changPage}
+                      totalPage={totalPage}
+                      totalRecord={totalRecord}
+                      refresh={refreshFind}
+                />
+
+                <RepositoryAddPop {...props}
+                                   visible={addVisible}
+                                   setVisible={setAddVisible}
                 />
             </Col>
 

@@ -4,10 +4,9 @@ import {UserOutlined} from "@ant-design/icons";
 import {getUser} from "tiklab-core-ui"
 
 const ProfileContent = ({userInfo = undefined}) => {
-
     const renderEl = () => {
         if (userInfo){
-            return <Avatar >{userInfo.substring(0,1).toUpperCase()}</Avatar>
+            return <Avatar >{userInfo?.substring(0,1).toUpperCase()}</Avatar>
         }else {
             const user=getUser()
             if (user.avatar && user.avatar !== "null") {

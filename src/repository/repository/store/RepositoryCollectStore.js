@@ -6,7 +6,7 @@ import {getUser,Axios} from 'tiklab-core-ui';
 export class RepositoryCollectStore {
 
     @observable
-    refresh=false
+    coRefresh=false
 
     /**
      * 条件查询收藏
@@ -16,7 +16,7 @@ export class RepositoryCollectStore {
     findRepositoryCollectList = async (param) =>{
         const data = await Axios.post('/repositoryCollect/findRepositoryCollectList',param)
         if (data.code===0){
-            this.refresh=!this.refresh
+            this.coRefresh=!this.coRefresh
         }
         return data
     }
@@ -30,7 +30,7 @@ export class RepositoryCollectStore {
     createRepositoryCollect = async (param) =>{
         const data = await Axios.post('/repositoryCollect/createRepositoryCollect',param)
         if (data.code===0){
-            this.refresh=!this.refresh
+            this.coRefresh=!this.coRefresh
         }
         return data
     }
@@ -45,7 +45,7 @@ export class RepositoryCollectStore {
         param.append('repositoryId',repositoryId)
         const data = await Axios.post('/repositoryCollect/deleteCollectByRpyId',param)
        /* if (data.code===0){
-            this.refresh=!this.refresh
+            this.coRefresh=!this.coRefresh
         }*/
         return data
     }

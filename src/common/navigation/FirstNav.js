@@ -10,7 +10,7 @@ import "./FirstNav.scss"
 import {
     CaretLeftOutlined,
     CaretRightOutlined,
-    HomeOutlined,
+    HomeOutlined, SettingOutlined,
 } from "@ant-design/icons";
 import {productImg,productWhiteImg,productTitle} from "tiklab-core-ui";
 import {useTranslation} from "react-i18next";
@@ -77,12 +77,12 @@ const FirstNav = (props) => {
     }
 
     let navigation = [
-        {
+     /*   {
             key: 'home',
             id:`/index`,
             title:'home',
             icon:  <HomeOutlined className={`${collapsed?'close-iconfont':'open-iconfont'}`}/>
-        },
+        },*/
         {
             key: 'repository',
             id:`/repository`,
@@ -96,18 +96,19 @@ const FirstNav = (props) => {
             icon: <NavigationImage theme={theme} icon={"group"} type={`${collapsed?'close':'open'}`}/>
 
         },
-      /*  {
+        {
             key: 'setting',
-            id:`/setting/version`,
+            id:`/setting/home`,
             title:'设置',
             icon:  <SettingOutlined className={`${collapsed?'close-iconfont':'open-iconfont'}`}/>
-        },*/
+        },
     ];
 
     //切换nav
     const cuteNav = (value) => {
         setNavPath(value.id)
-        if (value.key==='setting'){
+        props.history.push(value.id)
+       /* if (value.key==='setting'){
             if (version==='cloud'){
                 props.history.push('/setting/myLog')
             }else {
@@ -115,7 +116,7 @@ const FirstNav = (props) => {
             }
         }else {
             props.history.push(value.id)
-        }
+        }*/
     }
     /**
      * 点击折叠或展开菜单
@@ -189,7 +190,7 @@ const FirstNav = (props) => {
                         HelpLink={HelpLink}
                         AvatarLink={AvatarLink}
                 />
-                <div className="menu-box-right-border" >
+             {/*   <div className="menu-box-right-border" >
                     <div className={"menu-box-isexpanded"} onClick={toggleCollapsed}>
                         {
                             collapsed ?
@@ -198,7 +199,7 @@ const FirstNav = (props) => {
                                 <CaretLeftOutlined className='first-menu-expend-icon'/>
                         }
                     </div>
-                </div>
+                </div>*/}
             </Sider>
         </div>
     )

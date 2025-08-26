@@ -3,8 +3,15 @@
 ul li{
     list-style: none;
 }
+/*弹窗右侧关闭按钮样式*/
+.ant-modal-close-x {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+}
 
-.antd-custom,.ant-modal,.ant-drawer,.ant-table {
+
+.antd-custom,.ant-modal,.ant-drawer,.ant-table{
     .ant-form-item{
         margin-bottom: 20px !important;
     }
@@ -22,7 +29,6 @@ ul li{
         line-height: 1;
         content: "*";
     }
-
 
     .ant-form-item-label>label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
         display: none !important;
@@ -102,15 +108,8 @@ ul li{
         fill: currentColor;
         overflow: hidden;
     }
-
-
-
 }
 
-
-.ant-table-thead > tr > th:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before {
-    background-color: #ffffff !important;
-}
 
 
 /*ant-form 样式修改*/
@@ -149,7 +148,6 @@ ul li{
 
 
 /*ant-table 样式修改*/
-
 .xcode .ant-table-tbody>tr>td{
     border: none;
     padding: 8px ;

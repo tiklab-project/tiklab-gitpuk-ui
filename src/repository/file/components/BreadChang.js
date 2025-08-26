@@ -2,7 +2,8 @@ import React, {Fragment, useEffect} from 'react';
 import BranchSelect from './BranchSelect';
 import './BreadChang.scss';
 import {observer} from "mobx-react";
-
+import codePage from "../../../assets/images/img/code-home-page.png";
+import {Tooltip} from "antd";
 /**
  * 文件目录
  * @param props
@@ -50,14 +51,24 @@ const BreadChang = props => {
         })
     }
 
+
+    const goCodeHome = () => {
+        props.history.push(`/repository/${webUrl}/code/${refCode}`)
+    }
     return (
         <div className='code-head-left'>
-            <BranchSelect
+           {/* <BranchSelect
                 {...props}
                 repositoryInfo={repositoryInfo}
                 type={'code'}
                 refCode={refCode}
-            />
+            />*/}
+            <div onClick={goCodeHome} style={{cursor:"pointer"}}>
+                <Tooltip title='回到库首页' >
+                    <img  src={codePage}  style={{width:23,height:23}}/>
+                </Tooltip>
+            </div>
+
             <div className='code-bread'>
                 <div className='bread-item'
                      onClick={()=>branch && props.history.push(`/repository/${webUrl}/code/${branch}`)}

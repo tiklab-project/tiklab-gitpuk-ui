@@ -38,35 +38,17 @@ const RepositoryAdd = props =>{
             groupOption(groups.data)
             setGroupList(groups.data)
         }
-        if (location.search&&location.search.indexOf("group")!=-1){
-            initialize(groups.data)
-        }else {
-            // 初始化仓库
-            const res= await findRepositoryByName({userId:getUser().userId})
-            if (res.code===0){
-                setRepositoryList(res.data)
-            }
+
+        // 初始化仓库
+        const res= await findRepositoryByName({userId:getUser().userId})
+        if (res.code===0){
+            setRepositoryList(res.data)
         }
         getAddress()
     },[])
 
 
-    //初始化数据
-    const initialize = async (groups) => {
-        const groupName = location.search.substring(7)
-        const group = groups.filter(a => a.name === groupName)
-        if (group.length) {
-            form.setFieldsValue({
-                group:group[0].groupId
-            })
-            setGroup(group[0])
-            // 初始化仓库
-            const res= await findRepositoryByName({groupId:group[0].groupId})
-            if (res.code===0){
-                setRepositoryList(res.data)
-            }
-        }
-    }
+
 
     /**
      * 确定添加仓库
@@ -250,7 +232,7 @@ const RepositoryAdd = props =>{
                     name='address'
                     rules={[
                         {required:true,message:'请输入路径'},
-                        {max:64,message:'请输入1~64位以内的名称'},
+                        {max:32,message:'请输入1~32位以内的名称'},
                         Validation('路径','appoint'),
                         ({ getFieldValue }) => ({
                             validator(rule,value) {

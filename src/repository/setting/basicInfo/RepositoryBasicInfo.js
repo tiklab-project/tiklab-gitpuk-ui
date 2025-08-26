@@ -24,7 +24,7 @@ import FileStore from "../../file/store/FileStore";
 import GroupStore from "../../../repositoryGroup/repositoryGroup/store/RepositoryGroupStore";
 import {getUser} from "tiklab-core-ui";
 import {Validation} from "../../../common/client/Client";
-import RepositoryDeletePop from "./RepositoryDeletePop";
+import RepositoryDeletePop from "../../../common/repository/RepositoryDeletePop";
 import RepositoryResetPop from "./RepositoryResetPop";
 
 const RepositoryBasicInfo = props =>{
@@ -98,14 +98,6 @@ const RepositoryBasicInfo = props =>{
        })
     }
 
-    /**
-     * 删除仓库
-     */
-    const delRepository = () =>{
-        deleteRpy(repositoryInfo.rpyId).then(res=>{
-            res.code===0 && props.history.push('/repository')
-        })
-    }
 
     //仓库名字
     const inputName = (value) => {

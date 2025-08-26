@@ -21,12 +21,14 @@ import commitsStore from "../../repository/commits/store/CommitsStore";
 import mergeAuditorStore from "../store/MergeAuditor";
 import {getUser} from "tiklab-core-ui";
 import {DownOutlined} from "@ant-design/icons";
+import CommitsTree from "../../common/repository/CommitsTree";
 const MergeDetails = (props) => {
     const {repositoryStore,match}=props
     const {repositoryInfo} = repositoryStore
     const {findMergeRequest,execMerge,updateMergeRequest,fresh}=mergeStore
     const {findMergeConditionList,createMergeComment,deleteMergeComment,conFresh}=mergeConditionStore
-    const {findStatisticsByBranchs,findStatisticsByMergeId,findCommitDiffBranch,findDiffCommitByMergeId} = commitsStore
+    const {findDiffFileByBranchs,findStatisticsByBranchs,findStatisticsByMergeId,findCommitDiffBranch,
+        findDiffCommitByMergeId,findDiffBranchFileDetails,findCommitLineFile} = commitsStore
     const {findMergeAuditorList,updateMergeAuditor}=mergeAuditorStore
 
     const userId=getUser().userId
@@ -34,8 +36,7 @@ const MergeDetails = (props) => {
 
     //合并请求
     const [mergeData,setMergeData]=useState(null)
-    //添加合并分支table类型
-    const [mergeTableType,setMergeTableType]=useState("basics")
+
 
     //审核状态
     const [auditorVisible,setAuditorVisible]=useState()
@@ -74,6 +75,16 @@ const MergeDetails = (props) => {
     //查询当前登陆用户是否是审核用户
     const isUser=auditorUserList.filter(a=>a.user.id===userId).length;
 
+
+
+    //添加合并分支table类型
+    const [mergeTableType,setMergeTableType]=useState("info")
+    const [borderPath,setBorderPath]=useState(null)
+    const [commitDiff,setCommitDiff]=useState(null)
+    // diff文件列表
+    const [commitDiffList,setCommitDiffList] = useState([])
+
+
     useEffect(()=>{
         findMergeRequest(match.params.mergeId).then(res=>{
             if (res.code===0){
@@ -85,6 +96,8 @@ const MergeDetails = (props) => {
                     getDiffCommitStatistics(res.data)
                     getCommitDiffBranch(res.data,res.data.mergeOrigin,res.data.mergeTarget)
                 }
+
+                findDiffFile(res.data)
             }
         })
     },[fresh])
@@ -94,6 +107,22 @@ const MergeDetails = (props) => {
             getMergeConditionList(mergeData.id,findConditionType)
         }
     },[conFresh])
+
+
+
+    //查询两个分子之间的差异文件
+    const findDiffFile = (mergeData) => {
+        findDiffFileByBranchs({
+            rpyId:repositoryInfo.rpyId,
+            branch:mergeData.mergeOrigin,
+            targetBranch:mergeData.mergeTarget,
+        }).then(res=>{
+            if (res.code===0){
+                setCommitDiff(res.data)
+                res.data&&setCommitDiffList(res.data.diffList)
+            }
+        })
+    }
 
 
     //查询审核
@@ -236,6 +265,87 @@ const MergeDetails = (props) => {
     const deGetMergeConditionList = () => {
         getMergeConditionList(mergeData.id,findConditionType)
     }
+    /**
+     * 文件标题显示
+     * @param item
+     * @returns {*}
+     */
+    const filePath = item => item.type==='ADD'?item.newFilePath:item.oldFilePath
+
+    /**
+     * 获取符合要求的值
+     * @param path
+     * @returns {*}
+     */
+    const setFileContent = path => {
+        let a
+        commitDiffList && commitDiffList.map(list=>{
+            if(filePath(list)===path){
+                a = list
+            }
+        })
+        return a
+    }
+
+
+    //查询文件详情
+    const findCommitFileData = (path) => {
+        setBorderPath(path)
+        // 获取文件内容
+        findDiffBranchFileDetails({
+            rpyId:repositoryInfo.rpyId,
+            branch:mergeData.mergeOrigin,
+            targetBranch:mergeData.mergeTarget,
+            filePath:path
+        }).then(res=>{
+            if(res.code===0){
+                setFileContent(path).content = res.data
+                setCommitDiffList([...commitDiffList])
+            }
+        })
+    }
+
+    /**
+     * 文件内容，查看全部操作
+     * @param content
+     * @param item
+     * @param index
+     */
+    const expand = (content,item,index) => {
+        const path = filePath(content)
+        const last = content && content.content[index-1]
+        const next = content && content.content[index+1]
+        let count = 20 , oldStn = item.left, newStn = item.right
+        if(last && next){
+            count = next.right - last.right
+            oldStn = last.left
+            newStn = last.right
+        }
+        if(!last){
+            oldStn = next.left
+            newStn = next.right
+        }
+        // 文件内容
+        findCommitLineFile({
+            rpyId:repositoryInfo.rpyId,
+            branch:mergeData.mergeOrigin,
+            path:content.newFilePath,
+            count:count>20 ? 20 :count,
+            oldStn:oldStn,
+            newStn:newStn,
+            queryType:"branch",
+            direction:index > 0 ? 'down':'up',
+        }).then(res=>{
+            if(res.code===0){
+                let arr = []
+                res.data.map(item=> {
+                    arr.push(Object.assign({},item,{expand: true}))
+                })
+                setFileContent(path).content.splice(index>0?index:index+1,0,...arr)
+                setCommitDiffList([...commitDiffList])
+            }
+        })
+    }
 
 
     //审核下拉
@@ -293,157 +403,224 @@ const MergeDetails = (props) => {
     )
 
 
-    const goBack = () => {
-        props.history.go(-1)
-    }
     return(
-        <div className=' page-width merge-verify'>
-            <Col sm={{ span: "24" }}
-                 md={{ span: "24" }}
-                 lg={{ span: "24" }}
-                 xl={{ span: "20", offset: "2" }}
-                 xxl={{ span: "18", offset: "3" }}
-            >
-                {
-                    mergeData&&
-                    <div className='merge-verify-content'>
-                        <BreadcrumbContent firstItem= {mergeData.title}  goBack={goBack}/>
-                        <div className='merge-verify-title'>
-                            <div className='merge-verify-title-nav'>
-                                <div className='merge-verify-title-desc'>
-                                    {
-                                        mergeData.mergeState===1&&
-                                        <div className='merge-verify-border merge-verify-border-open'>已开启</div>||
-                                        mergeData.mergeState===2&&
-                                        <div className='merge-verify-border merge-verify-border-success'>已合并</div>||
-                                        mergeData.mergeState===3&&
-                                        <div className='merge-verify-border merge-verify-border-close'>已关闭</div>
-                                    }
+        <div className='xcode  merge-verify'>
+            <CommitsTree {...props}
+                         commitDiff={commitDiff}
+                         findCommitFileData={findCommitFileData}
+                         setNavType={setMergeTableType}
+                         navType={mergeTableType}
+                         borderPath={borderPath}
+                         setBorderPath={setBorderPath}
+                         title={mergeData?.title}
+                         type={"merge"}
+            />
+            <div className='merge-page-width '>
+                <Col sm={{ span: "24" }}
+                     md={{ span: "24" }}
+                     lg={{ span: "24" }}
+                     xl={{ span: "20", offset: "2" }}
+                     xxl={{ span: "18", offset: "3" }}
+                >
+                    {
+                        mergeData&&
+                        <div className='merge-verify-content'>
+                            {
+                                mergeTableType==='info'&&
+                                <Fragment>
+                                    <BreadcrumbContent firstItem= {"基本信息"}  />
+                                    <div className='merge-verify-title'>
+                                        <div className='merge-verify-title-nav'>
+                                            <div className='merge-verify-title-desc'>
+                                                {
+                                                    mergeData.mergeState===1&&
+                                                    <div className='merge-verify-border merge-verify-border-open'>已开启</div>||
+                                                    mergeData.mergeState===2&&
+                                                    <div className='merge-verify-border merge-verify-border-success'>已合并</div>||
+                                                    mergeData.mergeState===3&&
+                                                    <div className='merge-verify-border merge-verify-border-close'>已关闭</div>
+                                                }
 
-                                    <div className='title-desc-merge'>
-                                        <div>{mergeData.user.name}发起合并</div>
-                                        <div className='title-desc-border'>{mergeData.mergeOrigin}</div>
-                                        合并到
-                                        <div className='title-desc-border'> {mergeData.mergeTarget}</div>
+                                                <div className='title-desc-merge'>
+                                                    <div>{mergeData.user.name}发起合并</div>
+                                                    <div className='title-desc-border'>{mergeData.mergeOrigin}</div>
+                                                    合并到
+                                                    <div className='title-desc-border'> {mergeData.mergeTarget}</div>
+                                                </div>
+                                            </div>
+
+                                            <div className='merge-verify-title-bt'>
+                                                {
+                                                    mergeData.mergeState===1&&
+                                                    <Fragment>
+                                                        {
+                                                            isUser>0?
+                                                                <Dropdown
+                                                                    overlay={auditorPullDown}
+                                                                    trigger={['click']}
+                                                                    placement={'bottomLeft'}
+                                                                    visible={auditorVisible}
+                                                                    getPopupContainer={e => e.parentElement}
+                                                                    onVisibleChange={auditorVisible=>setAuditorVisible(auditorVisible)}
+                                                                >
+                                                                    <div  onClick={()=>setAuditorVisible(!auditorVisible)}>
+                                                                        <div className='select-view'>
+                                                                            <div className='select-content'>
+                                                                                {
+
+                                                                                    auditorState===0&&<div>未审核</div>||
+                                                                                    auditorState===1&&<div>通过</div>||
+                                                                                    auditorState===2&&<div>不通过</div>
+                                                                                }
+                                                                                <DownOutlined style={{fontSize:10}} twoToneColor="#52c41a"/>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </Dropdown>:
+                                                                <Btn
+                                                                    type={'disabled'}
+                                                                    title={'审核'}
+                                                                    isTooltip={true}
+                                                                    tooltipTitle={'没有权限操作该合并'}
+                                                                    onClick={()=>setMergeTypeVisible(!mergeTypeVisible)}
+                                                                />
+                                                        }
+
+                                                        {
+                                                            ( auditorState===1&& isUser>0&&commitsStatistics?.clash===0)?
+                                                                <Dropdown
+                                                                    overlay={mergePullDown}
+                                                                    trigger={['click']}
+                                                                    placement={'bottomRight'}
+                                                                    visible={mergeTypeVisible}
+                                                                    getPopupContainer={e => e.parentElement}
+                                                                    onVisibleChange={mergeTypeVisible=>setMergeTypeVisible(mergeTypeVisible)}
+                                                                >
+                                                                    <Btn
+                                                                        type={'primary'}
+                                                                        title={'合并'}
+                                                                        onClick={()=>setMergeTypeVisible(!mergeTypeVisible)}
+                                                                    />
+                                                                </Dropdown>:
+                                                                <Btn
+                                                                    type={'disabled'}
+                                                                    title={'合并'}
+                                                                    onClick={()=>setMergeTypeVisible(!mergeTypeVisible)}
+                                                                />
+                                                        }
+                                                        {
+                                                            isUser>0&&
+                                                            <Dropdown
+                                                                overlay={closePullDown}
+                                                                trigger={['click']}
+                                                                placement={'bottomRight'}
+                                                                visible={closeVisible}
+                                                                overlayStyle={{width:105}}
+                                                                getPopupContainer={e => e.parentElement}
+                                                                onVisibleChange={closeVisible=>setCloseVisible(closeVisible)}
+                                                            >
+                                                                <Btn
+                                                                    type={'common'}
+                                                                    title={'...'}
+                                                                    onClick={()=>setCloseVisible(!closeVisible)}
+                                                                />
+                                                            </Dropdown>
+                                                        }
+
+                                                    </Fragment>||
+                                                    (mergeData.mergeState===3&& isUser>0)&&
+                                                    <>
+                                                        {
+                                                            mergeData.branchExist?
+                                                                <Btn
+                                                                    type={'common'}
+                                                                    title={'重新打开'}
+                                                                    onClick={()=>updateMergeReq(1,"open")}
+                                                                />:
+                                                                <Btn
+                                                                    type={'disabled'}
+                                                                    title={'重新打开'}
+                                                                    isTooltip={true}
+                                                                    tooltipTitle={"源分支或目标分支不存在"}
+                                                                />
+                                                        }
+                                                    </>
+
+                                                }
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
+                                    <div className='merge-verify-table'>
+                                        <MergeDetailsBasic
+                                            {...props}
+                                            mergeData={mergeData}
+                                            mergeConditionList={mergeConditionList}
+                                            createMergeComment={createMergeComment}
+                                            deleteMergeComment={deleteMergeComment}
+                                            findConditionType={findConditionType}
+                                            setFindConditionType={addFindConditionType}
+                                            commitsStatistics={commitsStatistics}
+                                            auditorUserList={auditorUserList}
+                                            repositoryInfo={repositoryInfo}
+                                            getMergeAuditorList={getMergeAuditorList}
+                                            deGetMergeConditionList={deGetMergeConditionList}
+                                        />
+                                    </div>
+                                </Fragment>||
+                                mergeTableType==='commit'&&
+                                <Fragment>
+                                    <BreadcrumbContent firstItem= {"提交信息"}  />
+                                    <div className='merge-verify-table'>
+                                        <MergeDetailsCommit
+                                            {...props}
+                                            commitsList={commitsList}
+                                            webUrl={webUrl}
+                                        />
+                                    </div>
+                                </Fragment>||
+                                mergeTableType==='tree'&&
+                                <Fragment>
+                                    <div>
+                                        <BreadcrumbContent firstItem= {"改动文件"}  />
+                                     {/*   <Btn type={'common'} title={'查看文件'} onClick={()=>findFile('blob',commitDiffList.filter(a=>a.newFilePath===borderPath)[0])}/>*/}
+                                    </div>
 
-                                <div className='merge-verify-title-bt'>
-                                    {
-                                        mergeData.mergeState===1&&
-                                        <Fragment>
-                                            {
-                                                isUser>0?
-                                                    <Dropdown
-                                                        overlay={auditorPullDown}
-                                                        trigger={['click']}
-                                                        placement={'bottomLeft'}
-                                                        visible={auditorVisible}
-                                                        getPopupContainer={e => e.parentElement}
-                                                        onVisibleChange={auditorVisible=>setAuditorVisible(auditorVisible)}
-                                                    >
-                                                        <div  onClick={()=>setAuditorVisible(!auditorVisible)}>
-                                                            <div className='select-view'>
-                                                                <div className='select-content'>
-                                                                    {
+                                    <div className='contrast-content-desc'>
+                                        路径:{borderPath}
+                                    </div>
+                                    <div className='merge-verify-table'>
+                                        <MergeDetailsFile
+                                            {...props}
+                                            commitDiff={commitDiffList.filter(a=>a.newFilePath===borderPath)[0]}
+                                            expand={expand}
+                                        />
+                                        {/*<MergeDetailsFile
+                                            {...props}
+                                            repositoryInfo={repositoryInfo}
+                                            mergeData={mergeData}
+                                            webUrl={webUrl}
+                                        />*/}
+                                    </div>
+                                </Fragment>
+                            }
 
-                                                                        auditorState===0&&<div>未审核</div>||
-                                                                        auditorState===1&&<div>通过</div>||
-                                                                        auditorState===2&&<div>不通过</div>
-                                                                    }
-                                                                    <DownOutlined style={{fontSize:10}} twoToneColor="#52c41a"/>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </Dropdown>:
-                                                    <Btn
-                                                        type={'disabled'}
-                                                        title={'审核'}
-                                                        isTooltip={true}
-                                                        tooltipTitle={'没有权限操作该合并'}
-                                                        onClick={()=>setMergeTypeVisible(!mergeTypeVisible)}
-                                                    />
-                                            }
 
-                                            {
-                                                ( auditorState===1&& isUser>0&&commitsStatistics?.clash===0)?
-                                                    <Dropdown
-                                                        overlay={mergePullDown}
-                                                        trigger={['click']}
-                                                        placement={'bottomRight'}
-                                                        visible={mergeTypeVisible}
-                                                        getPopupContainer={e => e.parentElement}
-                                                        onVisibleChange={mergeTypeVisible=>setMergeTypeVisible(mergeTypeVisible)}
-                                                    >
-                                                        <Btn
-                                                            type={'primary'}
-                                                            title={'合并'}
-                                                            onClick={()=>setMergeTypeVisible(!mergeTypeVisible)}
-                                                        />
-                                                    </Dropdown>:
-                                                    <Btn
-                                                        type={'disabled'}
-                                                        title={'合并'}
-                                                        onClick={()=>setMergeTypeVisible(!mergeTypeVisible)}
-                                                    />
-                                            }
-                                            {
-                                                isUser>0&&
-                                                <Dropdown
-                                                    overlay={closePullDown}
-                                                    trigger={['click']}
-                                                    placement={'bottomRight'}
-                                                    visible={closeVisible}
-                                                    overlayStyle={{width:105}}
-                                                    getPopupContainer={e => e.parentElement}
-                                                    onVisibleChange={closeVisible=>setCloseVisible(closeVisible)}
-                                                >
-                                                    <Btn
-                                                        type={'common'}
-                                                        title={'...'}
-                                                        onClick={()=>setCloseVisible(!closeVisible)}
-                                                    />
-                                                </Dropdown>
-                                            }
 
-                                        </Fragment>||
-                                        (mergeData.mergeState===3&& isUser>0)&&
-                                        <>
-                                            {
-                                                mergeData.branchExist?
-                                                <Btn
-                                                    type={'common'}
-                                                    title={'重新打开'}
-                                                    onClick={()=>updateMergeReq(1,"open")}
-                                                />:
-                                                    <Btn
-                                                        type={'disabled'}
-                                                        title={'重新打开'}
-                                                        isTooltip={true}
-                                                        tooltipTitle={"源分支或目标分支不存在"}
-                                                    />
-                                            }
-                                        </>
+                          {/*  <div className='merge-verify-table'>
+                                <Tabs
+                                    type={mergeTableType}
+                                    tabLis={[
+                                        {id:"basics", title:'基础信息'},
+                                        {id:"commit", title:`提交记录(${commitsStatistics?.commitNum})`},
+                                        {id:"file", title:`文件改动(${commitsStatistics?.fileNum})`}
+                                    ]}
+                                    onClick={clickType}
+                                />
+                            </div>*/}
+                          {/*  <div className='merge-verify-table'>
 
-                                    }
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className='merge-verify-table'>
-                            <Tabs
-                                type={mergeTableType}
-                                tabLis={[
-                                    {id:"basics", title:'基础信息'},
-                                    {id:"commit", title:`提交记录(${commitsStatistics?.commitNum})`},
-                                    {id:"file", title:`文件改动(${commitsStatistics?.fileNum})`}
-                                ]}
-                                onClick={clickType}
-                            />
-                        </div>
-                        <div className='merge-verify-table'>
-                            {mergeTableType==='basics'&&
-                                <MergeDetailsBasic
+                                {mergeTableType==='info'&&
+                                    <MergeDetailsBasic
                                         {...props}
                                         mergeData={mergeData}
                                         mergeConditionList={mergeConditionList}
@@ -456,35 +633,37 @@ const MergeDetails = (props) => {
                                         repositoryInfo={repositoryInfo}
                                         getMergeAuditorList={getMergeAuditorList}
                                         deGetMergeConditionList={deGetMergeConditionList}
-                                />||
-                                mergeTableType==='commit'&&
-                                <MergeDetailsCommit
+                                    />||
+                                    mergeTableType==='commit'&&
+                                    <MergeDetailsCommit
                                         {...props}
                                         commitsList={commitsList}
                                         webUrl={webUrl}
-                                />||
-                                mergeTableType==='file'&&
-                                <MergeDetailsFile
+                                    />||
+                                    mergeTableType==='file'&&
+                                    <MergeDetailsFile
                                         {...props}
                                         repositoryInfo={repositoryInfo}
                                         mergeData={mergeData}
                                         webUrl={webUrl}
-                                />
-                            }
+                                    />
+                                }
+                            </div>*/}
                         </div>
-                    </div>
-                }
-            </Col>
-            <MergePop {...props}
-                    visible={mergeVisible}
-                      setVisible={setMergeVisible}
-                      mergeWay={mergeWay}
-                      setDeleteOrigin={setDeleteOrigin}
-                      starMerger={starMerger}
-                      mergeData={mergeData}
-                      mergeExecState={mergeExecState}
-            />
+                    }
+                </Col>
+                <MergePop {...props}
+                          visible={mergeVisible}
+                          setVisible={setMergeVisible}
+                          mergeWay={mergeWay}
+                          setDeleteOrigin={setDeleteOrigin}
+                          starMerger={starMerger}
+                          mergeData={mergeData}
+                          mergeExecState={mergeExecState}
+                />
+            </div>
         </div>
+
     )
 
 

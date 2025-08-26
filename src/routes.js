@@ -12,6 +12,7 @@ const LoginRpwContent=AsyncComponent(()=>import('./login/LoginRpwContent'))
 const SysException=AsyncComponent(()=>import('./login/SysExceptionContent'))
 const ExcludeProductUser=AsyncComponent(()=>import('./login/ExcludeProductUser'))
 const error=AsyncComponent(()=>import('./login/error'))
+const RequestErrorContent=AsyncComponent(()=>import('./login/RequestErrorContent'))
 
 /**
  * 首页
@@ -31,11 +32,11 @@ const Survey=AsyncComponent(()=>import('./repository/survey/components/Survey'))
 
 const Repository=AsyncComponent(()=>import('./repository/repository/components/Repository'))
 const RepositoryAdd=AsyncComponent(()=>import('./repository/repository/components/RepositoryAdd'))
-const RepositoryAside=AsyncComponent(()=>import('./repository/navigator/RepositoryAside'))
+const RepositoryAside=AsyncComponent(()=>import('./repository/navigator/RepositoryNav'))
 
 const File=AsyncComponent(()=>import('./repository/file/components/File'))
-const Blob=AsyncComponent(()=>import('./repository/file/components/Blob'))
-const EditFile=AsyncComponent(()=>import('./repository/file/components/EditFile'))
+const Blob=AsyncComponent(()=>import('./repository/file/components/File'))
+const EditFile=AsyncComponent(()=>import('./repository/file/components/File'))
 const Branch=AsyncComponent(()=>import('./repository/branch/components/Branch'))
 const Tag=AsyncComponent(()=>import('./repository/tag/components/Tag'))
 
@@ -56,14 +57,13 @@ const MergeAdd=AsyncComponent(()=>import('./merge/components/MergeAdd'))
 const MergeAddVerify=AsyncComponent(()=>import('./merge/components/MergeDetails'))
 const MergeClashEdit=AsyncComponent(()=>import('./merge/components/MergeClashEdit'))
 
-//统计
-const StatisticsNav=AsyncComponent(()=>import('./repository/statistics/components/StatisticsNav'))
-const StatisticsCommit=AsyncComponent(()=>import('./repository/statistics/components/StatisticsCommit'))
-const StatisticsCode=AsyncComponent(()=>import('./repository/statistics/components/StatisticsCode'))
+
 
 //流水线
-const Pipeline=AsyncComponent(()=>import('./repository/pipeline/components/Pipeline'))
+const Pipeline=AsyncComponent(()=>import('./repository/integration/pipeline/components/Pipeline'))
 
+//扫描计划
+const ScanPlayList=AsyncComponent(()=>import('./repository/integration/scan/ScanPlayList'))
 
 /*仓库设置*/
 const BranchSetting=AsyncComponent(()=>import('./repository/setting/branch/BranchSetting'))
@@ -72,11 +72,10 @@ const RepositoryRole=AsyncComponent(()=>import('./repository/setting/element/Rep
 const RemoteList=AsyncComponent(()=>import('./repository/setting/remote/components/RemoteList'))
 const RepositoryDetailsSet=AsyncComponent(()=>import('./repository/setting/navigator/RepositorySetting'))
 const RepositoryBasicInfo=AsyncComponent(()=>import('./repository/setting/basicInfo/RepositoryBasicInfo'))
-const PushRule=AsyncComponent(()=>import('./repository/setting/pushRule/components/PushRule'))
+const PushMerge=AsyncComponent(()=>import('./repository/setting/pushMerge/components/PushMerge'))
 const AccessKeys=AsyncComponent(()=>import('./repository/setting/accessKeys/components/AccessKeys'))
 const WebHooks=AsyncComponent(()=>import('./repository/setting/webHooks/components/Hooks'))
 //const LfsList=AsyncComponent(()=>import('./repository/setting/lfs/components/LfsList'))
-const RepositoryClean=AsyncComponent(()=>import('./repository/setting/RepositoryClean/components/RepositoryClean'))
 
 
 /**
@@ -103,6 +102,8 @@ const Auth=AsyncComponent(()=>import('./setting/auth/components/Auth'))
 
 
 // message
+const MessageContent=AsyncComponent(()=>import('./setting/element/MessageContent'))
+
 const MessageManagement=AsyncComponent(()=>import('./setting/message/MessageManagement'))
 const MessageType=AsyncComponent(()=>import('./setting/message/MessageType'))
 const MessageSendType=AsyncComponent(()=>import('./setting/message/MessageSendType'))
@@ -173,6 +174,11 @@ const routers = [
         component:ExcludeProductUser,
     },
     {
+        path:'/requestError',
+        exact:true,
+        component:RequestErrorContent,
+    },
+    {
         exact: true,
         path: '/noaccess',
         render: props => <NotFoundContent {...props}/>
@@ -201,7 +207,7 @@ const routers = [
     {
         path: '/',
         exact:true,
-        render:()=><Redirect to={'/index'}/>,
+        render:()=><Redirect to={'/repository'}/>,
     },
     {
         path:'/',
@@ -347,19 +353,10 @@ const routers = [
                         component: Pipeline
                     },
                     {
-                        path: '/repository/:namespace/:name/statistics',
-                        component: StatisticsNav,
-                        routes:[
-                            {
-                                path:'/repository/:namespace/:name/statistics/commit',
-                                component: StatisticsCommit
-                            },
-                            {
-                                path:'/repository/:namespace/:name/statistics/code',
-                                component: StatisticsCode
-                            },
-                        ]
+                        path:'/repository/:namespace/:name/codePlay',
+                        component: ScanPlayList
                     },
+
                     {
                         path:'/repository/:namespace/:name/setting',
                         component: RepositoryDetailsSet,
@@ -369,8 +366,8 @@ const routers = [
                                 component:RepositoryBasicInfo
                             },
                             {
-                                path:'/repository/:namespace/:name/setting/pushRule',
-                                component:PushRule
+                                path:'/repository/:namespace/:name/setting/pushMerge',
+                                component:PushMerge
                             },
                             {
                                 path:'/repository/:namespace/:name/setting/keys',
@@ -380,10 +377,7 @@ const routers = [
                                 path:'/repository/:namespace/:name/setting/hooks',
                                 component:WebHooks
                             },
-                            {
-                                path:'/repository/:namespace/:name/setting/clean',
-                                component:RepositoryClean
-                            },
+
 
                             {
                                 path:'/repository/:namespace/:name/setting/user',
@@ -547,6 +541,10 @@ const routers = [
                     {
                         path: '/setting/user',
                         component: User,
+                    },
+                    {
+                        path:'/setting/message',
+                        component: MessageContent,
                     },
                     {
                         path:'/setting/mes/management',

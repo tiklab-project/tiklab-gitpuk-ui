@@ -13,6 +13,7 @@ export class MergeStore {
     @observable
     mergeRequest=''
 
+
     /**
      * 创建合并请求
      * @param value

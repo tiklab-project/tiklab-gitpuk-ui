@@ -64,7 +64,7 @@ const BranchSelect = props => {
         }
     }
     return (
-        <div className='drop-down branch-select'>
+        <div className='branch-select-drop  branch-select'>
             <Select
                 ref={selectRef}
                 showSearch

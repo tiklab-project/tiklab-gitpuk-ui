@@ -22,8 +22,16 @@ const TimeTaskPop=AsyncComponent(()=>import('./common/timetask/TimeTaskPop'))
 const EmptyText=AsyncComponent(()=>import('./common/emptyText/EmptyText'))
 const DownSelect=AsyncComponent(()=>import('./common/downSelect/DownSelect'))
 const Loading=AsyncComponent(()=>import('./common/loading/Loading'))
+const Aside=AsyncComponent(()=>import('./common/aside/Aside'))
 
+const NavigationImage=AsyncComponent(()=>import('./common/image/NavigationImage'))
+const RpySetting=AsyncComponent(()=>import('./common/aside/RpySetting'))
+
+const RepositoryAside=AsyncComponent(()=>import('./repository/navigator/RepositoryAside'))
+const Common=AsyncComponent(()=>import('./repository/file/components/Common'))
 const ExcludeProductUser=AsyncComponent(()=>import('./login/ExcludeProductUser'))
+
+
 
 /**
  * 首页
@@ -48,11 +56,10 @@ const Tag=AsyncComponent(()=>import('./repository/tag/components/Tag'))
 const Commits=AsyncComponent(()=>import('./repository/commits/components/Commits'))
 const CommitsDetails=AsyncComponent(()=>import('./repository/commits/components/CommitsDetails'))
 const Issue=AsyncComponent(()=>import('./repository/issue/components/Issue'))
-const Pipeline=AsyncComponent(()=>import('./repository/pipeline/components/Pipeline'))
-const Statistics=AsyncComponent(()=>import('./repository/statistics/components/StatisticsCommit'))
+const Pipeline=AsyncComponent(()=>import('./repository/integration/pipeline/components/Pipeline'))
 const RepositoryDetailsSet=AsyncComponent(()=>import('./repository/setting/navigator/RepositorySetting'))
 const RepositoryBasicInfo=AsyncComponent(()=>import('./repository/setting/basicInfo/RepositoryBasicInfo'))
-const PushRule=AsyncComponent(()=>import('./repository/setting/pushRule/components/PushRule'))
+const PushRule=AsyncComponent(()=>import('./repository/setting/pushMerge/components/PushMerge'))
 const AccessKeys=AsyncComponent(()=>import('./repository/setting/accessKeys/components/AccessKeys'))
 const WebHooks=AsyncComponent(()=>import('./repository/setting/webHooks/components/Hooks'))
 const RepositoryRole=AsyncComponent(()=>import('./repository/setting/element/RepositoryRole'))
@@ -70,17 +77,9 @@ const MergeAdd=AsyncComponent(()=>import('./merge/components/MergeAdd'))
 const MergeAddVerify=AsyncComponent(()=>import('./merge/components/MergeDetails'))
 const MergeClashEdit=AsyncComponent(()=>import('./merge/components/MergeClashEdit'))
 
-//代码扫描
-const ScanPlay=AsyncComponent(()=>import('./repository/scan/components/ScanPlay'))
-const ScanRecord=AsyncComponent(()=>import('./repository/scan/components/ScanRecord'))
-const ScanDetails=AsyncComponent(()=>import('./repository/scan/components/ScanDetails'))
+const RepositorySetting=AsyncComponent(()=>import('./repository/setting/navigator/RepositorySetting'))
 
-//扫描方案
-const ScanScheme=AsyncComponent(()=>import('./setting/scan/components/ScanScheme'))
-const ScanRule=AsyncComponent(()=>import('./setting/scan/components/ScanRule'))
-const ScanRuleDetails=AsyncComponent(()=>import('./setting/scan/components/ScanRuleDetails'))
-const EnvServer=AsyncComponent(()=>import('./setting/scan/components/ScanEnvironment'))
-const RepositoryClean=AsyncComponent(()=>import('./repository/setting/RepositoryClean/components/RepositoryClean'))
+
 
 /**
  * 仓库组
@@ -163,10 +162,14 @@ const gitTokImg = {
 
 export {
     gitTokImg,
-
+    Aside,
+    RepositoryAside,
+    NavigationImage,
+    RpySetting,
     SearchInput,
     Routers,
     xcodeZh,
+    RepositorySetting,
 
     Breadcrumb,
     DeleteExec,
@@ -180,6 +183,7 @@ export {
     EmptyText,
     DownSelect,
     Loading,
+    Common,
 
     App,
      Homepage,
@@ -201,7 +205,6 @@ export {
      CommitsDetails,
      Issue,
      Pipeline,
-     Statistics,
      RepositoryDetailsSet,
      RepositoryBasicInfo,
      PushRule,
@@ -264,16 +267,8 @@ export {
     ExcludeProductUser,
     CommitRepository,
 
-    ScanPlay,
-    ScanRecord,
-    ScanDetails,
-    ScanScheme,
-    ScanRule,
-    ScanRuleDetails,
-    EnvServer,
     PowerUserList,
     UserRpyList,
     Resources,
-    RepositoryClean,
     SettingRouters,
 }

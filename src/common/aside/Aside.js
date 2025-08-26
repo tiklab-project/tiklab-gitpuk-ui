@@ -1,11 +1,16 @@
+/**
+ * 左侧路由（二级标题）
+ * @param props
+ * @returns {JSX.Element}
+ * @constructor
+ */
 import React,{useState,useEffect} from 'react';
 import {renderRoutes} from 'react-router-config';
 import {Dropdown, Layout, Tooltip} from 'antd';
 import {
     BarChartOutlined,
     CaretDownOutlined, CaretLeftOutlined,
-    CaretRightOutlined, HomeOutlined,
-    MenuUnfoldOutlined,
+    CaretRightOutlined, DownOutlined, HomeOutlined, MenuFoldOutlined, MenuUnfoldOutlined,
     SettingOutlined
 } from '@ant-design/icons';
 import {useTranslation} from 'react-i18next';
@@ -14,17 +19,13 @@ import {interceptUrl} from '../client/Client';
 import AsideMenu from './AsideMenu';
 import Listicon from '../list/Listicon';
 import './Aside.scss';
-import UpgradePopup from "../upgrade/UpgradePopup"
+
 import {getUser, getVersionInfo, productWhiteImg} from "tiklab-core-ui";
 import MoreMeu from "./MoreMeu";
-
+import ScanCodeFree from "../upgrade/ScanCodeFree";
+import StatisticsFree from "../upgrade/StatisticsFree"
 const {Sider} = Layout;
-/**
- * 左侧路由（二级标题）
- * @param props
- * @returns {JSX.Element}
- * @constructor
- */
+
 const Aside = props => {
 
     const {location,route,firstRouters,list,info,asideType,repositoryAddress,setNavLevel,setFoldState} = props
@@ -37,7 +38,12 @@ const Aside = props => {
     const [normalOrScrum,setNormalOrScrum] = useState('normal')
     const [isLoading,setIsLoading] = useState(false)
     const [triggerVisible,setTriggerVisible] = useState(false)
-    const [upgradeVisible,setUpgradeVisible]=useState(false)
+
+    //代码扫描弹窗状态
+    const [scanCodeVisible,setScanCodeVisible]=useState(false)
+
+    //统计弹窗状态
+    const [statisticsVisible,setStatisticsVisible]=useState(false)
 
     const [moreMenu, setMoreMenu] = useState()
     const [morePath, setMorePath] = useState()
@@ -91,7 +97,7 @@ const Aside = props => {
         const documentHeight = e.target ? e.target.innerHeight : e.clientHeight;
         const menuHeight = documentHeight - 250;
         const menuNum = Math.floor(menuHeight / 60);
-        let num = menuNum > 8 ? 9 : menuNum;
+        let num = menuNum > 6 ? 6 : menuNum;
 
          setProjectRouter(firstRouters.slice(0, num))
          const hiddenMenu = firstRouters.slice(num, firstRouters.length)
@@ -101,7 +107,6 @@ const Aside = props => {
              data.push(item.id)
          })
          setMorePath([...data])
-
         setMenuNum(num)
     };
 
@@ -200,9 +205,7 @@ const Aside = props => {
                                             <div className='open-icon-style'>{item.icon}</div>
                                     }
                                     <div>{t(item.title)}</div>
-                                    {
-                                        ( item.title==="代码扫描"&&getVersionInfo().expired)&& <div className='open-icon-vip'>{item.icon}</div>
-                                    }
+
                                 </div>
                         }
                 </div>
@@ -210,11 +213,12 @@ const Aside = props => {
 
     //跳转界面
     const goPage = (item) => {
-        if (item.id.endsWith("codeScan")&&(getVersionInfo().expired&&getVersionInfo().release!==3)){
-            setUpgradeVisible(true)
+        props.history.push(item.id)
+      /*  if(item.id.endsWith("statistics/commit")&&(getVersionInfo().expired)){
+            setStatisticsVisible(true)
         }else {
             props.history.push(item.id)
-        }
+        }*/
     }
 
     //跳转首页
@@ -258,7 +262,9 @@ const Aside = props => {
                                                 />
                                             </div>
                                             <div className='repository-open-nav-name'>{info.name}</div>
-                                            <div><CaretDownOutlined  className='repository-nav-icon'/></div>
+                                            <div>
+                                                <DownOutlined className='repository-nav-icon'/>
+                                            </div>
                                         </div>
                             }
 
@@ -284,35 +290,55 @@ const Aside = props => {
                     {
                         projectRouter.map(item=>renderTaskRouter(item))
                     }
-                    {(menuNum<9&&asideType==='repository') &&
+                    {(menuNum<7&&asideType==='repository') &&
                         <MoreMeu {...props}
                                  moreMenu={moreMenu}
                                  morePath={morePath}
                                  nav={nav}
-                                 setUpgradeVisible={setUpgradeVisible}
+                                 setUpgradeVisible={setScanCodeVisible}
+                                 setStatisticsVisible={setStatisticsVisible}
                                  collapsed={collapsed}
                                  theme={theme}
-                                 themeClass={themeClass}
                         />}
 
                 </div>
-                <div className="rpy-nav-setting" onClick={()=>goSys()}>
-                    {
-                        collapsed?
-                            <div className='nav-close-setting-place tab-link'>
-                                <SettingOutlined className='close-iconfont'/>
-                            </div>:
-                            <div className='nav-open-setting-place tab-link'>
-                                <div className='open-icon-setting-style'>
-                                    <SettingOutlined className={`open-iconfont`}/>
+                <div>
+                    <div className="rpy-nav-setting" onClick={()=>goSys()}>
+                        {
+                            collapsed?
+                                <div className='nav-close-setting-place tab-link' data-title-right='设置'>
+                                    <SettingOutlined className='close-iconfont'/>
+                                </div>:
+                                <div className='nav-open-setting-place tab-link'>
+                                    <div className='open-icon-setting-style'>
+                                        <SettingOutlined className={`open-iconfont`}/>
+                                    </div>
+                                    <div>{t('Setting')}</div>
                                 </div>
-                                <div>{t('Setting')}</div>
-                            </div>
-                    }
+                        }
 
+                    </div>
+
+
+                    <div className="rpy-nav-setting" onClick={toggleCollapsed}>
+                        {
+                            collapsed?
+                                <div className='nav-close-setting-place tab-link' data-title-right='展开'>
+                                    <MenuUnfoldOutlined className='close-iconfont'/>
+                                </div>:
+                                <div className='nav-open-setting-place tab-link'>
+                                    <div className='open-icon-setting-style'>
+                                        <MenuFoldOutlined className='open-iconfont'/>
+                                    </div>
+                                    <div>折叠</div>
+                                </div>
+                        }
+
+                    </div>
                 </div>
 
-                <div className="menu-box-right-border" >
+
+                {/*<div className="menu-box-right-border" >
                     <div className={"menu-box-isexpanded"} onClick={toggleCollapsed}>
                         {
                             collapsed ?
@@ -320,7 +346,7 @@ const Aside = props => {
                                 : <CaretLeftOutlined className='first-menu-expend-icon'/>
                         }
                     </div>
-                </div>
+                </div>*/}
             </Sider>
             <Layout>
                 {
@@ -332,11 +358,12 @@ const Aside = props => {
 
             </Layout>
 
-            <UpgradePopup visible={upgradeVisible}
-                          setVisible={setUpgradeVisible}
-                          title={'代码扫描'}
-                          desc={getVersionInfo().release===3?"如需使用代码扫描,请先订阅":'如需使用代码扫描，请购买企业版Licence'}
+            <ScanCodeFree visible={scanCodeVisible}
+                          setVisible={setScanCodeVisible}
             />
+           {/* <StatisticsFree visible={statisticsVisible}
+                            setVisible={setStatisticsVisible}
+            />*/}
         </Layout>
     )
 }

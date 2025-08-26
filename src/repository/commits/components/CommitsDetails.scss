@@ -1,6 +1,7 @@
 .commitsDetails{
     height: 100%;
-    overflow: auto;
+   /* overflow: auto;*/
+    display: flex;
     &-head{
         margin-bottom: var(--tiklab-padding-item);
         padding: var(--tiklab-padding-item);
@@ -100,6 +101,11 @@
             }
             .contrast-content {
                 padding-top: 10px;
+                .contrast-content-desc{
+                    color: #9b9b9b;
+                    padding: 5px 0 20px 0;
+                }
+
                 .contrast-content-title{
                     display: flex;
                     justify-content: space-between;
@@ -154,6 +160,12 @@
 
         }
     }
+
+    .commit-title-style{
+        justify-content: space-between;
+        display: flex;
+        align-items: center;
+    }
 }
 
 
@@ -204,5 +216,15 @@
         .diff-drop-title-item-delete{
             color: #ff0000;
         }
+    }
+}
+
+.commit-page-width{
+    width: 100%;;
+    height: 100%;
+    overflow: auto;
+    padding: 20px 50px;
+    .ant-col{
+        min-width: 720px;
     }
 }

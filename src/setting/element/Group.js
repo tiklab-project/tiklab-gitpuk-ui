@@ -9,7 +9,7 @@ import {UserGroup} from "tiklab-user-ui";
  */
 const Group = props => {
 
-    return <UserGroup {...props} bgroup={"xcode"}/>
+    return <UserGroup {...props} bgroup={"gitpuk"}/>
 
 }
 

@@ -1,6 +1,8 @@
 .code-head-left{
     flex: 1;
     display: flex;
+    gap: 5px;
+    align-items: center;
     .code-bread{
         display: flex;
         flex-wrap: wrap;

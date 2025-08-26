@@ -1,24 +1,16 @@
 import React,{useState,useEffect} from 'react';
-import {
-    ApartmentOutlined,
-    BarChartOutlined,
-    BranchesOutlined, LineChartOutlined, PullRequestOutlined,
-    PushpinOutlined, StockOutlined,
-    TagsOutlined
-} from '@ant-design/icons';
+
 import {inject,observer} from 'mobx-react';
 import "./RepositoryAside.scss"
 import Aside from "../../common/aside/Aside";
 import {Loading} from '../../common/loading/Loading';
 import {getUser,getVersionInfo} from "tiklab-core-ui";
-import member from "../../assets/images/img/member.png";
-import code from "../../assets/images/img/code.png";
-import NavigationImage from "../../common/image/NavigationImage";
+
 
 
 const RepositoryAside= props=>{
 
-    const {match,repositoryStore,systemRoleStore,location}=props
+    const {match,repositoryStore,systemRoleStore,location,firstRouters,setFoldState}=props
 
     const {findRepositoryPage,repositoryInfo,setRepositoryInfo,findRepositoryByAddress,findRepositoryAuth,setNavLevel} = repositoryStore
 
@@ -27,8 +19,6 @@ const RepositoryAside= props=>{
     const namespace = match.params.namespace
     const name = match.params.name
 
-    const [theme] = useState(localStorage.getItem("theme") ? localStorage.getItem("theme") : "gray");
-
 
     const webUrl = `${match.params.namespace}/${match.params.name}`
     // 页面初始加载状态
@@ -36,61 +26,6 @@ const RepositoryAside= props=>{
 
     const [repositoryList,setRepositoryList]=useState([])
 
-    const [foldState,setFoldState]=useState()
-
-
-    // 侧边第一栏导航
-    const firstRouters=[
-        {
-            id:`/repository/${namespace}/${name}/overview`,
-            title:`概览`,
-            icon:<ApartmentOutlined className={`${foldState?'close-iconfont':'open-iconfont'}`}/>,
-        },
-        {
-            id:`/repository/${namespace}/${name}/code`,
-            title:`Code`,
-           /* icon: <img  src={code}  style={{width:20,height:20}}/>,*/
-
-            icon: <NavigationImage theme={theme} icon={"code"} type={`${foldState?'close':'open'}`}/>
-        },
-        {
-            id:`/repository/${webUrl}/commits`,
-            title: `Commits`,
-            icon: <PushpinOutlined className={`${foldState?'close-iconfont':'open-iconfont'}`}/>,
-        },
-        {
-            id:`/repository/${webUrl}/branch`,
-            title: `Branch`,
-            icon: <BranchesOutlined className={`${foldState?'close-iconfont':'open-iconfont'}`}/>,
-        },
-        {
-            id:`/repository/${webUrl}/tag`,
-            title: `标签`,
-            icon: <TagsOutlined className={`${foldState?'close-iconfont':'open-iconfont'}`}/>,
-        },
-        {
-            id:`/repository/${webUrl}/mergeRequest`,
-            title: `合并请求`,
-            icon: <PullRequestOutlined className={`${foldState?'close-iconfont':'open-iconfont'}`}/>,
-        },
-        {
-            id:`/repository/${webUrl}/codeScan`,
-            title: `代码扫描`,
-            icon: !getVersionInfo().expired?<BarChartOutlined />:
-                <img  src={member}  style={{width:18,height:18}}/>,
-        },
-        {
-            id:`/repository/${webUrl}/pipeline`,
-            title: `CI/CD`,
-            icon: <LineChartOutlined  className={`${foldState?'close-iconfont':'open-iconfont'}`}/>
-
-        },
-        {
-            id:`/repository/${webUrl}/statistics/commit`,
-            title: `统计`,
-            icon: <PullRequestOutlined className={`${foldState?'close-iconfont':'open-iconfont'}`}/>,
-        },
-    ]
 
     useEffect( ()=>{
         setNavLevel(2)
@@ -104,7 +39,6 @@ const RepositoryAside= props=>{
                             }
                         }
                     })
-
                     // 所有仓库
                     findRepositoryPage({ pageParam:{currentPage:1, pageSize:15},
                         userId:getUser().userId}).then(rpyData=>{

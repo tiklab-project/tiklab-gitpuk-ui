@@ -7,9 +7,16 @@
  */
 
 import React ,{useState,useEffect}from 'react';
-import {observer} from "mobx-react";
-import {LockOutlined, SettingOutlined, UnlockOutlined} from '@ant-design/icons';
-import {Table,Tooltip} from 'antd';
+import {inject, observer} from "mobx-react";
+import {
+    DeleteOutlined,
+    EditOutlined,
+    EllipsisOutlined,
+    LockOutlined,
+    SettingOutlined, StarFilled,
+    UnlockOutlined
+} from '@ant-design/icons';
+import {Dropdown, Menu, Table, Tooltip} from 'antd';
 import EmptyText from '../../../common/emptyText/EmptyText';
 import Listicon from '../../../common/list/Listicon';
 import {SpinLoading} from "../../../common/loading/Loading";
@@ -21,10 +28,16 @@ import RepositoryCollectStore from "../store/RepositoryCollectStore";
 import {getUser} from "tiklab-core-ui";
 
 import xingxing from "../../../assets/images/img/xingxing.png"
+import {PrivilegeProjectButton} from "tiklab-privilege-ui";
+import RepositoryDeletePop from "../../../common/repository/RepositoryDeletePop";
+import RepositoryUpdatePop from "./RepositoryUpdatePop";
 
 const RepositoryTable = props => {
 
-    const {isLoading,repositoryList,createOpenRecord,changPage,totalPage,currentPage,onChange,type,getRpyData,tab,totalRecord,refreshFind} = props
+    const {isLoading,repositoryList,createOpenRecord,onChange,type,getRpyData,tab,
+      deleteRpy,updateRpy,systemRoleStore} = props
+
+    const {getInitProjectPermissions} = systemRoleStore
     const [innerWidth,setInnerWidth]=useState(window.innerWidth)
 
     const {createRepositoryCollect,deleteCollectByRpyId,findRepositoryCollectList}=RepositoryCollectStore
@@ -34,6 +47,14 @@ const RepositoryTable = props => {
 
     const [columnList,setColumnList]=useState([])
     const [tabType,setTabType]=useState()
+
+    //删除弹窗
+    const [deleteVisible,setDeleteVisible]=useState(false)
+
+    //更新弹窗状态
+    const [updateVisible,setUpdateVisible]=useState(false)
+    const [repository,setRepository]=useState(null)
+
 
     useEffect(async ()=>{
         getCollect(userId)
@@ -52,21 +73,27 @@ const RepositoryTable = props => {
                                 <span className='repository-tables-collect'>
                                 {
                                     collectList.indexOf(record.rpyId)!== -1 ?
-                                /*        <svg className='icon' aria-hidden='true' onClick={()=>compileCollect(record,'cancel')}>
-                                            <use xlinkHref={`#icon-xingxing1`} />
-                                        </svg>*/
-                                        <img src={xingxing} alt={"收藏"} width={19} height={19} onClick={()=>compileCollect(record,'cancel')}/>
+                                        <Tooltip title='取消收藏'>
+                                            <StarFilled className={"icon-text-collect"}  onClick={()=>compileCollect(record,"cancel")}/>
+                                        </Tooltip>
                                     :
-                                        <svg className='icon' aria-hidden='true' onClick={()=>compileCollect(record,'add')}>
-                                            <use xlinkHref={`#icon-xingxing-kong`} />
-                                        </svg>
+                                        <Tooltip title='收藏'>
+                                            <StarFilled className={"icon-text-size"}  onClick={()=>compileCollect(record,"add")}/>
+                                        </Tooltip>
                                 }
                                 </span>
                             </Tooltip>
-                            <Tooltip title='设置'>
-                            <span className='repository-tables-set' onClick={()=>goSet(text,record)}>
-                                <SettingOutlined className='actions-se'/>
-                            </span>
+                            <Tooltip title='更多'>
+                                <span className='repository-tables-set' onClick={()=>findAuth(record)}>
+                                 {/*   <SettingOutlined className='actions-se'/>*/}
+                                     <Dropdown    overlay={()=>execPullDown(record)}
+                                                  placement="bottomRight"
+                                                  trigger={['click']}
+                                                 /* getPopupContainer={e => e.parentElement}*/
+                                     >
+                                        <EllipsisOutlined style={{fontSize:25}}/>
+                                     </Dropdown>
+                                </span>
                             </Tooltip>
                         </div>
                     )
@@ -79,6 +106,7 @@ const RepositoryTable = props => {
             setTabType('collect')
         }
     },[collectList])
+
     /**
      * 跳转代码文件
      * @param text
@@ -94,7 +122,7 @@ const RepositoryTable = props => {
      * @param text
      * @param record
      */
-    const goSet = (text,record) => {
+    const goSet = (record) => {
         createOpenRecord(record.rpyId)
         props.history.push(`/repository/${record.address}/setting/info`)
     }
@@ -147,6 +175,61 @@ const RepositoryTable = props => {
         }
     }
 
+    //查询权限
+    const findAuth = (value) => {
+        // 获取项目权限
+        getInitProjectPermissions(getUser().userId,value.rpyId,value.data?.rules==='public')
+    }
+
+    //打开删除弹窗
+    const openEditePop = (value) => {
+        setUpdateVisible(true)
+        setRepository(value)
+    }
+
+    //打开删除弹窗
+    const openDeletePop = (value) => {
+      setDeleteVisible(true)
+      setRepository(value)
+    }
+
+    const closeDeletePop = () => {
+        setDeleteVisible(false)
+    }
+
+
+    /**
+     * 操作下拉
+     */
+    const execPullDown=(value) => (
+        <Menu>
+            <Menu.Item  style={{width:120}} onClick={()=>openEditePop(value)}>
+                <div className='repository-nav-style'>
+                    <div><EditOutlined /></div>
+                    <div>编辑</div>
+                </div>
+            </Menu.Item>
+            <PrivilegeProjectButton code={"rpy_delete"} domainId={value.rpyId}>
+                <Menu.Item>
+                    <div onClick={()=>openDeletePop(value)} className='table-nav-style'>
+                        <div className='repository-nav-style'>
+                            <div><DeleteOutlined /></div>
+                            <div>删除</div>
+                        </div>
+                    </div>
+                </Menu.Item>
+            </PrivilegeProjectButton >
+            <Menu.Item  style={{width:120}} onClick={()=>goSet(value)}>
+                <div className='repository-nav-style'>
+                    <div><SettingOutlined /></div>
+                    <div>设置</div>
+                </div>
+            </Menu.Item>
+        </Menu>
+    );
+
+
+
 
     const columns = [
         {
@@ -169,7 +252,7 @@ const RepositoryTable = props => {
                                     <div>
                                         <div className='name-text-name'>{ record?.address}</div>
                                     </div>
-                                    <div className='name-text-type'>{ "示例仓库"}</div>
+                                    {/*<div className='name-text-type'>{ "示例仓库"}</div>*/}
                                 </div>
                                 <div className='rpy-text-group'>{record?.name}</div>
                             </div>
@@ -189,39 +272,6 @@ const RepositoryTable = props => {
             }
         },
         {
-            title: '负责人',
-            dataIndex: ['user','nickname'],
-            key: 'user',
-            width:'15%',
-            ellipsis:true,
-            render:(text,record)=><div className='icon-text-user'>
-                    <UserIcon text={record?.user?.nickname?text:record?.user?.name} size={"small"}/>
-                    <div>{record?.user?.nickname?text:record?.user?.name}</div>
-                </div>
-        },
-        {
-            title: '可见范围',
-            dataIndex: 'rules',
-            key: 'rules',
-            width:'10%',
-            ellipsis:true,
-            render:(text,record)=>{
-                return (
-                    <div className='repository-tables-name'>
-                        {text==='private'?
-                            <div className='icon-text-use'>
-                                <LockOutlined/>
-                                <span>私有</span>
-                            </div>:
-                            <div className='icon-text-use'>
-                                <UnlockOutlined />
-                                <span>公开</span>
-                            </div>
-                        }
-                    </div>
-                )}
-        },
-        {
             title: '大小',
             dataIndex: 'rpySize',
             key: 'rpySize',
@@ -230,12 +280,22 @@ const RepositoryTable = props => {
             sorter: (a, b) => a.size - b.size,
         },
         {
-            title: '更新',
-            dataIndex: 'updateTime',
-            key: 'updateTime',
+            title: '负责人',
+            dataIndex: ['user','nickname'],
+            key: 'user',
+            width:'15%',
+            ellipsis:true,
+            render:(text,record)=><div className='icon-text-user'>
+                <UserIcon text={record?.user?.nickname?text:record?.user?.name} size={"small"}/>
+                <div>{record?.user?.nickname?text:record?.user?.name}</div>
+            </div>
+        },
+        {
+            title: '创建时间',
+            dataIndex: 'createTime',
+            key: 'createTime',
             width:'20%',
             ellipsis:true,
-            render:text => text?text:'暂无更新'
         },
 
     ]
@@ -252,14 +312,23 @@ const RepositoryTable = props => {
                         <SpinLoading type="table"/>: <EmptyText title={"暂无仓库数据"}/>}}
                 onChange={onChange}
             />
-            <Page pageCurrent={currentPage}
-                  changPage={changPage}
-                  totalPage={totalPage}
-                  totalRecord={totalRecord}
-                  refresh={refreshFind}
+
+
+            <RepositoryDeletePop {...props}
+                                 deleteVisible={deleteVisible}
+                                 repository={repository}
+                                 setDeleteVisible={closeDeletePop}
+                                 deleteRepository={deleteRpy}/>
+
+            <RepositoryUpdatePop  {...props}
+                                  visible={updateVisible}
+                                  setVisible={setUpdateVisible}
+                                  repository={repository}
+                                  updateRpy={updateRpy}
+
             />
         </div>
     )
 }
 
-export default observer(RepositoryTable)
+export default inject('systemRoleStore')(observer(RepositoryTable))

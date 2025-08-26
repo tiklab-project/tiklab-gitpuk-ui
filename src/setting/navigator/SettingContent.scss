@@ -106,17 +106,18 @@
         display: flex;
         align-items: center;
         gap: var(--nav-icone-text-space);
-        .sys-content-icon{
-            font-size: 18px;
-        }
+
     }
 
-
+    .sys-content-icon{
+        font-size: 18px;
+    }
 
     .nav-style{
         display: flex;
         align-items: center;
         padding-right: 20px;
+        gap: 10px;
         .nav-style-title{
             flex: 1;
         }

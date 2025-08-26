@@ -6,10 +6,10 @@
         margin-bottom: 10px;
     }
     .repository-filter{
-         display: flex;
-         align-items: center;
-         justify-content: space-between;
-
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 20px;
         .input-icon{
             font-size: var(--tiklab-input-icon-15);
         }
@@ -74,4 +74,57 @@
         }
     }
 
+    .repository-use-top{
+        margin-top: 10px;
+    }
+    .repository-open-record{
+        display: flex;
+        gap: 1rem;
+        margin-top: 5px;
+        .houseRecent-border{
+            display: block;
+            position: relative;
+            box-sizing: border-box;
+            max-width: 308px;
+            background: #f7f7f7;
+            border-radius: 3px;
+            padding: 16px;
+            cursor: pointer;
+            .houseRecent-border-flex{
+                display: flex;
+            }
+            .houseRecent-border-text-top{
+                padding-top: 15px;
+                justify-content: space-between;
+                margin:0 10px;
+            }
+            .houseRecent-border-text{
+                flex: 1;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                -o-text-overflow: ellipsis;
+                font-weight: 600;
+            }
+            .houseRecent-border-desc {
+                font-style: inherit;
+                margin-top: 7px;
+                line-height: 1.45455;
+                .title-color{
+                    color: #6b778c;
+                }
+                .desc-text{
+                    margin-left: 5px;
+                }
+            }
+        }
+        .houseRecent-border-width-20{
+            width: 20%;
+        }
+        .houseRecent-border-width-25{
+            width: 25%;
+        }
+    }
+
 }
+

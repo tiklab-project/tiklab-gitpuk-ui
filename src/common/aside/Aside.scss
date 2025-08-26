@@ -215,7 +215,7 @@
     align-items: center;
     cursor: pointer;
     .repository-open-nav-name{
-        flex: 1;
+       /* flex: 1;*/
         text-overflow: ellipsis;
         white-space: nowrap;
         overflow: hidden;
@@ -223,7 +223,7 @@
         margin-left: 10px;
     }
     &-icon{
-        padding-top: 10px;
+        padding: 0 7px;
     }
 }
 
