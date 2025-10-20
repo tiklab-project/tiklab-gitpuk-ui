@@ -113,7 +113,7 @@ const Setting = props =>{
                 children: [
                     {
                         id:'/setting/systemInt',
-                        title:'系统集成',
+                        title:'服务集成',
                     },
                     {
                         id:'/setting/openApi',
@@ -128,11 +128,6 @@ const Setting = props =>{
                 title:'Security',
                 icon:<SafetyCertificateOutlined/>,
                 children: [
-                    {
-                        id:'/setting/myLog',
-                        title:'Operation Log',
-                        purviewCode:'log',
-                    },
                     {
                         id:'/setting/backupRecovery',
                         title:'备份与恢复',

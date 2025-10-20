@@ -124,7 +124,6 @@ const UserRpyList=AsyncComponent(()=>import('./setting/repository/components/Use
 const UserGroupList=AsyncComponent(()=>import('./setting/repository/components/UserGroupList'))
 
 // security
-const MyLog=AsyncComponent(()=>import("./setting/security/MyLog"))
 const LogTemplate=AsyncComponent(()=>import("./setting/security/LogTemplate"))
 const LogType=AsyncComponent(()=>import("./setting/security/LogType"))
 
@@ -513,10 +512,6 @@ const routers = [
                     {
                         path: '/setting/todoType',
                         component: TodoType,
-                    },
-                    {
-                        path:'/setting/myLog',
-                        component: MyLog,
                     },
                     {
                         path:'/setting/logTemplate',

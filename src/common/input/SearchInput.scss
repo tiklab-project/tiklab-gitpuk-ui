@@ -2,9 +2,10 @@
 /* input 输入框样式*/
 .input-custom.ant-input-affix-wrapper{
   border:none !important;
-  background-color:#f7f7f7 !important;
+  background-color:#efefef !important;
+  border-radius:4px;
   .ant-input{
-    background-color:#f7f7f7 !important;
+    background-color:#efefef !important;
   }
 }
 .input-icon{

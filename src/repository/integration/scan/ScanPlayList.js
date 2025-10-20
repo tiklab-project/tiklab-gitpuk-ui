@@ -40,7 +40,11 @@ const ScanPlayList = (props) => {
         findIntegrationInfo("sourcefare").then(res=>{
             if (res.code===0){
                 setFindState(true)
-                intRelevancys(res.data)
+                if (res.data){
+                    intRelevancys(res.data)
+                }else {
+                    setFindState(false)
+                }
             }
         })
     },[fresh])
@@ -72,7 +76,7 @@ const ScanPlayList = (props) => {
     //跳转goSourceFare
     const goSourceFare = (value) => {
         const intPath=findIntPath(integrationAddress.integrationAddress)
-        window.open(`${intPath}/#/project/${value.projectId}/codeScan/${value.id}`)
+        window.open(`${intPath}/#/project/${value.id}/report`)
     }
 
     //打开弹窗
@@ -83,9 +87,9 @@ const ScanPlayList = (props) => {
 
     const columns = [
         {
-            title: "流水线名称",
-            dataIndex: "playName",
-            key: "playName",
+            title: "项目",
+            dataIndex: "name",
+            key: "name",
             width:"30%",
             ellipsis:true,
             render:(text,record)=>{
@@ -93,13 +97,6 @@ const ScanPlayList = (props) => {
                             <span>{text}</span>
                         </span>
             }
-        },
-        {
-            title: "仓库名字",
-            dataIndex: "repositoryName",
-            key: "repositoryName",
-            width:"20%",
-            ellipsis:true,
         },
 
         {
@@ -127,6 +124,13 @@ const ScanPlayList = (props) => {
 
                 )
             }
+        },
+        {
+            title: '创建时间',
+            dataIndex: 'createTime',
+            key: 'user',
+            width:'15%',
+            ellipsis:true,
         },
         {
             title: '操作',

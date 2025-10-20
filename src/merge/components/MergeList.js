@@ -152,14 +152,19 @@ const MergeList = (props) => {
                 <div className='merge-content '>
                     <div className='merge-top'>
                         <BreadcrumbContent firstItem={'Merge Requests'}/>
-                        <PrivilegeProjectButton code={"rpy_merge"} domainId={repositoryInfo && repositoryInfo.rpyId}>
+                        {/*<PrivilegeProjectButton code={"rpy_merge"} domainId={repositoryInfo && repositoryInfo.rpyId}>
                             <Btn
                                 type={'primary'}
                                 title={'新建合并请求'}
-                                /* icon={<PlusOutlined/>}*/
                                 onClick={goMergeAdd}
                             />
-                        </PrivilegeProjectButton>
+                        </PrivilegeProjectButton>*/}
+                        <Btn
+                            type={'primary'}
+                            title={'新建合并请求'}
+                            /* icon={<PlusOutlined/>}*/
+                            onClick={goMergeAdd}
+                        />
                     </div>
                     <div className='merge-filter'>
                         <Tabs

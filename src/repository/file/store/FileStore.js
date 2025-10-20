@@ -44,15 +44,12 @@ export class FileStore {
         this.findState=true
     }
 
-    //添加完整的树结构（每次点击文件夹都会切换路由）
-    @action
-    setCompleteTreeData = async (data) =>{
-        this.completeTreeData=data
-    }
 
     //添加完整的树结构（每次点击文件夹都会切换路由）
     @action
     setStoreValue = async (type,data) =>{
+
+        //设置查询状态 (控制需要查询的接口)
         if (type==="findState"){
             this.findState=true
         }
@@ -71,8 +68,6 @@ export class FileStore {
         if (type==='addState'){
             this.addState=data
         }
-
-
     }
 
 

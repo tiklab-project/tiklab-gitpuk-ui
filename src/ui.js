@@ -117,7 +117,6 @@ const BackupRecoveryContent=AsyncComponent(()=>import('./setting/backups/BackupR
 
 
 // security
-const MyLog=AsyncComponent(()=>import("./setting/security/MyLog"))
 const LogTemplate=AsyncComponent(()=>import("./setting/security/LogTemplate"))
 const LogType=AsyncComponent(()=>import("./setting/security/LogType"))
 
@@ -239,7 +238,6 @@ export {
     MessageNoticeTrue,
 
     BackupRecoveryContent,
-    MyLog,
     LogTemplate,
     LogType ,
     MyTodoTask,

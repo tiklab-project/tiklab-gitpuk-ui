@@ -203,22 +203,38 @@ const RepositoryTable = props => {
      */
     const execPullDown=(value) => (
         <Menu>
-            <Menu.Item  style={{width:120}} onClick={()=>openEditePop(value)}>
-                <div className='repository-nav-style'>
-                    <div><EditOutlined /></div>
-                    <div>编辑</div>
-                </div>
-            </Menu.Item>
-            <PrivilegeProjectButton code={"rpy_delete"} domainId={value.rpyId}>
-                <Menu.Item>
-                    <div onClick={()=>openDeletePop(value)} className='table-nav-style'>
+            {
+                value.update?
+                    <Menu.Item  style={{width:120}} onClick={()=>openEditePop(value)}>
+                        <div className='repository-nav-style' >
+                            <div><EditOutlined /></div>
+                            <div>编辑</div>
+                        </div>
+                    </Menu.Item>:
+                    <Menu.Item  style={{width:120}}  disabled>
+                        <div className='repository-nav-style' >
+                            <div><EditOutlined /></div>
+                            <div>编辑</div>
+                        </div>
+                    </Menu.Item>
+            }
+            {
+                value.delete?
+                    <Menu.Item>
+                        <div className='repository-nav-style' onClick={()=>openDeletePop(value)}>
+                            <div><DeleteOutlined /></div>
+                            <div>删除</div>
+                        </div>
+                    </Menu.Item>:
+                    <Menu.Item disabled>
                         <div className='repository-nav-style'>
                             <div><DeleteOutlined /></div>
                             <div>删除</div>
                         </div>
-                    </div>
-                </Menu.Item>
-            </PrivilegeProjectButton >
+                    </Menu.Item>
+            }
+
+
             <Menu.Item  style={{width:120}} onClick={()=>goSet(value)}>
                 <div className='repository-nav-style'>
                     <div><SettingOutlined /></div>

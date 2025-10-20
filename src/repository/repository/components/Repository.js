@@ -14,6 +14,7 @@ import RepositoryCollectStore from "../store/RepositoryCollectStore";
 import {SpinLoading} from "../../../common/loading/Loading";
 import EmptyText from "../../../common/emptyText/EmptyText";
 import Listicon from "../../../common/list/Listicon";
+import {PrivilegeButton} from 'tiklab-privilege-ui';
 const Repository = props => {
 
     const {repositoryStore} = props
@@ -236,14 +237,17 @@ const Repository = props => {
                 xxl={{ span: "18", offset: "3" }}
             >
                 <div className='repository-top'>
+
                     <BreadcrumbContent firstItem={'Repository'}/>
-                    <Dropdown
-                        overlay={items}
-                        trigger={['click']}
-                        getPopupContainer={triggerNode => triggerNode.parentElement}
-                    >
-                        <Btn type={'primary'} title={'创建仓库'}/>
-                    </Dropdown>
+                    <PrivilegeButton  code={"repository_add"} key={'repository_add'} >
+                        <Dropdown
+                            overlay={items}
+                            trigger={['click']}
+                            getPopupContainer={triggerNode => triggerNode.parentElement}
+                        >
+                            <Btn type={'primary'} title={'创建仓库'}/>
+                        </Dropdown>
+                    </PrivilegeButton>
                 </div>
                 <div>
                     常用项目

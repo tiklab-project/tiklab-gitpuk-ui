@@ -13,6 +13,19 @@
       padding-left: 5px;
     }
   }
+
+  .scan-time{
+    display: inline-block;
+    margin-left: 10px;
+    .scan-time-result-success{
+      color: #4cbb17;
+      font-size: 14px;
+    }
+    .scan-time-result-fail{
+      color: #ff4d4f;
+      font-size: 14px;
+    }
+  }
 }
 .scan-play-pop-search{
   padding: 20px 0;

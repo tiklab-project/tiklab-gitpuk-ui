@@ -240,7 +240,7 @@ const RepositoryBasicInfo = props =>{
                                 isMar={true}
                                 onClick={()=>setOpenOrClose(1)}
                             />
-                            <PrivilegeProjectButton code={"rpy_update"} domainId={repositoryInfo && repositoryInfo.rpyId}>
+                            <PrivilegeProjectButton code={"repository_update"} domainId={repositoryInfo && repositoryInfo.rpyId}>
                                 <Btn
                                     type={'primary'}
                                     title={'确定'}
@@ -253,7 +253,6 @@ const RepositoryBasicInfo = props =>{
                                     }}
                                 />
                             </PrivilegeProjectButton>
-
                         </div>
                      </div>
         },
@@ -268,7 +267,7 @@ const RepositoryBasicInfo = props =>{
                     重置代码仓库操作是永久性的且数据无法恢复,包括代码分支、合并请求、代码版本、标签。代码仓库将会被重置为空仓库，请谨慎操作！
                 </div>
                 <Btn title={'取消'} isMar={true} onClick={()=>setOpenOrClose(2)}/>
-                <PrivilegeProjectButton code={"rpy_delete"} domainId={repositoryInfo && repositoryInfo.rpyId}>
+                <PrivilegeProjectButton code={"repository_reset"} domainId={repositoryInfo && repositoryInfo.rpyId}>
                     <Btn onClick={()=>setResetVisible(true)} type={'dangerous'} title={'重置'}/>
                 </PrivilegeProjectButton>
             </div>
@@ -284,7 +283,7 @@ const RepositoryBasicInfo = props =>{
                             此操作无法恢复！请慎重操作！
                         </div>
                         <Btn title={'取消'} isMar={true} onClick={()=>setOpenOrClose(3)}/>
-                        <PrivilegeProjectButton code={"rpy_delete"} domainId={repositoryInfo && repositoryInfo.rpyId}>
+                        <PrivilegeProjectButton code={"repository_delete"} domainId={repositoryInfo && repositoryInfo.rpyId}>
                             <Btn onClick={()=>setDeleteVisible(true)} type={'dangerous'} title={'删除'}/>
                         </PrivilegeProjectButton>
                     </div>

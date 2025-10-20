@@ -16,6 +16,7 @@ import Page from "../../../common/page/Page";
 import IntegrateInStore from "../store/IntegrateInStore";
 import "./ScanPlayPop.scss"
 import {observer} from "mobx-react";
+import {CheckCircleOutlined, CloseCircleOutlined} from "@ant-design/icons";
 const ScanPlayPop = (props) => {
     const {visible,setVisible,integrationAddress,repositoryId,relevancyIds}=props
 
@@ -104,18 +105,38 @@ const ScanPlayPop = (props) => {
 
     const columns = [
         {
-            title: "扫描计划名称",
-            dataIndex: "playName",
-            key: "playName",
+            title: "扫描项目",
+            dataIndex: "name",
+            key: "name",
             width:"60%",
             ellipsis:true,
         },
         {
-            title: "关联仓库",
-            dataIndex: "repositoryName",
-            key: "repositoryName",
+            title: "最近扫描",
+            dataIndex: "newScanTime",
+            key: "newScanTime",
             width:"40%",
             ellipsis:true,
+            render:(text,record)=>{
+                return (
+                    <div>
+                        {
+                            text?
+                                <div style={{display:'flex',gap:'5',alignItems:"center"}}>
+                                    {text}
+                                    <div className='scan-time'>
+                                        {record.scanResult==="success"&&
+                                            <CheckCircleOutlined className={"scan-time-result-success"}/>
+                                            ||
+                                            record.scanResult==="fail"&&
+                                            <CloseCircleOutlined className='scan-time-result-fail'/>
+                                        }
+                                    </div>
+                                </div> :
+                                <div className='project-nav-desc'>未扫描</div>
+                        }
+                    </div>
+                )}
         },
 
     ]

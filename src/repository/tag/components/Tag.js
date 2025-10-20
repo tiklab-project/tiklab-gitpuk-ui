@@ -1,5 +1,5 @@
 import React,{useEffect,useState} from 'react';
-import {Tooltip, Col} from 'antd';
+import {Tooltip, Col, message} from 'antd';
 import {TagOutlined} from '@ant-design/icons';
 import BreadcrumbContent from '../../../common/breadcrumb/Breadcrumb';
 import Btn from '../../../common/btn/Btn';
@@ -64,7 +64,13 @@ const Tag = props =>{
     //删除标签
     const delTag = (value) => {
         deleteTag({rpyId:repositoryInfo.rpyId,tagName:value.tagName}).then(res=>{
-            res.code===0&&findTags()
+            if (res.code===0){
+                message.success("删除成功")
+                res.code===0&&findTags()
+            }else {
+                message.success("删除失败，"+res.msg)
+            }
+
         })
     }
 
@@ -111,13 +117,19 @@ const Tag = props =>{
                         <BreadcrumbContent firstItem={'Tag'}/>
                         {
                             tagType===1?
-                                <PrivilegeProjectButton code={"rpy_tag_add"} domainId={repositoryInfo && repositoryInfo.rpyId}>
+                               /* <PrivilegeProjectButton code={"rpy_tag_add"} domainId={repositoryInfo && repositoryInfo.rpyId}>
                                     <Btn
                                         type={'primary'}
                                         title={'新建标签'}
                                         onClick={()=>setAddTagVisible(true)}
                                     />
-                                </PrivilegeProjectButton > :
+                                </PrivilegeProjectButton >*/
+
+                                <Btn
+                                    type={'primary'}
+                                    title={'新建标签'}
+                                    onClick={()=>setAddTagVisible(true)}
+                                />:
                                 <Btn
                                     type={'primary'}
                                     title={'新建发行版'}
@@ -185,24 +197,10 @@ const Tag = props =>{
                                                         </svg>
                                                     </div>
                                                 </Tooltip>
-                                                <PrivilegeProjectButton code={"rpy_tag_delete"} domainId={repositoryInfo && repositoryInfo.rpyId}>
+                                                {/*<PrivilegeProjectButton code={"rpy_tag_delete"} domainId={repositoryInfo && repositoryInfo.rpyId}>
                                                     <DeleteExec value={item} deleteData={delTag} title={"确认删除"} type={'tag'}/>
-                                                </PrivilegeProjectButton>
-                                              {/*  <Tooltip title='删除'>
-                                                    <Popconfirm
-                                                        title="你确定删除吗"
-                                                        onConfirm={()=>delTag(item)}
-                                                        okText="确定"
-                                                        cancelText="取消"
-                                                        placement="topRight"
-                                                    >
-                                                        <div className='tag-tables-del'>
-                                                            <svg className="icon" aria-hidden="true">
-                                                                <use xlinkHref="#icon-delete"/>
-                                                            </svg>
-                                                        </div>
-                                                    </Popconfirm>
-                                                </Tooltip>*/}
+                                                </PrivilegeProjectButton>*/}
+                                                <DeleteExec value={item} deleteData={delTag} title={"确认删除"} type={'tag'}/>
                                             </div>
                                         </div>
 
